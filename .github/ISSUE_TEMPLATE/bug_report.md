@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Something about Quartz isn't working the way you expect
+about: Something isn't working the way you expect
 title: ""
 labels: bug
 assignees: ""
@@ -30,10 +30,10 @@ You can help speed up fixing the problem by either
 
 **Desktop (please complete the following information):**
 
-- Quartz Version: [e.g. v4.1.2]
-- `node` Version: [e.g. v18.16]
-- `npm` version: [e.g. v10.1.0]
-- OS: [e.g. iOS]
+
+- `java` Version: [e.g. v17.03.6]
+- `spring-boot` version: [e.g. v10.1.0]
+- IDE: 
 - Browser [e.g. chrome, safari]
 
 **Additional context**
