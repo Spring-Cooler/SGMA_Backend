@@ -39,4 +39,5 @@ out/
 # Ignore YAML and properties files
 *.yml
 *.properties
+src/main/resources/config/mybatis-config.xml
 src/main/resources/application.properties/
