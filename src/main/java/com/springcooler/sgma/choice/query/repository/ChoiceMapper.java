@@ -1,4 +1,4 @@
 package com.springcooler.sgma.choice.query.repository;
 
-public class ChoiceRepository {
+public interface ChoiceMapper {
 }

@@ -1,4 +1,4 @@
 package com.springcooler.sgma.studygroupapplicant.query.repository;
 
-public class StudyGroupApplicantRepository {
+public interface StudyGroupApplicantMapper {
 }
