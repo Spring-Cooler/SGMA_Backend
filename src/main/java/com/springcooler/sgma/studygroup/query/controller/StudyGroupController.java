@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @RestController("queryStudyGroupController")
 @RequestMapping("/api/study-groups")
 public class StudyGroupController {
+
     private final StudyGroupService studyGroupService;
 
     @Autowired

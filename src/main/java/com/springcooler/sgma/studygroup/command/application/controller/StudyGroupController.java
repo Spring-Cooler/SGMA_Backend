@@ -13,6 +13,7 @@ import java.net.URI;
 @RequestMapping("/api/study-groups")
 @Slf4j
 public class StudyGroupController {
+
     private final StudyGroupService studyGroupService;
 
     @Autowired

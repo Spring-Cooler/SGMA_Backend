@@ -13,6 +13,7 @@ import java.util.List;
 
 @SpringBootTest
 class StudyGroupServiceTests {
+
     @Autowired
     private StudyGroupService studyGroupService;
 
@@ -27,7 +28,7 @@ class StudyGroupServiceTests {
         );
     }
 
-    @DisplayName("생성한 스터디그룹 조회 테스트")
+    @DisplayName("그룹장인 스터디그룹 조회 테스트")
     @ParameterizedTest
     @ValueSource(longs = 3L)
     void testFindStudyGroupsByOwnerId(long ownerId) {
@@ -39,7 +40,7 @@ class StudyGroupServiceTests {
         );
     }
 
-    @DisplayName("참가한 스터디그룹 조회 테스트")
+    @DisplayName("그룹원인 스터디그룹 조회 테스트")
     @ParameterizedTest
     @ValueSource(longs = 1L)
     void testFindStudyGroupsByParticipantId(long participantId) {
