@@ -1,4 +1,7 @@
 package com.springcooler.sgma.studygroupapplicant.command.domain.repository;
 
-public class StudyGroupApplicantRepository {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface StudyGroupApplicantRepository<StudyGroupApplicant,Long> {
 }
