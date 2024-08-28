@@ -2,6 +2,7 @@ package com.springcooler.sgma.studygroup.command.application.service;
 
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
+import com.springcooler.sgma.studygroup.command.domain.repository.StudyGroupRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,9 @@ class StudyGroupServiceTests {
     @Autowired
     private StudyGroupService studyGroupService;
 
+    @Autowired
+    private StudyGroupRepository studyGroupRepository;
+
     @DisplayName("스터디 그룹 생성 테스트")
     @Test
     void testSaveStudyGroup() {
@@ -30,9 +34,12 @@ class StudyGroupServiceTests {
 
         //When
         StudyGroup studyGroup = studyGroupService.registStudyGroup(studyGroupInfo);
+        if (studyGroup != null) {
+            System.out.println(studyGroup);
+        }
 
         //Then
-        Assertions.assertDoesNotThrow(() -> System.out.println(studyGroup));
+        Assertions.assertNotNull(studyGroup);
     }
 
     @DisplayName("스터디 그룹 수정 테스트")
@@ -49,8 +56,25 @@ class StudyGroupServiceTests {
 
         //When
         StudyGroup studyGroup = studyGroupService.modifyStudyGroup(studyGroupInfo);
+        if (studyGroup != null) {
+            System.out.println(studyGroup);
+        }
 
         //Then
-        Assertions.assertDoesNotThrow(() -> System.out.println(studyGroup));
+        Assertions.assertNotNull(studyGroup);
+    }
+
+    @DisplayName("스터디 그룹 삭제 테스트")
+    @Test
+    void testDeleteStudyGroup() {
+        //Given
+        long groupId = 1L;
+
+        //When
+        studyGroupService.deleteStudyGroup(groupId);
+        System.out.println("DELETE SUCCESS");
+
+        //Then
+        Assertions.assertTrue(studyGroupRepository.findById(groupId).isEmpty());
     }
 }

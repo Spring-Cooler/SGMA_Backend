@@ -44,6 +44,8 @@ public class StudyGroupService {
     // 스터디 그룹 삭제
     @Transactional
     public void deleteStudyGroup(long groupId) {
-
+        studyGroupRepository.findById(groupId)
+                .orElseThrow(() -> new EntityNotFoundException("잘못된 삭제 요청입니다."));
+        studyGroupRepository.deleteById(groupId);
     }
 }

@@ -31,7 +31,12 @@ public class StudyGroupController {
 
     @PutMapping("/{groupId}")
     public ResponseEntity<?> modifyStudyGroup(@RequestBody StudyGroupDTO modifyStudyGroup) {
-        StudyGroup updatedStudyGroup = studyGroupService.modifyStudyGroup(modifyStudyGroup);
-        return ResponseEntity.ok(updatedStudyGroup);
+        return ResponseEntity.ok(studyGroupService.modifyStudyGroup(modifyStudyGroup));
+    }
+
+    @DeleteMapping("/{groupId}")
+    public ResponseEntity<?> deleteStudyGroup(@PathVariable long groupId) {
+        studyGroupService.deleteStudyGroup(groupId);
+        return ResponseEntity.noContent().build();
     }
 }
