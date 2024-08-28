@@ -20,4 +20,7 @@ public class ProblemService {
         return problemMapper.findAllProblems();
     }
 
+    public List<ProblemDTO> findProblemByScheduleId(long scheduleId){
+        return problemMapper.findProblemByScheduleId(scheduleId);
+    }
 }

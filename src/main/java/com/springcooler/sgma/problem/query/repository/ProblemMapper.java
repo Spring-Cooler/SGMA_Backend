@@ -8,4 +8,7 @@ import java.util.List;
 @Mapper
 public interface ProblemMapper {
     List<ProblemDTO> findAllProblems();
+
+    List<ProblemDTO> findProblemByScheduleId(long scheduleId);
 }
+
