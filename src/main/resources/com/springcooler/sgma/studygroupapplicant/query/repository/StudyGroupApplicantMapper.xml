@@ -8,6 +8,7 @@
         <id property="recruitmentBoardId" column="RECRUITMENT_BOARD_ID"/>
         <result property="title" column="TITLE"/>
         <result property="createdAt" column="CREATED_AT"/>
+        <result property="updatedAt" column="UPDATED_AT"/>
         <result property="recruitmentStartTime" column="RECRUITMENT_START_TIME"/>
         <result property="recruitmentEndTime" column="RECRUITMENT_END_TIME"/>
         <result property="likes" column="LIKES"/>
@@ -25,6 +26,7 @@
         A.RECRUITMENT_BOARD_ID,
         A.TITLE,
         A.CREATED_AT,
+        A.UPDATED_AT,
         A.RECRUITMENT_START_TIME,
         A.RECRUITMENT_END_TIME,
         A.ACTIVE_STATUS,

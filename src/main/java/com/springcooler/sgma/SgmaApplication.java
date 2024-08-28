@@ -6,11 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class SgmaApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(SgmaApplication.class, args);
-
-
-
+		StudyGroupApplicantService studyGroupApplicantService = new StudyGroupApplicantService();
+		studyGroupApplicantService.studyGroupRecruitmentTest();
 	}
 }

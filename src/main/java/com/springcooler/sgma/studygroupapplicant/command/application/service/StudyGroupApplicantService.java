@@ -1,4 +1,4 @@
-package com.springcooler.sgma.studygroupapplicant.command.application.service;
-
-public class StudyGroupApplicantService {
-}
+//package com.springcooler.sgma.studygroupapplicant.command.application.service;
+//
+//public class StudyGroupApplicantService {
+//}
