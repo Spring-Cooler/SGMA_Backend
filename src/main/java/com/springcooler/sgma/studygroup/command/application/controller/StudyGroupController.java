@@ -2,7 +2,6 @@ package com.springcooler.sgma.studygroup.command.application.controller;
 
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.command.application.service.StudyGroupService;
-import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
