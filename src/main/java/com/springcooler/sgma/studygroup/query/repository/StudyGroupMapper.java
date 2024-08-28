@@ -7,5 +7,14 @@ import java.util.List;
 
 @Mapper
 public interface StudyGroupMapper {
-    List<StudyGroupDTO> findAllStudyGroupsByActiveStatus(String activeStatus);
+    List<StudyGroupDTO> findAllStudyGroups();
+
+    List<StudyGroupDTO> findStudyGroupsByOwnerId(long ownerId);
+
+    List<StudyGroupDTO> findStudyGroupsByParticipantId(long participantId);
+
+    List<StudyGroupDTO> findStudyGroupsByCategoryId(int categoryId);
+
+    List<StudyGroupDTO> findStudyGroupByGroupId(long groupId);
+
 }

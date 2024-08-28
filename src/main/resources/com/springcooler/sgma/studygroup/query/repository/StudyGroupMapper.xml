@@ -11,7 +11,8 @@
         <result property="userId" column="USER_ID"/>
         <result property="studyGroupCategoryId" column="STUDY_GROUP_CATEGORY_ID"/>
     </resultMap>
-    <select id="findAllStudyGroupsByActiveStatus" resultMap="studyGroupResultMap" parameterType="string">
+
+    <select id="findAllStudyGroups" resultMap="studyGroupResultMap">
         SELECT
                A.GROUP_ID
              , A.GROUP_NAME
@@ -20,6 +21,62 @@
              , A.USER_ID
              , A.STUDY_GROUP_CATEGORY_ID
           FROM STUDY_GROUP A
-         WHERE A.ACTIVE_STATUS = #{ activeStatus }
+         WHERE A.ACTIVE_STATUS = 'ACTIVE'
+         ORDER BY A.GROUP_ID
+    </select>
+
+    <select id="findStudyGroupsByOwnerId" resultMap="studyGroupResultMap" parameterType="long">
+        SELECT
+               A.GROUP_ID
+             , A.GROUP_NAME
+             , A.ACTIVE_STATUS
+             , A.GROUP_MEMBERS
+             , A.USER_ID
+             , A.STUDY_GROUP_CATEGORY_ID
+          FROM STUDY_GROUP A
+         WHERE A.USER_ID = #{ ownerId } AND A.ACTIVE_STATUS = 'ACTIVE'
+         ORDER BY A.GROUP_ID
+    </select>
+
+    <select id="findStudyGroupsByParticipantId" resultMap="studyGroupResultMap" parameterType="long">
+        SELECT
+               A.GROUP_ID
+             , A.GROUP_NAME
+             , A.ACTIVE_STATUS
+             , A.GROUP_MEMBERS
+             , A.USER_ID
+             , A.STUDY_GROUP_CATEGORY_ID
+          FROM STUDY_GROUP A
+          JOIN STUDY_GROUP_MEMBER B
+            ON A.GROUP_ID = B.GROUP_ID
+          JOIN USER C
+            ON B.USER_ID = C.USER_ID
+        WHERE C.USER_ID = #{ participantId } AND A.ACTIVE_STATUS = 'ACTIVE'
+        ORDER BY A.GROUP_ID
+    </select>
+
+    <select id="findStudyGroupsByCategoryId" resultMap="studyGroupResultMap" parameterType="int">
+        SELECT
+        A.GROUP_ID
+        , A.GROUP_NAME
+        , A.ACTIVE_STATUS
+        , A.GROUP_MEMBERS
+        , A.USER_ID
+        , A.STUDY_GROUP_CATEGORY_ID
+        FROM STUDY_GROUP A
+        WHERE A.STUDY_GROUP_CATEGORY_ID = #{ categoryId } AND A.ACTIVE_STATUS = 'ACTIVE'
+        ORDER BY A.GROUP_ID
+    </select>
+
+    <select id="findStudyGroupByGroupId" resultMap="studyGroupResultMap" parameterType="long">
+        SELECT
+               A.GROUP_ID
+             , A.GROUP_NAME
+             , A.ACTIVE_STATUS
+             , A.GROUP_MEMBERS
+             , A.USER_ID
+             , A.STUDY_GROUP_CATEGORY_ID
+          FROM STUDY_GROUP A
+         WHERE A.GROUP_ID = #{ groupId } AND A.ACTIVE_STATUS = 'ACTIVE'
     </select>
 </mapper>
