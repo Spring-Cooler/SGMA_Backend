@@ -79,4 +79,16 @@
           FROM STUDY_GROUP A
          WHERE A.GROUP_ID = #{ groupId } AND A.ACTIVE_STATUS = 'ACTIVE'
     </select>
+
+    <select id="findStudyGroupByGroupName" resultMap="studyGroupResultMap" parameterType="string">
+        SELECT
+               A.GROUP_ID
+             , A.GROUP_NAME
+             , A.ACTIVE_STATUS
+             , A.GROUP_MEMBERS
+             , A.USER_ID
+             , A.STUDY_GROUP_CATEGORY_ID
+          FROM STUDY_GROUP A
+         WHERE A.GROUP_NAME = #{ groupName } AND A.ACTIVE_STATUS = 'ACTIVE'
+    </select>
 </mapper>

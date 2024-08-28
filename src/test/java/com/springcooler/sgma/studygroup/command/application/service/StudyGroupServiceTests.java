@@ -34,4 +34,23 @@ class StudyGroupServiceTests {
         //Then
         Assertions.assertDoesNotThrow(() -> System.out.println(studyGroup));
     }
+
+    @DisplayName("스터디 그룹 수정 테스트")
+    @Test
+    void testUpdateStudyGroup() {
+        //Given
+        StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
+        studyGroupInfo.setGroupId(1L);
+        studyGroupInfo.setGroupName("반짝반짝");
+        studyGroupInfo.setActiveStatus("ACTIVE");
+        studyGroupInfo.setGroupMembers(5);
+        studyGroupInfo.setUserId(1);
+        studyGroupInfo.setStudyGroupCategoryId(3);
+
+        //When
+        StudyGroup studyGroup = studyGroupService.modifyStudyGroup(studyGroupInfo);
+
+        //Then
+        Assertions.assertDoesNotThrow(() -> System.out.println(studyGroup));
+    }
 }

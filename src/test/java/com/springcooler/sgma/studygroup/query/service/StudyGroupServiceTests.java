@@ -63,13 +63,25 @@ class StudyGroupServiceTests {
         );
     }
 
-    @DisplayName("스터디 그룹 단건 조회 테스트")
+    @DisplayName("스터디 그룹 단건 조회(그룹 아이디) 테스트")
     @ParameterizedTest
     @ValueSource(longs = 4L)
     void testFindStudyGroupByGroupId(long groupId) {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupDTO> studyGroups = studyGroupService.findStudyGroupByGroupId(groupId);
+                    studyGroups.forEach(System.out::println);
+                }
+        );
+    }
+
+    @DisplayName("스터디 그룹 단건 조회(그룹 이름) 테스트")
+    @ParameterizedTest
+    @ValueSource(strings = "스프링쿨러")
+    void testFindStudyGroupByGroupId(String groupName) {
+        Assertions.assertDoesNotThrow(
+                () -> {
+                    List<StudyGroupDTO> studyGroups = studyGroupService.findStudyGroupByGroupName(groupName);
                     studyGroups.forEach(System.out::println);
                 }
         );

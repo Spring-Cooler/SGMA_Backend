@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudyGroupService {
@@ -39,5 +40,9 @@ public class StudyGroupService {
     // 스터디 그룹 단건 조회
     public List<StudyGroupDTO> findStudyGroupByGroupId(long groupId) {
         return studyGroupMapper.findStudyGroupByGroupId(groupId);
+    }
+
+    public List<StudyGroupDTO> findStudyGroupByGroupName(String groupName) {
+        return studyGroupMapper.findStudyGroupByGroupName(groupName);
     }
 }

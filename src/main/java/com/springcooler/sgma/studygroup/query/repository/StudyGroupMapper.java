@@ -17,4 +17,5 @@ public interface StudyGroupMapper {
 
     List<StudyGroupDTO> findStudyGroupByGroupId(long groupId);
 
+    List<StudyGroupDTO> findStudyGroupByGroupName(String groupName);
 }

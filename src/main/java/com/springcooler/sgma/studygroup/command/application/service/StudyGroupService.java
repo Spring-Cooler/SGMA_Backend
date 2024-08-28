@@ -3,6 +3,7 @@ package com.springcooler.sgma.studygroup.command.application.service;
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
 import com.springcooler.sgma.studygroup.command.domain.repository.StudyGroupRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,16 @@ public class StudyGroupService {
 
     // 스터디 그룹 정보 수정
     @Transactional
-    public void modifyStudyGroup(StudyGroupDTO modifyStudyGroup) {
+    public StudyGroup modifyStudyGroup(StudyGroupDTO modifyStudyGroup) {
+        // 기존 엔티티 조회
+        StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
+                .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
 
+        // DTO를 엔티티에 매핑
+        modelMapper.map(modifyStudyGroup, existingStudyGroup);
+
+        // 엔티티 저장
+        return studyGroupRepository.save(existingStudyGroup);
     }
 
     // 스터디 그룹 삭제
