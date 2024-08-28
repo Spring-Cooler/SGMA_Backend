@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springcooler.sgma.problem.query.repository.ProblemMapper">
+    <resultMap id="problemResultMap" type="com.springcooler.sgma.problem.query.dto.ProblemDTO">
+        <id property="problemId" column="problem_id"/>
+        <result property="content" column="content"/>
+        <result property="answer" column="answer"/>
+        <result property="participantId" column="participant_id"/>
+        <result property="scheduleId" column="schedule_id"/>
+    </resultMap>
+
+    <select id="findAllProblems" resultMap="problemResultMap">
+        SELECT
+                A.PROBLEM_ID
+               ,A.CONTENT
+               ,A.ANSWER
+               ,A.PARTICIPANT_ID
+               ,A.SCHEDULE_ID
+          FROM PROBLEM A
+    </select>
+</mapper>
