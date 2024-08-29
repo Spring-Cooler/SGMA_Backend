@@ -52,7 +52,7 @@ class StudyGroupMemberServiceTests {
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
         StudyGroupMemberDTO modifyMember = new StudyGroupMemberDTO();
-        modifyMember.setMemberId(21L);
+        modifyMember.setMemberId(20L);
         modifyMember.setMemberEnrolledAt(timestamp);
         modifyMember.setMemberWithdrawnAt(new Timestamp(System.currentTimeMillis()));
         modifyMember.setMemberStatus("INACTIVE");
