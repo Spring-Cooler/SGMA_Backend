@@ -4,7 +4,6 @@ import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
 import com.springcooler.sgma.studygroup.command.domain.repository.StudyGroupRepository;
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
-import com.springcooler.sgma.studygroupmember.query.service.StudyGroupMemberService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

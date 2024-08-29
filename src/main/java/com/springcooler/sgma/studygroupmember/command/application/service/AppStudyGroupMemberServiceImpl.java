@@ -5,7 +5,6 @@ import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGrou
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMemberStatus;
 import com.springcooler.sgma.studygroupmember.command.domain.repository.StudyGroupMemberRepository;
 import com.springcooler.sgma.studygroupmember.command.domain.service.DomainStudyGroupMemberService;
-import com.springcooler.sgma.studygroupmember.command.infrastructure.service.InfraStudyGroupMemberService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
