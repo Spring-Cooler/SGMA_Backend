@@ -2,6 +2,7 @@ package com.springcooler.sgma.studygroup.command.application.service;
 
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
+import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroupStatus;
 import com.springcooler.sgma.studygroup.command.domain.repository.StudyGroupRepository;
 import com.springcooler.sgma.studygroup.command.domain.service.DomainStudyGroupService;
 import jakarta.persistence.EntityNotFoundException;
@@ -29,6 +30,7 @@ public class AppStudyGroupService {
     // 스터디 그룹 생성
     @Transactional
     public StudyGroup registStudyGroup(StudyGroupDTO newStudyGroup) {
+        newStudyGroup.setActiveStatus(StudyGroupStatus.ACTIVE.name());
         return studyGroupRepository.save(modelMapper.map(newStudyGroup, StudyGroup.class));
     }
 
@@ -55,7 +57,7 @@ public class AppStudyGroupService {
         if(!domainStudyGroupService.isActive(deleteStudyGroup.getActiveStatus()))
             throw new EntityNotFoundException("잘못된 삭제 요청입니다.");
 
-        deleteStudyGroup.setActiveStatus("INACTIVE");
+        deleteStudyGroup.setActiveStatus(StudyGroupStatus.INACTIVE.name());
         studyGroupRepository.save(deleteStudyGroup);
     }
 }

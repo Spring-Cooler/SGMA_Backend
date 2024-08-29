@@ -27,7 +27,6 @@ class StudyGroupServiceTests {
         //Given
         StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
         studyGroupInfo.setGroupName("메가스터디");
-        studyGroupInfo.setActiveStatus("ACTIVE");
         studyGroupInfo.setGroupMembers(1);
         studyGroupInfo.setUserId(5L);
         studyGroupInfo.setStudyGroupCategoryId(7);
