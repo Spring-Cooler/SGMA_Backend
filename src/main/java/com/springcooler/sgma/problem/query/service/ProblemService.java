@@ -18,18 +18,18 @@ public class ProblemService {
         this.problemMapper = problemMapper;
     }
 
-    public List<ProblemDTO> findAllProblmes() {
+    public List<ProblemDTO> findAllProblems() {
         return problemMapper.findAllProblems();
     }
 
-    public List<ProblemDTO> findProblemByScheduleId(long scheduleId){
-        return problemMapper.findProblemByScheduleId(scheduleId);
+    public List<ProblemDTO> findProblemsByScheduleId(long scheduleId){
+        return problemMapper.findProblemsByScheduleId(scheduleId);
     }
 
-    public List<ProblemDTO> findProblemByUserIdAndScheduleId(long participantId, long scheduleId){
+    public List<ProblemDTO> findProblemsByParticipantIdAndScheduleId(long participantId, long scheduleId){
         Map<String, Long> map = new HashMap<>();
         map.put("participantId", participantId);
         map.put("scheduleId", scheduleId);
-        return problemMapper.findProblemByParticipantIdAndScheduleId(map);
+        return problemMapper.findProblemsByParticipantIdAndScheduleId(map);
     }
 }

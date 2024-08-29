@@ -10,8 +10,8 @@ import java.util.Map;
 public interface ProblemMapper {
     List<ProblemDTO> findAllProblems();
 
-    List<ProblemDTO> findProblemByScheduleId(long scheduleId);
+    List<ProblemDTO> findProblemsByScheduleId(long scheduleId);
 
-    List<ProblemDTO> findProblemByParticipantIdAndScheduleId(Map<String, Long> map);
+    List<ProblemDTO> findProblemsByParticipantIdAndScheduleId(Map<String, Long> map);
 }
 

@@ -1,9 +1,6 @@
 package com.springcooler.sgma.problem.query.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
-import com.springcooler.sgma.problem.query.service.ProblemService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 @SpringBootTest
@@ -30,7 +25,7 @@ class ProblemServiceTests {
     @DisplayName("전체 문제 조회")
     @Test
     void testFindAllProblems() {
-        List<ProblemDTO> problems = problemService.findAllProblmes();
+        List<ProblemDTO> problems = problemService.findAllProblems();
         Assertions.assertNotNull(problems);
         problems.forEach(System.out::println);
     }
@@ -38,8 +33,8 @@ class ProblemServiceTests {
     @DisplayName("스케쥴 아이디로 문제 조회")
     @ParameterizedTest
     @ValueSource(longs = 3L)
-    void testFindProblemByScheduleId(long scheduleId) {
-        List<ProblemDTO> problems = problemService.findProblemByScheduleId(scheduleId);
+    void testFindProblemsByScheduleId(long scheduleId) {
+        List<ProblemDTO> problems = problemService.findProblemsByScheduleId(scheduleId);
         Assertions.assertNotNull(problems);
         problems.forEach(System.out::println);
     }
@@ -52,7 +47,7 @@ class ProblemServiceTests {
     @DisplayName("참가자 아이디와 스케쥴 아이디로 문제 조회")
     @ParameterizedTest
     @MethodSource("getParticipantAndScheduleInfo")
-    void testFindProblemByParticipantIdAndScheduleId(long participantId, long scheduleId) {
-        List<ProblemDTO> problems = problemService.findProblemByUserIdAndScheduleId(participantId, scheduleId);
+    void testFindProblemsByParticipantIdAndScheduleId(long participantId, long scheduleId) {
+        List<ProblemDTO> problems = problemService.findProblemsByParticipantIdAndScheduleId(participantId, scheduleId);
     }
 }
