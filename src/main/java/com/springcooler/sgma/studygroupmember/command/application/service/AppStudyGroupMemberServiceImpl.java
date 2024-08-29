@@ -24,7 +24,6 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
     @Autowired
     public AppStudyGroupMemberServiceImpl(ModelMapper modelMapper,
                                           DomainStudyGroupMemberService domainStudyGroupMemberService,
-                                          InfraStudyGroupMemberService infraStudyGroupMemberService,
                                           StudyGroupMemberRepository studyGroupMemberRepository) {
         this.modelMapper = modelMapper;
         this.domainStudyGroupMemberService = domainStudyGroupMemberService;
