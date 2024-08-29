@@ -22,6 +22,7 @@ public class StudyGroupController {
         this.studyGroupService = studyGroupService;
     }
 
+    // 스터디 그룹 생성
     @PostMapping("/")
     public ResponseEntity<?> registStudyGroup(@RequestBody StudyGroupDTO newStudyGroup) {
         return ResponseEntity
@@ -30,36 +31,42 @@ public class StudyGroupController {
                 .build();
     }
 
+    // 스터디 그룹장 신청 승인
     @PostMapping("/member")
     public ResponseEntity<?> registAcceptedMember(@RequestBody StudyGroupMemberDTO newMember) {
         return ResponseEntity.ok(studyGroupService.registAcceptedMember(newMember));
     }
 
+    // 스터디 그룹 정보 수정
     @PutMapping("/")
     public ResponseEntity<?> modifyStudyGroup(@RequestBody StudyGroupDTO modifyStudyGroup) {
         return ResponseEntity.ok(studyGroupService.modifyStudyGroup(modifyStudyGroup));
     }
 
+    // 스터디 그룹 이름 수정
     @PatchMapping("/group-name")
     public ResponseEntity<?> modifyStudyGroupName(@RequestBody StudyGroupDTO modifyStudyGroup) {
         return ResponseEntity.ok(studyGroupService.modifyStudyGroupName(modifyStudyGroup));
     }
 
+    // 스터디 그룹 카테고리 수정
     @PatchMapping("/category")
     public ResponseEntity<?> modifyStudyGroupCategory(@RequestBody StudyGroupDTO modifyStudyGroup) {
         return ResponseEntity.ok(studyGroupService.modifyStudyGroupCategory(modifyStudyGroup));
     }
 
+    // 스터디 그룹원 탈퇴
+    @DeleteMapping("/member")
+    public ResponseEntity<?> deleteQuitMember(@RequestParam("member-id") long memberId,
+                                              @RequestParam("group-id") long groupId) {
+        return ResponseEntity.ok(studyGroupService.deleteQuitMember(memberId, groupId));
+    }
+
+    // 스터디 그룹 삭제
     @DeleteMapping("/{groupId}")
     public ResponseEntity<?> deleteStudyGroup(@PathVariable long groupId) {
         studyGroupService.deleteStudyGroup(groupId);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/member")
-    public ResponseEntity<?> deleteQuitMember(@RequestParam("member-id") long memberId,
-                                            @RequestParam("group-id") long groupId) {
-        studyGroupService.deleteQuitMember(memberId, groupId);
-        return ResponseEntity.noContent().build();
-    }
 }

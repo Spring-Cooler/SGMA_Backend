@@ -105,6 +105,8 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         return studyGroupRepository.save(existingStudyGroup);
     }
 
+    // 스터디 그룹 카테고리 수정
+    @Transactional
     @Override
     public StudyGroup modifyStudyGroupCategory(StudyGroupDTO modifyStudyGroup) {
         // 기존 엔티티 조회
