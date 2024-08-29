@@ -1,4 +1,4 @@
-package com.springcooler.sgma.studygroupapplicant.command.application.dto;
-
-public class StudyGroupApplicantDTO {
-}
+//package com.springcooler.sgma.studygroupapplicant.command.application.dto;
+//
+//public class StudyGroupApplicantDTO {
+//}

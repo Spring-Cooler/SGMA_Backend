@@ -1,4 +1,5 @@
-package com.springcooler.sgma.studygroupapplicant.command.application.controller;
-
-public class StudyGroupApplicantController {
-}
+//package com.springcooler.sgma.studygroupapplicant.command.application.controller;
+//
+//public class StudyGroupApplicantController {
+//}
+//
