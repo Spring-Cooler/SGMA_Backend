@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/study-group/members")
 @Slf4j
 public class StudyGroupMemberController {
+
     private final AppStudyGroupMemberService studyGroupMemberService;
 
     @Autowired
@@ -18,9 +19,9 @@ public class StudyGroupMemberController {
         this.studyGroupMemberService = studyGroupMemberService;
     }
 
-    @PutMapping("/")
-    public ResponseEntity<?> modifyStudyGroupMember(@RequestBody StudyGroupMemberDTO modifyMember) {
-        return ResponseEntity.ok(studyGroupMemberService.modifyStudyGroupMember(modifyMember));
-    }
+//    @PutMapping("/")
+//    public ResponseEntity<?> modifyStudyGroupMember(@RequestBody StudyGroupMemberDTO modifyMember) {
+//        return ResponseEntity.ok(studyGroupMemberService.modifyStudyGroupMember(modifyMember));
+//    }
 
 }
