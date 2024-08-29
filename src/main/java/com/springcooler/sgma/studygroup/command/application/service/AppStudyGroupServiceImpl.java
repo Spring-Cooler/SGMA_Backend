@@ -45,7 +45,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         StudyGroupMemberDTO owner = new StudyGroupMemberDTO();
         owner.setUserId(studyGroup.getUserId());
         owner.setGroupId(studyGroup.getGroupId());
-        infraStudyGroupService.registStudyGroupOwner(owner);
+        infraStudyGroupService.registStudyGroupMember(owner);
 
         // 스터디 그룹원 수 1명으로 초기화
         studyGroup.setGroupMembers(1);
@@ -62,6 +62,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
                 .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
 
+
         modifyStudyGroup.setActiveStatus(StudyGroupStatus.ACTIVE.name());
 
         // DTO를 엔티티에 매핑
@@ -69,6 +70,55 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
 
         // 엔티티 저장
         return studyGroupRepository.save(existingStudyGroup);
+    }
+
+    // 스터디 그룹 이름 수정
+    @Transactional
+    @Override
+    public StudyGroup modifyStudyGroupName(StudyGroupDTO modifyStudyGroup) {
+        // 기존 엔티티 조회
+        StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
+                .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
+
+        // 변경된 이름 매핑
+        existingStudyGroup.setGroupName(modifyStudyGroup.getGroupName());
+        return studyGroupRepository.save(existingStudyGroup);
+    }
+
+    // 스터디 그룹장 신청 승인
+    @Transactional
+    @Override
+    public StudyGroup acceptApplication(StudyGroupMemberDTO acceptStudyGroupMember) {
+        // 스터디 그룹 조회
+        StudyGroup existingStudyGroup = studyGroupRepository.findById(acceptStudyGroupMember.getGroupId())
+                .orElseThrow(() -> new EntityNotFoundException("잘못된 요청입니다."));
+
+        // 스터디 그룹원 추가 요청
+        infraStudyGroupService.registStudyGroupMember(acceptStudyGroupMember);
+
+        // 스터디 그룹원 수 + 1
+        existingStudyGroup.setGroupMembers(existingStudyGroup.getGroupMembers() + 1);
+        studyGroupRepository.save(existingStudyGroup);
+
+        return existingStudyGroup;
+    }
+
+    // 스터디 그룹원 탈퇴
+    @Transactional
+    @Override
+    public StudyGroup quitStudyGroup(long memberId, long groupId) {
+        // 스터디 그룹 조회
+        StudyGroup existingStudyGroup = studyGroupRepository.findById(groupId)
+                .orElseThrow(() -> new EntityNotFoundException("잘못된 요청입니다."));
+
+        // 스터디 그룹원 삭제 요청
+        infraStudyGroupService.deleteStudyGroupMember(memberId);
+
+        // 스터디 그룹원 수 - 1
+        existingStudyGroup.setGroupMembers(existingStudyGroup.getGroupMembers() - 1);
+        studyGroupRepository.save(existingStudyGroup);
+
+        return existingStudyGroup;
     }
 
     // 스터디 그룹 삭제

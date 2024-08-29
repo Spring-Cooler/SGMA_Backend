@@ -4,13 +4,13 @@ import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroup
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMember;
 
 public interface AppStudyGroupMemberService {
-
-    StudyGroupMember registStudyGroupOwner(StudyGroupMemberDTO owner);
-
+    // 스터디 그룹원 추가
     StudyGroupMember registStudyGroupMember(StudyGroupMemberDTO newMember);
 
+    // 스터디 그룹원 정보 수정
     StudyGroupMember modifyStudyGroupMember(StudyGroupMemberDTO modifyMember);
 
+    // 스터디 그룹원 삭제
     void deleteStudyGroupMember(long memberId);
 
 }
