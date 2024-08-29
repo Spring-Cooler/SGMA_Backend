@@ -80,8 +80,10 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
                 .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
 
-
+        // 활성화 여부, 그룹원 수, 그룹장은 기존 정보 그대로
         modifyStudyGroup.setActiveStatus(StudyGroupStatus.ACTIVE.name());
+        modifyStudyGroup.setGroupMembers(existingStudyGroup.getGroupMembers());
+        modifyStudyGroup.setUserId(existingStudyGroup.getUserId());
 
         // DTO를 엔티티에 매핑
         modelMapper.map(modifyStudyGroup, existingStudyGroup);
@@ -100,6 +102,17 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
 
         // 변경된 이름 매핑
         existingStudyGroup.setGroupName(modifyStudyGroup.getGroupName());
+        return studyGroupRepository.save(existingStudyGroup);
+    }
+
+    @Override
+    public StudyGroup modifyStudyGroupCategory(StudyGroupDTO modifyStudyGroup) {
+        // 기존 엔티티 조회
+        StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
+                .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
+
+        // 변경된 카테고리 매핑
+        existingStudyGroup.setStudyGroupCategoryId(modifyStudyGroup.getStudyGroupCategoryId());
         return studyGroupRepository.save(existingStudyGroup);
     }
 

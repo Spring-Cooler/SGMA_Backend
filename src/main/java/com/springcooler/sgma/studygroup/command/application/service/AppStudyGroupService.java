@@ -17,6 +17,9 @@ public interface AppStudyGroupService {
     // 스터디 그룹 이름 수정
     StudyGroup modifyStudyGroupName(StudyGroupDTO modifyStudyGroup);
 
+    // 스터디 그룹 카테고리 수정
+    StudyGroup modifyStudyGroupCategory(StudyGroupDTO modifyStudyGroup);
+
     // 스터디 그룹원 탈퇴
     StudyGroup deleteQuitMember(long memberId, long groupId);
 
