@@ -44,7 +44,7 @@ class StudyGroupServiceTests {
 
     @DisplayName("스터디 그룹 수정 테스트")
     @Test
-    void testUpdateStudyGroup() {
+    void testModifyStudyGroup() {
         //Given
         StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
         studyGroupInfo.setGroupId(1L);
@@ -55,6 +55,24 @@ class StudyGroupServiceTests {
 
         //When
         StudyGroup studyGroup = studyGroupService.modifyStudyGroup(studyGroupInfo);
+        if (studyGroup != null) {
+            System.out.println(studyGroup);
+        }
+
+        //Then
+        Assertions.assertNotNull(studyGroup);
+    }
+
+    @DisplayName("스터디 그룹 이름 변경 테스트")
+    @Test
+    void testModifyStudyGroupName() {
+        //Given
+        StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
+        studyGroupInfo.setGroupId(5L);
+        studyGroupInfo.setGroupName("나만의스터디");
+
+        //When
+        StudyGroup studyGroup = studyGroupService.modifyStudyGroupName(studyGroupInfo);
         if (studyGroup != null) {
             System.out.println(studyGroup);
         }
