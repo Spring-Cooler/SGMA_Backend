@@ -19,7 +19,7 @@ class StudyGroupMemberServiceTests {
 
     @DisplayName("스터디 그룹원 단건 조회(그룹원 아이디) 테스트")
     @ParameterizedTest
-    @ValueSource(longs = 6L)
+    @ValueSource(longs = 6)
     void testFindStudyGroupMemberByMemberId(long memberId) {
         Assertions.assertDoesNotThrow(
                 () -> {
@@ -32,7 +32,7 @@ class StudyGroupMemberServiceTests {
 
     @DisplayName("스터디 그룹원 그룹별 조회 테스트")
     @ParameterizedTest
-    @ValueSource(longs = 4L)
+    @ValueSource(longs = 4)
     void testFindStudyGroupMembersByGroupId(long groupId) {
         Assertions.assertDoesNotThrow(
                 () -> {
