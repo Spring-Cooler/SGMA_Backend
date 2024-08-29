@@ -20,30 +20,9 @@ public class StudyGroupMemberController {
         this.studyGroupMemberService = studyGroupMemberService;
     }
 
-    @PostMapping("/owner")
-    public ResponseEntity<?> registStudyGroupOwner(@RequestBody StudyGroupMemberDTO owner) {
-        return ResponseEntity
-                .created(URI.create("/api/study-group/members/"
-                        + studyGroupMemberService.registStudyGroupOwner(owner).getMemberId()))
-                .build();
-    }
-
-    @PostMapping("/")
-    public ResponseEntity<?> registStudyGroupMember(@RequestBody StudyGroupMemberDTO newMember) {
-        return ResponseEntity
-                .created(URI.create("/api/study-group/members/"
-                        + studyGroupMemberService.registStudyGroupMember(newMember).getMemberId()))
-                .build();
-    }
-
-    @PutMapping("/{memberId}")
+    @PutMapping("/")
     public ResponseEntity<?> modifyStudyGroupMember(@RequestBody StudyGroupMemberDTO modifyMember) {
         return ResponseEntity.ok(studyGroupMemberService.modifyStudyGroupMember(modifyMember));
     }
 
-    @DeleteMapping("/{memberId}")
-    public ResponseEntity<?> deleteStudyGroupMember(@PathVariable long memberId) {
-        studyGroupMemberService.deleteStudyGroupMember(memberId);
-        return ResponseEntity.noContent().build();
-    }
 }

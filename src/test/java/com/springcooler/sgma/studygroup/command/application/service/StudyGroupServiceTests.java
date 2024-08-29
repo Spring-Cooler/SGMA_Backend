@@ -3,7 +3,8 @@ package com.springcooler.sgma.studygroup.command.application.service;
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
 import com.springcooler.sgma.studygroup.command.domain.repository.StudyGroupRepository;
-import com.springcooler.sgma.studygroupmember.query.dto.StudyGroupMemberDTO;
+import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
+import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMember;
 import com.springcooler.sgma.studygroupmember.query.service.StudyGroupMemberService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootTest
 @Transactional
@@ -40,15 +38,9 @@ class StudyGroupServiceTests {
 
         //When
         StudyGroup studyGroup = studyGroupService.registStudyGroup(studyGroupInfo);
-        List<StudyGroupMemberDTO> owner = new ArrayList<>();
 
         if (studyGroup != null) {
             System.out.println(studyGroup);
-            owner = studyGroupMemberService.findStudyGroupMembersByGroupId(studyGroup.getGroupId());
-        }
-
-        if (!owner.isEmpty()) {
-            System.out.println(owner.get(0));
         }
 
         //Then
@@ -89,5 +81,40 @@ class StudyGroupServiceTests {
         //Then
         String groupStatus = studyGroupRepository.findById(groupId).orElseThrow().getActiveStatus();
         Assertions.assertEquals("INACTIVE", groupStatus);
+    }
+
+    @DisplayName("스터디 그룹 참가 신청 승인 테스트")
+    @Test
+    void testAcceptApplication() {
+        //Given
+        StudyGroupMemberDTO applicant = new StudyGroupMemberDTO();
+        applicant.setUserId(1L);
+        applicant.setGroupId(5L);
+
+        //When
+        StudyGroup studyGroup = studyGroupService.acceptApplication(applicant);
+        if (studyGroup != null) {
+            System.out.println(studyGroup);
+        }
+
+        //Then
+        Assertions.assertNotNull(studyGroup);
+    }
+
+    @DisplayName("스터디 그룹 탈퇴 테스트")
+    @Test
+    void testQuitStudyGroup() {
+        //Given
+        long memberId = 2L;
+        long groupId = 1L;
+
+        //When
+        StudyGroup studyGroup = studyGroupService.quitStudyGroup(memberId, groupId);
+        if (studyGroup != null) {
+            System.out.println(studyGroup);
+        }
+
+        //Then
+        Assertions.assertNotNull(studyGroup);
     }
 }

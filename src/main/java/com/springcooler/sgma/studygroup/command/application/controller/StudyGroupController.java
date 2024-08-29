@@ -2,6 +2,7 @@ package com.springcooler.sgma.studygroup.command.application.controller;
 
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.command.application.service.AppStudyGroupService;
+import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +30,31 @@ public class StudyGroupController {
                 .build();
     }
 
-    @PutMapping("/{groupId}")
+    @PostMapping("/member")
+    public ResponseEntity<?> acceptApplication(@RequestBody StudyGroupMemberDTO newMember) {
+        return ResponseEntity.ok(studyGroupService.acceptApplication(newMember));
+    }
+
+    @PutMapping("/")
     public ResponseEntity<?> modifyStudyGroup(@RequestBody StudyGroupDTO modifyStudyGroup) {
         return ResponseEntity.ok(studyGroupService.modifyStudyGroup(modifyStudyGroup));
+    }
+
+    @PatchMapping("/group-name")
+    public ResponseEntity<?> modifyStudyGroupName(@RequestBody StudyGroupDTO modifyStudyGroup) {
+        return ResponseEntity.ok(studyGroupService.modifyStudyGroupName(modifyStudyGroup));
     }
 
     @DeleteMapping("/{groupId}")
     public ResponseEntity<?> deleteStudyGroup(@PathVariable long groupId) {
         studyGroupService.deleteStudyGroup(groupId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/member")
+    public ResponseEntity<?> quitStudyGroup(@RequestParam("member-id") long memberId,
+                                            @RequestParam("group-id") long groupId) {
+        studyGroupService.quitStudyGroup(memberId, groupId);
         return ResponseEntity.noContent().build();
     }
 }
