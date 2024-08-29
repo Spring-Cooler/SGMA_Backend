@@ -32,7 +32,7 @@
          WHERE A.SCHEDULE_ID=#{ scheduleId }
     </select>
 
-    <select id="findProblemsByParticipantIdAndScheduleId" resultMap="problemResultMap" parameterType="hashmap">
+    <select id="findProblemsByScheduleIdAndParticipantId" resultMap="problemResultMap" parameterType="hashmap">
         SELECT
                 A.PROBLEM_ID
                ,A.CONTENT

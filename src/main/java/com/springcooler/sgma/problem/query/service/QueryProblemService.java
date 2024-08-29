@@ -1,35 +1,17 @@
 package com.springcooler.sgma.problem.query.service;
 
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
-import com.springcooler.sgma.problem.query.repository.ProblemMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-@Service
-public class QueryProblemService {
-    private ProblemMapper problemMapper;
+public interface QueryProblemService {
 
-    @Autowired
-    public QueryProblemService(ProblemMapper problemMapper) {
-        this.problemMapper = problemMapper;
-    }
+    // 문제 전체 조회
+    public List<ProblemDTO> findAllProblems();
 
-    public List<ProblemDTO> findAllProblems() {
-        return problemMapper.findAllProblems();
-    }
+    // 스케쥴 ID로 문제 조회
+    public List<ProblemDTO> findProblemsByScheduleId(long scheduleId);
 
-    public List<ProblemDTO> findProblemsByScheduleId(long scheduleId){
-        return problemMapper.findProblemsByScheduleId(scheduleId);
-    }
-
-    public List<ProblemDTO> findProblemsByParticipantIdAndScheduleId(long participantId, long scheduleId){
-        Map<String, Long> map = new HashMap<>();
-        map.put("participantId", participantId);
-        map.put("scheduleId", scheduleId);
-        return problemMapper.findProblemsByParticipantIdAndScheduleId(map);
-    }
+    // 스케쥴 ID와 참가자 ID로 문제 조회
+    public List<ProblemDTO> findProblemsByScheduleIdAndParticipantId(long scheduleId, long participantId);
 }
