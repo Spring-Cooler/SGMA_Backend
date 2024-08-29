@@ -24,7 +24,7 @@ public class StudyGroupMemberController {
     public ResponseEntity<?> registStudyGroupOwner(@RequestBody StudyGroupMemberDTO owner) {
         return ResponseEntity
                 .created(URI.create("/api/study-group/members/"
-                        + studyGroupMemberService.registStudyGroupMember(owner).getMemberId()))
+                        + studyGroupMemberService.registStudyGroupOwner(owner).getMemberId()))
                 .build();
     }
 
