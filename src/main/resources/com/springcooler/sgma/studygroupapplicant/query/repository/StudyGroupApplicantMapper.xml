@@ -21,7 +21,7 @@
     </resultMap>
 
 
-    <select id="studyGroupRecruitmentTest" resultMap="studyGroupRecruitment2">
+    <select id="studyGroupRecruitment" resultMap="studyGroupRecruitment2">
         SELECT
         A.RECRUITMENT_BOARD_ID,
         A.TITLE,
@@ -34,7 +34,24 @@
         A.GROUP_ID,
         A.STUDY_GROUP_CATEGORY_ID
         FROM RECRUITMENT_BOARD A
-        WHERE A.ACTIVE_STATUS = 'ACTIVE';
+        WHERE A.ACTIVE_STATUS = 'ACTIVE'
+    </select>
+
+
+    <select id="selectStudyGroupApplicantDTO" resultMap="studyGroupRecruitment2" parameterType="long">
+        SELECT
+        A.RECRUITMENT_BOARD_ID,
+        A.TITLE,
+        A.CREATED_AT,
+        A.UPDATED_AT,
+        A.RECRUITMENT_START_TIME,
+        A.RECRUITMENT_END_TIME,
+        A.ACTIVE_STATUS,
+        A.LIKES,
+        A.GROUP_ID,
+        A.STUDY_GROUP_CATEGORY_ID
+        FROM RECRUITMENT_BOARD A
+        WHERE A.RECRUITMENT_BOARD_ID = #{ recruitmentBoardId }
     </select>
 
 </mapper>

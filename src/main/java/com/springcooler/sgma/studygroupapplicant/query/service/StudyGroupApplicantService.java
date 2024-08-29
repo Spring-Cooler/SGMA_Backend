@@ -15,10 +15,19 @@ import static com.springcooler.sgma.studygroupapplicant.common.Template.getSqlSe
 @Service
 @Log4j2
 public class StudyGroupApplicantService {
-    public List<StudyGroupApplicantDTO> studyGroupRecruitmentTest() {
+
+    private StudyGroupApplicantMapper studyGroupApplicantMapper;
+    public List<StudyGroupApplicantDTO> studyGroupRecruitment() {
         SqlSession sqlSession = getSqlSession();
         StudyGroupApplicantMapper mapper = sqlSession.getMapper(StudyGroupApplicantMapper.class);
-        List<StudyGroupApplicantDTO> studyGroupApplicantDTOS = mapper.studyGroupRecruitmentTest();
+        List<StudyGroupApplicantDTO> studyGroupApplicantDTOS = mapper.studyGroupRecruitment();
         return studyGroupApplicantDTOS;
+    }
+
+    public StudyGroupApplicantDTO selectStudyGroupApplicantById(Long recruitmentBoardId){
+        SqlSession sqlSession =getSqlSession();
+        studyGroupApplicantMapper =sqlSession.getMapper(StudyGroupApplicantMapper.class);
+        StudyGroupApplicantDTO studyGroupApplicant = studyGroupApplicantMapper.selectStudyGroupApplicantDTO(recruitmentBoardId);
+        return studyGroupApplicant;
     }
 }

@@ -1,18 +1,15 @@
 package com.springcooler.sgma.studygroupapplicant.query.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
+
+
+import lombok.Data;
 
 import java.sql.Timestamp;
 
+@Data
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
 public class StudyGroupApplicantDTO {
     private Long recruitmentBoardId;
     private String title;

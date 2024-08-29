@@ -7,6 +7,8 @@ import java.util.List;
 
 
 public interface StudyGroupApplicantMapper {
-    List<StudyGroupApplicantDTO> studyGroupRecruitmentTest();
+    List<StudyGroupApplicantDTO> studyGroupRecruitment();
+
+    StudyGroupApplicantDTO selectStudyGroupApplicantDTO(Long recruitmentBoardId);
 
 }
