@@ -29,7 +29,7 @@ class StudyGroupServiceTests {
         studyGroupInfo.setGroupName("메가스터디");
         studyGroupInfo.setActiveStatus("ACTIVE");
         studyGroupInfo.setGroupMembers(1);
-        studyGroupInfo.setUserId(5);
+        studyGroupInfo.setUserId(5L);
         studyGroupInfo.setStudyGroupCategoryId(7);
 
         //When
@@ -51,7 +51,7 @@ class StudyGroupServiceTests {
         studyGroupInfo.setGroupName("반짝반짝");
         studyGroupInfo.setActiveStatus("ACTIVE");
         studyGroupInfo.setGroupMembers(5);
-        studyGroupInfo.setUserId(1);
+        studyGroupInfo.setUserId(1L);
         studyGroupInfo.setStudyGroupCategoryId(3);
 
         //When
@@ -75,6 +75,7 @@ class StudyGroupServiceTests {
         System.out.println("DELETE SUCCESS");
 
         //Then
-        Assertions.assertTrue(studyGroupRepository.findById(groupId).isEmpty());
+        String groupStatus = studyGroupRepository.findById(groupId).orElseThrow().getActiveStatus();
+        Assertions.assertEquals("INACTIVE", groupStatus);
     }
 }
