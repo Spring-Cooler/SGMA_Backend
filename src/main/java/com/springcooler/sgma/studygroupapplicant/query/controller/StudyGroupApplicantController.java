@@ -29,17 +29,25 @@ public class StudyGroupApplicantController {
 
 
     @GetMapping("getAll")
-    public List<StudyGroupApplicantDTO> getAllStudyGroupApplicantList() {
-        if(studyGroupApplicantService.studyGroupRecruitment().size()!=0) {
-            return studyGroupApplicantService.studyGroupRecruitment();
+    public ResponseEntity<?> getAllStudyGroupApplicantList() {
+        List<StudyGroupApplicantDTO> studyGroupApplicants = studyGroupApplicantService.studyGroupRecruitment();
+        if(studyGroupApplicants.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("모집 글이 존재하지 않습니다");
         }
-        else{
-            return (List<StudyGroupApplicantDTO>) ResponseEntity.status(HttpStatus.FORBIDDEN).body("모집 글이 없습니다");
-        }
+        else
+            return ResponseEntity.ok(studyGroupApplicants);
     }
 
+
     @GetMapping("getstudygroup/{recruitmentBoardId}")
-    public StudyGroupApplicantDTO findStudyGroupApplicantByRecruitmentBoardId(@PathVariable Long recruitmentBoardId) {
-        return studyGroupApplicantService.selectStudyGroupApplicantById(recruitmentBoardId);
+    public ResponseEntity<?> findStudyGroupApplicantByRecruitmentBoardId(@PathVariable Long recruitmentBoardId) {
+        try {
+            StudyGroupApplicantDTO applicantDTO = studyGroupApplicantService.selectStudyGroupApplicantById(recruitmentBoardId);
+            return ResponseEntity.ok(applicantDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("해당 번호의 글이 존재하지 않습니다");
+        }
     }
 }
