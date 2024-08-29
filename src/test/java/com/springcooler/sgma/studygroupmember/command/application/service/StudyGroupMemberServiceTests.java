@@ -24,6 +24,24 @@ class StudyGroupMemberServiceTests {
     @Autowired
     private StudyGroupMemberRepository studyGroupMemberRepository;
 
+    @DisplayName("스터디 그룹장 추가 테스트")
+    @Test
+    void testSaveStudyGroupOwner() {
+        //Given
+        StudyGroupMemberDTO owner = new StudyGroupMemberDTO();
+        owner.setUserId(1L);
+        owner.setGroupId(5L);
+
+        //When
+        StudyGroupMember member = studyGroupMemberService.registStudyGroupMember(owner);
+        if (member != null) {
+            System.out.println(member);
+        }
+
+        //Then
+        Assertions.assertNotNull(member);
+    }
+
     @DisplayName("스터디 그룹원 추가 테스트")
     @Test
     void testSaveStudyGroupMember() {

@@ -20,6 +20,14 @@ public class StudyGroupMemberController {
         this.studyGroupMemberService = studyGroupMemberService;
     }
 
+    @PostMapping("/owner")
+    public ResponseEntity<?> registStudyGroupOwner(@RequestBody StudyGroupMemberDTO owner) {
+        return ResponseEntity
+                .created(URI.create("/api/study-group/members/"
+                        + studyGroupMemberService.registStudyGroupMember(owner).getMemberId()))
+                .build();
+    }
+
     @PostMapping("/")
     public ResponseEntity<?> registStudyGroupMember(@RequestBody StudyGroupMemberDTO newMember) {
         return ResponseEntity

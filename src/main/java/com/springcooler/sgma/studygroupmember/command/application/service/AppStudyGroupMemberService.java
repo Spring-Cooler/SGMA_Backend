@@ -5,6 +5,8 @@ import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGrou
 
 public interface AppStudyGroupMemberService {
 
+    StudyGroupMember registStudyGroupOwner(StudyGroupMemberDTO owner);
+
     StudyGroupMember registStudyGroupMember(StudyGroupMemberDTO newMember);
 
     StudyGroupMember modifyStudyGroupMember(StudyGroupMemberDTO modifyMember);

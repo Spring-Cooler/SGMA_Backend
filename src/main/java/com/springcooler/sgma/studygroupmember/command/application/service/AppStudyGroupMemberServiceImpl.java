@@ -29,6 +29,14 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
         this.studyGroupMemberRepository = studyGroupMemberRepository;
     }
 
+    @Transactional
+    @Override
+    public StudyGroupMember registStudyGroupOwner(StudyGroupMemberDTO owner) {
+        owner.setMemberEnrolledAt(new Timestamp(System.currentTimeMillis()));
+        owner.setMemberStatus(StudyGroupMemberStatus.ACTIVE.name());
+        return studyGroupMemberRepository.save(modelMapper.map(owner, StudyGroupMember.class));
+    }
+
     // 스터디 그룹원 추가
     @Transactional
     @Override
