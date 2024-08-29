@@ -31,8 +31,8 @@ public class StudyGroupController {
     }
 
     @PostMapping("/member")
-    public ResponseEntity<?> acceptApplication(@RequestBody StudyGroupMemberDTO newMember) {
-        return ResponseEntity.ok(studyGroupService.acceptApplication(newMember));
+    public ResponseEntity<?> registAcceptedMember(@RequestBody StudyGroupMemberDTO newMember) {
+        return ResponseEntity.ok(studyGroupService.registAcceptedMember(newMember));
     }
 
     @PutMapping("/")
@@ -52,9 +52,9 @@ public class StudyGroupController {
     }
 
     @DeleteMapping("/member")
-    public ResponseEntity<?> quitStudyGroup(@RequestParam("member-id") long memberId,
+    public ResponseEntity<?> deleteQuitMember(@RequestParam("member-id") long memberId,
                                             @RequestParam("group-id") long groupId) {
-        studyGroupService.quitStudyGroup(memberId, groupId);
+        studyGroupService.deleteQuitMember(memberId, groupId);
         return ResponseEntity.noContent().build();
     }
 }

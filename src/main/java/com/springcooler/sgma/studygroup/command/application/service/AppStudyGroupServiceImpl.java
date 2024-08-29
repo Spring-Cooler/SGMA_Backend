@@ -54,6 +54,24 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         return studyGroup;
     }
 
+    // 스터디 그룹장 신청 승인
+    @Transactional
+    @Override
+    public StudyGroup registAcceptedMember(StudyGroupMemberDTO acceptStudyGroupMember) {
+        // 스터디 그룹 조회
+        StudyGroup existingStudyGroup = studyGroupRepository.findById(acceptStudyGroupMember.getGroupId())
+                .orElseThrow(() -> new EntityNotFoundException("잘못된 요청입니다."));
+
+        // 스터디 그룹원 추가 요청
+        infraStudyGroupService.registStudyGroupMember(acceptStudyGroupMember);
+
+        // 스터디 그룹원 수 + 1
+        existingStudyGroup.setGroupMembers(existingStudyGroup.getGroupMembers() + 1);
+        studyGroupRepository.save(existingStudyGroup);
+
+        return existingStudyGroup;
+    }
+
     // 스터디 그룹 정보 수정
     @Transactional
     @Override
@@ -85,28 +103,10 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         return studyGroupRepository.save(existingStudyGroup);
     }
 
-    // 스터디 그룹장 신청 승인
-    @Transactional
-    @Override
-    public StudyGroup acceptApplication(StudyGroupMemberDTO acceptStudyGroupMember) {
-        // 스터디 그룹 조회
-        StudyGroup existingStudyGroup = studyGroupRepository.findById(acceptStudyGroupMember.getGroupId())
-                .orElseThrow(() -> new EntityNotFoundException("잘못된 요청입니다."));
-
-        // 스터디 그룹원 추가 요청
-        infraStudyGroupService.registStudyGroupMember(acceptStudyGroupMember);
-
-        // 스터디 그룹원 수 + 1
-        existingStudyGroup.setGroupMembers(existingStudyGroup.getGroupMembers() + 1);
-        studyGroupRepository.save(existingStudyGroup);
-
-        return existingStudyGroup;
-    }
-
     // 스터디 그룹원 탈퇴
     @Transactional
     @Override
-    public StudyGroup quitStudyGroup(long memberId, long groupId) {
+    public StudyGroup deleteQuitMember(long memberId, long groupId) {
         // 스터디 그룹 조회
         StudyGroup existingStudyGroup = studyGroupRepository.findById(groupId)
                 .orElseThrow(() -> new EntityNotFoundException("잘못된 요청입니다."));

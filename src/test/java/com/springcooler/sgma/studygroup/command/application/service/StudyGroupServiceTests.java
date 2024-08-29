@@ -105,7 +105,7 @@ class StudyGroupServiceTests {
         applicant.setGroupId(5L);
 
         //When
-        StudyGroup studyGroup = studyGroupService.acceptApplication(applicant);
+        StudyGroup studyGroup = studyGroupService.registAcceptedMember(applicant);
         if (studyGroup != null) {
             System.out.println(studyGroup);
         }
@@ -122,7 +122,7 @@ class StudyGroupServiceTests {
         long groupId = 1L;
 
         //When
-        StudyGroup studyGroup = studyGroupService.quitStudyGroup(memberId, groupId);
+        StudyGroup studyGroup = studyGroupService.deleteQuitMember(memberId, groupId);
         if (studyGroup != null) {
             System.out.println(studyGroup);
         }
