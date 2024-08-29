@@ -41,6 +41,8 @@ public class AppStudyGroupService {
         StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
                 .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
 
+        modifyStudyGroup.setActiveStatus(StudyGroupStatus.ACTIVE.name());
+
         // DTO를 엔티티에 매핑
         modelMapper.map(modifyStudyGroup, existingStudyGroup);
 

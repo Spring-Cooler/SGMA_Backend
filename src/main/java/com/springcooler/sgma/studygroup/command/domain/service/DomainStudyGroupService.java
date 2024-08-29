@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public class DomainStudyGroupService {
 
     public boolean isActive(String groupStatus) {
-        return groupStatus.equals(StudyGroupStatus.INACTIVE.name());
+        return groupStatus.equals(StudyGroupStatus.ACTIVE.name());
     }
 
 }

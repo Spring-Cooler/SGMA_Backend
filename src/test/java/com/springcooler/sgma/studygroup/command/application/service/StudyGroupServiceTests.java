@@ -48,7 +48,6 @@ class StudyGroupServiceTests {
         StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
         studyGroupInfo.setGroupId(1L);
         studyGroupInfo.setGroupName("반짝반짝");
-        studyGroupInfo.setActiveStatus("ACTIVE");
         studyGroupInfo.setGroupMembers(5);
         studyGroupInfo.setUserId(1L);
         studyGroupInfo.setStudyGroupCategoryId(3);
