@@ -2,7 +2,7 @@ package com.springcooler.sgma.problem.query.controller;
 
 import com.springcooler.sgma.problem.query.common.ResponseMessage;
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
-import com.springcooler.sgma.problem.query.service.ProblemService;
+import com.springcooler.sgma.problem.query.service.QueryProblemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -22,12 +22,12 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProblemController {
 
-    private ProblemService problemService;
+    private QueryProblemService queryProblemService;
     List<ProblemDTO> problems;
     @Autowired
-    public ProblemController(ProblemService problemService, List<ProblemDTO> problems) {
-        this.problemService = problemService;
-        this.problems = problemService.findAllProblems();
+    public ProblemController(QueryProblemService queryProblemService, List<ProblemDTO> problems) {
+        this.queryProblemService = queryProblemService;
+        this.problems = queryProblemService.findAllProblems();
     }
     @GetMapping("/")
     public ResponseEntity<ResponseMessage> getAllProblems() {

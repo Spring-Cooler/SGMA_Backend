@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ProblemService {
+public class QueryProblemService {
     private ProblemMapper problemMapper;
 
     @Autowired
-    public ProblemService(ProblemMapper problemMapper) {
+    public QueryProblemService(ProblemMapper problemMapper) {
         this.problemMapper = problemMapper;
     }
 
