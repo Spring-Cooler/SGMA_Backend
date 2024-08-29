@@ -1,6 +1,5 @@
 package com.springcooler.sgma.studygroupmember.query.service;
 
-import com.springcooler.sgma.studygroup.query.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroupmember.query.dto.StudyGroupMemberDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
