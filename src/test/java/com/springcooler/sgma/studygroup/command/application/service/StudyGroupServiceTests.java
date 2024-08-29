@@ -3,6 +3,8 @@ package com.springcooler.sgma.studygroup.command.application.service;
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
 import com.springcooler.sgma.studygroup.command.domain.repository.StudyGroupRepository;
+import com.springcooler.sgma.studygroupmember.query.dto.StudyGroupMemberDTO;
+import com.springcooler.sgma.studygroupmember.query.service.StudyGroupMemberService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,12 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootTest
 @Transactional
 class StudyGroupServiceTests {
 
     @Autowired
     private AppStudyGroupService studyGroupService;
+
+    @Autowired
+    private StudyGroupMemberService studyGroupMemberService;
 
     @Autowired
     private StudyGroupRepository studyGroupRepository;
@@ -27,14 +35,20 @@ class StudyGroupServiceTests {
         //Given
         StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
         studyGroupInfo.setGroupName("메가스터디");
-        studyGroupInfo.setGroupMembers(1);
         studyGroupInfo.setUserId(5L);
         studyGroupInfo.setStudyGroupCategoryId(7);
 
         //When
         StudyGroup studyGroup = studyGroupService.registStudyGroup(studyGroupInfo);
+        List<StudyGroupMemberDTO> owner = new ArrayList<>();
+
         if (studyGroup != null) {
             System.out.println(studyGroup);
+            owner = studyGroupMemberService.findStudyGroupMembersByGroupId(studyGroup.getGroupId());
+        }
+
+        if (!owner.isEmpty()) {
+            System.out.println(owner.get(0));
         }
 
         //Then
