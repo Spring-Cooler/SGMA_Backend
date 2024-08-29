@@ -1,7 +1,7 @@
 package com.springcooler.sgma.studygroupmember.command.application.controller;
 
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
-import com.springcooler.sgma.studygroupmember.command.application.service.StudyGroupMemberService;
+import com.springcooler.sgma.studygroupmember.command.application.service.AppStudyGroupMemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +13,10 @@ import java.net.URI;
 @RequestMapping("/api/study-group/members")
 @Slf4j
 public class StudyGroupMemberController {
-    private final StudyGroupMemberService studyGroupMemberService;
+    private final AppStudyGroupMemberService studyGroupMemberService;
 
     @Autowired
-    public StudyGroupMemberController(StudyGroupMemberService studyGroupMemberService) {
+    public StudyGroupMemberController(AppStudyGroupMemberService studyGroupMemberService) {
         this.studyGroupMemberService = studyGroupMemberService;
     }
 

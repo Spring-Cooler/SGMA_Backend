@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 class StudyGroupMemberServiceTests {
 
     @Autowired
-    private StudyGroupMemberService studyGroupMemberService;
+    private AppStudyGroupMemberService studyGroupMemberService;
 
     @Autowired
     private StudyGroupMemberRepository studyGroupMemberRepository;
@@ -29,8 +29,8 @@ class StudyGroupMemberServiceTests {
     void testSaveStudyGroupMember() {
         //Given
         StudyGroupMemberDTO newMember = new StudyGroupMemberDTO();
-        newMember.setUserId(1);
-        newMember.setGroupId(5);
+        newMember.setUserId(1L);
+        newMember.setGroupId(5L);
 
         //When
         StudyGroupMember member = studyGroupMemberService.registStudyGroupMember(newMember);
@@ -52,12 +52,12 @@ class StudyGroupMemberServiceTests {
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
         StudyGroupMemberDTO modifyMember = new StudyGroupMemberDTO();
-        modifyMember.setMemberId(21);
+        modifyMember.setMemberId(21L);
         modifyMember.setMemberEnrolledAt(timestamp);
         modifyMember.setMemberWithdrawnAt(new Timestamp(System.currentTimeMillis()));
         modifyMember.setMemberStatus("INACTIVE");
-        modifyMember.setUserId(5);
-        modifyMember.setGroupId(5);
+        modifyMember.setUserId(5L);
+        modifyMember.setGroupId(5L);
 
         //When
         StudyGroupMember member = studyGroupMemberService.modifyStudyGroupMember(modifyMember);
@@ -73,13 +73,14 @@ class StudyGroupMemberServiceTests {
     @Test
     void testDeleteStudyGroupMember() {
         //Given
-        long memberId = 1;
+        long memberId = 5L;
 
         //When
         studyGroupMemberService.deleteStudyGroupMember(memberId);
         System.out.println("DELETE SUCCESS");
 
         //Then
-        Assertions.assertTrue(studyGroupMemberRepository.findById(memberId).isEmpty());
+        String memberStatus = studyGroupMemberRepository.findById(memberId).orElseThrow().getMemberStatus();
+        Assertions.assertEquals("INACTIVE", memberStatus);
     }
 }

@@ -3,6 +3,7 @@ package com.springcooler.sgma.studygroupmember.command.application.service;
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMember;
 import com.springcooler.sgma.studygroupmember.command.domain.repository.StudyGroupMemberRepository;
+import com.springcooler.sgma.studygroupmember.command.domain.service.DomainStudyGroupMemberService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,34 +11,27 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
-@Service("studyGroupMemberApplicationService")
-public class StudyGroupMemberService {
+@Service
+public class AppStudyGroupMemberService {
 
     private final ModelMapper modelMapper;
+    private final DomainStudyGroupMemberService domainStudyGroupMemberService;
     private final StudyGroupMemberRepository studyGroupMemberRepository;
 
     @Autowired
-    public StudyGroupMemberService(ModelMapper modelMapper, StudyGroupMemberRepository studyGroupMemberRepository) {
+    public AppStudyGroupMemberService(ModelMapper modelMapper,
+                                      DomainStudyGroupMemberService domainStudyGroupMemberService,
+                                      StudyGroupMemberRepository studyGroupMemberRepository) {
         this.modelMapper = modelMapper;
+        this.domainStudyGroupMemberService = domainStudyGroupMemberService;
         this.studyGroupMemberRepository = studyGroupMemberRepository;
     }
 
     // 스터디 그룹원 추가
     @Transactional
     public StudyGroupMember registStudyGroupMember(StudyGroupMemberDTO newMember) {
-
-        // 현재 시간 가져오기
-        LocalDateTime now = LocalDateTime.now();
-
-        // 밀리초 이하 값을 제거 (초 단위로만 남김)
-        LocalDateTime truncatedNow = now.withNano(0);
-
-        // LocalDateTime을 Timestamp로 변환
-        Timestamp timestamp = Timestamp.valueOf(truncatedNow);
-
-        newMember.setMemberEnrolledAt(timestamp);
+        newMember.setMemberEnrolledAt(new Timestamp(System.currentTimeMillis()));
         newMember.setMemberStatus("ACTIVE");
         return studyGroupMemberRepository.save(modelMapper.map(newMember, StudyGroupMember.class));
     }
@@ -59,19 +53,15 @@ public class StudyGroupMemberService {
     // 스터디 그룹원 삭제
     @Transactional
     public void deleteStudyGroupMember(long memberId) {
+        // 기존 엔티티 조회
         StudyGroupMember deleteMember = studyGroupMemberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException("잘못된 삭제 요청입니다."));
 
-        // 현재 시간 가져오기
-        LocalDateTime now = LocalDateTime.now();
+        // 유효성 검사
+        if (!domainStudyGroupMemberService.isActive(deleteMember.getMemberStatus()))
+            throw new EntityNotFoundException("잘못된 삭제 요청입니다.");
 
-        // 밀리초 이하 값을 제거 (초 단위로만 남김)
-        LocalDateTime truncatedNow = now.withNano(0);
-
-        // LocalDateTime을 Timestamp로 변환
-        Timestamp timestamp = Timestamp.valueOf(truncatedNow);
-
-        deleteMember.setMemberWithdrawnAt(timestamp);
+        deleteMember.setMemberWithdrawnAt(new Timestamp(System.currentTimeMillis()));
         deleteMember.setMemberStatus("INACTIVE");
         studyGroupMemberRepository.save(deleteMember);
     }
