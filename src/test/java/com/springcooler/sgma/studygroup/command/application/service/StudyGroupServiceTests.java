@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 class StudyGroupServiceTests {
 
     @Autowired
-    private StudyGroupService studyGroupService;
+    private AppStudyGroupService studyGroupService;
 
     @Autowired
     private StudyGroupRepository studyGroupRepository;
@@ -68,7 +68,7 @@ class StudyGroupServiceTests {
     @Test
     void testDeleteStudyGroup() {
         //Given
-        long groupId = 1L;
+        long groupId = 2L;
 
         //When
         studyGroupService.deleteStudyGroup(groupId);

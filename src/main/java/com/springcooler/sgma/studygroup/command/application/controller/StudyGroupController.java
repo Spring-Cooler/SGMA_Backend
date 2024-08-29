@@ -1,7 +1,7 @@
 package com.springcooler.sgma.studygroup.command.application.controller;
 
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
-import com.springcooler.sgma.studygroup.command.application.service.StudyGroupService;
+import com.springcooler.sgma.studygroup.command.application.service.AppStudyGroupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import java.net.URI;
 @Slf4j
 public class StudyGroupController {
 
-    private final StudyGroupService studyGroupService;
+    private final AppStudyGroupService studyGroupService;
 
     @Autowired
-    public StudyGroupController(StudyGroupService studyGroupService) {
+    public StudyGroupController(AppStudyGroupService studyGroupService) {
         this.studyGroupService = studyGroupService;
     }
 
