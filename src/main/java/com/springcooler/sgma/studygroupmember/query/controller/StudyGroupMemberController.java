@@ -1,6 +1,5 @@
 package com.springcooler.sgma.studygroupmember.query.controller;
 
-import com.springcooler.sgma.studygroupcategory.query.dto.StudyGroupCategoryDTO;
 import com.springcooler.sgma.studygroupmember.query.common.ResponseMessage;
 import com.springcooler.sgma.studygroupmember.query.dto.StudyGroupMemberDTO;
 import com.springcooler.sgma.studygroupmember.query.service.StudyGroupMemberService;
