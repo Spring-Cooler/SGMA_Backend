@@ -58,6 +58,7 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
         return studyGroupNoticeRepository.save(existingNotice);
     }
 
+    // 스터디그룹 공지사항 삭제
     @Transactional
     @Override
     public void deleteStudyGroupNotice(long noticeId) {
