@@ -7,12 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-
 @RestController("commandStudyGroupMemberController")
 @RequestMapping("/api/study-group/members")
 @Slf4j
 public class StudyGroupMemberController {
+
     private final AppStudyGroupMemberService studyGroupMemberService;
 
     @Autowired
@@ -20,30 +19,9 @@ public class StudyGroupMemberController {
         this.studyGroupMemberService = studyGroupMemberService;
     }
 
-    @PostMapping("/owner")
-    public ResponseEntity<?> registStudyGroupOwner(@RequestBody StudyGroupMemberDTO owner) {
-        return ResponseEntity
-                .created(URI.create("/api/study-group/members/"
-                        + studyGroupMemberService.registStudyGroupOwner(owner).getMemberId()))
-                .build();
-    }
+//    @PutMapping("/")
+//    public ResponseEntity<?> modifyStudyGroupMember(@RequestBody StudyGroupMemberDTO modifyMember) {
+//        return ResponseEntity.ok(studyGroupMemberService.modifyStudyGroupMember(modifyMember));
+//    }
 
-    @PostMapping("/")
-    public ResponseEntity<?> registStudyGroupMember(@RequestBody StudyGroupMemberDTO newMember) {
-        return ResponseEntity
-                .created(URI.create("/api/study-group/members/"
-                        + studyGroupMemberService.registStudyGroupMember(newMember).getMemberId()))
-                .build();
-    }
-
-    @PutMapping("/{memberId}")
-    public ResponseEntity<?> modifyStudyGroupMember(@RequestBody StudyGroupMemberDTO modifyMember) {
-        return ResponseEntity.ok(studyGroupMemberService.modifyStudyGroupMember(modifyMember));
-    }
-
-    @DeleteMapping("/{memberId}")
-    public ResponseEntity<?> deleteStudyGroupMember(@PathVariable long memberId) {
-        studyGroupMemberService.deleteStudyGroupMember(memberId);
-        return ResponseEntity.noContent().build();
-    }
 }

@@ -25,6 +25,7 @@ public class StudyGroupController {
         this.studyGroupService = studyGroupService;
     }
 
+    // 스터디 그룹 전체 조회
     @GetMapping("/")
     public ResponseEntity<ResponseMessage> findAllStudyGroups() {
         HttpHeaders headers = new HttpHeaders();
@@ -44,6 +45,7 @@ public class StudyGroupController {
         return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
     }
 
+    // 그룹장인 스터디 그룹 조회
     @GetMapping("/owner/{ownerId}")
     public ResponseEntity<ResponseMessage> findStudyGroupsByOwnerId(@PathVariable long ownerId) {
         HttpHeaders headers = new HttpHeaders();
@@ -63,6 +65,7 @@ public class StudyGroupController {
         return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
     }
 
+    // 그룹원인 스터디 그룹 조회
     @GetMapping("/participant/{participantId}")
     public ResponseEntity<ResponseMessage> findStudyGroupsByParticipantId(@PathVariable long participantId) {
         HttpHeaders headers = new HttpHeaders();
@@ -82,6 +85,7 @@ public class StudyGroupController {
         return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
     }
 
+    // 스터디 그룹 카테고리별 조회
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<ResponseMessage> findStudyGroupsByCategoryId(@PathVariable int categoryId) {
         HttpHeaders headers = new HttpHeaders();
@@ -101,6 +105,7 @@ public class StudyGroupController {
         return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
     }
 
+    // 스터디 그룹 단건 조회(그룹 아이디)
     @GetMapping("/{groupId}")
     public ResponseEntity<ResponseMessage> findStudyGroupByGroupId(@PathVariable long groupId) {
         HttpHeaders headers = new HttpHeaders();
@@ -120,6 +125,7 @@ public class StudyGroupController {
         return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
     }
 
+    // 스터디 그룹 단건 조회(그룹 이름)
     @GetMapping("/group-name/{groupName}")
     public ResponseEntity<ResponseMessage> findStudyGroupByGroupName(@PathVariable String groupName) {
         HttpHeaders headers = new HttpHeaders();
