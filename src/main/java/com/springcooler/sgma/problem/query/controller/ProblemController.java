@@ -2,7 +2,7 @@ package com.springcooler.sgma.problem.query.controller;
 
 import com.springcooler.sgma.problem.query.common.ResponseMessage;
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
-import com.springcooler.sgma.problem.query.service.QueryProblemServiceImpl;
+import com.springcooler.sgma.problem.query.service.ProblemServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -22,10 +22,10 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProblemController {
 
-    private QueryProblemServiceImpl queryProblemServiceImpl;
+    private ProblemServiceImpl queryProblemServiceImpl;
     List<ProblemDTO> problems;
     @Autowired
-    public ProblemController(QueryProblemServiceImpl queryProblemServiceImpl, List<ProblemDTO> problems) {
+    public ProblemController(ProblemServiceImpl queryProblemServiceImpl, List<ProblemDTO> problems) {
         this.queryProblemServiceImpl = queryProblemServiceImpl;
         this.problems = queryProblemServiceImpl.findAllProblems();
     }
