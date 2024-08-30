@@ -34,4 +34,23 @@ class StudyGroupNoticeServiceTests {
         //Then
         Assertions.assertNotNull(notice);
     }
+
+    @DisplayName("스터디그룹 공지사항 정보 수정 테스트")
+    @Test
+    void testModifyStudyGroupNotice() {
+        //Given
+        StudyGroupNoticeDTO modifyNotice = new StudyGroupNoticeDTO();
+        modifyNotice.setNoticeId(1L);
+        modifyNotice.setTitle("바뀐 제목");
+        modifyNotice.setContent("바뀐 내용");
+
+        //When
+        StudyGroupNotice notice = studyGroupNoticeService.modifyStudyGroupNotice(modifyNotice);
+        if (notice != null) {
+            System.out.println(notice);
+        }
+
+        //Then
+        Assertions.assertNotNull(notice);
+    }
 }

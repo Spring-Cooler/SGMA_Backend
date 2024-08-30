@@ -4,10 +4,7 @@ import com.springcooler.sgma.studygroupnotice.command.application.dto.StudyGroup
 import com.springcooler.sgma.studygroupnotice.command.application.service.AppStudyGroupNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -24,11 +21,16 @@ public class StudyGroupNoticeController {
 
     // 스터디그룹 공지사항 생성
     @PostMapping("/")
-    public ResponseEntity<?>  registStudyGroupNotice(@RequestBody StudyGroupNoticeDTO newNotice) {
+    public ResponseEntity<?> registStudyGroupNotice(@RequestBody StudyGroupNoticeDTO newNotice) {
         return ResponseEntity
                 .created(URI.create("/api/study-group/notices/"
                         + studyGroupNoticeService.registStudyGroupNotice(newNotice).getNoticeId()))
                 .build();
     }
 
+    // 스터디그룹 공지사항 정보 수정
+    @PutMapping("/")
+    public ResponseEntity<?> modifyStudyGroupNotice(@RequestBody StudyGroupNoticeDTO modifyNotice) {
+        return ResponseEntity.ok(studyGroupNoticeService.modifyStudyGroupNotice(modifyNotice));
+    }
 }
