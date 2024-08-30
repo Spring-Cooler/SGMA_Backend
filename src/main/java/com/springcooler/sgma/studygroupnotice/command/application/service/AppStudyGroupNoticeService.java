@@ -5,10 +5,10 @@ import com.springcooler.sgma.studygroupnotice.command.domain.aggregate.StudyGrou
 
 public interface AppStudyGroupNoticeService {
 
-    StudyGroupNotice registStudyGroupNotice(StudyGroupNoticeDTO studyGroupNotice);
+    StudyGroupNotice registStudyGroupNotice(StudyGroupNoticeDTO newNotice);
 
-    StudyGroupNotice modifyStudyGroupNotice(StudyGroupNoticeDTO studyGroupNotice);
+    StudyGroupNotice modifyStudyGroupNotice(StudyGroupNoticeDTO modifyNotice);
 
-    void deleteStudyGroupNotice(StudyGroupNoticeDTO studyGroupNotice);
+    void deleteStudyGroupNotice(long noticeId);
 
 }

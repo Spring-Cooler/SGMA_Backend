@@ -33,4 +33,11 @@ public class StudyGroupNoticeController {
     public ResponseEntity<?> modifyStudyGroupNotice(@RequestBody StudyGroupNoticeDTO modifyNotice) {
         return ResponseEntity.ok(studyGroupNoticeService.modifyStudyGroupNotice(modifyNotice));
     }
+
+    // 스터디그룹 공지사항 삭제
+    @DeleteMapping("/{noticeId}")
+    public ResponseEntity<?> deleteStudyGroupNotice(@PathVariable long noticeId) {
+        studyGroupNoticeService.deleteStudyGroupNotice(noticeId);
+        return ResponseEntity.noContent().build();
+    }
 }
