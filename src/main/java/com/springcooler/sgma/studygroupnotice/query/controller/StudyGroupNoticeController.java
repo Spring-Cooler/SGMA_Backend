@@ -1,6 +1,8 @@
 package com.springcooler.sgma.studygroupnotice.query.controller;
 
+import com.springcooler.sgma.studygroupmember.query.dto.StudyGroupMemberDTO;
 import com.springcooler.sgma.studygroupnotice.query.common.ResponseMessage;
+import com.springcooler.sgma.studygroupnotice.query.dto.StudyGroupNoticeDTO;
 import com.springcooler.sgma.studygroupnotice.query.service.StudyGroupNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -34,17 +37,7 @@ public class StudyGroupNoticeController {
         headers.setContentType(new MediaType("application", "json"
                 , StandardCharsets.UTF_8));
 
-        Map<String, Object> responseMap = studyGroupNoticeService.findStudyGroupNoticeByNoticeId(noticeId)
-                .stream()
-                .collect(
-                        Collectors.toMap(
-                                studyGroupNotice -> String.valueOf(studyGroupNotice.getNoticeId()),
-                                Function.identity()
-                        )
-                );
-
-        ResponseMessage responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
-        return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
+        return getResponseEntity(headers, studyGroupNoticeService.findStudyGroupNoticeByNoticeId(noticeId));
     }
 
     @GetMapping("/group-id/{groupId}")
@@ -53,7 +46,20 @@ public class StudyGroupNoticeController {
         headers.setContentType(new MediaType("application", "json"
                 , StandardCharsets.UTF_8));
 
-        Map<String, Object> responseMap = studyGroupNoticeService.findStudyGroupNoticesByGroupId(groupId)
+        return getResponseEntity(headers, studyGroupNoticeService.findStudyGroupNoticesByGroupId(groupId));
+    }
+
+    private ResponseEntity<ResponseMessage> getResponseEntity(HttpHeaders headers, List<StudyGroupNoticeDTO> notices) {
+        ResponseMessage responseMessage;
+
+        // 조회되지 않은 경우
+        if (notices.isEmpty()) {
+            responseMessage = new ResponseMessage(404, "조회 실패!", null);
+            return new ResponseEntity<>(responseMessage, headers, HttpStatus.NOT_FOUND);
+        }
+
+        // 조회된 경우
+        Map<String, Object> responseMap = notices
                 .stream()
                 .collect(
                         Collectors.toMap(
@@ -61,8 +67,7 @@ public class StudyGroupNoticeController {
                                 Function.identity()
                         )
                 );
-
-        ResponseMessage responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
+        responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
         return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
     }
 

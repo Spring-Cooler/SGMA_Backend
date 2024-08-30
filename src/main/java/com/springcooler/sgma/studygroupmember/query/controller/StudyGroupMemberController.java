@@ -1,6 +1,8 @@
 package com.springcooler.sgma.studygroupmember.query.controller;
 
+import com.springcooler.sgma.studygroupcategory.query.dto.StudyGroupCategoryDTO;
 import com.springcooler.sgma.studygroupmember.query.common.ResponseMessage;
+import com.springcooler.sgma.studygroupmember.query.dto.StudyGroupMemberDTO;
 import com.springcooler.sgma.studygroupmember.query.service.StudyGroupMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -32,17 +35,7 @@ public class StudyGroupMemberController {
         headers.setContentType(new MediaType("application", "json"
                 , StandardCharsets.UTF_8));
 
-        Map<String, Object> responseMap = studyGroupMemberService.findStudyGroupMemberByMemberId(memberId)
-                .stream()
-                .collect(
-                        Collectors.toMap(
-                                studyGroupMember -> String.valueOf(studyGroupMember.getMemberId()),
-                                Function.identity()
-                        )
-                );
-
-        ResponseMessage responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
-        return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
+        return getResponseEntity(headers, studyGroupMemberService.findStudyGroupMemberByMemberId(memberId));
     }
 
     // 스터디 그룹원 그룹별 조회
@@ -52,7 +45,20 @@ public class StudyGroupMemberController {
         headers.setContentType(new MediaType("application", "json"
                 , StandardCharsets.UTF_8));
 
-        Map<String, Object> responseMap = studyGroupMemberService.findStudyGroupMembersByGroupId(groupId)
+        return getResponseEntity(headers, studyGroupMemberService.findStudyGroupMembersByGroupId(groupId));
+    }
+
+    private ResponseEntity<ResponseMessage> getResponseEntity(HttpHeaders headers, List<StudyGroupMemberDTO> members) {
+        ResponseMessage responseMessage;
+
+        // 조회되지 않은 경우
+        if (members.isEmpty()) {
+            responseMessage = new ResponseMessage(404, "조회 실패!", null);
+            return new ResponseEntity<>(responseMessage, headers, HttpStatus.NOT_FOUND);
+        }
+
+        // 조회된 경우
+        Map<String, Object> responseMap = members
                 .stream()
                 .collect(
                         Collectors.toMap(
@@ -60,8 +66,8 @@ public class StudyGroupMemberController {
                                 Function.identity()
                         )
                 );
-
-        ResponseMessage responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
+        responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
         return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
     }
+
 }
