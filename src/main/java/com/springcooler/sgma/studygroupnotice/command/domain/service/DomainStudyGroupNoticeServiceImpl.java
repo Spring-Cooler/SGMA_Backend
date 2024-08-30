@@ -1,6 +1,7 @@
 package com.springcooler.sgma.studygroupnotice.command.domain.service;
 
-import com.springcooler.sgma.studygroupnotice.query.service.StudyGroupNoticeService;
+import org.springframework.stereotype.Service;
 
-public class DomainStudyGroupNoticeServiceImpl implements StudyGroupNoticeService {
+@Service
+public class DomainStudyGroupNoticeServiceImpl implements DomainStudyGroupNoticeService {
 }
