@@ -2,11 +2,19 @@ package com.springcooler.sgma.studygroupapplicant.command.domain.aggregate;
 
 
 import jakarta.persistence.*;
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
 
 
-@Slf4j
 @Entity
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class StudyGroupApplicant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +25,10 @@ public class StudyGroupApplicant {
     private String title;
 
     @Column(name = "created_at",columnDefinition = "TIMESTAMP",nullable = false)
-    private java.sql.Timestamp createdAt;
+    private Timestamp createdAt;
 
     @Column(name = "updated_at",columnDefinition = "TIMESTAMP",nullable = false)
-    private java.sql.Timestamp updatedAt;
+    private Timestamp updatedAt;
     @Column(name = "recruitment_start_time",columnDefinition = "TIMESTAMP",nullable = false)
     private java.sql.Timestamp recruitmentStartTime;
     @Column(name = "recruitment_end_time",columnDefinition = "TIMESTAMP",nullable = false)
