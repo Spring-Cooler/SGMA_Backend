@@ -2,7 +2,6 @@ package com.springcooler.sgma.studygroupcategory.command.application.service;
 
 import com.springcooler.sgma.studygroupcategory.command.application.dto.StudyGroupCategoryDTO;
 import com.springcooler.sgma.studygroupcategory.command.domain.aggregate.StudyGroupCategory;
-import com.springcooler.sgma.studygroupcategory.command.domain.repository.StudyGroupCategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +16,7 @@ class StudyGroupCategoryTests {
 
     @Autowired
     private AppStudyGroupCategoryService studyGroupCategoryService;
-    
+
     @DisplayName("스터디그룹 카테고리 생성 테스트")
     @Test
     void testRegistStudyGroupCategory() {
