@@ -1,10 +1,10 @@
 package com.springcooler.sgma.studygroupnotice.command.application.service;
 
-import com.springcooler.sgma.studygroup.command.domain.service.DomainStudyGroupService;
 import com.springcooler.sgma.studygroupnotice.command.application.dto.StudyGroupNoticeDTO;
 import com.springcooler.sgma.studygroupnotice.command.domain.aggregate.StudyGroupNotice;
 import com.springcooler.sgma.studygroupnotice.command.domain.aggregate.StudyGroupNoticeStatus;
 import com.springcooler.sgma.studygroupnotice.command.domain.repository.StudyGroupNoticeRepository;
+import com.springcooler.sgma.studygroupnotice.command.domain.service.DomainStudyGroupNoticeService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +17,15 @@ import java.sql.Timestamp;
 public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeService {
 
     private final ModelMapper modelMapper;
-    private final DomainStudyGroupService domainStudyGroupService;
+    private final DomainStudyGroupNoticeService domainStudyGroupNoticeService;
     private final StudyGroupNoticeRepository studyGroupNoticeRepository;
 
     @Autowired
     public AppStudyGroupNoticeServiceImpl(ModelMapper modelMapper,
-                                          DomainStudyGroupService domainStudyGroupService,
+                                          DomainStudyGroupNoticeService domainStudyGroupNoticeService,
                                           StudyGroupNoticeRepository studyGroupNoticeRepository) {
         this.modelMapper = modelMapper;
-        this.domainStudyGroupService = domainStudyGroupService;
+        this.domainStudyGroupNoticeService = domainStudyGroupNoticeService;
         this.studyGroupNoticeRepository = studyGroupNoticeRepository;
     }
 
@@ -67,7 +67,7 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
                         .orElseThrow(() -> new EntityNotFoundException("잘못된 삭제 요청입니다."));
 
         // 유효성 검사
-        if(!domainStudyGroupService.isActive(deleteNotice.getActiveStatus()))
+        if(!domainStudyGroupNoticeService.isActive(deleteNotice.getActiveStatus()))
             throw new EntityNotFoundException("잘못된 삭제 요청입니다.");
 
         // INACTIVE 처리
