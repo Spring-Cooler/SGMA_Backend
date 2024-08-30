@@ -25,6 +25,7 @@ public class StudyGroupMemberController {
         this.studyGroupMemberService = studyGroupMemberService;
     }
 
+    // 스터디 그룹원 단건 조회(그룹원 아이디)
     @GetMapping("/{memberId}")
     public ResponseEntity<ResponseMessage> findStudyGroupMemberByMemberId(@PathVariable long memberId) {
         HttpHeaders headers = new HttpHeaders();
@@ -44,6 +45,7 @@ public class StudyGroupMemberController {
         return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
     }
 
+    // 스터디 그룹원 그룹별 조회
     @GetMapping("/group-id/{groupId}")
     public ResponseEntity<ResponseMessage> findStudyGroupMembersByGroupId(@PathVariable long groupId) {
         HttpHeaders headers = new HttpHeaders();

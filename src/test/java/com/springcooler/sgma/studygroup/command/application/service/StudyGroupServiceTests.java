@@ -49,8 +49,6 @@ class StudyGroupServiceTests {
         StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
         studyGroupInfo.setGroupId(1L);
         studyGroupInfo.setGroupName("반짝반짝");
-        studyGroupInfo.setGroupMembers(5);
-        studyGroupInfo.setUserId(1L);
         studyGroupInfo.setStudyGroupCategoryId(3);
 
         //When
@@ -73,6 +71,24 @@ class StudyGroupServiceTests {
 
         //When
         StudyGroup studyGroup = studyGroupService.modifyStudyGroupName(studyGroupInfo);
+        if (studyGroup != null) {
+            System.out.println(studyGroup);
+        }
+
+        //Then
+        Assertions.assertNotNull(studyGroup);
+    }
+
+    @DisplayName("스터디 그룹 카테고리 변경 테스트")
+    @Test
+    void testModifyStudyGroupCategory() {
+        //Given
+        StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
+        studyGroupInfo.setGroupId(5L);
+        studyGroupInfo.setStudyGroupCategoryId(8);
+
+        //When
+        StudyGroup studyGroup = studyGroupService.modifyStudyGroupCategory(studyGroupInfo);
         if (studyGroup != null) {
             System.out.println(studyGroup);
         }
@@ -105,7 +121,7 @@ class StudyGroupServiceTests {
         applicant.setGroupId(5L);
 
         //When
-        StudyGroup studyGroup = studyGroupService.acceptApplication(applicant);
+        StudyGroup studyGroup = studyGroupService.registAcceptedMember(applicant);
         if (studyGroup != null) {
             System.out.println(studyGroup);
         }
@@ -122,7 +138,7 @@ class StudyGroupServiceTests {
         long groupId = 1L;
 
         //When
-        StudyGroup studyGroup = studyGroupService.quitStudyGroup(memberId, groupId);
+        StudyGroup studyGroup = studyGroupService.deleteQuitMember(memberId, groupId);
         if (studyGroup != null) {
             System.out.println(studyGroup);
         }
