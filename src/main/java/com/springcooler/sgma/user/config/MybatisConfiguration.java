@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration("userMybatisConfiguration")
 @MapperScan(basePackages = "com.springcooler.sgma.user",annotationClass = Mapper.class)
 public class MybatisConfiguration {
 }

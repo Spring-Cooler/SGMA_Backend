@@ -7,7 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 
 @MapperScan(basePackages = "com.springcooler.sgma.problem.query.repository", annotationClass = Mapper.class)
-@Configuration
+@Configuration("problemMybatisConfiguration")
 public class MybatisConfiguration {
+
     private ProblemMapper problemMapper;
 }
