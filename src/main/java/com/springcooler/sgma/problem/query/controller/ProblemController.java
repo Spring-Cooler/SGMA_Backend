@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController("queryProblemController")
-@RequestMapping("/api/problems")
+@RequestMapping("/api/problems")    // TODO: study-problems로 수정
 @Slf4j
 public class ProblemController {
 

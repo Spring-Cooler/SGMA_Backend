@@ -1,4 +1,7 @@
 package com.springcooler.sgma.problem.command.domain.repository;
 
-public class ProblemRepository {
+import com.springcooler.sgma.problem.command.domain.aggregate.Problem;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProblemRepository extends JpaRepository<Problem, Long> {
 }
