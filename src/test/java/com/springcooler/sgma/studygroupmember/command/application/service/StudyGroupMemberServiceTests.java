@@ -2,7 +2,7 @@ package com.springcooler.sgma.studygroupmember.command.application.service;
 
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMember;
-import com.springcooler.sgma.studygroupmember.command.domain.repository.StudyGroupMemberRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,9 +20,6 @@ class StudyGroupMemberServiceTests {
 
     @Autowired
     private AppStudyGroupMemberService studyGroupMemberService;
-
-    @Autowired
-    private StudyGroupMemberRepository studyGroupMemberRepository;
 
     @DisplayName("스터디 그룹원 추가 테스트")
     @Test
@@ -80,7 +77,7 @@ class StudyGroupMemberServiceTests {
         System.out.println("DELETE SUCCESS");
 
         //Then
-        String memberStatus = studyGroupMemberRepository.findById(memberId).orElseThrow().getMemberStatus();
-        Assertions.assertEquals("INACTIVE", memberStatus);
+        Assertions.assertThrows(EntityNotFoundException.class,
+                () -> studyGroupMemberService.deleteStudyGroupMember(memberId));
     }
 }

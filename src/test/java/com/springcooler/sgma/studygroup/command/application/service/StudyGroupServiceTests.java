@@ -2,8 +2,8 @@ package com.springcooler.sgma.studygroup.command.application.service;
 
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
-import com.springcooler.sgma.studygroup.command.domain.repository.StudyGroupRepository;
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,9 +18,6 @@ class StudyGroupServiceTests {
 
     @Autowired
     private AppStudyGroupService studyGroupService;
-
-    @Autowired
-    private StudyGroupRepository studyGroupRepository;
 
     @DisplayName("스터디 그룹 생성 테스트")
     @Test
@@ -108,8 +105,8 @@ class StudyGroupServiceTests {
         System.out.println("DELETE SUCCESS");
 
         //Then
-        String groupStatus = studyGroupRepository.findById(groupId).orElseThrow().getActiveStatus();
-        Assertions.assertEquals("INACTIVE", groupStatus);
+        Assertions.assertThrows(EntityNotFoundException.class,
+                () -> studyGroupService.deleteStudyGroup(groupId));
     }
 
     @DisplayName("스터디 그룹 참가 신청 승인 테스트")
@@ -119,6 +116,7 @@ class StudyGroupServiceTests {
         StudyGroupMemberDTO applicant = new StudyGroupMemberDTO();
         applicant.setUserId(1L);
         applicant.setGroupId(5L);
+        int expectedMembers = 4;
 
         //When
         StudyGroup studyGroup = studyGroupService.registAcceptedMember(applicant);
@@ -128,6 +126,7 @@ class StudyGroupServiceTests {
 
         //Then
         Assertions.assertNotNull(studyGroup);
+        Assertions.assertEquals(expectedMembers, studyGroup.getGroupMembers());
     }
 
     @DisplayName("스터디 그룹 탈퇴 테스트")
@@ -136,6 +135,7 @@ class StudyGroupServiceTests {
         //Given
         long memberId = 2L;
         long groupId = 1L;
+        int expectedMembers = 4;
 
         //When
         StudyGroup studyGroup = studyGroupService.deleteQuitMember(memberId, groupId);
@@ -145,5 +145,6 @@ class StudyGroupServiceTests {
 
         //Then
         Assertions.assertNotNull(studyGroup);
+        Assertions.assertEquals(expectedMembers, studyGroup.getGroupMembers());
     }
 }
