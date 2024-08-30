@@ -2,10 +2,7 @@ package com.springcooler.sgma.studygroupapplicant.command.domain.aggregate;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -15,6 +12,7 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
 public class StudyGroupApplicant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

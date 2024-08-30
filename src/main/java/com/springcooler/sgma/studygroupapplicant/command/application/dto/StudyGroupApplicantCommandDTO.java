@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class StudyGroupApplicantCommandDTO {
     private Long recruitmentBoardId;
     private String title;
