@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 
 @Service
 public class StudyGroupApplicantCommandService {
@@ -46,12 +47,34 @@ public class StudyGroupApplicantCommandService {
     }
 
     public StudyGroupApplicantCommandDTO updateStudyGroupApplicant(Long recruitmentBoardId, StudyGroupApplicantCommandDTO dto) {
-        if (studyGroupApplicantRepository.existsById(recruitmentBoardId)) {
-            StudyGroupApplicant applicantToUpdate = modelMapper.map(dto, StudyGroupApplicant.class);
-            applicantToUpdate.setRecruitmentBoardId(recruitmentBoardId);
-            StudyGroupApplicant updatedApplicant = studyGroupApplicantRepository.save(applicantToUpdate);
+        // 먼저 해당 ID를 가진 신청자가 있는지 확인합니다.
+        Optional<StudyGroupApplicant> optionalApplicant = studyGroupApplicantRepository.findById(recruitmentBoardId);
+
+        if (optionalApplicant.isPresent()) {
+            StudyGroupApplicant existingApplicant = optionalApplicant.get();
+
+            // DTO의 값을 기반으로 엔티티를 업데이트합니다.
+            existingApplicant.setTitle(dto.getTitle());
+            existingApplicant.setRecruitmentStartTime(dto.getRecruitmentStartTime());
+            existingApplicant.setRecruitmentEndTime(dto.getRecruitmentEndTime());
+            existingApplicant.setActiveStatus(BoardActiveStatus.valueOf(dto.getActiveStatus()));
+            existingApplicant.setLikes(dto.getLikes()); // 이 부분은 필요에 따라 조정합니다.
+            existingApplicant.setGroup_id(dto.getGroupId());
+            existingApplicant.setStudy_group_category_id(dto.getStudyGroupCategoryId());
+
+            // 현재 시간으로 updatedAt 필드를 갱신합니다.
+            ZonedDateTime nowKst = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+            Timestamp currentTimestamp = Timestamp.from(nowKst.toInstant());
+            existingApplicant.setUpdatedAt(currentTimestamp);
+
+            // 업데이트된 엔티티를 저장합니다.
+            StudyGroupApplicant updatedApplicant = studyGroupApplicantRepository.save(existingApplicant);
+
+            // 업데이트된 엔티티를 DTO로 변환하여 반환합니다.
             return modelMapper.map(updatedApplicant, StudyGroupApplicantCommandDTO.class);
         }
+
+        // 해당 ID를 가진 신청자가 없으면 null을 반환합니다.
         return null;
     }
 
@@ -63,7 +86,7 @@ public class StudyGroupApplicantCommandService {
         }
         else{
             System.out.println("2.=====================");
+            return false;
         }
-        return false;
     }
 }
