@@ -1,6 +1,7 @@
 package com.springcooler.sgma.studygroup.query.controller;
 
 import com.springcooler.sgma.studygroup.query.common.ResponseMessage;
+import com.springcooler.sgma.studygroup.query.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.query.service.StudyGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -32,17 +34,7 @@ public class StudyGroupController {
         headers.setContentType(new MediaType("application", "json"
                 , StandardCharsets.UTF_8));
 
-        Map<String, Object> responseMap = studyGroupService.findAllStudyGroups()
-                .stream()
-                .collect(
-                        Collectors.toMap(
-                            studyGroup -> String.valueOf(studyGroup.getGroupId()),
-                            Function.identity()
-                        )
-                );
-
-        ResponseMessage responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
-        return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
+        return getResponseEntity(headers, studyGroupService.findAllStudyGroups());
     }
 
     // 그룹장인 스터디 그룹 조회
@@ -52,17 +44,7 @@ public class StudyGroupController {
         headers.setContentType(new MediaType("application", "json"
                 , StandardCharsets.UTF_8));
 
-        Map<String, Object> responseMap = studyGroupService.findStudyGroupsByOwnerId(ownerId)
-                .stream()
-                .collect(
-                        Collectors.toMap(
-                                studyGroup -> String.valueOf(studyGroup.getGroupId()),
-                                Function.identity()
-                        )
-                );
-
-        ResponseMessage responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
-        return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
+        return getResponseEntity(headers, studyGroupService.findStudyGroupsByOwnerId(ownerId));
     }
 
     // 그룹원인 스터디 그룹 조회
@@ -72,17 +54,7 @@ public class StudyGroupController {
         headers.setContentType(new MediaType("application", "json"
                 , StandardCharsets.UTF_8));
 
-        Map<String, Object> responseMap = studyGroupService.findStudyGroupsByParticipantId(participantId)
-                .stream()
-                .collect(
-                        Collectors.toMap(
-                                studyGroup -> String.valueOf(studyGroup.getGroupId()),
-                                Function.identity()
-                        )
-                );
-
-        ResponseMessage responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
-        return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
+        return getResponseEntity(headers, studyGroupService.findStudyGroupsByParticipantId(participantId));
     }
 
     // 스터디 그룹 카테고리별 조회
@@ -92,17 +64,7 @@ public class StudyGroupController {
         headers.setContentType(new MediaType("application", "json"
                 , StandardCharsets.UTF_8));
 
-        Map<String, Object> responseMap = studyGroupService.findStudyGroupsByCategoryId(categoryId)
-                .stream()
-                .collect(
-                        Collectors.toMap(
-                                studyGroup -> String.valueOf(studyGroup.getGroupId()),
-                                Function.identity()
-                        )
-                );
-
-        ResponseMessage responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
-        return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
+        return getResponseEntity(headers, studyGroupService.findStudyGroupsByCategoryId(categoryId));
     }
 
     // 스터디 그룹 단건 조회(그룹 아이디)
@@ -112,17 +74,7 @@ public class StudyGroupController {
         headers.setContentType(new MediaType("application", "json"
                 , StandardCharsets.UTF_8));
 
-        Map<String, Object> responseMap = studyGroupService.findStudyGroupByGroupId(groupId)
-                .stream()
-                .collect(
-                        Collectors.toMap(
-                                studyGroup -> String.valueOf(studyGroup.getGroupId()),
-                                Function.identity()
-                        )
-                );
-
-        ResponseMessage responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
-        return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
+        return getResponseEntity(headers, studyGroupService.findStudyGroupByGroupId(groupId));
     }
 
     // 스터디 그룹 단건 조회(그룹 이름)
@@ -132,7 +84,20 @@ public class StudyGroupController {
         headers.setContentType(new MediaType("application", "json"
                 , StandardCharsets.UTF_8));
 
-        Map<String, Object> responseMap = studyGroupService.findStudyGroupByGroupName(groupName)
+        return getResponseEntity(headers, studyGroupService.findStudyGroupByGroupName(groupName));
+    }
+
+    private ResponseEntity<ResponseMessage> getResponseEntity(HttpHeaders headers, List<StudyGroupDTO> studyGroups) {
+        ResponseMessage responseMessage;
+
+        // 조회되지 않은 경우
+        if (studyGroups.isEmpty()) {
+            responseMessage = new ResponseMessage(404, "조회 실패!", null);
+            return new ResponseEntity<>(responseMessage, headers, HttpStatus.NOT_FOUND);
+        }
+
+        // 조회된 경우
+        Map<String, Object> responseMap = studyGroups
                 .stream()
                 .collect(
                         Collectors.toMap(
@@ -140,8 +105,8 @@ public class StudyGroupController {
                                 Function.identity()
                         )
                 );
-
-        ResponseMessage responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
+        responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
         return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
     }
+
 }
