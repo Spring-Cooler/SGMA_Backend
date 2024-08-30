@@ -36,7 +36,7 @@ public class StudyGroupApplicantCommandService {
                 .updatedAt(currentTimestamp)
                 .recruitmentStartTime(studyGroupApplicantCommandDTO.getRecruitmentStartTime())
                 .recruitmentEndTime(studyGroupApplicantCommandDTO.getRecruitmentEndTime())
-                .activeStatus(BoardActiveStatus.valueOf(studyGroupApplicantCommandDTO.getActiveStatus()))
+                .activeStatus(BoardActiveStatus.valueOf("ACTIVE"))
                 .likes(studyGroupApplicantCommandDTO.getLikes())//추후 수정
                 .group_id(studyGroupApplicantCommandDTO.getGroupId())
                 .study_group_category_id(studyGroupApplicantCommandDTO.getStudyGroupCategoryId())
@@ -47,20 +47,13 @@ public class StudyGroupApplicantCommandService {
     }
 
     public StudyGroupApplicantCommandDTO updateStudyGroupApplicant(Long recruitmentBoardId, StudyGroupApplicantCommandDTO dto) {
-        // 먼저 해당 ID를 가진 신청자가 있는지 확인합니다.
         Optional<StudyGroupApplicant> optionalApplicant = studyGroupApplicantRepository.findById(recruitmentBoardId);
 
         if (optionalApplicant.isPresent()) {
             StudyGroupApplicant existingApplicant = optionalApplicant.get();
-
-            // DTO의 값을 기반으로 엔티티를 업데이트합니다.
             existingApplicant.setTitle(dto.getTitle());
             existingApplicant.setRecruitmentStartTime(dto.getRecruitmentStartTime());
             existingApplicant.setRecruitmentEndTime(dto.getRecruitmentEndTime());
-            existingApplicant.setActiveStatus(BoardActiveStatus.valueOf(dto.getActiveStatus()));
-            existingApplicant.setLikes(dto.getLikes()); // 이 부분은 필요에 따라 조정합니다.
-            existingApplicant.setGroup_id(dto.getGroupId());
-            existingApplicant.setStudy_group_category_id(dto.getStudyGroupCategoryId());
 
             // 현재 시간으로 updatedAt 필드를 갱신합니다.
             ZonedDateTime nowKst = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
@@ -79,14 +72,16 @@ public class StudyGroupApplicantCommandService {
     }
 
     public boolean deleteStudyGroupApplicant(Long recruitmentBoardId) {
-        if (studyGroupApplicantRepository.existsById(recruitmentBoardId)) {
-            System.out.println("1.===================");
-            studyGroupApplicantRepository.deleteById(recruitmentBoardId);
+        Optional<StudyGroupApplicant> optionalApplicant = studyGroupApplicantRepository.findById(recruitmentBoardId);
+
+        if (optionalApplicant.isPresent()) {
+            StudyGroupApplicant applicantUpdate = optionalApplicant.get();
+            applicantUpdate.setActiveStatus(BoardActiveStatus.INACTIVE);
+            studyGroupApplicantRepository.save(applicantUpdate);
             return true;
+        } else {
+            System.out.println("해당 ID를 가진 신청자를 찾을 수 없습니다.");
         }
-        else{
-            System.out.println("2.=====================");
-            return false;
-        }
+        return false;
     }
 }
