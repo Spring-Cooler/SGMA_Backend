@@ -22,13 +22,13 @@ public class StudyGroupServiceImpl implements StudyGroupService {
         return studyGroupMapper.findAllStudyGroups();
     }
 
-    // 생성한 스터디 그룹 조회
+    // 그룹장인 스터디 그룹 조회
     @Override
     public List<StudyGroupDTO> findStudyGroupsByOwnerId(Long ownerId) {
         return studyGroupMapper.findStudyGroupsByOwnerId(ownerId);
     }
 
-    // 참가한 스터디 그룹 조회
+    // 그룹원인 스터디 그룹 조회
     @Override
     public List<StudyGroupDTO> findStudyGroupsByParticipantId(Long participantId) {
         return studyGroupMapper.findStudyGroupsByParticipantId(participantId);
