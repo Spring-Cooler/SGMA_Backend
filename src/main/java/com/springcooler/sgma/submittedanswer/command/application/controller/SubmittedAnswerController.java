@@ -1,7 +1,7 @@
 package com.springcooler.sgma.submittedanswer.command.application.controller;
 
 import com.springcooler.sgma.submittedanswer.command.application.dto.SubmittedAnswerDTO;
-import com.springcooler.sgma.submittedanswer.command.infrastructure.service.AppSubmittedAnswerService;
+import com.springcooler.sgma.submittedanswer.command.application.service.AppSubmittedAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
-@RestController("appSubmittedAnswerController")
+@RestController("commandSubmittedAnswerController")
 @RequestMapping("/api/submitted-answers/")
 public class SubmittedAnswerController {
 
