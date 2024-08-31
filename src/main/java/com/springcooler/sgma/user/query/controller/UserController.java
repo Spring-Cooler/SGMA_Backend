@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@RestController("userQueryController")
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -35,7 +35,7 @@ public class UserController {
     }
 
     // 사용자 ID로 조회
-    @GetMapping("/user_id/{userId}")
+    @GetMapping("/user-id/{userId}")
     public ResponseDTO<?> getUserById(@PathVariable Long userId) {
         UserDTO userDTO = userService.getUserByuUserId(userId);
         return ResponseDTO.ok(userDTO);
