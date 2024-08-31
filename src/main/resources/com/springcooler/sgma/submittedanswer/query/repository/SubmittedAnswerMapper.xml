@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springcooler.sgma.submittedanswer.query.repository.SubmittedAnswerMapper">
     <resultMap id="submittedAnswerResultMap" type="com.springcooler.sgma.submittedanswer.query.dto.SubmittedAnswerDTO">
-        <result property="problemId" column="problem_id"/>
-        <result property="participantId" column="participant_id"/>
+        <id property="problemId" column="problem_id"/>
+        <id property="participantId" column="participant_id"/>
         <result property="submittedAnswer" column="submitted_answer"/>
         <result property="answerStatus" column="answer_status"/>
     </resultMap>
