@@ -1,8 +1,14 @@
 package com.springcooler.sgma.studygroupapplicant.command.domain.aggregate;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
 public class StudyGroupApplicant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
