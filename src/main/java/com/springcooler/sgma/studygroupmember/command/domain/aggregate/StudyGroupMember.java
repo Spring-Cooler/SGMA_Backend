@@ -33,4 +33,5 @@ public class StudyGroupMember {
 
     @Column(name="GROUP_ID")
     private long groupId;
+
 }

@@ -72,4 +72,5 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
         deleteMember.setMemberStatus(StudyGroupMemberStatus.INACTIVE.name());
         studyGroupMemberRepository.save(deleteMember);
     }
+
 }

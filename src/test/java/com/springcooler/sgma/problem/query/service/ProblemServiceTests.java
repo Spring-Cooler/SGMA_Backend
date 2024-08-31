@@ -41,13 +41,13 @@ class ProblemServiceTests {
 
     private static Stream<Arguments> getParticipantAndScheduleInfo(){
         return Stream.of(
-                Arguments.of(1,3)
+                Arguments.of(3,1)
         );
     }
     @DisplayName("참가자 아이디와 스케쥴 아이디로 문제 조회")
     @ParameterizedTest
     @MethodSource("getParticipantAndScheduleInfo")
-    void testFindProblemsByParticipantIdAndScheduleId(long participantId, long scheduleId) {
-        List<ProblemDTO> problems = problemService.findProblemsByParticipantIdAndScheduleId(participantId, scheduleId);
+    void testFindProblemsByParticipantIdAndScheduleId(long scheduleId, long participantId) {
+        List<ProblemDTO> problems = problemService.findProblemsByScheduleIdAndParticipantId(scheduleId, participantId);
     }
 }
