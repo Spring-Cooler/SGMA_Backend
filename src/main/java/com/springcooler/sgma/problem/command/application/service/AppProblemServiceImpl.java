@@ -24,11 +24,11 @@ public class AppProblemServiceImpl implements AppProblemService{
     @Transactional
     @Override
     public Problem registProblem(ProblemDTO newProblem) {
-        log.info("newProblem: {}", newProblem);
+//        log.info("newProblem: {}", newProblem);
         Problem problem = modelMapper.map(newProblem, Problem.class);
-        log.info("problemEntity: {}", problem);
+//        log.info("problemEntity: {}", problem);
         problem = problemRepository.save(problem);
-        log.info("problemSaved: {}", problem);
+//        log.info("problemSaved: {}", problem);
         return problem;
     }
 
