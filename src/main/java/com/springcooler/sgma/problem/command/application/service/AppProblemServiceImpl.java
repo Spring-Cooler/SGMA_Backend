@@ -28,6 +28,7 @@ public class AppProblemServiceImpl implements AppProblemService{
         return problem;
     }
 
+    @Transactional
     @Override
     public Problem modifyProblem(ProblemDTO modifiedProblem) {
         Problem existingProblem = problemRepository.findById(modifiedProblem.getProblemId()).orElseThrow(()->new EntityNotFoundException("Problem not found"));
@@ -36,5 +37,12 @@ public class AppProblemServiceImpl implements AppProblemService{
 
         return problemRepository.save(existingProblem);
 
+    }
+
+    @Override
+    public void deleteProblem(long problemId) {
+        Problem deleteProblem  = problemRepository.findById(problemId).orElseThrow(()->new EntityNotFoundException("Problem not found"));
+
+        problemRepository.delete(deleteProblem);
     }
 }

@@ -7,4 +7,6 @@ public interface AppProblemService {
     Problem registProblem(ProblemDTO newProblem);
 
     Problem modifyProblem(ProblemDTO modifiedProblem);
+
+    void deleteProblem(long problemId);
 }

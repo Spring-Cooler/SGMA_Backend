@@ -2,6 +2,7 @@ package com.springcooler.sgma.problem.command.application.service;
 
 import com.springcooler.sgma.problem.command.application.dto.ProblemDTO;
 import com.springcooler.sgma.problem.command.domain.aggregate.Problem;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -53,7 +54,20 @@ class AppProblemServiceTests {
         // then
         assertNotNull(problem);
         System.out.println("problem : " + problem);
+    }
 
+    @DisplayName("문제 삭제 테스트")
+    @Test
+    void testDeleteProblem(){
 
+        // given
+        long deleteProblemId = 13L;
+        
+        // when
+        appProblemService.deleteProblem(deleteProblemId);
+        
+        // then
+        Assertions.assertThrows(EntityNotFoundException.class, ()-> appProblemService.deleteProblem(deleteProblemId));
+        System.out.println("삭제 완료");
     }
 }
