@@ -7,6 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface StudyGroupMapper {
+
     List<StudyGroupDTO> findAllStudyGroups();
 
     List<StudyGroupDTO> findStudyGroupsByOwnerId(long ownerId);
@@ -18,4 +19,5 @@ public interface StudyGroupMapper {
     List<StudyGroupDTO> findStudyGroupByGroupId(long groupId);
 
     List<StudyGroupDTO> findStudyGroupByGroupName(String groupName);
+
 }
