@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController("sumittedAnswerController")
+@RestController("submittedAnswerController")
 @RequestMapping("/api/submitted-answers")
 public class SubmittedAnswerController {
 
