@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 public class RecruitmentBoardCommandDTO {
     private Long recruitmentBoardId;
     private String title;
+    private String content;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Timestamp recruitmentStartTime;

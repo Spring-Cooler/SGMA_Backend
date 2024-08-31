@@ -1,15 +1,10 @@
 package com.springcooler.sgma.recruitmentboard.query.dto;
 
-
-
-
-
 import lombok.Data;
 
 import java.sql.Timestamp;
 
 @Data
-
 public class RecruitmentBoardDTO {
     private Long recruitmentBoardId;
     private String title;
@@ -21,4 +16,5 @@ public class RecruitmentBoardDTO {
     private int likes;
     private Long groupId;
     private int studyGroupCategoryId;
+    private Long UserId;
 }

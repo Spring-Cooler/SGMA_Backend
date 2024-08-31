@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 @RestController
-@RequestMapping("/api/study-group-applicants")
+@RequestMapping("/api/recruitment-board")
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class RecruitmentBoardCommandController {

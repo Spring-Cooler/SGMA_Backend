@@ -22,6 +22,9 @@ public class RecruitmentBoard {
     @Column(columnDefinition = "TEXT",nullable = false)
     private String title;
 
+    @Column(columnDefinition = "TEXT")
+    private String content;
+
     @Column(name = "created_at",columnDefinition = "TIMESTAMP",nullable = false)
     private Timestamp createdAt;
 
