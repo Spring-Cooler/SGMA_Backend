@@ -75,4 +75,5 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
         deleteNotice.setActiveStatus(StudyGroupNoticeStatus.INACTIVE.name());
         studyGroupNoticeRepository.save(deleteNotice);
     }
+
 }

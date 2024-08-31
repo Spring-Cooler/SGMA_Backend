@@ -31,4 +31,5 @@ public class StudyGroup {
 
     @Column(name="STUDY_GROUP_CATEGORY_ID")
     private int studyGroupCategoryId;
+
 }

@@ -5,11 +5,12 @@ import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
 
 public interface AppStudyGroupService {
+
     // 스터디 그룹 생성
     StudyGroup registStudyGroup(StudyGroupDTO newStudyGroup);
 
     // 스터디 그룹장 신청 승인
-    StudyGroup registAcceptedMember(StudyGroupMemberDTO acceptStudyGroupMember);
+    StudyGroup registAcceptedMember(StudyGroupMemberDTO newMember);
 
     // 스터디 그룹 정보 수정
     StudyGroup modifyStudyGroup(StudyGroupDTO modifyStudyGroup);
@@ -25,4 +26,5 @@ public interface AppStudyGroupService {
 
     // 스터디 그룹 삭제
     void deleteStudyGroup(long groupId);
+
 }

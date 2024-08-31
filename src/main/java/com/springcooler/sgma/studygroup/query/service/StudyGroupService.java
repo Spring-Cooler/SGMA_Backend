@@ -5,6 +5,7 @@ import com.springcooler.sgma.studygroup.query.dto.StudyGroupDTO;
 import java.util.List;
 
 public interface StudyGroupService {
+
     // 스터디 그룹 전체 조회
     List<StudyGroupDTO> findAllStudyGroups();
 
@@ -22,4 +23,5 @@ public interface StudyGroupService {
 
     // 스터디 그룹 단건 조회(그룹 이름)
     List<StudyGroupDTO> findStudyGroupByGroupName(String groupName);
+
 }

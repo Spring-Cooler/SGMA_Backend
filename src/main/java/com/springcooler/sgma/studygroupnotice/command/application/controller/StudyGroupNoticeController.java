@@ -40,4 +40,5 @@ public class StudyGroupNoticeController {
         studyGroupNoticeService.deleteStudyGroupNotice(noticeId);
         return ResponseEntity.noContent().build();
     }
+
 }
