@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
         return ResponseDTO.fail(e);
     }
 
-
+    //필기. 서버 내부 오류시 작동
     @ExceptionHandler(value = {Exception.class})
     public ResponseDTO<?> handleServerException(Exception e) {
         log.info("occurred exception in handleServerError = {}", e.getMessage());
