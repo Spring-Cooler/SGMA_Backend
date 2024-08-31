@@ -13,15 +13,12 @@
         password,
         nickname,
         email,
-        gender,
         user_status AS userStatus,
-        birth_year AS birthYear,
-        birth_day AS birthDay,
         created_at AS createdAt,
         withdrawn_at AS withdrawnAt,
-        last_login_time AS lastLoginTime,
         profile_image AS profileImage,
-        accept_status AS acceptStatus  <!-- 올바른 필드명으로 수정 -->
+        accept_status AS acceptStatus,
+        signup_path AS signupPath
         FROM USER
         WHERE user_id = #{userId}
     </select>
@@ -34,15 +31,12 @@
         password,
         nickname,
         email,
-        gender,
         user_status AS userStatus,
-        birth_year AS birthYear,
-        birth_day AS birthDay,
         created_at AS createdAt,
         withdrawn_at AS withdrawnAt,
-        last_login_time AS lastLoginTime,
         profile_image AS profileImage,
-        accept_status AS acceptStatus  <!-- 올바른 필드명으로 수정 -->
+        accept_status AS acceptStatus,
+        signup_path AS signupPath
         FROM USER
         WHERE nickname = #{nickname}
     </select>

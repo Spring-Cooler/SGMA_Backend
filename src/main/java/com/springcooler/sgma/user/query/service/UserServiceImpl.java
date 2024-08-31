@@ -6,7 +6,7 @@ import com.springcooler.sgma.user.query.dto.UserDTO;
 import com.springcooler.sgma.user.query.repository.UserMapper;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("userQueryServiceImpl")
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
