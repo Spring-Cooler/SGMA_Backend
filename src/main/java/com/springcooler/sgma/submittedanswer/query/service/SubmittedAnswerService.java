@@ -1,4 +1,10 @@
 package com.springcooler.sgma.submittedanswer.query.service;
 
-public class SubmittedAnswerService {
+import com.springcooler.sgma.submittedanswer.query.dto.SubmittedAnswerDTO;
+
+import java.util.List;
+
+public interface SubmittedAnswerService {
+
+    List<SubmittedAnswerDTO> findAllSubmittedAnswers();
 }
