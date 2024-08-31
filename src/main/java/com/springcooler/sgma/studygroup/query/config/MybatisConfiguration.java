@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration("studyGroupMybatisConfiguration")
 @MapperScan(basePackages = "com.springcooler.sgma.studygroup.query.repository", annotationClass= Mapper.class)
-public class StudyGroupMybatisConfiguration {
+public class MybatisConfiguration {
 }

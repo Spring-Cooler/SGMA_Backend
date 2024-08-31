@@ -57,13 +57,13 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     // 스터디 그룹장 신청 승인
     @Transactional
     @Override
-    public StudyGroup registAcceptedMember(StudyGroupMemberDTO acceptStudyGroupMember) {
+    public StudyGroup registAcceptedMember(StudyGroupMemberDTO newMember) {
         // 스터디 그룹 조회
-        StudyGroup existingStudyGroup = studyGroupRepository.findById(acceptStudyGroupMember.getGroupId())
+        StudyGroup existingStudyGroup = studyGroupRepository.findById(newMember.getGroupId())
                 .orElseThrow(() -> new EntityNotFoundException("잘못된 요청입니다."));
 
         // 스터디 그룹원 추가 요청
-        infraStudyGroupService.registStudyGroupMember(acceptStudyGroupMember);
+        infraStudyGroupService.registStudyGroupMember(newMember);
 
         // 스터디 그룹원 수 + 1
         existingStudyGroup.setGroupMembers(existingStudyGroup.getGroupMembers() + 1);
@@ -140,10 +140,11 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     @Transactional
     @Override
     public void deleteStudyGroup(long groupId) {
+        // 스터디 그룹 조회
         StudyGroup deleteStudyGroup = studyGroupRepository.findById(groupId)
                 .orElseThrow(() -> new EntityNotFoundException("잘못된 삭제 요청입니다."));
 
-        // 스터디 그룹 삭제 유효성 검사
+        // 유효성 검사
         if(!domainStudyGroupService.isActive(deleteStudyGroup.getActiveStatus()))
             throw new EntityNotFoundException("잘못된 삭제 요청입니다.");
 

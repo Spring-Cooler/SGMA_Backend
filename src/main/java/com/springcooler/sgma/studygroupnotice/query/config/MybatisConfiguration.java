@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration("studyGroupNoticeMybatisConfiguration")
 @MapperScan(basePackages = "com.springcooler.sgma.studygroupnotice.query.repository", annotationClass= Mapper.class)
-public class StudyGroupNoticeMybatisConfiguration {
+public class MybatisConfiguration {
 }

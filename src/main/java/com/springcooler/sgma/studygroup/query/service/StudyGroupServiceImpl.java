@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class StudyGroupServiceImpl implements StudyGroupService {
+
     private final StudyGroupMapper studyGroupMapper;
 
     @Autowired
@@ -51,4 +52,5 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     public List<StudyGroupDTO> findStudyGroupByGroupName(String groupName) {
         return studyGroupMapper.findStudyGroupByGroupName(groupName);
     }
+
 }
