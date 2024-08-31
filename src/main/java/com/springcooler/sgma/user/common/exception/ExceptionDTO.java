@@ -1,7 +1,7 @@
 package com.springcooler.sgma.user.common.exception;
 
 import lombok.Getter;
-
+//필기. 에러 응답 형식(코드,메시지)
 @Getter
 public class ExceptionDTO {
     private final Integer code;
