@@ -22,7 +22,7 @@ public class ProblemController {
 
     @PostMapping("/")
     public ResponseEntity<?> registProblem(@RequestBody ProblemDTO newProblem) {
-        return ResponseEntity.created(URI.create("/api/problems" + appProblemService.registProblem(newProblem).getProblemId())).build();
+        return ResponseEntity.created(URI.create("/api/problems/" + appProblemService.registProblem(newProblem).getProblemId())).build();
     }
 
     @PutMapping("/modify")

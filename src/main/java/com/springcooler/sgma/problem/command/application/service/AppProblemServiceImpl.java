@@ -4,11 +4,12 @@ import com.springcooler.sgma.problem.command.application.dto.ProblemDTO;
 import com.springcooler.sgma.problem.command.domain.aggregate.Problem;
 import com.springcooler.sgma.problem.command.domain.repository.ProblemRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+@Slf4j
 @Service
 public class AppProblemServiceImpl implements AppProblemService{
 
@@ -23,8 +24,11 @@ public class AppProblemServiceImpl implements AppProblemService{
     @Transactional
     @Override
     public Problem registProblem(ProblemDTO newProblem) {
+        log.info("newProblem: {}", newProblem);
         Problem problem = modelMapper.map(newProblem, Problem.class);
-        problemRepository.save(problem);
+        log.info("problemEntity: {}", problem);
+        problem = problemRepository.save(problem);
+        log.info("problemSaved: {}", problem);
         return problem;
     }
 
