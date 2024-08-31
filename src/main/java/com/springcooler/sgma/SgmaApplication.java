@@ -9,10 +9,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SgmaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SgmaApplication.class, args);
-		StudyGroupApplicantService studyGroupApplicantService=new StudyGroupApplicantService();
-		studyGroupApplicantService.selectStudyGroupApplicantByRecruitmentBoardId(2L);
-		studyGroupApplicantService.selectStudyGroupApplicantByUserId(2L);
-
-		System.out.println("=================================");
 	}
 }

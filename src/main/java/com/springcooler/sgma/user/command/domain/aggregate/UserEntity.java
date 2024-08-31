@@ -45,12 +45,24 @@ public class UserEntity {
     @Column(name = "signup_path", length = 255)
     private String signupPath;
 
+    //필기. 사용자 정보 비활성화로 설정
     public void deactivateUser() {
         this.userStatus = "INACTIVE";
         this.withdrawnAt = new Timestamp(System.currentTimeMillis());
     }
 
+    //필기. 사용자 정보 활성화로 설정
     public void activateUser() {
         this.userStatus = "ACTIVE";
+    }
+    
+    //필기. 사용자 정보 변경(닉네임, 사진)
+    public void updateProfile(String nickname, String profileImage) {
+        if (nickname != null && !nickname.isEmpty()) {
+            this.nickname = nickname;
+        }
+        if (profileImage != null && !profileImage.isEmpty()) {
+            this.profileImage = profileImage;
+        }
     }
 }

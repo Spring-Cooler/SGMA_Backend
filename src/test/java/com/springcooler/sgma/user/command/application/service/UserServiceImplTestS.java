@@ -1,5 +1,6 @@
 package com.springcooler.sgma.user.command.application.service;
 
+import com.springcooler.sgma.user.command.application.vo.RequestUpdateUserVO;
 import com.springcooler.sgma.user.command.domain.aggregate.UserEntity;
 import com.springcooler.sgma.user.command.domain.repository.UserRepository;
 import com.springcooler.sgma.user.common.exception.CommonException;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class UserServiceImplTest {
+class UserServiceImplTestS {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
@@ -74,6 +75,38 @@ class UserServiceImplTest {
 
         // When & Then
         CommonException exception = assertThrows(CommonException.class, () -> userServiceImpl.activateUser(userId));
+        assertEquals(ErrorCode.NOT_FOUND_USER, exception.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("사용자 프로필 업데이트 성공 테스트")
+    void updateProfile_Success() {
+        // Given
+        Long userId = 1L;
+        RequestUpdateUserVO userUpdateVO = new RequestUpdateUserVO();
+        userUpdateVO.setNickname("새로운 닉네임");
+        userUpdateVO.setProfileImage("new_image_url");
+
+        // When
+        UserEntity result = userServiceImpl.updateProfile(userId, userUpdateVO);
+
+        // Then
+        assertNotNull(result);
+        assertEquals("새로운 닉네임", result.getNickname());
+        assertEquals("new_image_url", result.getProfileImage());
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 사용자 프로필 업데이트 실패 테스트")
+    void updateProfile_UserNotFound() {
+        // Given
+        Long userId = 999L;  // 존재하지 않는 사용자 ID로 테스트
+        RequestUpdateUserVO userUpdateVO = new RequestUpdateUserVO();
+        userUpdateVO.setNickname("새로운 닉네임");
+        userUpdateVO.setProfileImage("new_image_url");
+
+        // When & Then
+        CommonException exception = assertThrows(CommonException.class, () -> userServiceImpl.updateProfile(userId, userUpdateVO));
         assertEquals(ErrorCode.NOT_FOUND_USER, exception.getErrorCode());
     }
 }
