@@ -5,4 +5,10 @@ import com.springcooler.sgma.submittedanswer.command.domain.aggregate.SubmittedA
 
 public interface AppSubmittedAnswerService {
     SubmittedAnswer registSubmittedAnswer(SubmittedAnswerDTO newSubmittedAnswerDTO);
+
+    SubmittedAnswer modifySubmittedAnswer(SubmittedAnswerDTO modifySubmittedAnswer);
+
+    SubmittedAnswer findSubmittedAnswerByProblemIdAndParticipantId(long problemId, long participantId);
+
+    void gradeSubmittedAnswer(SubmittedAnswerDTO submittedAnswerDTO);
 }

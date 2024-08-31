@@ -5,6 +5,7 @@ import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Embeddable
+@ToString
 public class SubmittedAnswerPK implements Serializable {
     @Column(name = "problem_id")
     private long problemId;

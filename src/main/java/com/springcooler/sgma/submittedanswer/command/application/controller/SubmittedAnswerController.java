@@ -4,10 +4,7 @@ import com.springcooler.sgma.submittedanswer.command.application.dto.SubmittedAn
 import com.springcooler.sgma.submittedanswer.command.application.service.AppSubmittedAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -25,6 +22,11 @@ public class SubmittedAnswerController {
     @PostMapping("/")
     public ResponseEntity<?> registSubmittedAnswer(@RequestBody SubmittedAnswerDTO newSubmittedAnswer){
         return ResponseEntity.created(URI.create("/api/submitted-answers/" + appSubmittedAnswerService.registSubmittedAnswer(newSubmittedAnswer))).build();
+    }
+
+    @PutMapping("/problems/{problemId}")
+    public ResponseEntity<?> modifySubmittedAnswer(@RequestBody SubmittedAnswerDTO modifySubmittedAnswer){
+        return ResponseEntity.created(URI.create("/api/submitted-answers/" + appSubmittedAnswerService.modifySubmittedAnswer(modifySubmittedAnswer))).build();
     }
 
 }
