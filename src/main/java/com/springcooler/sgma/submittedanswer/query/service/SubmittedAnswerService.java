@@ -7,4 +7,6 @@ import java.util.List;
 public interface SubmittedAnswerService {
 
     List<SubmittedAnswerDTO> findAllSubmittedAnswers();
+
+    List<SubmittedAnswerDTO> findSubmittedAnswersByProblemId(long problemId);
 }

@@ -18,7 +18,16 @@
                    ,A.ANSWER_STATUS
           FROM SUBMITTED_ANSWER A
     </select>
+    <select id="findSubmittedAnswersByProblemId" resultMap="submittedAnswerResultMap" parameterType="long">
+        SELECT
+                    A.PROBLEM_ID
+                   ,A.PARTICIPANT_ID
+                   ,A.SUBMITTED_ANSWER
+                   ,A.ANSWER_STATUS
+          FROM SUBMITTED_ANSWER A
+         WHERE A.PROBLEM_ID = #{ problemId }
 
+    </select>
 
 
 

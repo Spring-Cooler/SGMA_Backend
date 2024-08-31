@@ -20,4 +20,9 @@ public class SubmittedAnswerServiceImpl implements SubmittedAnswerService{
     public List<SubmittedAnswerDTO> findAllSubmittedAnswers() {
         return submittedAnswerMapper.findAllSubmittedAnswers();
     }
+
+    @Override
+    public List<SubmittedAnswerDTO> findSubmittedAnswersByProblemId(long problemId) {
+        return submittedAnswerMapper.findSubmittedAnswersByProblemId(problemId);
+    }
 }

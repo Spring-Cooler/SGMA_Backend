@@ -8,6 +8,8 @@ import java.util.List;
 @Mapper
 public interface SubmittedAnswerMapper {
     List<SubmittedAnswerDTO> findAllSubmittedAnswers();
+
+    List<SubmittedAnswerDTO> findSubmittedAnswersByProblemId(long problemId);
 //    List<SubmittedAnswerDTO> findSubmittedAnswersByScheduleId();
 //    List<SubmittedAnswerDTO> findSubmittedAnswersByProblemId();
 
