@@ -11,7 +11,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-
+//필기. 응답 DTO통일
 @Data
 public class ResponseDTO<T> {
 

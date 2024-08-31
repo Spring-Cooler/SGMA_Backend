@@ -4,7 +4,7 @@ package com.springcooler.sgma.user.common.exception;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-
+//필기. 에러 상태별 메시지
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
