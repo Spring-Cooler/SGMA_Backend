@@ -2,7 +2,7 @@ package com.springcooler.sgma.problem.query.controller;
 
 import com.springcooler.sgma.problem.query.common.ResponseMessage;
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
-import com.springcooler.sgma.problem.query.service.ProblemService;
+import com.springcooler.sgma.problem.query.service.ProblemServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,16 +18,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController("queryProblemController")
-@RequestMapping("/api/problems")
+@RequestMapping("/api/problems")    // TODO: study-problems로 수정
 @Slf4j
 public class ProblemController {
 
-    private ProblemService problemService;
+    private ProblemServiceImpl queryProblemServiceImpl;
     List<ProblemDTO> problems;
     @Autowired
-    public ProblemController(ProblemService problemService, List<ProblemDTO> problems) {
-        this.problemService = problemService;
-        this.problems = problemService.findAllProblems();
+    public ProblemController(ProblemServiceImpl queryProblemServiceImpl, List<ProblemDTO> problems) {
+        this.queryProblemServiceImpl = queryProblemServiceImpl;
+        this.problems = queryProblemServiceImpl.findAllProblems();
     }
     @GetMapping("/")
     public ResponseEntity<ResponseMessage> getAllProblems() {
