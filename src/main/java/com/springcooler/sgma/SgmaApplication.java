@@ -1,6 +1,7 @@
 package com.springcooler.sgma;
 
 
+import com.springcooler.sgma.studygroupapplicant.query.service.StudyGroupApplicantService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,5 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SgmaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SgmaApplication.class, args);
+		StudyGroupApplicantService studyGroupApplicantService=new StudyGroupApplicantService();
+		studyGroupApplicantService.selectStudyGroupApplicantByRecruitmentBoardId(2L);
+		studyGroupApplicantService.selectStudyGroupApplicantByUserId(2L);
+
+		System.out.println("=================================");
 	}
 }

@@ -32,6 +32,7 @@ public class RecruitmentBoardCommandService {
         RecruitmentBoard studyGroupApplicant = RecruitmentBoard.builder()
                 .recruitmentBoardId(studyGroupApplicantCommandDTO.getRecruitmentBoardId())
                 .title(studyGroupApplicantCommandDTO.getTitle())
+                .content(studyGroupApplicantCommandDTO.getContent())
                 .createdAt(currentTimestamp)  // 한국 현재 시간을 설정합니다.
                 .updatedAt(currentTimestamp)
                 .recruitmentStartTime(studyGroupApplicantCommandDTO.getRecruitmentStartTime())
@@ -52,6 +53,7 @@ public class RecruitmentBoardCommandService {
         if (optionalApplicant.isPresent()) {
             RecruitmentBoard existingApplicant = optionalApplicant.get();
             existingApplicant.setTitle(dto.getTitle());
+            existingApplicant.setContent(dto.getContent());
             existingApplicant.setRecruitmentStartTime(dto.getRecruitmentStartTime());
             existingApplicant.setRecruitmentEndTime(dto.getRecruitmentEndTime());
 
@@ -76,7 +78,7 @@ public class RecruitmentBoardCommandService {
 
         if (optionalApplicant.isPresent()) {
             RecruitmentBoard applicantUpdate = optionalApplicant.get();
-            applicantUpdate.setActiveStatus(BoardActiveStatus.INACTIVE);
+            applicantUpdate.setActiveStatus(BoardActiveStatus.DELETED);
             recruitmentBoardRepository.save(applicantUpdate);
             return true;
         } else {

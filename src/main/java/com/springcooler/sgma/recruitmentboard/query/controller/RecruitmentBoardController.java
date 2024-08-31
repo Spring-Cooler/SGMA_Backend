@@ -19,18 +19,18 @@ import java.util.List;
 @RequestMapping("api/study-group-applicant")
 public class RecruitmentBoardController {
 
-    private final RecruitmentBoardService studyGroupApplicantService;
+    private final RecruitmentBoardService recruitmentBoardService;
 
     @Autowired
     public RecruitmentBoardController(RecruitmentBoardService studyGroupApplicantService) {
-        this.studyGroupApplicantService = studyGroupApplicantService;
+        this.recruitmentBoardService = studyGroupApplicantService;
     }
 
 
 
     @GetMapping("getAll")
-    public ResponseEntity<?> getAllStudyGroupApplicantList() {
-        List<RecruitmentBoardDTO> studyGroupApplicants = studyGroupApplicantService.studyGroupRecruitment();
+    public ResponseEntity<?> findAllRecruitmentBoardApplicantList() {
+        List<RecruitmentBoardDTO> studyGroupApplicants = recruitmentBoardService.studyGroupRecruitment();
         if(studyGroupApplicants.isEmpty()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("모집 글이 존재하지 않습니다");
         }
@@ -40,9 +40,9 @@ public class RecruitmentBoardController {
 
 
     @GetMapping("getstudygroup/{recruitmentBoardId}")
-    public ResponseEntity<?> findStudyGroupApplicantByRecruitmentBoardId(@PathVariable Long recruitmentBoardId) {
+    public ResponseEntity<?> findRecruitmentBoardByRecruitmentBoardId(@PathVariable Long recruitmentBoardId) {
         try {
-            RecruitmentBoardDTO applicantDTO = studyGroupApplicantService.selectStudyGroupApplicantById(recruitmentBoardId);
+            RecruitmentBoardDTO applicantDTO = recruitmentBoardService.selectStudyGroupApplicantById(recruitmentBoardId);
             return ResponseEntity.ok(applicantDTO);
         } catch (Exception e) {
             e.printStackTrace();

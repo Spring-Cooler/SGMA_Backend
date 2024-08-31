@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.springcooler.sgma.recruitmentboard.common.Template.getSqlSession;
+import static com.springcooler.sgma.studygroupapplicant.common.Template.getSqlSession;
 
 
 @Service
@@ -27,7 +27,9 @@ public class RecruitmentBoardService {
     public RecruitmentBoardDTO selectStudyGroupApplicantById(Long recruitmentBoardId){
         SqlSession sqlSession =getSqlSession();
         recruitmentBoardMapper =sqlSession.getMapper(RecruitmentBoardMapper.class);
-        RecruitmentBoardDTO studyGroupApplicant = recruitmentBoardMapper.selectStudyGroupApplicantDTO(recruitmentBoardId);
-        return studyGroupApplicant;
+//        RecruitmentBoardDTO studyGroupApplicant = recruitmentBoardMapper.selectStudyGroupApplicantDTO(recruitmentBoardId);
+//        return studyGroupApplicant;
+        RecruitmentBoardDTO recruitmentBoardDTO = recruitmentBoardMapper.selectStudyGroupApplicantDTO(recruitmentBoardId);
+        return recruitmentBoardDTO;
     }
 }
