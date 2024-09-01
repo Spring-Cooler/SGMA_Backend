@@ -24,7 +24,7 @@ class AppSubmittedAnswerServiceTests {
     void testRegistSubmittedAnswer(){
 
         // given
-        SubmittedAnswerDTO newSubmittedAnswerDTO = new SubmittedAnswerDTO(12,10,3, "UNGRADED");
+        SubmittedAnswerDTO newSubmittedAnswerDTO = new SubmittedAnswerDTO(10,10,3, "UNGRADED");
         log.info("newSubmittedAnswerDTO: {}", newSubmittedAnswerDTO);
         // when
         SubmittedAnswer newSubmittedAnswer = appSubmittedAnswerService.registSubmittedAnswer(newSubmittedAnswerDTO);
@@ -40,7 +40,7 @@ class AppSubmittedAnswerServiceTests {
     void testModifySubmittedAnswer(){
 
         // given
-        SubmittedAnswerDTO newSubmittedAnswerDTO = new SubmittedAnswerDTO(12,10,2, "UNGRADED");
+        SubmittedAnswerDTO newSubmittedAnswerDTO = new SubmittedAnswerDTO(10,10,2, "UNGRADED");
 
         log.info("newSubmittedAnswerDTO: {}", newSubmittedAnswerDTO);
 

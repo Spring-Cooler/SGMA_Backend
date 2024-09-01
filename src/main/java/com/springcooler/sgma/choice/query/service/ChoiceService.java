@@ -1,4 +1,7 @@
 package com.springcooler.sgma.choice.query.service;
 
-public class ChoiceService {
+import com.springcooler.sgma.choice.query.dto.ChoiceDTO;
+
+public interface ChoiceService {
+    ChoiceDTO getChoiceById(long problemChoiceId);
 }
