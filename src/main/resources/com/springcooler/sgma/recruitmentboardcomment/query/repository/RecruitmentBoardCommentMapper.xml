@@ -21,7 +21,7 @@
     <select id="studyGroupRecruitmentCommentDTO1" resultMap="studyGroupRecruitmentComment2">
         SELECT
         A.RECRUITMENT_BOARD_COMMENT_ID,
-        A.CONTENT,S
+        A.CONTENT,
         A.CREATED_AT,
         A.UPDATED_AT,
         A.ACTIVE_STATUS,
