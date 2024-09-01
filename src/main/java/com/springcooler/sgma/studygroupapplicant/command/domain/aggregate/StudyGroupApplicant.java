@@ -11,7 +11,6 @@ import lombok.*;
 @Setter
 public class StudyGroupApplicant {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
     private Long userId;
 
