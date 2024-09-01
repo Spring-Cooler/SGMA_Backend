@@ -7,5 +7,5 @@ import com.springcooler.sgma.user.command.domain.aggregate.UserEntity;
 public interface UserService{
     UserEntity deactivateUser(Long userId);
     UserEntity activateUser(Long userId);
-    UserEntity updateProfile(Long userId, RequestUpdateUserDTO userUpdateDTO);
+//    UserEntity updateProfile(Long userId, RequestUpdateUserDTO userUpdateDTO);
 }
