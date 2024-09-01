@@ -29,4 +29,9 @@ public class StudyGroupMemberServiceImpl implements StudyGroupMemberService {
         return studyGroupMemberMapper.findStudyGroupMembersByGroupId(groupId);
     }
 
+    @Override
+    public List<StudyGroupMemberDTO> findStudyGroupMembersByUserId(long userId) {
+        return studyGroupMemberMapper.findStudyGroupMembersByUserId(userId);
+    }
+
 }
