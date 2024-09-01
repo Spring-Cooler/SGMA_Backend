@@ -9,4 +9,6 @@ public interface AppProblemService {
     Problem modifyProblem(ProblemDTO modifiedProblem);
 
     void deleteProblem(long problemId);
+
+    int getAnswerByProblemId(long problemId);
 }
