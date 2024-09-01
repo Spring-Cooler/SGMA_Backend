@@ -1,7 +1,7 @@
 package com.springcooler.sgma.studygroupapplicant.command.application.service;
 
 
-import com.springcooler.sgma.recruitmentboard.command.domain.aggregate.StudyGroupApplicantId;
+import com.springcooler.sgma.studygroupapplicant.command.domain.aggregate.StudyGroupApplicantId;
 import com.springcooler.sgma.studygroup.command.application.service.AppStudyGroupService;
 import com.springcooler.sgma.studygroupapplicant.command.application.dto.StudyGroupApplicantCommandDTO;
 import com.springcooler.sgma.studygroupapplicant.command.domain.aggregate.ApplicationStatus;

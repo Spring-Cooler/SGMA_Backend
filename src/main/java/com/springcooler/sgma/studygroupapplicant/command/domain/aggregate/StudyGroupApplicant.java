@@ -1,6 +1,5 @@
 package com.springcooler.sgma.studygroupapplicant.command.domain.aggregate;
 
-import com.springcooler.sgma.recruitmentboard.command.domain.aggregate.StudyGroupApplicantId;
 import jakarta.persistence.*;
 import lombok.*;
 
