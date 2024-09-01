@@ -6,21 +6,33 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.springcooler.sgma.user.command.application.dto.RequestUpdateUserDTO;
-import com.springcooler.sgma.user.command.domain.aggregate.vo.RequestUpdateUserVO;
+import com.springcooler.sgma.user.command.application.dto.UserDTO;
 import com.springcooler.sgma.user.command.domain.aggregate.UserEntity;
 import com.springcooler.sgma.user.command.domain.repository.UserRepository;
 import com.springcooler.sgma.user.common.exception.CommonException;
 import com.springcooler.sgma.user.common.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service("userCommandServiceImpl")
 @Slf4j
@@ -32,10 +44,19 @@ public class UserServiceImpl implements UserService {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    /* 설명. security 모듈 추가 후 암호화를 위해 BCryptPasswordEncoder bean 주입 */
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ModelMapper modelMapper;
+
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, AmazonS3Client s3Client) {
+    public UserServiceImpl(UserRepository userRepository
+            , AmazonS3Client s3Client
+            , BCryptPasswordEncoder bCryptPasswordEncoder
+            , ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.s3Client = s3Client;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.modelMapper = modelMapper;
     }
 
     /**
@@ -171,5 +192,49 @@ public class UserServiceImpl implements UserService {
             throw new CommonException(ErrorCode.FILE_CONVERSION_ERROR);
         }
         return convertedFile;
+    }
+
+    //필기.
+    @Override
+    @Transactional
+    public UserDTO registUser(UserDTO userDTO) {
+
+    /* 설명. 경우에 따라 ModelMapper는 자의적인 판단으로 필드끼리 매핑하는 경우가 있어
+       정확히 일치되게 매칭하려면 추가할 속성 */
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+        // DTO -> Entity 변환
+        UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
+        log.info("Service 계층에서 DTO -> Entity: {}", userEntity);
+
+        /* 설명. BCryptPasswordEncoder 주입 후 암호화(평문 -> 다이제스트) */
+        userEntity.setEncryptedPwd(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+
+        // Entity 저장 후 반환된 Entity 가져오기
+        UserEntity savedEntity = userRepository.save(userEntity);
+
+        // 저장된 Entity를 DTO로 변환하여 반환
+        return modelMapper.map(savedEntity, UserDTO.class);
+    }
+
+    /* 설명. 로그인 시 security가 자동으로 호출하는 메소드 */
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        /* 설명. 넘어온 email이 사용자가 입력한 id로써 eamil로 회원을 조회하는 쿼리 메소드 작성 */
+        UserEntity loginUser = userRepository.findByEmail(email);
+
+        if (loginUser == null) {
+            throw new UsernameNotFoundException(email + " 이메일 아이디의 유저는 존재하지 않습니다.");
+        }
+
+        /* 설명. 사용자의 권한들을 가져왔다는 가정 */
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ENTERPRISE"));
+
+        return new User(loginUser.getEmail(), loginUser.getEncryptedPwd(),
+                true, true, true, true,
+                grantedAuthorities);
     }
 }

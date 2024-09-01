@@ -1,8 +1,9 @@
 package com.springcooler.sgma.user.command.application.controller;
 
 import com.springcooler.sgma.user.command.application.dto.RequestUpdateUserDTO;
+import com.springcooler.sgma.user.command.application.dto.UserDTO;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.RequestResistUserVO;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.ResponseUserVO;
-import com.springcooler.sgma.user.command.domain.aggregate.vo.RequestUpdateUserVO;
 import com.springcooler.sgma.user.common.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -11,6 +12,8 @@ import com.springcooler.sgma.user.command.application.service.UserService;
 import com.springcooler.sgma.user.command.domain.aggregate.UserEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDateTime;
 
 @RestController("userCommandController")
 @RequestMapping("/api/users")
@@ -59,6 +62,24 @@ public class UserController {
         UserEntity userEntity = userService.updateProfile(userId, userUpdateDTO);
         ResponseUserVO userUpdateRequestVO = modelMapper.map(userEntity, ResponseUserVO.class);
         return ResponseDTO.ok(userUpdateRequestVO);
+    }
+
+    /*설명. 일반 회원 가입 기능*/
+    @PostMapping("/normal")
+    public ResponseDTO<?> registNormalUser(@RequestBody RequestResistUserVO newUser) {
+        UserDTO userDTO = modelMapper.map(newUser, UserDTO.class);
+
+        // signupPath 설정
+        userDTO.setSignupPath(newUser.getSignupPath());
+
+        // createdAt 현재 시각으로 설정
+        userDTO.setCreatedAt(LocalDateTime.now().withNano(0));
+
+        // UserService 호출
+        UserDTO savedUserDTO = userService.registUser(userDTO); // 저장된 DTO 반환
+
+        ResponseUserVO responseUser=modelMapper.map(savedUserDTO,ResponseUserVO.class);
+        return ResponseDTO.ok(responseUser);
     }
 
 }
