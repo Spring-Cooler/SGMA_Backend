@@ -1,7 +1,12 @@
-package com.springcooler.sgma.user.command.application.vo;
+package com.springcooler.sgma.user.command.domain.aggregate.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.springcooler.sgma.user.command.domain.aggregate.AcceptStatus;
+import com.springcooler.sgma.user.command.domain.aggregate.ActiveStatus;
+import com.springcooler.sgma.user.command.domain.aggregate.SignupPath;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 public class ResponseUserVO {
@@ -22,20 +27,20 @@ public class ResponseUserVO {
     private String email;
 
     @JsonProperty("user_status")
-    private String userStatus;
+    private ActiveStatus userStatus;  // Enum 타입으로 정의
 
     @JsonProperty("created_at")
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @JsonProperty("withdrawn_at")
-    private String withdrawnAt;
+    private LocalDateTime withdrawnAt;
 
     @JsonProperty("profile_image")
     private String profileImage;
 
     @JsonProperty("accept_status")
-    private String acceptStatus;
+    private AcceptStatus acceptStatus;  // Enum 타입으로 정의
 
     @JsonProperty("signup_path")
-    private String signupPath;
+    private SignupPath signupPath;  // Enum 타입으로 정의
 }

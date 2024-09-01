@@ -9,7 +9,9 @@ import com.springcooler.sgma.user.query.repository.RecruitmentCommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class RecruitmentCommentServiceImpl implements RecruitmentCommentService {
@@ -31,11 +33,12 @@ public class RecruitmentCommentServiceImpl implements RecruitmentCommentService 
             throw new CommonException(ErrorCode.NOT_FOUND_RECRUITMENT_BOARD_COMMENT);
         }
 
-        // 통합 DTO 생성 및 반환
+        // 기존 Map 사용 대신, List로 그대로 반환
         UserCommentsAndRepliesDTO result = new UserCommentsAndRepliesDTO();
-        result.setComments(comments != null ? comments : List.of());
-        result.setReplies(replies != null ? replies : List.of());
+        result.setComments(comments);  // List를 그대로 설정
+        result.setReplies(replies);    // List를 그대로 설정
 
         return result;
     }
+
 }

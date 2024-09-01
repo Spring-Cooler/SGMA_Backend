@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserByuUserId(Long userId) {
+    public UserDTO getUserByUserId(Long userId) {
         UserDTO user = userMapper.findByUserId(userId);
         if (user == null) {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);

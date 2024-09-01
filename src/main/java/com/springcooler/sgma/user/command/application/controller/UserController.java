@@ -1,7 +1,7 @@
 package com.springcooler.sgma.user.command.application.controller;
 
-import com.springcooler.sgma.user.command.application.vo.ResponseUserVO;
-import com.springcooler.sgma.user.command.application.vo.RequestUpdateUserVO;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.ResponseUserVO;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.RequestUpdateUserVO;
 import com.springcooler.sgma.user.common.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
