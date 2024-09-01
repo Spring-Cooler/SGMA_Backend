@@ -16,15 +16,27 @@ public class StudyScheduleServiceImpl implements StudyScheduleService {
         this.studyScheduleMapper = studyScheduleMapper;
     }
 
+    // 스터디 그룹 일정 단건 조회
+    @Override
+    public List<StudyScheduleDTO> findStudyScheduleByScheduleId(long scheduleId) {
+        return studyScheduleMapper.findStudyScheduleByScheduleId(scheduleId);
+    }
+
     // 스터디 그룹 일정 전체 조회
     @Override
     public List<StudyScheduleDTO> findStudyScheduleByGroupId(long groupId) {
         return studyScheduleMapper.findStudyScheduleByGroupId(groupId);
     }
 
-    // 스터디 그룹 일정 단건 조회 (일정 ID로 조회)
+    // 스터디 그룹 일정 기간별 조회
     @Override
-    public List<StudyScheduleDTO> findStudyScheduleByScheduleId(long scheduleId) {
-        return studyScheduleMapper.findStudyScheduleByScheduleId(scheduleId);
+    public List<StudyScheduleDTO> findStudySchedulesByPeriod(long groupId, String startDate, String endDate) {
+        return studyScheduleMapper.findStudySchedulesByPeriod(groupId, startDate, endDate);
+    }
+
+    // 스터디 그룹 일정 시험의 통계 자료 조회
+    @Override
+    public StudyScheduleDTO findStudyScheduleByStatistics(long scheduleId) {
+        return studyScheduleMapper.findStudyScheduleByStatistics(scheduleId);
     }
 }

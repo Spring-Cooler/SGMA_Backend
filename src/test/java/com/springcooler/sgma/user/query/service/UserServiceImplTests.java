@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Slf4j
 @SpringBootTest
@@ -28,7 +30,7 @@ class UserServiceImplTests {
         log.info("회원 ID로 사용자 조회 테스트 시작");
 
         // 이미 데이터베이스에 존재하는 user_id 1에 대한 테스트
-        UserDTO foundUser = userService.getUserByuUserId(1L);
+        UserDTO foundUser = userService.getUserByUserId(1L);
 
         log.info("조회된 사용자 정보: {}", foundUser);
 
@@ -36,6 +38,10 @@ class UserServiceImplTests {
         assertThat(foundUser.getUserId()).isEqualTo(1L);
         assertThat(foundUser.getUserName()).isEqualTo("조찬국");
         assertThat(foundUser.getEmail()).isEqualTo("alice@example.com");
+
+        // expected LocalDateTime
+        LocalDateTime expectedDateTime = LocalDateTime.of(2023, 8, 1, 10, 30);
+        assertThat(foundUser.getCreatedAt()).isEqualTo(expectedDateTime);
 
         log.info("회원 ID로 사용자 조회 테스트 성공");
     }
@@ -45,13 +51,13 @@ class UserServiceImplTests {
     void getUserByNickname_success() {
         log.info("회원 닉네임으로 사용자 조회 테스트 시작");
 
-        // 이미 데이터베이스에 존재하는 nickname "alice01"에 대한 테스트
-        UserDTO foundUser = userService.getUserByNickname("alice01");
+        // 이미 데이터베이스에 존재하는 nickname "조짠국"에 대한 테스트
+        UserDTO foundUser = userService.getUserByNickname("조짠국");
 
         log.info("조회된 사용자 정보: {}", foundUser);
 
         assertThat(foundUser).isNotNull();
-        assertThat(foundUser.getNickname()).isEqualTo("alice01");
+        assertThat(foundUser.getNickname()).isEqualTo("조짠국");
         assertThat(foundUser.getEmail()).isEqualTo("alice@example.com");
 
         log.info("회원 닉네임으로 사용자 조회 테스트 성공");
