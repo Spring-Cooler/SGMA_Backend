@@ -27,7 +27,7 @@ public class StudyGroupApplicantCommandServiceImpl implements StudyGroupApplican
     public StudyGroupApplicant applyStudyGroup(StudyGroupApplicantCommandDTO studyGroupApplicantCommandDTO) {
         StudyGroupApplicant studyGroupApplicant = StudyGroupApplicant.builder()
                 .userId(studyGroupApplicantCommandDTO.getUserId())
-                .applicationStatus(ApplicationStatus.valueOf("WAIT"))
+                .applicationStatus(ApplicationStatus.WAIT)
                 .recruitmentBoardId(studyGroupApplicantCommandDTO.getRecruitmentBoardId())
                 .build();
         studyGroupApplicantRepository.save(studyGroupApplicant);

@@ -1,5 +1,6 @@
 package com.springcooler.sgma.studygroupapplicant.command.domain.aggregate;
 
+import com.springcooler.sgma.recruitmentboard.command.domain.aggregate.StudyGroupApplicantId;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,15 +10,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
+@IdClass(StudyGroupApplicantId.class)
 public class StudyGroupApplicant {
     @Id
-    @Column(name="user_id")
+    @Column(name = "user_id")
     private Long userId;
+
+    @Id
+    @Column(name = "recruitment_board_id")
+    private Long recruitmentBoardId;
 
     @Column(name="application_status",nullable = false)
     @Enumerated(EnumType.STRING)
     private ApplicationStatus applicationStatus;
 
-    @Column(name = "recruitment_board_id")
-    private Long recruitmentBoardId;
 }
