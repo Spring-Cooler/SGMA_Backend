@@ -42,4 +42,17 @@ class StudyGroupMemberServiceTests {
         );
     }
 
+    @DisplayName("스터디 그룹원 회원별 조회 테스트")
+    @ParameterizedTest
+    @ValueSource(longs = 1)
+    void testFindStudyGroupMembersByUserId(long userId) {
+        Assertions.assertDoesNotThrow(
+                () -> {
+                    List<StudyGroupMemberDTO> studyGroupMembers
+                            = studyGroupMemberService.findStudyGroupMembersByUserId(userId);
+                    studyGroupMembers.forEach(System.out::println);
+                }
+        );
+    }
+
 }
