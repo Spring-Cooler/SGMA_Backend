@@ -2,6 +2,8 @@ package com.springcooler.sgma.studygroup.query.service;
 
 import com.springcooler.sgma.studygroup.query.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.query.repository.StudyGroupMapper;
+import com.springcooler.sgma.studygroup.common.exception.CommonException;
+import com.springcooler.sgma.studygroup.common.exception.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,37 +22,61 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     // 스터디 그룹 전체 조회
     @Override
     public List<StudyGroupDTO> findAllStudyGroups() {
-        return studyGroupMapper.findAllStudyGroups();
+        List<StudyGroupDTO> studyGroups = studyGroupMapper.findAllStudyGroups();
+        if(studyGroups == null || studyGroups.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP);
+        }
+        return studyGroups;
     }
 
     // 그룹장인 스터디 그룹 조회
     @Override
     public List<StudyGroupDTO> findStudyGroupsByOwnerId(Long ownerId) {
-        return studyGroupMapper.findStudyGroupsByOwnerId(ownerId);
+        List<StudyGroupDTO> studyGroups = studyGroupMapper.findStudyGroupsByOwnerId(ownerId);
+        if(studyGroups == null || studyGroups.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP);
+        }
+        return studyGroups;
     }
 
     // 그룹원인 스터디 그룹 조회
     @Override
     public List<StudyGroupDTO> findStudyGroupsByParticipantId(Long participantId) {
-        return studyGroupMapper.findStudyGroupsByParticipantId(participantId);
+        List<StudyGroupDTO> studyGroups = studyGroupMapper.findStudyGroupsByParticipantId(participantId);
+        if(studyGroups == null || studyGroups.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP);
+        }
+        return studyGroups;
     }
 
     // 스터디 그룹 카테고리별 조회
     @Override
-    public List<StudyGroupDTO> findStudyGroupsByCategoryId(int categoryId) {
-        return studyGroupMapper.findStudyGroupsByCategoryId(categoryId);
+    public List<StudyGroupDTO> findStudyGroupsByCategoryId(Integer categoryId) {
+        List<StudyGroupDTO> studyGroups = studyGroupMapper.findStudyGroupsByCategoryId(categoryId);
+        if(studyGroups == null || studyGroups.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP);
+        }
+        return studyGroups;
     }
 
     // 스터디 그룹 단건 조회(그룹 아이디)
     @Override
-    public List<StudyGroupDTO> findStudyGroupByGroupId(long groupId) {
-        return studyGroupMapper.findStudyGroupByGroupId(groupId);
+    public StudyGroupDTO findStudyGroupByGroupId(Long groupId) {
+        StudyGroupDTO studyGroup = studyGroupMapper.findStudyGroupByGroupId(groupId);
+        if(studyGroup == null) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP);
+        }
+        return studyGroup;
     }
 
     // 스터디 그룹 단건 조회(그룹 이름)
     @Override
-    public List<StudyGroupDTO> findStudyGroupByGroupName(String groupName) {
-        return studyGroupMapper.findStudyGroupByGroupName(groupName);
+    public StudyGroupDTO findStudyGroupByGroupName(String groupName) {
+        StudyGroupDTO studyGroup = studyGroupMapper.findStudyGroupByGroupName(groupName);
+        if(studyGroup == null) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP);
+        }
+        return studyGroup;
     }
 
 }

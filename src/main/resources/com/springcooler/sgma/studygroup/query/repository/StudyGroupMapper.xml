@@ -25,7 +25,7 @@
          ORDER BY A.GROUP_ID
     </select>
 
-    <select id="findStudyGroupsByOwnerId" resultMap="studyGroupResultMap" parameterType="long">
+    <select id="findStudyGroupsByOwnerId" resultMap="studyGroupResultMap" parameterType="Long">
         SELECT
                A.GROUP_ID
              , A.GROUP_NAME
@@ -38,7 +38,7 @@
          ORDER BY A.GROUP_ID
     </select>
 
-    <select id="findStudyGroupsByParticipantId" resultMap="studyGroupResultMap" parameterType="long">
+    <select id="findStudyGroupsByParticipantId" resultMap="studyGroupResultMap" parameterType="Long">
         SELECT
                A.GROUP_ID
              , A.GROUP_NAME
@@ -55,7 +55,7 @@
         ORDER BY A.GROUP_ID
     </select>
 
-    <select id="findStudyGroupsByCategoryId" resultMap="studyGroupResultMap" parameterType="int">
+    <select id="findStudyGroupsByCategoryId" resultMap="studyGroupResultMap" parameterType="Integer">
         SELECT
         A.GROUP_ID
         , A.GROUP_NAME
@@ -68,7 +68,7 @@
         ORDER BY A.GROUP_ID
     </select>
 
-    <select id="findStudyGroupByGroupId" resultMap="studyGroupResultMap" parameterType="long">
+    <select id="findStudyGroupByGroupId" resultMap="studyGroupResultMap" parameterType="Long">
         SELECT
                A.GROUP_ID
              , A.GROUP_NAME

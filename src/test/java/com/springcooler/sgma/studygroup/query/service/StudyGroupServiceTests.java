@@ -70,8 +70,8 @@ class StudyGroupServiceTests {
     void testFindStudyGroupByGroupId(long groupId) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<StudyGroupDTO> studyGroups = studyGroupService.findStudyGroupByGroupId(groupId);
-                    studyGroups.forEach(System.out::println);
+                    StudyGroupDTO studyGroups = studyGroupService.findStudyGroupByGroupId(groupId);
+                    System.out.println(studyGroups);
                 }
         );
     }
@@ -82,8 +82,8 @@ class StudyGroupServiceTests {
     void testFindStudyGroupByGroupId(String groupName) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<StudyGroupDTO> studyGroups = studyGroupService.findStudyGroupByGroupName(groupName);
-                    studyGroups.forEach(System.out::println);
+                    StudyGroupDTO studyGroups = studyGroupService.findStudyGroupByGroupName(groupName);
+                    System.out.println(studyGroups);
                 }
         );
     }

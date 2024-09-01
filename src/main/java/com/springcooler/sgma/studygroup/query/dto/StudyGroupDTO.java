@@ -1,17 +1,29 @@
 package com.springcooler.sgma.studygroup.query.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class StudyGroupDTO {
-    private long groupId;
+
+    @JsonProperty("group_id")
+    private Long groupId;
+
+    @JsonProperty("group_name")
     private String groupName;
+
+    @JsonProperty("active_status")
     private String activeStatus;
-    private int groupMembers;
-    private long userId;
-    private int studyGroupCategoryId;
+
+    @JsonProperty("group_members")
+    private Integer groupMembers;
+
+    @JsonProperty("user_id")
+    private Long userId;
+
+    @JsonProperty("category_id")
+    private Integer studyGroupCategoryId;
+
 }
