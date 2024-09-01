@@ -1,5 +1,6 @@
 package com.springcooler.sgma.user.command.application.service;
 
+import com.springcooler.sgma.user.command.application.vo.RequestUpdateUserVO;
 import com.springcooler.sgma.user.command.domain.aggregate.UserEntity;
 import com.springcooler.sgma.user.command.domain.repository.UserRepository;
 import com.springcooler.sgma.user.common.exception.CommonException;
@@ -39,6 +40,17 @@ public class UserServiceImpl implements UserService{
         UserEntity userEntity = user.get();
         userEntity.activateUser();
         return userRepository.save(userEntity);
+    }
+
+    @Override
+    public UserEntity updateProfile(Long userId, RequestUpdateUserVO userUpdateVO) {
+        Optional<UserEntity> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+        }
+        UserEntity userEntity = user.get();
+        userEntity.updateProfile(userUpdateVO.getNickname(), userUpdateVO.getProfileImage());
+        return userRepository.save(userEntity);  // Save the updated entity
     }
 
 }

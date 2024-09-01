@@ -16,6 +16,10 @@ public enum ErrorCode {
     // 데이터 무결성 위반 추가(ex: db의 NOT NULL 속성)
     DATA_INTEGRITY_VIOLATION(40005, HttpStatus.BAD_REQUEST,
             "데이터 무결성 위반입니다. 필수 값이 누락되었거나 유효하지 않습니다."),
+    INVALID_INPUT_VALUE(40010, HttpStatus.BAD_REQUEST, "잘못된 입력 값입니다."),
+    INVALID_REQUEST_BODY(40011, HttpStatus.BAD_REQUEST, "잘못된 요청 본문입니다."),
+    MISSING_REQUIRED_FIELD(40012, HttpStatus.BAD_REQUEST, "필수 필드가 누락되었습니다."),
+
 
     //401
     INVALID_HEADER_VALUE(40100, HttpStatus.UNAUTHORIZED, "올바르지 않은 헤더값입니다."),
@@ -28,6 +32,10 @@ public enum ErrorCode {
     TOKEN_GENERATION_ERROR(40106, HttpStatus.UNAUTHORIZED, "토큰 생성에 실패하였습니다."),
     TOKEN_UNKNOWN_ERROR(40107, HttpStatus.UNAUTHORIZED, "알 수 없는 토큰입니다."),
     LOGIN_FAILURE(40108, HttpStatus.UNAUTHORIZED, "로그인에 실패했습니다"),
+    UNAUTHORIZED_ACCESS(40110, HttpStatus.UNAUTHORIZED, "인증되지 않은 접근입니다."),
+    EXPIRED_SESSION(40111, HttpStatus.UNAUTHORIZED, "세션이 만료되었습니다."),
+    ACCESS_DENIED(40310, HttpStatus.FORBIDDEN, "접근이 거부되었습니다."),
+
 
     //403
     FORBIDDEN_ROLE(40300, HttpStatus.FORBIDDEN, "권한이 존재하지 않습니다."),
@@ -48,7 +56,6 @@ public enum ErrorCode {
     NOT_FOUND_CHOICE(40413, HttpStatus.NOT_FOUND, "문제 선택지가 존재하지 않습니다."),
     NOT_FOUND_SUBMITTED_ANSWER(40414, HttpStatus.NOT_FOUND, "제출된 답변이 존재하지 않습니다."),
     NOT_FOUND_STUDY_GROUP_NOTICE(40415, HttpStatus.NOT_FOUND, "스터디 그룹 공지가 존재하지 않습니다."),
-
 
     //500
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다");
