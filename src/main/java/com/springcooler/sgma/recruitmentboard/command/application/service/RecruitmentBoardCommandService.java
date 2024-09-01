@@ -51,15 +51,15 @@ public class RecruitmentBoardCommandService {
         return recruitmentBoardRepository.save(recruitmentBoard);
     }
 
-    public RecruitmentBoardCommandDTO updateStudyGroupApplicant(Long recruitmentBoardId, RecruitmentBoardCommandDTO dto) {
+    public RecruitmentBoardCommandDTO updateStudyGroupApplicant(Long recruitmentBoardId, RecruitmentBoardCommandDTO recruitmentBoardCommandDTO) {
         Optional<RecruitmentBoard> optionalApplicant = recruitmentBoardRepository.findById(recruitmentBoardId);
 
         if (optionalApplicant.isPresent()) {
             RecruitmentBoard existingApplicant = optionalApplicant.get();
-            existingApplicant.setTitle(dto.getTitle());
-            existingApplicant.setContent(dto.getContent());
-            existingApplicant.setRecruitmentStartTime(dto.getRecruitmentStartTime());
-            existingApplicant.setRecruitmentEndTime(dto.getRecruitmentEndTime());
+            existingApplicant.setTitle(recruitmentBoardCommandDTO.getTitle());
+            existingApplicant.setContent(recruitmentBoardCommandDTO.getContent());
+            existingApplicant.setRecruitmentStartTime(recruitmentBoardCommandDTO.getRecruitmentStartTime());
+            existingApplicant.setRecruitmentEndTime(recruitmentBoardCommandDTO.getRecruitmentEndTime());
 
             // 현재 시간으로 updatedAt 필드를 갱신합니다.
             ZonedDateTime nowKst = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
