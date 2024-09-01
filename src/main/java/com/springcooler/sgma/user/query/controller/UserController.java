@@ -37,7 +37,7 @@ public class UserController {
     // 사용자 ID로 조회
     @GetMapping("/user-id/{userId}")
     public ResponseDTO<?> getUserById(@PathVariable Long userId) {
-        UserDTO userDTO = userService.getUserByuUserId(userId);
+        UserDTO userDTO = userService.getUserByUserId(userId);
         return ResponseDTO.ok(userDTO);
     }
 

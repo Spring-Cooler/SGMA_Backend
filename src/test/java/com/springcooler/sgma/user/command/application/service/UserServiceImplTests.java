@@ -1,6 +1,7 @@
 package com.springcooler.sgma.user.command.application.service;
 
-import com.springcooler.sgma.user.command.application.vo.RequestUpdateUserVO;
+import com.springcooler.sgma.user.command.domain.aggregate.ActiveStatus;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.RequestUpdateUserVO;
 import com.springcooler.sgma.user.command.domain.aggregate.UserEntity;
 import com.springcooler.sgma.user.command.domain.repository.UserRepository;
 import com.springcooler.sgma.user.common.exception.CommonException;
@@ -11,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class UserServiceImplTestS {
+class UserServiceImplTests {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
@@ -36,7 +40,7 @@ class UserServiceImplTestS {
 
         // Then
         assertNotNull(result);
-        assertEquals("INACTIVE", result.getUserStatus());
+        assertEquals(ActiveStatus.INACTIVE, result.getUserStatus());
         assertNotNull(result.getWithdrawnAt());
     }
 
@@ -64,7 +68,7 @@ class UserServiceImplTestS {
 
         // Then
         assertNotNull(result);
-        assertEquals("ACTIVE", result.getUserStatus());
+        assertEquals(ActiveStatus.ACTIVE, result.getUserStatus());
     }
 
     @Test
@@ -76,6 +80,29 @@ class UserServiceImplTestS {
         // When & Then
         CommonException exception = assertThrows(CommonException.class, () -> userServiceImpl.activateUser(userId));
         assertEquals(ErrorCode.NOT_FOUND_USER, exception.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("사용자 비활성화 시간 정확성 검증 테스트")
+    void deactivateUser_TimeExactMatchVerification() {
+        // Given
+        Long userId = 1L;  // 실제 DB에 존재하는 사용자 ID로 변경 필요
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        // When
+        UserEntity result = userServiceImpl.deactivateUser(userId);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(ActiveStatus.INACTIVE, result.getUserStatus());
+
+        // 현재 시간을 기준으로 withdrawnAt이 정확히 같은지 확인 (초 단위까지)
+        LocalDateTime now = LocalDateTime.now().withNano(0);
+        LocalDateTime withdrawnAt = result.getWithdrawnAt();
+        assertNotNull(withdrawnAt);
+        assertTrue(ChronoUnit.SECONDS.between(withdrawnAt, now) < 1,
+                "withdrawnAt 시간이 현재 시간과 1초 이내여야 합니다.");
     }
 
     @Test

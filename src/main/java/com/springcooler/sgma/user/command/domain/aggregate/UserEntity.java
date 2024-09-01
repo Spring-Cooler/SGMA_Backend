@@ -3,7 +3,7 @@ package com.springcooler.sgma.user.command.domain.aggregate;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "USER")
@@ -27,36 +27,40 @@ public class UserEntity {
     @Column(name = "email", nullable = false, length = 255)
     private String email;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "user_status", nullable = false, length = 255)
-    private String userStatus = "ACTIVE";
+    private ActiveStatus userStatus =  ActiveStatus.ACTIVE; //필기. Enum타입으로 정의
 
     @Column(name = "created_at")
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "withdrawn_at")
-    private Timestamp withdrawnAt;
+    private LocalDateTime withdrawnAt;
 
     @Column(name = "profile_image", columnDefinition = "TEXT")
     private String profileImage;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "accept_status", nullable = false, length = 255)
-    private String acceptStatus = "N";
+    private AcceptStatus acceptStatus = AcceptStatus.N;  //필기. Enum타입으로 정의
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "signup_path", length = 255)
-    private String signupPath;
+    private SignupPath signupPath; //필기. Enum타입으로 정의
 
-    //필기. 사용자 정보 비활성화로 설정
+    // 사용자 정보 비활성화로 설정
     public void deactivateUser() {
-        this.userStatus = "INACTIVE";
-        this.withdrawnAt = new Timestamp(System.currentTimeMillis());
+        this.userStatus = ActiveStatus.INACTIVE;
+        this.withdrawnAt = LocalDateTime.now().withNano(0); // 필기. 초 단위까지만 설정
     }
 
-    //필기. 사용자 정보 활성화로 설정
+    // 사용자 정보 활성화로 설정
     public void activateUser() {
-        this.userStatus = "ACTIVE";
+        this.userStatus = ActiveStatus.ACTIVE;
+        this.withdrawnAt = null; // 재활성화 시 탈퇴 시간을 초기화
     }
-    
-    //필기. 사용자 정보 변경(닉네임, 사진)
+
+    // 사용자 정보 변경(닉네임, 사진)
     public void updateProfile(String nickname, String profileImage) {
         if (nickname != null && !nickname.isEmpty()) {
             this.nickname = nickname;
