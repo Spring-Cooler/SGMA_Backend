@@ -43,22 +43,22 @@ public class UserController {
         UserEntity userEntity = userService.activateUser(userId);
         return ResponseDTO.ok(userEntity);
     }
-
-    //필기. 사용자 정보 변경(닉네임,사진)
-    @PatchMapping("/{userId}/profile")
-    public ResponseDTO<?> updateProfile(@PathVariable Long userId,
-                                        @RequestParam("nickname") String nickname,
-                                        @RequestParam("profile_image") MultipartFile profileImage) {
-
-        // DTO 객체 생성 및 값 설정
-        RequestUpdateUserDTO userUpdateDTO = new RequestUpdateUserDTO();
-        userUpdateDTO.setNickname(nickname);
-        userUpdateDTO.setProfileImage(profileImage);
-
-        // 서비스 호출 및 결과 처리
-        UserEntity userEntity = userService.updateProfile(userId, userUpdateDTO);
-        ResponseUserVO userUpdateRequestVO = modelMapper.map(userEntity, ResponseUserVO.class);
-        return ResponseDTO.ok(userUpdateRequestVO);
-    }
+//
+//    //필기. 사용자 정보 변경(닉네임,사진)
+//    @PatchMapping("/{userId}/profile")
+//    public ResponseDTO<?> updateProfile(@PathVariable Long userId,
+//                                        @RequestParam("nickname") String nickname,
+//                                        @RequestParam("profile_image") MultipartFile profileImage) {
+//
+//        // DTO 객체 생성 및 값 설정
+//        RequestUpdateUserDTO userUpdateDTO = new RequestUpdateUserDTO();
+//        userUpdateDTO.setNickname(nickname);
+//        userUpdateDTO.setProfileImage(profileImage);
+//
+//        // 서비스 호출 및 결과 처리
+//        UserEntity userEntity = userService.updateProfile(userId, userUpdateDTO);
+//        ResponseUserVO userUpdateRequestVO = modelMapper.map(userEntity, ResponseUserVO.class);
+//        return ResponseDTO.ok(userUpdateRequestVO);
+//    }
 
 }
