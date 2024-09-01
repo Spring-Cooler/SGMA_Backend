@@ -38,4 +38,17 @@
          ORDER BY A.MEMBER_ID
     </select>
 
+    <select id="findStudyGroupMembersByUserId" resultMap="studyGroupMemberResultMap" parameterType="long">
+        SELECT
+               A.MEMBER_ID
+             , A.MEMBER_ENROLLED_AT
+             , A.MEMBER_WITHDRAWN_AT
+             , A.MEMBER_STATUS
+             , A.USER_ID
+             , A.GROUP_ID
+          FROM STUDY_GROUP_MEMBER A
+         WHERE A.MEMBER_STATUS = 'ACTIVE' AND A.USER_ID = #{ userId }
+         ORDER BY A.MEMBER_ID
+    </select>
+
 </mapper>

@@ -47,6 +47,16 @@ public class StudyGroupMemberController {
         return getResponseEntity(headers, studyGroupMemberService.findStudyGroupMembersByGroupId(groupId));
     }
 
+    // 스터디 그룹원 회원별 조회
+    @GetMapping("/user-id/{userId}")
+    public ResponseEntity<ResponseMessage> findStudyGroupMembersByUserId(@PathVariable long userId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json"
+                , StandardCharsets.UTF_8));
+
+        return getResponseEntity(headers, studyGroupMemberService.findStudyGroupMembersByUserId(userId));
+    }
+
     private ResponseEntity<ResponseMessage> getResponseEntity(HttpHeaders headers, List<StudyGroupMemberDTO> members) {
         ResponseMessage responseMessage;
 
