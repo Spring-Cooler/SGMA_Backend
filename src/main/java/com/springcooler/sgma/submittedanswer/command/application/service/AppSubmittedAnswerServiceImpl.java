@@ -40,8 +40,9 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
 //        }
 
         SubmittedAnswer newSubmittedAnswer = new SubmittedAnswer(newSubmittedAnswerPK, newSubmittedAnswerDTO.getSubmittedAnswer(), newSubmittedAnswerDTO.getAnswerStatus());
+        newSubmittedAnswer = submittedAnswerRepository.save(newSubmittedAnswer);
 
-        return submittedAnswerRepository.save(newSubmittedAnswer);
+        return newSubmittedAnswer;
     }
 
     @Transactional
@@ -65,7 +66,7 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
     }
     @Transactional
     @Override
-    public void gradeSubmittedAnswer(SubmittedAnswerDTO submittedAnswerDTO) {
+    public SubmittedAnswer gradeSubmittedAnswer(SubmittedAnswerDTO submittedAnswerDTO) {
 
         SubmittedAnswerPK ungradedAnswerPK = new SubmittedAnswerPK(submittedAnswerDTO.getProblemId(), submittedAnswerDTO.getParticipantId());
         Integer rightAnswer = infraSubmittedAnswerService.getAnswerByProblemId(submittedAnswerDTO.getProblemId());
@@ -77,7 +78,7 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
 
         SubmittedAnswer ungradedAnswer = submittedAnswerRepository.findById(ungradedAnswerPK).orElseThrow(EntityNotFoundException::new);
         ungradedAnswer.setAnswerStatus(submittedAnswerDTO.getAnswerStatus());
-        submittedAnswerRepository.save(ungradedAnswer);
+        return submittedAnswerRepository.save(ungradedAnswer);
 
 
 

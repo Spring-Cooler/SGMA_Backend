@@ -10,5 +10,5 @@ public interface AppSubmittedAnswerService {
 
     SubmittedAnswer findSubmittedAnswerByProblemIdAndParticipantId(long problemId, long participantId);
 
-    void gradeSubmittedAnswer(SubmittedAnswerDTO submittedAnswerDTO);
+    SubmittedAnswer gradeSubmittedAnswer(SubmittedAnswerDTO submittedAnswerDTO);
 }

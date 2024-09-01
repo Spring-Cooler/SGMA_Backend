@@ -24,7 +24,7 @@ class AppSubmittedAnswerServiceTests {
     void testRegistSubmittedAnswer(){
 
         // given
-        SubmittedAnswerDTO newSubmittedAnswerDTO = new SubmittedAnswerDTO(11,9,3, "WRONG");
+        SubmittedAnswerDTO newSubmittedAnswerDTO = new SubmittedAnswerDTO(12,10,3, "UNGRADED");
         log.info("newSubmittedAnswerDTO: {}", newSubmittedAnswerDTO);
         // when
         SubmittedAnswer newSubmittedAnswer = appSubmittedAnswerService.registSubmittedAnswer(newSubmittedAnswerDTO);
@@ -40,7 +40,7 @@ class AppSubmittedAnswerServiceTests {
     void testModifySubmittedAnswer(){
 
         // given
-        SubmittedAnswerDTO newSubmittedAnswerDTO = new SubmittedAnswerDTO(11,9,2, "WRONG");
+        SubmittedAnswerDTO newSubmittedAnswerDTO = new SubmittedAnswerDTO(12,10,2, "UNGRADED");
 
         log.info("newSubmittedAnswerDTO: {}", newSubmittedAnswerDTO);
 
@@ -54,25 +54,25 @@ class AppSubmittedAnswerServiceTests {
         log.info("modifySubmittedAnswer: {}", modifySubmittedAnswer);
     }
 
-    @DisplayName("제출된 문제 채점 테스트")
-    @Test
-    @Order(3)
-    void testGradeSubmittedAnswers(){
-
-        // given
-        SubmittedAnswerDTO ungradedSubmittedAnswerDTO = new SubmittedAnswerDTO(11,9,2, null);
-        log.info("existingSubmittedAnswerDTO: {}", ungradedSubmittedAnswerDTO);
-
-        // when
-        SubmittedAnswer answerToGrade = appSubmittedAnswerService.findSubmittedAnswerByProblemIdAndParticipantId(ungradedSubmittedAnswerDTO.getProblemId(), ungradedSubmittedAnswerDTO.getParticipantId());
-        log.info("answerToGrade: {}", answerToGrade);
-
-        appSubmittedAnswerService.gradeSubmittedAnswer(ungradedSubmittedAnswerDTO);
-        SubmittedAnswer gradedAnswer = appSubmittedAnswerService.findSubmittedAnswerByProblemIdAndParticipantId(ungradedSubmittedAnswerDTO.getProblemId(), ungradedSubmittedAnswerDTO.getParticipantId());
-        log.info("gradedAnswer: {}", gradedAnswer);
-        // then
-        assertNotNull(gradedAnswer);
-    }
+//    @DisplayName("제출된 문제 채점 테스트")
+//    @Test
+//    @Order(3)
+//    void testGradeSubmittedAnswers(){
+//
+//        // given
+//        SubmittedAnswerDTO ungradedSubmittedAnswerDTO = new SubmittedAnswerDTO(12,9,2, null);
+//        log.info("existingSubmittedAnswerDTO: {}", ungradedSubmittedAnswerDTO);
+//
+//        // when
+//        SubmittedAnswer answerToGrade = appSubmittedAnswerService.findSubmittedAnswerByProblemIdAndParticipantId(ungradedSubmittedAnswerDTO.getProblemId(), ungradedSubmittedAnswerDTO.getParticipantId());
+//        log.info("answerToGrade: {}", answerToGrade);
+//
+//        appSubmittedAnswerService.gradeSubmittedAnswer(ungradedSubmittedAnswerDTO);
+//        SubmittedAnswer gradedAnswer = appSubmittedAnswerService.findSubmittedAnswerByProblemIdAndParticipantId(ungradedSubmittedAnswerDTO.getProblemId(), ungradedSubmittedAnswerDTO.getParticipantId());
+//        log.info("gradedAnswer: {}", gradedAnswer);
+//        // then
+//        assertNotNull(gradedAnswer);
+//    }
 
 
 

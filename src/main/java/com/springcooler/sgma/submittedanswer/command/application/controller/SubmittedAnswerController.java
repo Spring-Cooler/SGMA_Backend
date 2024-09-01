@@ -21,12 +21,19 @@ public class SubmittedAnswerController {
 
     @PostMapping("/")
     public ResponseEntity<?> registSubmittedAnswer(@RequestBody SubmittedAnswerDTO newSubmittedAnswer){
-        return ResponseEntity.created(URI.create("/api/submitted-answers/" + appSubmittedAnswerService.registSubmittedAnswer(newSubmittedAnswer))).build();
+        return ResponseEntity.created(URI.create("/api/submitted-answers/" + appSubmittedAnswerService.registSubmittedAnswer(newSubmittedAnswer).getAnswerStatus())).build();
     }
 
-    @PutMapping("/problems/{problemId}")
+    @PutMapping("/")
     public ResponseEntity<?> modifySubmittedAnswer(@RequestBody SubmittedAnswerDTO modifySubmittedAnswer){
-        return ResponseEntity.created(URI.create("/api/submitted-answers/" + appSubmittedAnswerService.modifySubmittedAnswer(modifySubmittedAnswer))).build();
+        return ResponseEntity.created(URI.create("/api/submitted-answers/" + appSubmittedAnswerService.modifySubmittedAnswer(modifySubmittedAnswer).getAnswerStatus())).build();
     }
+
+//    @PutMapping("/grade/")// TODO: 시험 종료시 해당 시험에 해당하는 문제 한번에 채점
+//    public ResponseEntity<?> gradeSubmittedAnswer(@RequestBody SubmittedAnswerDTO answerToGrade){
+//
+//        return ResponseEntity.created(URI.create("/api/submitted-answers/grade/" + appSubmittedAnswerService.gradeSubmittedAnswer(answerToGrade).getAnswerStatus())).build();
+//    }
+
 
 }
