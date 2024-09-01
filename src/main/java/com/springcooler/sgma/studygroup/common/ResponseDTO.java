@@ -5,13 +5,17 @@ import com.springcooler.sgma.studygroup.common.exception.CommonException;
 import com.springcooler.sgma.studygroup.common.exception.ErrorCode;
 import com.springcooler.sgma.studygroup.common.exception.ExceptionDTO;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 //필기. 응답 DTO통일
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class ResponseDTO<T> {
 
@@ -26,19 +30,6 @@ public class ResponseDTO<T> {
 
     @Nullable
     private ExceptionDTO error;
-
-    // 기본 생성자
-    public ResponseDTO() {
-    }
-
-    // 모든 필드를 받는 생성자
-    public ResponseDTO(HttpStatus httpStatus, boolean success, @Nullable T data, @Nullable ExceptionDTO error) {
-        this.httpStatus = httpStatus;
-        this.success = success;
-        this.data = data;
-        this.error = error;
-    }
-
 
     // static 팩토리 메소드
     public static <T> ResponseDTO<T> ok(T data) {
