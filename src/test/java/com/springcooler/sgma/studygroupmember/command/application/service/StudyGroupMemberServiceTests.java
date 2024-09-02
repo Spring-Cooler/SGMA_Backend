@@ -2,6 +2,7 @@ package com.springcooler.sgma.studygroupmember.command.application.service;
 
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMember;
+import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMemberStatus;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -52,7 +53,7 @@ class StudyGroupMemberServiceTests {
         modifyMember.setMemberId(20L);
         modifyMember.setMemberEnrolledAt(timestamp);
         modifyMember.setMemberWithdrawnAt(new Timestamp(System.currentTimeMillis()));
-        modifyMember.setMemberStatus("INACTIVE");
+        modifyMember.setMemberStatus(StudyGroupMemberStatus.INACTIVE);
         modifyMember.setUserId(5L);
         modifyMember.setGroupId(5L);
 

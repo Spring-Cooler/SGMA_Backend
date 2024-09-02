@@ -16,12 +16,12 @@ public interface StudyGroupService {
     List<StudyGroupDTO> findStudyGroupsByParticipantId(Long participantId);
 
     // 스터디 그룹 카테고리별 조회
-    List<StudyGroupDTO> findStudyGroupsByCategoryId(int categoryId);
+    List<StudyGroupDTO> findStudyGroupsByCategoryId(Integer categoryId);
 
     // 스터디 그룹 단건 조회(그룹 아이디)
-    List<StudyGroupDTO> findStudyGroupByGroupId(long groupId);
+    StudyGroupDTO findStudyGroupByGroupId(Long groupId);
 
     // 스터디 그룹 단건 조회(그룹 이름)
-    List<StudyGroupDTO> findStudyGroupByGroupName(String groupName);
+    StudyGroupDTO findStudyGroupByGroupName(String groupName);
 
 }

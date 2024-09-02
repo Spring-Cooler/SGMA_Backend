@@ -1,9 +1,12 @@
 package com.springcooler.sgma.studygroupcategory.command.application.service;
 
 import com.springcooler.sgma.studygroupcategory.command.application.dto.StudyGroupCategoryDTO;
+import com.springcooler.sgma.studygroupcategory.command.domain.aggregate.RestStatus;
 import com.springcooler.sgma.studygroupcategory.command.domain.aggregate.StudyGroupCategory;
 import com.springcooler.sgma.studygroupcategory.command.domain.repository.StudyGroupCategoryRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.springcooler.sgma.studygroupcategory.command.domain.service.DomainStudyGroupCategoryService;
+import com.springcooler.sgma.studygroupcategory.common.exception.CommonException;
+import com.springcooler.sgma.studygroupcategory.common.exception.ErrorCode;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,12 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class AppStudyGroupCategoryServiceImpl implements AppStudyGroupCategoryService {
 
     private final ModelMapper modelMapper;
+    private final DomainStudyGroupCategoryService domainStudyGroupCategoryService;
     private final StudyGroupCategoryRepository studyGroupCategoryRepository;
 
     @Autowired
     public AppStudyGroupCategoryServiceImpl(ModelMapper modelMapper,
+                                            DomainStudyGroupCategoryService domainStudyGroupCategoryService,
                                             StudyGroupCategoryRepository studyGroupCategoryRepository) {
         this.modelMapper = modelMapper;
+        this.domainStudyGroupCategoryService = domainStudyGroupCategoryService;
         this.studyGroupCategoryRepository = studyGroupCategoryRepository;
     }
 
@@ -26,17 +32,22 @@ public class AppStudyGroupCategoryServiceImpl implements AppStudyGroupCategorySe
     @Transactional
     @Override
     public StudyGroupCategory registStudyGroupCategory(StudyGroupCategoryDTO newCategory) {
-        return studyGroupCategoryRepository.save(modelMapper.map(newCategory, StudyGroupCategory.class));
+        // DTO 유효성 검사
+        if(!domainStudyGroupCategoryService.isValidDTO(RestStatus.POST, newCategory))
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+
+        StudyGroupCategory category = modelMapper.map(newCategory, StudyGroupCategory.class);
+        return studyGroupCategoryRepository.save(category);
     }
 
     // 스터디그룹 카테고리 삭제
     @Transactional
     @Override
-    public void deleteStudyGroupCategory(int categoryId) {
+    public void deleteStudyGroupCategory(Integer categoryId) {
         // 기존 엔티티 조회
         StudyGroupCategory deleteCategory =
                 studyGroupCategoryRepository.findById(categoryId).orElseThrow(
-                        () -> new EntityNotFoundException("잘못된 삭제 요청입니다."));
+                        () -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_CATEGORY));
 
         studyGroupCategoryRepository.delete(deleteCategory);
     }

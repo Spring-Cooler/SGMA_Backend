@@ -1,5 +1,6 @@
 package com.springcooler.sgma.studygroupmember.query.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -10,10 +11,23 @@ import java.sql.Timestamp;
 @Setter
 @ToString
 public class StudyGroupMemberDTO {
-    private long memberId;
+
+    @JsonProperty("member_id")
+    private Long memberId;
+
+    @JsonProperty("member_enrolled_at")
     private Timestamp memberEnrolledAt;
+
+    @JsonProperty("member_withdrawn_at")
     private Timestamp memberWithdrawnAt;
+
+    @JsonProperty("member_status")
     private String memberStatus;
-    private long userId;
-    private long groupId;
+
+    @JsonProperty("user_id")
+    private Long userId;
+
+    @JsonProperty("group_id")
+    private Long groupId;
+
 }
