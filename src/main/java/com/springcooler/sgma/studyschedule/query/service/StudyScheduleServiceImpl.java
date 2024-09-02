@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudyScheduleServiceImpl implements StudyScheduleService {
@@ -18,7 +19,7 @@ public class StudyScheduleServiceImpl implements StudyScheduleService {
 
     // 스터디 그룹 일정 단건 조회
     @Override
-    public List<StudyScheduleDTO> findStudyScheduleByScheduleId(long scheduleId) {
+    public StudyScheduleDTO findStudyScheduleByScheduleId(long scheduleId) {
         return studyScheduleMapper.findStudyScheduleByScheduleId(scheduleId);
     }
 

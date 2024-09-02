@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface StudyScheduleParticipantRepository extends JpaRepository<StudyScheduleParticipant, Long> {
     Optional<StudyScheduleParticipant> findByScheduleIdAndMemberId(Long scheduleId, Long memberId);
+
+    boolean existsByScheduleIdAndMemberId(Long scheduleId, Long memberId);
 }
