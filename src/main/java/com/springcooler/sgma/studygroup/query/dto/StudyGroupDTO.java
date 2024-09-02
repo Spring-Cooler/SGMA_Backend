@@ -1,6 +1,9 @@
 package com.springcooler.sgma.studygroup.query.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroupStatus;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.*;
 
 @NoArgsConstructor
@@ -14,8 +17,9 @@ public class StudyGroupDTO {
     @JsonProperty("group_name")
     private String groupName;
 
+    @Enumerated(EnumType.STRING)
     @JsonProperty("active_status")
-    private String activeStatus;
+    private StudyGroupStatus activeStatus;
 
     @JsonProperty("group_members")
     private Integer groupMembers;

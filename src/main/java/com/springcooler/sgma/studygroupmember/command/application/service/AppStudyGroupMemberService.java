@@ -5,6 +5,9 @@ import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGrou
 
 public interface AppStudyGroupMemberService {
 
+    // 스터디 그룹장 추가
+    StudyGroupMember registStudyGroupOwner(StudyGroupMemberDTO owner);
+
     // 스터디 그룹원 추가
     StudyGroupMember registStudyGroupMember(StudyGroupMemberDTO newMember);
 

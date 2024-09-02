@@ -2,7 +2,7 @@ package com.springcooler.sgma.studygroupnotice.command.application.service;
 
 import com.springcooler.sgma.studygroupnotice.command.application.dto.StudyGroupNoticeDTO;
 import com.springcooler.sgma.studygroupnotice.command.domain.aggregate.StudyGroupNotice;
-import jakarta.persistence.EntityNotFoundException;
+import com.springcooler.sgma.studygroupnotice.common.exception.CommonException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -66,7 +66,7 @@ class StudyGroupNoticeServiceTests {
         System.out.println("DELETE SUCCESS");
 
         //Then
-        Assertions.assertThrows(EntityNotFoundException.class,
+        Assertions.assertThrows(CommonException.class,
                 () -> studyGroupNoticeService.deleteStudyGroupNotice(noticeId));
     }
 }

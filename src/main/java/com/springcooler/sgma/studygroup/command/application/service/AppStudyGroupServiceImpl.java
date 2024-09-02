@@ -43,6 +43,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
 
         // 스터디 그룹 생성 코드
+        newStudyGroup.setGroupMembers(0);
         newStudyGroup.setActiveStatus(StudyGroupStatus.ACTIVE);
         StudyGroup studyGroup =
                 studyGroupRepository.save(modelMapper.map(newStudyGroup, StudyGroup.class));
@@ -51,7 +52,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         StudyGroupMemberDTO owner = new StudyGroupMemberDTO();
         owner.setUserId(studyGroup.getUserId());
         owner.setGroupId(studyGroup.getGroupId());
-        infraStudyGroupService.registStudyGroupMember(owner);
+        infraStudyGroupService.registStudyGroupOwner(owner);
 
         // 스터디 그룹원 수 1명으로 초기화
         studyGroup.setGroupMembers(1);

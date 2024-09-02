@@ -10,6 +10,7 @@
         <result property="memberStatus" column="MEMBER_STATUS"/>
         <result property="userId" column="USER_ID"/>
         <result property="groupId" column="GROUP_ID"/>
+        <result property="groupRole" column="GROUP_ROLE"/>
     </resultMap>
 
     <select id="findStudyGroupMemberByMemberId" resultMap="studyGroupMemberResultMap" parameterType="Long">
@@ -18,6 +19,7 @@
              , A.MEMBER_ENROLLED_AT
              , A.MEMBER_WITHDRAWN_AT
              , A.MEMBER_STATUS
+             , A.GROUP_ROLE
              , A.USER_ID
              , A.GROUP_ID
           FROM STUDY_GROUP_MEMBER A
@@ -31,8 +33,10 @@
              , A.MEMBER_ENROLLED_AT
              , A.MEMBER_WITHDRAWN_AT
              , A.MEMBER_STATUS
+             , A.GROUP_ROLE
              , A.USER_ID
              , A.GROUP_ID
+             , A.GROUP_ROLE
           FROM STUDY_GROUP_MEMBER A
          WHERE A.MEMBER_STATUS = 'ACTIVE' AND A.GROUP_ID = #{ groupId }
          ORDER BY A.MEMBER_ID
@@ -44,6 +48,7 @@
              , A.MEMBER_ENROLLED_AT
              , A.MEMBER_WITHDRAWN_AT
              , A.MEMBER_STATUS
+             , A.GROUP_ROLE
              , A.USER_ID
              , A.GROUP_ID
           FROM STUDY_GROUP_MEMBER A
