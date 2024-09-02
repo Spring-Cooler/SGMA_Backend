@@ -19,12 +19,13 @@ public class UserEntity {
     private String userName;
 
     @Column(name = "password", length = 255)
-    private String password;
+//    private String pwd;
+    private String encryptedPwd; //암호화 이후의 컬럼
 
-    @Column(name = "nickname", nullable = false, length = 255)
+    @Column(name = "nickname", length = 255)
     private String nickname;
 
-    @Column(name = "email", nullable = false, length = 255)
+    @Column(name = "email", length = 255)
     private String email;
 
     @Enumerated(EnumType.STRING)
