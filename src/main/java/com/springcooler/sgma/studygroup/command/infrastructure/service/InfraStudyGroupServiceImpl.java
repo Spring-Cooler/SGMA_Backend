@@ -26,7 +26,7 @@ public class InfraStudyGroupServiceImpl implements InfraStudyGroupService {
     // 스터디 그룹원 삭제
     @Transactional
     @Override
-    public void deleteStudyGroupMember(long memberId) {
+    public void deleteStudyGroupMember(Long memberId) {
         studyGroupMemberService.deleteStudyGroupMember(memberId);
     }
 

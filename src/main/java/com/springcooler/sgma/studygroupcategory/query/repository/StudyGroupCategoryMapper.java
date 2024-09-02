@@ -12,6 +12,6 @@ public interface StudyGroupCategoryMapper {
     List<StudyGroupCategoryDTO> findAllStudyGroupCategories();
 
     // 스터디그룹 카테고리 단건 조회(카테고리 아이디)
-    List<StudyGroupCategoryDTO> findStudyGroupCategoryByCategoryId(int categoryId);
+    StudyGroupCategoryDTO findStudyGroupCategoryByCategoryId(Integer categoryId);
 
 }

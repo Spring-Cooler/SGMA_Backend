@@ -1,11 +1,13 @@
 package com.springcooler.sgma.studygroupmember.command.application.service;
 
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
+import com.springcooler.sgma.studygroupmember.command.domain.aggregate.RestStatus;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMember;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMemberStatus;
 import com.springcooler.sgma.studygroupmember.command.domain.repository.StudyGroupMemberRepository;
 import com.springcooler.sgma.studygroupmember.command.domain.service.DomainStudyGroupMemberService;
-import jakarta.persistence.EntityNotFoundException;
+import com.springcooler.sgma.studygroupmember.common.exception.CommonException;
+import com.springcooler.sgma.studygroupmember.common.exception.ErrorCode;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,9 +35,13 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
     @Transactional
     @Override
     public StudyGroupMember registStudyGroupMember(StudyGroupMemberDTO newMember) {
+        // DTO 유효성 검사
+        if(!domainStudyGroupMemberService.isValidDTO(RestStatus.POST, newMember))
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+
         // ACTIVE 처리
         newMember.setMemberEnrolledAt(new Timestamp(System.currentTimeMillis()));
-        newMember.setMemberStatus(StudyGroupMemberStatus.ACTIVE.name());
+        newMember.setMemberStatus(StudyGroupMemberStatus.ACTIVE);
 
         return studyGroupMemberRepository.save(modelMapper.map(newMember, StudyGroupMember.class));
     }
@@ -44,9 +50,13 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
     @Transactional
     @Override
     public StudyGroupMember modifyStudyGroupMember(StudyGroupMemberDTO modifyMember) {
+        // DTO 유효성 검사
+        if(!domainStudyGroupMemberService.isValidDTO(RestStatus.PUT, modifyMember))
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+
         // 기존 엔티티 조회
         StudyGroupMember existingMember = studyGroupMemberRepository.findById(modifyMember.getMemberId())
-                .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_MEMBER));
 
         // DTO를 엔티티에 매핑
         modelMapper.map(modifyMember, existingMember);
@@ -58,18 +68,18 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
     // 스터디 그룹원 삭제
     @Transactional
     @Override
-    public void deleteStudyGroupMember(long memberId) {
+    public void deleteStudyGroupMember(Long memberId) {
         // 기존 엔티티 조회
         StudyGroupMember deleteMember = studyGroupMemberRepository.findById(memberId)
-                .orElseThrow(() -> new EntityNotFoundException("잘못된 삭제 요청입니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_MEMBER));
 
         // 유효성 검사
         if (!domainStudyGroupMemberService.isActive(deleteMember.getMemberStatus()))
-            throw new EntityNotFoundException("잘못된 삭제 요청입니다.");
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_MEMBER);
 
         // INACTIVE 처리
         deleteMember.setMemberWithdrawnAt(new Timestamp(System.currentTimeMillis()));
-        deleteMember.setMemberStatus(StudyGroupMemberStatus.INACTIVE.name());
+        deleteMember.setMemberStatus(StudyGroupMemberStatus.INACTIVE);
         studyGroupMemberRepository.save(deleteMember);
     }
 

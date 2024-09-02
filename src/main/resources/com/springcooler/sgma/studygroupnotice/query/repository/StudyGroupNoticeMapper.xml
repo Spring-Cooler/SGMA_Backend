@@ -13,7 +13,7 @@
         <result property="groupId" column="GROUP_ID"/>
     </resultMap>
 
-    <select id="findStudyGroupNoticesByGroupId" resultMap="studyGroupNoticeResultMap" parameterType="long">
+    <select id="findStudyGroupNoticesByGroupId" resultMap="studyGroupNoticeResultMap" parameterType="Long">
         SELECT
                A.NOTICE_ID
              , A.TITLE
@@ -26,7 +26,7 @@
          WHERE A.GROUP_ID = #{ groupId } AND A.ACTIVE_STATUS = 'ACTIVE'
     </select>
 
-    <select id="findStudyGroupNoticeByNoticeId" resultMap="studyGroupNoticeResultMap" parameterType="long">
+    <select id="findStudyGroupNoticeByNoticeId" resultMap="studyGroupNoticeResultMap" parameterType="Long">
         SELECT
                A.NOTICE_ID
              , A.TITLE

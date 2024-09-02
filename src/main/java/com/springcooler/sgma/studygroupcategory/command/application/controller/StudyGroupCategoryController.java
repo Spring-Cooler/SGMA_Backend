@@ -2,10 +2,9 @@ package com.springcooler.sgma.studygroupcategory.command.application.controller;
 
 import com.springcooler.sgma.studygroupcategory.command.application.dto.StudyGroupCategoryDTO;
 import com.springcooler.sgma.studygroupcategory.command.application.service.AppStudyGroupCategoryService;
-import org.springframework.http.ResponseEntity;
+import com.springcooler.sgma.studygroupcategory.command.domain.aggregate.StudyGroupCategory;
+import com.springcooler.sgma.studygroupcategory.common.ResponseDTO;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
 
 @RestController("commandStudyGroupCategoryController")
 @RequestMapping("/api/study-group/categories")
@@ -19,18 +18,16 @@ public class StudyGroupCategoryController {
 
     // 스터디그룹 카테고리 생성
     @PostMapping("/")
-    public ResponseEntity<?> registerStudyGroupCategory(@RequestBody StudyGroupCategoryDTO newCategory) {
-        return ResponseEntity
-                .created(URI.create("/api/study-group/categories/"
-                        + studyGroupCategoryService.registStudyGroupCategory(newCategory).getCategoryId()))
-                .build();
+    public ResponseDTO<?> registerStudyGroupCategory(@RequestBody StudyGroupCategoryDTO newCategory) {
+        StudyGroupCategory category = studyGroupCategoryService.registStudyGroupCategory(newCategory);
+        return ResponseDTO.ok(category);
     }
 
     // 스터디그룹 카테고리 삭제
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<?> deleteStudyGroupCategory(@PathVariable int categoryId) {
+    public ResponseDTO<?> deleteStudyGroupCategory(@PathVariable Integer categoryId) {
         studyGroupCategoryService.deleteStudyGroupCategory(categoryId);
-        return ResponseEntity.noContent().build();
+        return ResponseDTO.ok(null);
     }
 
 }

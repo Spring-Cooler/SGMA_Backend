@@ -35,9 +35,9 @@ class StudyGroupNoticeServiceTests {
     void testFindStudyGroupNoticeByNoticeId(long noticeId) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<StudyGroupNoticeDTO> studyGroupNotice =
+                    StudyGroupNoticeDTO studyGroupNotice =
                             studyGroupNoticeService.findStudyGroupNoticeByNoticeId(noticeId);
-                    studyGroupNotice.forEach(System.out::println);
+                    System.out.println(studyGroupNotice);
                 }
         );
     }
