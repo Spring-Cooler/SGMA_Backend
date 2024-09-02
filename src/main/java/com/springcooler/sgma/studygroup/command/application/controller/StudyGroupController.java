@@ -2,13 +2,12 @@ package com.springcooler.sgma.studygroup.command.application.controller;
 
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.command.application.service.AppStudyGroupService;
+import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
+import com.springcooler.sgma.studygroup.common.ResponseDTO;
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
 
 @RestController("commandStudyGroupController")
 @RequestMapping("/api/study-groups")
@@ -24,49 +23,52 @@ public class StudyGroupController {
 
     // 스터디 그룹 생성
     @PostMapping("/")
-    public ResponseEntity<?> registStudyGroup(@RequestBody StudyGroupDTO newStudyGroup) {
-        return ResponseEntity
-                .created(URI.create("/api/study-groups/"
-                                + studyGroupService.registStudyGroup(newStudyGroup).getGroupId()))
-                .build();
+    public ResponseDTO<?> registStudyGroup(@RequestBody StudyGroupDTO newStudyGroup) {
+        StudyGroup studyGroup = studyGroupService.registStudyGroup(newStudyGroup);
+        return ResponseDTO.ok(studyGroup);
     }
 
     // 스터디 그룹장 신청 승인
     @PostMapping("/member")
-    public ResponseEntity<?> registAcceptedMember(@RequestBody StudyGroupMemberDTO newMember) {
-        return ResponseEntity.ok(studyGroupService.registAcceptedMember(newMember));
+    public ResponseDTO<?> registAcceptedMember(@RequestBody StudyGroupMemberDTO newMember) {
+        StudyGroup studyGroup = studyGroupService.registAcceptedMember(newMember);
+        return ResponseDTO.ok(studyGroup);
     }
 
     // 스터디 그룹 정보 수정
     @PutMapping("/")
-    public ResponseEntity<?> modifyStudyGroup(@RequestBody StudyGroupDTO modifyStudyGroup) {
-        return ResponseEntity.ok(studyGroupService.modifyStudyGroup(modifyStudyGroup));
+    public ResponseDTO<?> modifyStudyGroup(@RequestBody StudyGroupDTO modifyStudyGroup) {
+        StudyGroup studyGroup = studyGroupService.modifyStudyGroup(modifyStudyGroup);
+        return ResponseDTO.ok(studyGroup);
     }
 
     // 스터디 그룹 이름 수정
     @PatchMapping("/group-name")
-    public ResponseEntity<?> modifyStudyGroupName(@RequestBody StudyGroupDTO modifyStudyGroup) {
-        return ResponseEntity.ok(studyGroupService.modifyStudyGroupName(modifyStudyGroup));
+    public ResponseDTO<?> modifyStudyGroupName(@RequestBody StudyGroupDTO modifyStudyGroup) {
+        StudyGroup studyGroup = studyGroupService.modifyStudyGroupName(modifyStudyGroup);
+        return ResponseDTO.ok(studyGroup);
     }
 
     // 스터디 그룹 카테고리 수정
     @PatchMapping("/category")
-    public ResponseEntity<?> modifyStudyGroupCategory(@RequestBody StudyGroupDTO modifyStudyGroup) {
-        return ResponseEntity.ok(studyGroupService.modifyStudyGroupCategory(modifyStudyGroup));
+    public ResponseDTO<?> modifyStudyGroupCategory(@RequestBody StudyGroupDTO modifyStudyGroup) {
+        StudyGroup studyGroup = studyGroupService.modifyStudyGroupCategory(modifyStudyGroup);
+        return ResponseDTO.ok(studyGroup);
     }
 
     // 스터디 그룹원 탈퇴
     @DeleteMapping("/member")
-    public ResponseEntity<?> deleteQuitMember(@RequestParam("member-id") long memberId,
+    public ResponseDTO<?> deleteQuitMember(@RequestParam("member-id") long memberId,
                                               @RequestParam("group-id") long groupId) {
-        return ResponseEntity.ok(studyGroupService.deleteQuitMember(memberId, groupId));
+        StudyGroup studyGroup = studyGroupService.deleteQuitMember(memberId, groupId);
+        return ResponseDTO.ok(studyGroup);
     }
 
     // 스터디 그룹 삭제
     @DeleteMapping("/{groupId}")
-    public ResponseEntity<?> deleteStudyGroup(@PathVariable long groupId) {
+    public ResponseDTO<?> deleteStudyGroup(@PathVariable long groupId) {
         studyGroupService.deleteStudyGroup(groupId);
-        return ResponseEntity.noContent().build();
+        return ResponseDTO.ok(null);
     }
 
 }

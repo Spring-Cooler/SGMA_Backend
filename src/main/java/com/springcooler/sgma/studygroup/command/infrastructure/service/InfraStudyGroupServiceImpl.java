@@ -16,6 +16,12 @@ public class InfraStudyGroupServiceImpl implements InfraStudyGroupService {
         this.studyGroupMemberService = studyGroupMemberService;
     }
 
+    // 스터디 그룹장 추가
+    @Override
+    public void registStudyGroupOwner(StudyGroupMemberDTO owner) {
+        studyGroupMemberService.registStudyGroupOwner(owner);
+    }
+
     // 스터디 그룹원 추가
     @Transactional
     @Override
@@ -26,7 +32,7 @@ public class InfraStudyGroupServiceImpl implements InfraStudyGroupService {
     // 스터디 그룹원 삭제
     @Transactional
     @Override
-    public void deleteStudyGroupMember(long memberId) {
+    public void deleteStudyGroupMember(Long memberId) {
         studyGroupMemberService.deleteStudyGroupMember(memberId);
     }
 

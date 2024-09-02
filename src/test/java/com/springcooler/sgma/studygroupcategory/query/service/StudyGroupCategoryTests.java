@@ -34,9 +34,9 @@ class StudyGroupCategoryTests {
     void testFindStudyGroupCategoryByCategoryId(int categoryId) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<StudyGroupCategoryDTO> categories =
+                    StudyGroupCategoryDTO category =
                             studyGroupCategoryService.findStudyGroupCategoryByCategoryId(categoryId);
-                    categories.forEach(System.out::println);
+                    System.out.println(category);
                 }
         );
     }
