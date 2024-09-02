@@ -2,7 +2,7 @@ package com.springcooler.sgma.problem.command.application.service;
 
 import com.springcooler.sgma.problem.command.application.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.command.application.dto.ProblemDTO;
-import com.springcooler.sgma.problem.command.domain.aggregate.Problem;
+import com.springcooler.sgma.problem.command.domain.aggregate.entity.Problem;
 
 import java.util.Map;
 

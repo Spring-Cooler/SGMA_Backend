@@ -1,4 +1,4 @@
-package com.springcooler.sgma.problem.command.domain.aggregate;
+package com.springcooler.sgma.problem.command.domain.aggregate.entity;
 import jakarta.persistence.*;
 import lombok.*;
 

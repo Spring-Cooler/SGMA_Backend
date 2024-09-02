@@ -2,7 +2,7 @@ package com.springcooler.sgma.problem.command.application.service;
 
 import com.springcooler.sgma.problem.command.application.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.command.application.dto.ProblemDTO;
-import com.springcooler.sgma.problem.command.domain.aggregate.Problem;
+import com.springcooler.sgma.problem.command.domain.aggregate.entity.Problem;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 

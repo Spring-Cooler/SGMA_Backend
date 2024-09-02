@@ -2,7 +2,7 @@ package com.springcooler.sgma.problem.command.application.service;
 
 import com.springcooler.sgma.problem.command.application.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.command.application.dto.ProblemDTO;
-import com.springcooler.sgma.problem.command.domain.aggregate.Problem;
+import com.springcooler.sgma.problem.command.domain.aggregate.entity.Problem;
 import com.springcooler.sgma.problem.command.domain.repository.ProblemRepository;
 import com.springcooler.sgma.problem.command.infrastructure.service.InfraProblemService;
 import jakarta.persistence.EntityNotFoundException;
@@ -67,17 +67,18 @@ public class AppProblemServiceImpl implements AppProblemService{
     @Transactional
     @Override
     public Map<String,Object> registProblemAndChoice(ProblemAndChoiceDTO newProblemAndChoice) {
-        Problem problem = new Problem(null,
-                newProblemAndChoice.getContent(),
-                newProblemAndChoice.getAnswer(),
-                newProblemAndChoice.getParticipantId(),
-                newProblemAndChoice.getScheduleId());
+            Problem problem = new Problem(null,
+                    newProblemAndChoice.getContent(),
+                    newProblemAndChoice.getAnswer(),
+                    newProblemAndChoice.getParticipantId(),
+                    newProblemAndChoice.getScheduleId());
 
-        Problem registeredProblem = problemRepository.save(problem);
-        int numInsertedChoices = infraProblemService.requestRegistChoices(registeredProblem.getProblemId(),newProblemAndChoice.getChoices());
-        Map<String,Object> resultMap = new HashMap<>();
-        resultMap.put("registeredproblem", registeredProblem);
-        resultMap.put("numInsertedChoices", numInsertedChoices);
+            Problem registeredProblem = problemRepository.save(problem);
+            int numInsertedChoices = infraProblemService.requestRegistChoices(registeredProblem.getProblemId(), newProblemAndChoice.getChoices());
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("registeredproblem", registeredProblem);
+            resultMap.put("numInsertedChoices", numInsertedChoices);
+
         return resultMap;
 
     }
