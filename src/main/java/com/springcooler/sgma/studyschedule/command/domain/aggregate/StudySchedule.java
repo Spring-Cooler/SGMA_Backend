@@ -16,20 +16,23 @@ public class StudySchedule {
     @Column(name="schedule_id")
     private Long scheduleId;
 
-    @Column(columnDefinition = "TEXT",nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String title;
 
-    @Column(columnDefinition = "TEXT",nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(name = "schedule_start_time",columnDefinition = "TIMESTAMP",nullable = false)
+    @Column(name = "schedule_start_time",columnDefinition = "TIMESTAMP", nullable = false)
     private java.sql.Timestamp scheduleStartTime;
 
-    @Column(name = "schedule_end_time",columnDefinition = "TIMESTAMP",nullable = false)
+    @Column(name = "schedule_end_time",columnDefinition = "TIMESTAMP", nullable = false)
     private java.sql.Timestamp scheduleEndTime;
 
     @Column(name = "num_participants", nullable = false)
     private int numParticipants;
+
+    @Column(name="active_status")
+    private String activeStatus;
 
     @Column(name="test_status", columnDefinition = "TEXT", nullable = false)
     private String testStatus;
@@ -45,8 +48,4 @@ public class StudySchedule {
 
     @Column(name="num_problems_per_participant")
     private int numProblemsPerParticipant;
-
-    // 논리 삭제를 위한 필드 추가
-//    @Column(name="is_deleted", nullable = false)
-//    private boolean isDeleted = false;
 }

@@ -5,9 +5,9 @@ import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudySchedul
 
 public interface AppStudyScheduleParticipantService {
 
-    // 스터디 일정 참가자 참가
+    // 스터디 그룹 일정 참가
     StudySchedule registStudyScheduleParticipant(StudyScheduleParticipantDTO newParticipant);
 
-    // 스터디 일정 참가자 참가 취소
-    void deleteStudyScheduleParticipant(Long participantId);
+    // 스터디 그룹 일정 참가 취소
+    void deleteStudyScheduleParticipant(Long scheduleId, Long memberId);
 }

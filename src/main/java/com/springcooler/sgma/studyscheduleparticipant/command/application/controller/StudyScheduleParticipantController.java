@@ -17,16 +17,16 @@ public class StudyScheduleParticipantController {
     }
 
     // 스터디 일정 참가자 등록
-    @PostMapping("/participant")
-    public ResponseEntity<?> registerParticipant(@RequestBody StudyScheduleParticipantDTO newParticipant) {
-        studyScheduleParticipantService.registStudyScheduleParticipant(newParticipant);
-        return ResponseEntity.ok("참가자가 성공적으로 추가되었습니다.");
+    @PostMapping("/participant/{scheduleId}")
+    public ResponseEntity<?> registerParticipant(@PathVariable Long scheduleId, @RequestBody StudyScheduleParticipantDTO newParticipant) {
+        newParticipant.setScheduleId(scheduleId);
+        return ResponseEntity.ok(studyScheduleParticipantService.registStudyScheduleParticipant(newParticipant));
     }
 
     // 스터디 일정 참가자 삭제
-    @DeleteMapping("/participant/{participantId}")
-    public ResponseEntity<?> deleteParticipant(@PathVariable Long participantId) {
-        studyScheduleParticipantService.deleteStudyScheduleParticipant(participantId);
+    @DeleteMapping("/participant/{scheduleId}/{memberId}")
+    public ResponseEntity<?> cancelParticipant(@PathVariable Long scheduleId, @PathVariable Long memberId) {
+        studyScheduleParticipantService.deleteStudyScheduleParticipant(scheduleId, memberId);
         return ResponseEntity.noContent().build();
     }
 }
