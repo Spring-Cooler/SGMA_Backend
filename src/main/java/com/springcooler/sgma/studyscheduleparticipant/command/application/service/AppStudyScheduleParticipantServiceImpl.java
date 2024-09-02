@@ -56,14 +56,15 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
     // 스터디 그룹 일정 참가 취소
     @Transactional
     @Override
-    public void deleteStudyScheduleParticipant(Long participantId) {
-        StudyScheduleParticipant existingParticipant = participantRepository.findById(participantId)
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 참가자 ID입니다."));
-
-        StudySchedule schedule = scheduleRepository.findById(existingParticipant.getScheduleId())
+    public void deleteStudyScheduleParticipant(Long scheduleId, Long memberId) {
+        StudySchedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 일정 ID입니다."));
 
-        participantRepository.delete(existingParticipant);
+        StudyScheduleParticipant participant = participantRepository
+                .findByScheduleIdAndMemberId(scheduleId, memberId)
+                .orElseThrow(() -> new IllegalArgumentException("참가자가 이 일정에 등록되어 있지 않습니다."));
+
+        participantRepository.delete(participant);
 
         schedule.setNumParticipants(schedule.getNumParticipants() - 1);
         scheduleRepository.save(schedule);
