@@ -1,12 +1,18 @@
 package com.springcooler.sgma.user.command.application.controller;
 
+import com.springcooler.sgma.user.command.application.dto.EmailVerificationVO;
 import com.springcooler.sgma.user.command.application.dto.RequestUpdateUserDTO;
 import com.springcooler.sgma.user.command.application.dto.UserDTO;
+import com.springcooler.sgma.user.command.application.service.EmailVerificationService;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.RequestResistUserVO;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.ResponseEmailMessageVO;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.ResponseUserVO;
 import com.springcooler.sgma.user.common.ResponseDTO;
+import com.springcooler.sgma.user.common.exception.CommonException;
+import com.springcooler.sgma.user.common.exception.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.springcooler.sgma.user.command.application.service.UserService;
 import com.springcooler.sgma.user.command.domain.aggregate.UserEntity;
@@ -80,6 +86,38 @@ public class UserController {
 
         ResponseUserVO responseUser=modelMapper.map(savedUserDTO,ResponseUserVO.class);
         return ResponseDTO.ok(responseUser);
+    }
+
+    
+    //설명. 이메일 인증 서비스
+    @Autowired
+    private EmailVerificationService emailVerificationService;
+
+    //설명. 이메일 전송 API (회원가입전 실행)
+    @PostMapping("/verification-email")
+    public ResponseDTO<?> sendVerificationEmail(@RequestBody @Validated EmailVerificationVO request) {
+        try {
+            emailVerificationService.sendVerificationEmail(request.getEmail());
+
+            ResponseEmailMessageVO responseEmailMessageVO =new ResponseEmailMessageVO();
+            responseEmailMessageVO.setMessage("인증 코드가 이메일로 전송되었습니다.");
+            return ResponseDTO.ok(responseEmailMessageVO);
+        } catch (Exception e) {
+            return ResponseDTO.fail(new CommonException(ErrorCode.INTERNAL_SERVER_ERROR));
+        }
+    }
+    //설명. 이메일 인증번호 검증 API (회원가입전 실행)
+    @PostMapping("/verification-email/confirmation")
+    public ResponseDTO<?> verifyEmail(@RequestBody @Validated EmailVerificationVO request) {
+        boolean isVerified = emailVerificationService.verifyCode(request.getEmail(), request.getCode());
+
+        ResponseEmailMessageVO responseEmailMessageVO =new ResponseEmailMessageVO();
+        responseEmailMessageVO.setMessage("이메일 인증이 완료되었습니다.");
+        if (isVerified) {
+            return ResponseDTO.ok(responseEmailMessageVO);
+        } else {
+            return ResponseDTO.fail(new CommonException(ErrorCode.INVALID_VERIFICATION_CODE));
+        }
     }
 
 }
