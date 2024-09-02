@@ -16,11 +16,10 @@ import static com.springcooler.sgma.recruitmentboardcomment.common.Template.getS
 public class RecruitmentBoardCommentService {
     private RecruitmentBoardCommentMapper recruitmentBoardCommentMapper;
 
-    public List<RecruitmentBoardCommentDTO> studyGroupRecruitmentComment() {
+    public List<RecruitmentBoardCommentDTO> studyGroupRecruitmentComment(Long recruitmentBoardId) {
         SqlSession sqlSession = getSqlSession();
         RecruitmentBoardCommentMapper mapper = sqlSession.getMapper(RecruitmentBoardCommentMapper.class);
-        List<RecruitmentBoardCommentDTO> studyGroupRecruitment = mapper.studyGroupRecruitmentCommentDTO1();
-        System.out.println(studyGroupRecruitment);
+        List<RecruitmentBoardCommentDTO> studyGroupRecruitment = mapper.studyGroupRecruitmentCommentDTO1(recruitmentBoardId);
         return studyGroupRecruitment;
     }
 

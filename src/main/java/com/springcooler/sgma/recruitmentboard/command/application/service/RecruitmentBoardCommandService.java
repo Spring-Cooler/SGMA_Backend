@@ -15,11 +15,8 @@ import java.util.Optional;
 
 @Service
 public class RecruitmentBoardCommandService {
-    //@Autowired
-    private final RecruitmentBoardRepository recruitmentBoardRepository;
-
-    //@Autowired
-    private final ModelMapper modelMapper;
+    private RecruitmentBoardRepository recruitmentBoardRepository;
+    private ModelMapper modelMapper;
 
     @Autowired
     public RecruitmentBoardCommandService(RecruitmentBoardRepository recruitmentBoardRepository, ModelMapper modelMapper) {
@@ -28,7 +25,7 @@ public class RecruitmentBoardCommandService {
     }
     // 현재 시스템 시간으로 Timestamp 생성
 
-    public RecruitmentBoard createStudyGroupApplicant(RecruitmentBoardCommandDTO recruitmentBoardCommandDTO) {
+    public RecruitmentBoard createStudyGroupApplicant(Long RecruitmentBoardId,RecruitmentBoardCommandDTO recruitmentBoardCommandDTO) {
         // 한국 표준시(KST)로 현재 시간을 구합니다.
         ZonedDateTime nowKst = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
         Timestamp currentTimestamp = Timestamp.from(nowKst.toInstant());
