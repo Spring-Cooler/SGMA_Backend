@@ -1,6 +1,5 @@
 package com.springcooler.sgma.studyschedule.query.controller;
 
-import com.springcooler.sgma.recruitmentboard.query.dto.RecruitmentBoardDTO;
 import com.springcooler.sgma.studyschedule.query.common.ResponseMessage;
 import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleDTO;
 import com.springcooler.sgma.studyschedule.query.service.StudyScheduleService;
@@ -16,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 

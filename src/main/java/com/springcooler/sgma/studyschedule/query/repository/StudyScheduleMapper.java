@@ -2,10 +2,8 @@ package com.springcooler.sgma.studyschedule.query.repository;
 
 import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleDTO;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 @Mapper
 public interface StudyScheduleMapper {

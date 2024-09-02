@@ -3,7 +3,6 @@ package com.springcooler.sgma.studyschedule.query.service;
 import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface StudyScheduleService {
 
