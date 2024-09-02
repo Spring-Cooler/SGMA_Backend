@@ -17,26 +17,27 @@ public class StudyGroup {
     @Column(name="GROUP_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("group_id")
-    private long groupId;
+    private Long groupId;
 
     @Column(name="GROUP_NAME")
     @JsonProperty("group_name")
     private String groupName;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="ACTIVE_STATUS")
     @JsonProperty("active_status")
-    private String activeStatus;
+    private StudyGroupStatus activeStatus;
 
     @Column(name="GROUP_MEMBERS")
     @JsonProperty("group_members")
-    private int groupMembers;
+    private Integer groupMembers;
 
     @Column(name="USER_ID")
     @JsonProperty("user_id")
-    private long userId;
+    private Long userId;
 
     @Column(name="STUDY_GROUP_CATEGORY_ID")
     @JsonProperty("category_id")
-    private int studyGroupCategoryId;
+    private Integer studyGroupCategoryId;
 
 }

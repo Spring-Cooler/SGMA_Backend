@@ -37,7 +37,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     @Override
     public StudyGroup registStudyGroup(StudyGroupDTO newStudyGroup) {
         // 스터디 그룹 생성 코드
-        newStudyGroup.setActiveStatus(StudyGroupStatus.ACTIVE.name());
+        newStudyGroup.setActiveStatus(StudyGroupStatus.ACTIVE);
         StudyGroup studyGroup =
                 studyGroupRepository.save(modelMapper.map(newStudyGroup, StudyGroup.class));
 
@@ -81,7 +81,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
                 .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
 
         // 활성화 여부, 그룹원 수, 그룹장은 기존 정보 그대로
-        modifyStudyGroup.setActiveStatus(StudyGroupStatus.ACTIVE.name());
+        modifyStudyGroup.setActiveStatus(StudyGroupStatus.ACTIVE);
         modifyStudyGroup.setGroupMembers(existingStudyGroup.getGroupMembers());
         modifyStudyGroup.setUserId(existingStudyGroup.getUserId());
 
@@ -149,7 +149,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
             throw new EntityNotFoundException("잘못된 삭제 요청입니다.");
 
         // INACTIVE 처리
-        deleteStudyGroup.setActiveStatus(StudyGroupStatus.INACTIVE.name());
+        deleteStudyGroup.setActiveStatus(StudyGroupStatus.INACTIVE);
         studyGroupRepository.save(deleteStudyGroup);
     }
 }
