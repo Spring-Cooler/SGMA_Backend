@@ -7,7 +7,6 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
