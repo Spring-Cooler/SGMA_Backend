@@ -1,8 +1,8 @@
-package com.springcooler.sgma.studyschedule.query.controller;
+package com.springcooler.sgma.studyscheduleparticipant.query.controller;
 
-import com.springcooler.sgma.studyschedule.query.common.ResponseMessage;
-import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleParticipantDTO;
-import com.springcooler.sgma.studyschedule.query.service.StudyScheduleParticipantService;
+import com.springcooler.sgma.studyscheduleparticipant.query.common.ResponseMessage;
+import com.springcooler.sgma.studyscheduleparticipant.query.dto.StudyScheduleParticipantDTO;
+import com.springcooler.sgma.studyscheduleparticipant.query.service.StudyScheduleParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
