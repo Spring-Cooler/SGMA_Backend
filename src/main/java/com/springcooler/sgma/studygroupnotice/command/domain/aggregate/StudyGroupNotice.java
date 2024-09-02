@@ -1,5 +1,6 @@
 package com.springcooler.sgma.studygroupnotice.command.domain.aggregate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,24 +18,32 @@ public class StudyGroupNotice {
     @Id
     @Column(name="NOTICE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long noticeId;
+    @JsonProperty("notice_id")
+    private Long noticeId;
 
     @Column(name="TITLE")
+    @JsonProperty("title")
     private String title;
 
     @Column(name="CONTENT")
+    @JsonProperty("content")
     private String content;
 
     @Column(name="CREATED_AT")
+    @JsonProperty("created_at")
     private Timestamp createdAt;
 
     @Column(name="UPDATED_AT")
+    @JsonProperty("updated_at")
     private Timestamp updatedAt;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="ACTIVE_STATUS")
-    private String activeStatus;
+    @JsonProperty("active_status")
+    private StudyGroupNoticeStatus activeStatus;
 
     @Column(name="GROUP_ID")
-    private long groupId;
+    @JsonProperty("group_id")
+    private Long groupId;
 
 }

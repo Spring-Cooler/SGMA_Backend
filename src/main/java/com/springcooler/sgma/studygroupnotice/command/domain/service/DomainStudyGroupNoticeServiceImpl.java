@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 public class DomainStudyGroupNoticeServiceImpl implements DomainStudyGroupNoticeService {
 
     @Override
-    public boolean isActive(String activeStatus) {
-        return activeStatus.equals(StudyGroupNoticeStatus.ACTIVE.name());
+    public boolean isActive(StudyGroupNoticeStatus activeStatus) {
+        return activeStatus.equals(StudyGroupNoticeStatus.ACTIVE);
     }
 
 }

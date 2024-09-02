@@ -35,7 +35,7 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
     public StudyGroupNotice registStudyGroupNotice(StudyGroupNoticeDTO newNotice) {
         // 생성 시각, 활성화 여부 초기화
         newNotice.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-        newNotice.setActiveStatus(StudyGroupNoticeStatus.ACTIVE.name());
+        newNotice.setActiveStatus(StudyGroupNoticeStatus.ACTIVE);
 
         return studyGroupNoticeRepository.save(modelMapper.map(newNotice, StudyGroupNotice.class));
     }
@@ -61,7 +61,7 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
     // 스터디그룹 공지사항 삭제
     @Transactional
     @Override
-    public void deleteStudyGroupNotice(long noticeId) {
+    public void deleteStudyGroupNotice(Long noticeId) {
         // 기존 엔티티 조회
         StudyGroupNotice deleteNotice =
                 studyGroupNoticeRepository.findById(noticeId)
@@ -72,7 +72,7 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
             throw new EntityNotFoundException("잘못된 삭제 요청입니다.");
 
         // INACTIVE 처리
-        deleteNotice.setActiveStatus(StudyGroupNoticeStatus.INACTIVE.name());
+        deleteNotice.setActiveStatus(StudyGroupNoticeStatus.INACTIVE);
         studyGroupNoticeRepository.save(deleteNotice);
     }
 
