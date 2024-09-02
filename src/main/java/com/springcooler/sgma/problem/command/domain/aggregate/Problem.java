@@ -14,7 +14,7 @@ public class Problem {
     @Id
     @Column(name="problem_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long problemId;
+    private Long problemId;
 
     @Column(name="content")
     private String content;

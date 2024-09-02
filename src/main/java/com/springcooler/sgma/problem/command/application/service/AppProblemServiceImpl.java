@@ -1,24 +1,32 @@
 package com.springcooler.sgma.problem.command.application.service;
 
+import com.springcooler.sgma.problem.command.application.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.command.application.dto.ProblemDTO;
 import com.springcooler.sgma.problem.command.domain.aggregate.Problem;
 import com.springcooler.sgma.problem.command.domain.repository.ProblemRepository;
+import com.springcooler.sgma.problem.command.infrastructure.service.InfraProblemService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @Service
 public class AppProblemServiceImpl implements AppProblemService{
 
     private final ModelMapper modelMapper;
     private final ProblemRepository problemRepository;
+    private final InfraProblemService infraProblemService;
     @Autowired
-    public AppProblemServiceImpl(ModelMapper modelMapper, ProblemRepository problemRepository) {
+    public AppProblemServiceImpl(ModelMapper modelMapper, ProblemRepository problemRepository, InfraProblemService infraProblemService) {
         this.modelMapper = modelMapper;
         this.problemRepository = problemRepository;
+        this.infraProblemService = infraProblemService;
     }
 
     @Transactional
@@ -54,5 +62,23 @@ public class AppProblemServiceImpl implements AppProblemService{
     @Override
     public int getAnswerByProblemId(long problemId) {
         return problemRepository.findById(problemId).orElseThrow(()->new EntityNotFoundException("존재하지 않는 문제입니다.")).getAnswer();
+    }
+
+    @Transactional
+    @Override
+    public Map<String,Object> registProblemAndChoice(ProblemAndChoiceDTO newProblemAndChoice) {
+        Problem problem = new Problem(null,
+                newProblemAndChoice.getContent(),
+                newProblemAndChoice.getAnswer(),
+                newProblemAndChoice.getParticipantId(),
+                newProblemAndChoice.getScheduleId());
+
+        Problem registeredProblem = problemRepository.save(problem);
+        int numInsertedChoices = infraProblemService.requestRegistChoices(registeredProblem.getProblemId(),newProblemAndChoice.getChoices());
+        Map<String,Object> resultMap = new HashMap<>();
+        resultMap.put("registeredproblem", registeredProblem);
+        resultMap.put("numInsertedChoices", numInsertedChoices);
+        return resultMap;
+
     }
 }
