@@ -32,6 +32,9 @@ public class StudyGroupMemberDTO {
     @JsonProperty("user_id")
     private Long userId;
 
+    @JsonProperty("nickname")
+    private String nickname;
+
     @JsonProperty("group_id")
     private Long groupId;
 
