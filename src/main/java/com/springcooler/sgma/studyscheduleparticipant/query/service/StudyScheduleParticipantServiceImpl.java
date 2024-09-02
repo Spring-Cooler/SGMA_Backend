@@ -1,7 +1,7 @@
-package com.springcooler.sgma.studyschedule.query.service;
+package com.springcooler.sgma.studyscheduleparticipant.query.service;
 
-import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleParticipantDTO;
-import com.springcooler.sgma.studyschedule.query.repository.StudyScheduleParticipantMapper;
+import com.springcooler.sgma.studyscheduleparticipant.query.dto.StudyScheduleParticipantDTO;
+import com.springcooler.sgma.studyscheduleparticipant.query.repository.StudyScheduleParticipantMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
