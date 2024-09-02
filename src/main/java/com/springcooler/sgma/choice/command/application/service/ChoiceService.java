@@ -1,5 +1,5 @@
 package com.springcooler.sgma.choice.command.application.service;
 
 
-public class ChoiceService {
+public interface ChoiceService {
 }

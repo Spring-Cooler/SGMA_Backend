@@ -20,4 +20,9 @@ public class ChoiceServiceImpl implements ChoiceService {
     public List<ChoiceDTO> findAllChoices() {
         return choiceMapper.findAllChoices();
     }
+
+    @Override
+    public List<ChoiceDTO> findChoicesByProblemId(Long problemId) {
+        return choiceMapper.findChoicesByProblemId(problemId);
+    }
 }

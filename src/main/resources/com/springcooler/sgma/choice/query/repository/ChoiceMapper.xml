@@ -17,4 +17,12 @@
                ,A.CONTENT
         FROM CHOICE A
     </select>
+
+    <select id="findChoicesByProblemId" resultMap="choiceResultMap">
+        SELECT      A.PROBLEM_ID
+                   ,A.CHOICE_NUM
+                   ,A.CONTENT
+          FROM      CHOICE A
+         WHERE      A.PROBLEM_ID = #{ problemId }
+    </select>
 </mapper>

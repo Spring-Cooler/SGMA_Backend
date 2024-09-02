@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ChoiceService {
     List<ChoiceDTO> findAllChoices();
+    List<ChoiceDTO> findChoicesByProblemId(Long problemId);
 }

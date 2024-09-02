@@ -32,4 +32,19 @@ class ChoiceServiceTests {
 
         choices.forEach(x->{log.info("choice : {}",x);});
     }
+
+    @DisplayName("문제 ID로 선택지 조회")
+    @Test
+    void testFindChoiceByProblemId(){
+
+        // given
+        long problemId = 1L;
+
+        // when
+        List<ChoiceDTO> choices = choiceService.findChoicesByProblemId(problemId);
+
+        // then
+        assertNotNull(choices);
+        choices.forEach(x->{log.info("choice : {}",x);});
+    }
 }
