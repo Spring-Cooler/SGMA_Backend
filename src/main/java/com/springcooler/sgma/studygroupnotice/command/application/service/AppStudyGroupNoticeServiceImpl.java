@@ -5,6 +5,8 @@ import com.springcooler.sgma.studygroupnotice.command.domain.aggregate.StudyGrou
 import com.springcooler.sgma.studygroupnotice.command.domain.aggregate.StudyGroupNoticeStatus;
 import com.springcooler.sgma.studygroupnotice.command.domain.repository.StudyGroupNoticeRepository;
 import com.springcooler.sgma.studygroupnotice.command.domain.service.DomainStudyGroupNoticeService;
+import com.springcooler.sgma.studygroupnotice.common.exception.CommonException;
+import com.springcooler.sgma.studygroupnotice.common.exception.ErrorCode;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +50,7 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
         // 기존 엔티티 조회
         StudyGroupNotice existingNotice =
                 studyGroupNoticeRepository.findById(modifyNotice.getNoticeId())
-                        .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
+                        .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_NOTICE));
 
         // 바뀐 제목, 내용, 수정 시각 업데이트
         existingNotice.setTitle(modifyNotice.getTitle());
@@ -65,11 +67,11 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
         // 기존 엔티티 조회
         StudyGroupNotice deleteNotice =
                 studyGroupNoticeRepository.findById(noticeId)
-                        .orElseThrow(() -> new EntityNotFoundException("잘못된 삭제 요청입니다."));
+                        .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_NOTICE));
 
         // 유효성 검사
         if(!domainStudyGroupNoticeService.isActive(deleteNotice.getActiveStatus()))
-            throw new EntityNotFoundException("잘못된 삭제 요청입니다.");
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_NOTICE);
 
         // INACTIVE 처리
         deleteNotice.setActiveStatus(StudyGroupNoticeStatus.INACTIVE);

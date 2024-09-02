@@ -5,6 +5,8 @@ import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGrou
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMemberStatus;
 import com.springcooler.sgma.studygroupmember.command.domain.repository.StudyGroupMemberRepository;
 import com.springcooler.sgma.studygroupmember.command.domain.service.DomainStudyGroupMemberService;
+import com.springcooler.sgma.studygroupmember.common.exception.CommonException;
+import com.springcooler.sgma.studygroupmember.common.exception.ErrorCode;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,7 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
     public StudyGroupMember modifyStudyGroupMember(StudyGroupMemberDTO modifyMember) {
         // 기존 엔티티 조회
         StudyGroupMember existingMember = studyGroupMemberRepository.findById(modifyMember.getMemberId())
-                .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_MEMBER));
 
         // DTO를 엔티티에 매핑
         modelMapper.map(modifyMember, existingMember);
@@ -61,11 +63,11 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
     public void deleteStudyGroupMember(Long memberId) {
         // 기존 엔티티 조회
         StudyGroupMember deleteMember = studyGroupMemberRepository.findById(memberId)
-                .orElseThrow(() -> new EntityNotFoundException("잘못된 삭제 요청입니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_MEMBER));
 
         // 유효성 검사
         if (!domainStudyGroupMemberService.isActive(deleteMember.getMemberStatus()))
-            throw new EntityNotFoundException("잘못된 삭제 요청입니다.");
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_MEMBER);
 
         // INACTIVE 처리
         deleteMember.setMemberWithdrawnAt(new Timestamp(System.currentTimeMillis()));

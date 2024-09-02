@@ -6,6 +6,8 @@ import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroupStatu
 import com.springcooler.sgma.studygroup.command.domain.repository.StudyGroupRepository;
 import com.springcooler.sgma.studygroup.command.domain.service.DomainStudyGroupService;
 import com.springcooler.sgma.studygroup.command.infrastructure.service.InfraStudyGroupService;
+import com.springcooler.sgma.studygroup.common.exception.CommonException;
+import com.springcooler.sgma.studygroup.common.exception.ErrorCode;
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -60,7 +62,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     public StudyGroup registAcceptedMember(StudyGroupMemberDTO newMember) {
         // 스터디 그룹 조회
         StudyGroup existingStudyGroup = studyGroupRepository.findById(newMember.getGroupId())
-                .orElseThrow(() -> new EntityNotFoundException("잘못된 요청입니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
 
         // 스터디 그룹원 추가 요청
         infraStudyGroupService.registStudyGroupMember(newMember);
@@ -78,7 +80,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     public StudyGroup modifyStudyGroup(StudyGroupDTO modifyStudyGroup) {
         // 기존 엔티티 조회
         StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
-                .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
 
         // 활성화 여부, 그룹원 수, 그룹장은 기존 정보 그대로
         modifyStudyGroup.setActiveStatus(StudyGroupStatus.ACTIVE);
@@ -98,7 +100,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     public StudyGroup modifyStudyGroupName(StudyGroupDTO modifyStudyGroup) {
         // 기존 엔티티 조회
         StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
-                .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
 
         // 변경된 이름 매핑
         existingStudyGroup.setGroupName(modifyStudyGroup.getGroupName());
@@ -111,7 +113,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     public StudyGroup modifyStudyGroupCategory(StudyGroupDTO modifyStudyGroup) {
         // 기존 엔티티 조회
         StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
-                .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
 
         // 변경된 카테고리 매핑
         existingStudyGroup.setStudyGroupCategoryId(modifyStudyGroup.getStudyGroupCategoryId());
@@ -124,7 +126,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     public StudyGroup deleteQuitMember(long memberId, long groupId) {
         // 스터디 그룹 조회
         StudyGroup existingStudyGroup = studyGroupRepository.findById(groupId)
-                .orElseThrow(() -> new EntityNotFoundException("잘못된 요청입니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
 
         // 스터디 그룹원 삭제 요청
         infraStudyGroupService.deleteStudyGroupMember(memberId);
@@ -142,11 +144,11 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     public void deleteStudyGroup(long groupId) {
         // 스터디 그룹 조회
         StudyGroup deleteStudyGroup = studyGroupRepository.findById(groupId)
-                .orElseThrow(() -> new EntityNotFoundException("잘못된 삭제 요청입니다."));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
 
         // 유효성 검사
         if(!domainStudyGroupService.isActive(deleteStudyGroup.getActiveStatus()))
-            throw new EntityNotFoundException("잘못된 삭제 요청입니다.");
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP);
 
         // INACTIVE 처리
         deleteStudyGroup.setActiveStatus(StudyGroupStatus.INACTIVE);

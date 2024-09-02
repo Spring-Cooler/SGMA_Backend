@@ -3,6 +3,8 @@ package com.springcooler.sgma.studygroupcategory.command.application.service;
 import com.springcooler.sgma.studygroupcategory.command.application.dto.StudyGroupCategoryDTO;
 import com.springcooler.sgma.studygroupcategory.command.domain.aggregate.StudyGroupCategory;
 import com.springcooler.sgma.studygroupcategory.command.domain.repository.StudyGroupCategoryRepository;
+import com.springcooler.sgma.studygroupcategory.common.exception.CommonException;
+import com.springcooler.sgma.studygroupcategory.common.exception.ErrorCode;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,11 @@ public class AppStudyGroupCategoryServiceImpl implements AppStudyGroupCategorySe
     @Transactional
     @Override
     public StudyGroupCategory registStudyGroupCategory(StudyGroupCategoryDTO newCategory) {
-        return studyGroupCategoryRepository.save(modelMapper.map(newCategory, StudyGroupCategory.class));
+        StudyGroupCategory category = modelMapper.map(newCategory, StudyGroupCategory.class);
+        if(category.getCategoryName() == null) {
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+        }
+        return studyGroupCategoryRepository.save(category);
     }
 
     // 스터디그룹 카테고리 삭제
@@ -36,7 +42,7 @@ public class AppStudyGroupCategoryServiceImpl implements AppStudyGroupCategorySe
         // 기존 엔티티 조회
         StudyGroupCategory deleteCategory =
                 studyGroupCategoryRepository.findById(categoryId).orElseThrow(
-                        () -> new EntityNotFoundException("잘못된 삭제 요청입니다."));
+                        () -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_CATEGORY));
 
         studyGroupCategoryRepository.delete(deleteCategory);
     }
