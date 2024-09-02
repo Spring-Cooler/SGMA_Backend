@@ -1,6 +1,6 @@
-package com.springcooler.sgma.studyschedule.query.service;
+package com.springcooler.sgma.studyscheduleparticipant.query.service;
 
-import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleParticipantDTO;
+import com.springcooler.sgma.studyscheduleparticipant.query.dto.StudyScheduleParticipantDTO;
 
 import java.util.List;
 

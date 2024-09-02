@@ -1,4 +1,4 @@
-package com.springcooler.sgma.studyschedule.query.dto;
+package com.springcooler.sgma.studyscheduleparticipant.query.dto;
 
 import lombok.*;
 

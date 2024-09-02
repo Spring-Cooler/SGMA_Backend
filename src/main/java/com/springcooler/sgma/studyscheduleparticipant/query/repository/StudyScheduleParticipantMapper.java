@@ -1,6 +1,6 @@
-package com.springcooler.sgma.studyschedule.query.repository;
+package com.springcooler.sgma.studyscheduleparticipant.query.repository;
 
-import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleParticipantDTO;
+import com.springcooler.sgma.studyscheduleparticipant.query.dto.StudyScheduleParticipantDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
