@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="STUDY_GROUP_MEMBER")
@@ -23,11 +23,11 @@ public class StudyGroupMember {
 
     @Column(name="MEMBER_ENROLLED_AT")
     @JsonProperty("member_enrolled_at")
-    private Timestamp memberEnrolledAt;
+    private LocalDateTime memberEnrolledAt;
 
     @Column(name="MEMBER_WITHDRAWN_AT")
     @JsonProperty("member_withdrawn_at")
-    private Timestamp memberWithdrawnAt;
+    private LocalDateTime memberWithdrawnAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name="MEMBER_STATUS")

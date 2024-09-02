@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -47,11 +46,10 @@ class StudyGroupMemberServiceTests {
         String dateTimeString = "2023-09-07 21:30:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.parse(dateTimeString, formatter);
-        Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
         StudyGroupMemberDTO modifyMember = new StudyGroupMemberDTO();
         modifyMember.setMemberId(3L);
-        modifyMember.setMemberEnrolledAt(timestamp);
+        modifyMember.setMemberEnrolledAt(localDateTime);
         modifyMember.setUserId(3L);
         modifyMember.setGroupId(5L);
         modifyMember.setGroupRole(GroupRole.ROLE_OWNER);
