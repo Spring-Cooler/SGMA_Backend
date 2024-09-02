@@ -19,8 +19,7 @@ public class UserEntity {
     private String userName;
 
     @Column(name = "password", length = 255)
-//    private String pwd;
-    private String encryptedPwd; //암호화 이후의 컬럼
+    private String encryptedPwd;
 
     @Column(name = "nickname", length = 255)
     private String nickname;
@@ -30,7 +29,7 @@ public class UserEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_status", nullable = false, length = 255)
-    private ActiveStatus userStatus =  ActiveStatus.ACTIVE; //필기. Enum타입으로 정의
+    private ActiveStatus userStatus =  ActiveStatus.ACTIVE;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -43,25 +42,31 @@ public class UserEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "accept_status", nullable = false, length = 255)
-    private AcceptStatus acceptStatus = AcceptStatus.N;  //필기. Enum타입으로 정의
+    private AcceptStatus acceptStatus = AcceptStatus.N;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "signup_path", length = 255)
-    private SignupPath signupPath; //필기. Enum타입으로 정의
+    private SignupPath signupPath;
 
-    // 사용자 정보 비활성화로 설정
+    @Column(name = "user_identifier", nullable = false, unique = true, length = 511)
+    private String userIdentifier; // 신규 추가
+
+    @PrePersist
+    public void prePersist() {
+        // userIdentifier를 signupPath와 email을 기반으로 생성
+        this.userIdentifier = this.signupPath + "_" + this.email;
+    }
+
     public void deactivateUser() {
         this.userStatus = ActiveStatus.INACTIVE;
-        this.withdrawnAt = LocalDateTime.now().withNano(0); // 필기. 초 단위까지만 설정
+        this.withdrawnAt = LocalDateTime.now().withNano(0);
     }
 
-    // 사용자 정보 활성화로 설정
     public void activateUser() {
         this.userStatus = ActiveStatus.ACTIVE;
-        this.withdrawnAt = null; // 재활성화 시 탈퇴 시간을 초기화
+        this.withdrawnAt = null;
     }
 
-    // 사용자 정보 변경(닉네임, 사진)
     public void updateProfile(String nickname, String profileImage) {
         if (nickname != null && !nickname.isEmpty()) {
             this.nickname = nickname;

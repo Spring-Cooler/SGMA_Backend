@@ -39,8 +39,11 @@ public class UserDTO {
     private String profileImage;
 
     @JsonProperty("accept_status")
-    private AcceptStatus acceptStatus = AcceptStatus.N;  // 기본값 설정
+    private AcceptStatus acceptStatus = AcceptStatus.N;
 
     @JsonProperty("signup_path")
     private SignupPath signupPath;
+
+    @JsonProperty("user_identifier")
+    private String userIdentifier; // 신규 추가, 가입 경로 + 이메일 조합
 }

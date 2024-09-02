@@ -219,13 +219,13 @@ public class UserServiceImpl implements UserService {
 
     /* 설명. 로그인 시 security가 자동으로 호출하는 메소드 */
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String userIdentifier) throws UsernameNotFoundException {
 
-        /* 설명. 넘어온 email이 사용자가 입력한 id로써 eamil로 회원을 조회하는 쿼리 메소드 작성 */
-        UserEntity loginUser = userRepository.findByEmail(email);
+        /* 설명. 넘어온 email과 가입경로를 사용자가 입력한 id로써 회원을 조회하는 쿼리 메소드 작성 */
+        UserEntity loginUser = userRepository.findByUserIdentifier(userIdentifier);
 
         if (loginUser == null) {
-            throw new UsernameNotFoundException(email + " 이메일 아이디의 유저는 존재하지 않습니다.");
+            throw new UsernameNotFoundException(userIdentifier + " 해당 아이디의 유저는 존재하지 않습니다.");
         }
 
         /* 설명. 사용자의 권한들을 가져왔다는 가정 */

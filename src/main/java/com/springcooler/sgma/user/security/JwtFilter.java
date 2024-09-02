@@ -1,6 +1,10 @@
 package com.springcooler.sgma.user.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springcooler.sgma.user.command.application.service.UserService;
+import com.springcooler.sgma.user.common.ResponseDTO;
+import com.springcooler.sgma.user.common.exception.CommonException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,32 +32,39 @@ public class JwtFilter extends OncePerRequestFilter {
 
     /*설명. 들고 온(Request Header) 토큰이 유효한지 판별 및 인증(Authentication 객체로 관리)*/
     @Override
-    protected void doFilterInternal(HttpServletRequest request
-            , HttpServletResponse response
-            , FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         log.info("UsernamePasswordAuthenticationFilter보다 먼저 동작하는 필터");
 
-        String authorizationHeader=request.getHeader("Authorization");
-        log.info("Authorization header: {}"+authorizationHeader);
+        String authorizationHeader = request.getHeader("Authorization");
+        log.info("Authorization header: {}", authorizationHeader);
 
-        /* 설명. Jwt 토큰이 Request 헤더에 있는 경우(로그인 후 요청일 경우)*/
-        if (authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")){
-            String token = authorizationHeader.substring(7); //필기. B(0)e(1)...r(5)" "(6)이므로 7번부터 토큰 시작
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
             log.info("토큰 값: " + token);
 
-            if(jwtUtil.validateToken(token)) {
-                Authentication authentication = jwtUtil.getAuthentication(token);
-                log.info("JwtFilter를 통과한 유효한 토큰을 통해 security가 관리할 principal 객체: {}", authentication);
-                SecurityContextHolder.getContext().setAuthentication(authentication);   // 인증이 완료되었고 이후 필터 건너뜀
+            try {
+                if (jwtUtil.validateToken(token)) {
+                    Authentication authentication = jwtUtil.getAuthentication(token);
+                    log.info("JwtFilter를 통과한 유효한 토큰을 통해 security가 관리할 principal 객체: {}", authentication);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            } catch (CommonException ex) {
+                // 예외를 잡고 ResponseDTO 형식으로 응답
+                response.setStatus(ex.getErrorCode().getHttpStatus().value());
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");  // 응답 인코딩을 UTF-8로 설정
+
+                ResponseDTO<Object> errorResponse = ResponseDTO.fail(ex);
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonResponse = objectMapper.writeValueAsString(errorResponse);
+
+                response.getWriter().write(jsonResponse);
+                return;
             }
         }
 
-        /* 설명. 위의 if문으로 인증된 Authentication 객체가 principal 객체로 관리되지 않는다면 다음 필터 실행 */
-        filterChain.doFilter(request, response);    // 실행 될 다음 필터는 UsernamePasswordAuthenticationFilter
-
-        /* 설명. Jwt 토큰이 Request 헤더에 있는 경우*/
-
+        filterChain.doFilter(request, response);
     }
 }
 

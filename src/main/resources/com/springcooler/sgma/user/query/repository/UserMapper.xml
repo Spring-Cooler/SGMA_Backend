@@ -18,7 +18,8 @@
         withdrawn_at AS withdrawnAt,
         profile_image AS profileImage,
         accept_status AS acceptStatus,
-        signup_path AS signupPath
+        signup_path AS signupPath,
+        CONCAT(signup_path, '_', email) AS userIdentifier  <!-- 신규 추가된 필드 -->
         FROM USER
         WHERE user_id = #{userId}
     </select>
@@ -36,7 +37,8 @@
         withdrawn_at AS withdrawnAt,
         profile_image AS profileImage,
         accept_status AS acceptStatus,
-        signup_path AS signupPath
+        signup_path AS signupPath,
+        CONCAT(signup_path, '_', email) AS userIdentifier  <!-- 신규 추가된 필드 -->
         FROM USER
         WHERE nickname = #{nickname}
     </select>

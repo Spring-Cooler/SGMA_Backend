@@ -52,9 +52,12 @@ public class WebSecurity {
 
         http.authorizeHttpRequests((authz) ->
                         authz
-                             .requestMatchers(new AntPathRequestMatcher("/api/users/**", "POST")).permitAll()
-                             .requestMatchers(new AntPathRequestMatcher("/api/users/**", "GET")).permitAll()
-                             .requestMatchers(new AntPathRequestMatcher("/api/users/**", "PATCH")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/api/users/**", "POST")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/api/users/**", "GET")).hasRole("ENTERPRISE")
+                                .requestMatchers(new AntPathRequestMatcher("/api/users/**", "PATCH")).hasRole("ENTERPRISE")
+                                .requestMatchers(new AntPathRequestMatcher("/api/users/**", "PUT")).hasRole("ENTERPRISE")
+                                .requestMatchers(new AntPathRequestMatcher("/api/users/**", "DELETE")).hasRole("ENTERPRISE")
+
                              .anyRequest().authenticated()
                 )
                 /* 설명. authenticationManager 등록(UserDetails를 상속받는 Service 계층 + BCrypt 암호화) */

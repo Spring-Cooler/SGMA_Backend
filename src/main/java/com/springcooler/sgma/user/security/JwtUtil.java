@@ -1,6 +1,8 @@
 package com.springcooler.sgma.user.security;
 
 import com.springcooler.sgma.user.command.application.service.UserService;
+import com.springcooler.sgma.user.common.exception.CommonException;
+import com.springcooler.sgma.user.common.exception.ErrorCode;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -39,24 +41,28 @@ public class JwtUtil {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true; // 토큰이 유효한 경우에만 true 반환
+            return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT Token {}", e);
+            throw new CommonException(ErrorCode.INVALID_TOKEN_ERROR);
         } catch (ExpiredJwtException e) {
             log.info("Expired JWT Token {}", e);
+            throw new CommonException(ErrorCode.EXPIRED_TOKEN_ERROR);
         } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT Token {}", e);
+            throw new CommonException(ErrorCode.TOKEN_UNSUPPORTED_ERROR);
         } catch (IllegalArgumentException e) {
             log.info("JWT Token claims empty {}", e);
+            throw new CommonException(ErrorCode.TOKEN_MALFORMED_ERROR);
         }
-
-        return false; // 유효하지 않은 경우 false 반환
     }
 
 
     /* 설명. 넘어온 AccessToken으로 인증 객체 추출 */
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userService.loadUserByUsername(this.getUserId(token));
+        String userIdentifier = this.getUserId(token);
+        UserDetails userDetails = userService.loadUserByUsername(userIdentifier); // userIdentifier로 사용자 로드
+
         Claims claims = parseClaims(token);
         log.info("넘어온 AccessToken claims 확인: {}", claims);
 
@@ -64,12 +70,7 @@ public class JwtUtil {
         if (authClaim == null || authClaim.trim().isEmpty()) {
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }
-        /*필기. json형식에 값만 추출
-                "auth": [
-                  "ROLE_ADMIN",
-                  "ROLE_ENTERPRISE"
-                ],
-         */
+
         Collection<? extends GrantedAuthority> authorities
                 = Arrays.stream(authClaim.replace("[", "").replace("]", "").split(", "))
                 .map(String::trim)

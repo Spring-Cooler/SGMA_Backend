@@ -6,11 +6,11 @@ import com.springcooler.sgma.user.command.domain.aggregate.ActiveStatus;
 import com.springcooler.sgma.user.command.domain.aggregate.SignupPath;
 import lombok.Data;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
 public class UserDTO {
+
     @JsonProperty("user_id")
     private Long userId;
 
@@ -27,7 +27,7 @@ public class UserDTO {
     private String email;
 
     @JsonProperty("user_status")
-    private ActiveStatus userStatus;  // Enum 타입으로 정의
+    private ActiveStatus userStatus = ActiveStatus.ACTIVE;
 
     @JsonProperty("created_at")
     private LocalDateTime createdAt;
@@ -39,9 +39,12 @@ public class UserDTO {
     private String profileImage;
 
     @JsonProperty("accept_status")
-    private AcceptStatus acceptStatus;  // Enum 타입으로 정의
+    private AcceptStatus acceptStatus = AcceptStatus.N;
 
     @JsonProperty("signup_path")
-    private SignupPath signupPath;  // Enum 타입으로 정의
-    // 기본 생성자, 모든 필드를 포함한 생성자, 필요한 경우 빌더 패턴 등을 추가할 수 있습니다.
+    private SignupPath signupPath;
+
+    @JsonProperty("user_identifier")
+    private String userIdentifier; // 신규 추가, 가입 경로 + 이메일 조합
 }
+

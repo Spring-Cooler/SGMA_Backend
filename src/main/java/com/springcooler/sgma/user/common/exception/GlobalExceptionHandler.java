@@ -41,6 +41,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {CommonException.class})
     public ResponseDTO<?> handleCustomException(CommonException e) {
+        log.error("handleCustomException() in GlobalExceptionHandler: {}", e.getMessage());
         return ResponseDTO.fail(e);
     }
 
