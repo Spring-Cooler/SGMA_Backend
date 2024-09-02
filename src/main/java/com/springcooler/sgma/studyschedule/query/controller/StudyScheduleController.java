@@ -1,5 +1,6 @@
 package com.springcooler.sgma.studyschedule.query.controller;
 
+import com.springcooler.sgma.recruitmentboard.query.dto.RecruitmentBoardDTO;
 import com.springcooler.sgma.studyschedule.query.common.ResponseMessage;
 import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleDTO;
 import com.springcooler.sgma.studyschedule.query.service.StudyScheduleService;
@@ -15,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -31,27 +33,15 @@ public class StudyScheduleController {
 
     // 스터디 그룹 일정 단건 조회
     @GetMapping("/schedule/{scheduleId}")
-    public ResponseEntity<ResponseMessage> findStudyScheduleByScheduleId(@PathVariable long scheduleId) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
-
-        List<StudyScheduleDTO> schedules = studyScheduleService.findStudyScheduleByScheduleId(scheduleId);
-
-        if (schedules.isEmpty()) {
-            ResponseMessage responseMessage = new ResponseMessage(404, "조회 실패!", null);
-            return new ResponseEntity<>(responseMessage, headers, HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> findStudyScheduleByScheduleId(@PathVariable("scheduleId") Long ScheduleId) {
+        try {
+            StudyScheduleDTO studyScheduleDTO = studyScheduleService.findStudyScheduleByScheduleId(ScheduleId);
+            return ResponseEntity.ok(studyScheduleDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("해당 번호의 글이 존재하지 않습니다");
         }
-
-        Map<String, Object> responseMap = schedules
-                .stream()
-                .collect(Collectors.toMap(
-                                schedule -> String.valueOf(schedule.getScheduleId()),
-                                Function.identity()
-                        )
-                );
-
-        ResponseMessage responseMessage = new ResponseMessage(200, "조회 성공!", responseMap);
-        return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
     }
 
     // 스터디 그룹 일정 전체 조회

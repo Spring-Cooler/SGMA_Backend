@@ -46,6 +46,11 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
         StudySchedule schedule = scheduleRepository.findById(newParticipant.getScheduleId())
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 일정 ID입니다."));
 
+        // 중복 참가자 여부 확인
+        if (participantRepository.existsByScheduleIdAndMemberId(newParticipant.getScheduleId(), newParticipant.getMemberId())) {
+            throw new IllegalArgumentException("이 멤버는 이미 해당 일정에 참가자로 등록되어 있습니다.");
+        }
+
         StudyScheduleParticipant participant = modelMapper.map(newParticipant, StudyScheduleParticipant.class);
         participantRepository.save(participant);
 
