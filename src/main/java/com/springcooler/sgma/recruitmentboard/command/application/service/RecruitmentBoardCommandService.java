@@ -25,7 +25,7 @@ public class RecruitmentBoardCommandService {
     }
     // 현재 시스템 시간으로 Timestamp 생성
 
-    public RecruitmentBoard createStudyGroupApplicant(Long RecruitmentBoardId,RecruitmentBoardCommandDTO recruitmentBoardCommandDTO) {
+    public RecruitmentBoard createStudyGroupApplicant(RecruitmentBoardCommandDTO recruitmentBoardCommandDTO) {
         // 한국 표준시(KST)로 현재 시간을 구합니다.
         ZonedDateTime nowKst = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
         Timestamp currentTimestamp = Timestamp.from(nowKst.toInstant());
@@ -36,8 +36,8 @@ public class RecruitmentBoardCommandService {
                 .content(recruitmentBoardCommandDTO.getContent())
                 .createdAt(currentTimestamp)  // 한국 현재 시간을 설정합니다.
                 .updatedAt(currentTimestamp)
-                .recruitmentStartTime(recruitmentBoardCommandDTO.getRecruitmentStartTime())
-                .recruitmentEndTime(recruitmentBoardCommandDTO.getRecruitmentEndTime())
+                .recruitmentStartTime(currentTimestamp)
+                .recruitmentEndTime(currentTimestamp)
                 .activeStatus(BoardActiveStatus.valueOf("ACTIVE"))
                 .likes(recruitmentBoardCommandDTO.getLikes())//추후 수정
                 .group_id(recruitmentBoardCommandDTO.getGroupId())

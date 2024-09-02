@@ -18,8 +18,8 @@ public class RecruitmentBoardCommandController {
     private RecruitmentBoardCommandService recruitmentBoardCommandService;
 
     @PostMapping
-    public ResponseEntity<RecruitmentBoardCommandDTO> createRecruitmentBoard(@PathVariable Long recruitmentBoardId,@RequestBody RecruitmentBoardCommandDTO studyGroupApplicantCommandDTO) {
-        recruitmentBoardCommandService.createStudyGroupApplicant(recruitmentBoardId, studyGroupApplicantCommandDTO);
+    public ResponseEntity<RecruitmentBoardCommandDTO> createRecruitmentBoard(@RequestBody RecruitmentBoardCommandDTO studyGroupApplicantCommandDTO) {
+        recruitmentBoardCommandService.createStudyGroupApplicant(studyGroupApplicantCommandDTO);
         return ResponseEntity.ok(studyGroupApplicantCommandDTO);
     }
 

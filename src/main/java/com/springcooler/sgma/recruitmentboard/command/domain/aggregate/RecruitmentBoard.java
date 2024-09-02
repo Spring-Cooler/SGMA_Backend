@@ -47,4 +47,9 @@ public class RecruitmentBoard {
     private int study_group_category_id;
 
 
+    public void checkAndUpdateStatus(Timestamp currentTime) {
+        if (this.activeStatus == BoardActiveStatus.ACTIVE && currentTime.after(Timestamp.from(createdAt.toInstant().plusSeconds(60)))) {
+            this.activeStatus = BoardActiveStatus.INACTIVE;
+        }
+    }
 }
