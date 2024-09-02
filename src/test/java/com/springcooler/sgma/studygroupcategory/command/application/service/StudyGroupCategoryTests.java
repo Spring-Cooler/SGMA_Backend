@@ -2,7 +2,7 @@ package com.springcooler.sgma.studygroupcategory.command.application.service;
 
 import com.springcooler.sgma.studygroupcategory.command.application.dto.StudyGroupCategoryDTO;
 import com.springcooler.sgma.studygroupcategory.command.domain.aggregate.StudyGroupCategory;
-import jakarta.persistence.EntityNotFoundException;
+import com.springcooler.sgma.studygroupcategory.common.exception.CommonException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +45,7 @@ class StudyGroupCategoryTests {
         System.out.println("DELETE SUCCESS");
 
         //Then
-        Assertions.assertThrows(EntityNotFoundException.class,
+        Assertions.assertThrows(CommonException.class,
                 () -> studyGroupCategoryService.deleteStudyGroupCategory(categoryId)
         );
     }

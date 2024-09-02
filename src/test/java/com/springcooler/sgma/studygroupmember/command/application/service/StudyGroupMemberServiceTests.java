@@ -1,9 +1,9 @@
 package com.springcooler.sgma.studygroupmember.command.application.service;
 
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
+import com.springcooler.sgma.studygroupmember.command.domain.aggregate.GroupRole;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMember;
-import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMemberStatus;
-import jakarta.persistence.EntityNotFoundException;
+import com.springcooler.sgma.studygroupmember.common.exception.CommonException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,12 +50,11 @@ class StudyGroupMemberServiceTests {
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
         StudyGroupMemberDTO modifyMember = new StudyGroupMemberDTO();
-        modifyMember.setMemberId(20L);
+        modifyMember.setMemberId(3L);
         modifyMember.setMemberEnrolledAt(timestamp);
-        modifyMember.setMemberWithdrawnAt(new Timestamp(System.currentTimeMillis()));
-        modifyMember.setMemberStatus(StudyGroupMemberStatus.INACTIVE);
-        modifyMember.setUserId(5L);
+        modifyMember.setUserId(3L);
         modifyMember.setGroupId(5L);
+        modifyMember.setGroupRole(GroupRole.ROLE_OWNER);
 
         //When
         StudyGroupMember member = studyGroupMemberService.modifyStudyGroupMember(modifyMember);
@@ -71,14 +70,14 @@ class StudyGroupMemberServiceTests {
     @Test
     void testDeleteStudyGroupMember() {
         //Given
-        long memberId = 5L;
+        long memberId = 6L;
 
         //When
         studyGroupMemberService.deleteStudyGroupMember(memberId);
         System.out.println("DELETE SUCCESS");
 
         //Then
-        Assertions.assertThrows(EntityNotFoundException.class,
+        Assertions.assertThrows(CommonException.class,
                 () -> studyGroupMemberService.deleteStudyGroupMember(memberId));
     }
 }

@@ -1,6 +1,10 @@
 package com.springcooler.sgma.studygroupmember.query.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.springcooler.sgma.studygroupmember.command.domain.aggregate.GroupRole;
+import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMemberStatus;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -21,13 +25,18 @@ public class StudyGroupMemberDTO {
     @JsonProperty("member_withdrawn_at")
     private Timestamp memberWithdrawnAt;
 
+    @Enumerated(EnumType.STRING)
     @JsonProperty("member_status")
-    private String memberStatus;
+    private StudyGroupMemberStatus memberStatus;
 
     @JsonProperty("user_id")
     private Long userId;
 
     @JsonProperty("group_id")
     private Long groupId;
+
+    @Enumerated(EnumType.STRING)
+    @JsonProperty("group_role")
+    private GroupRole groupRole;
 
 }

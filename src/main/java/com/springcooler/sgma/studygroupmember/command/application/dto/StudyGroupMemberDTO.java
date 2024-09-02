@@ -1,6 +1,7 @@
 package com.springcooler.sgma.studygroupmember.command.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.springcooler.sgma.studygroupmember.command.domain.aggregate.GroupRole;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMemberStatus;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -33,5 +34,9 @@ public class StudyGroupMemberDTO {
 
     @JsonProperty("group_id")
     private Long groupId;
+
+    @Enumerated(EnumType.STRING)
+    @JsonProperty("group_role")
+    private GroupRole groupRole;
 
 }

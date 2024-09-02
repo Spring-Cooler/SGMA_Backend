@@ -1,6 +1,7 @@
 package com.springcooler.sgma.studygroupmember.command.application.service;
 
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
+import com.springcooler.sgma.studygroupmember.command.domain.aggregate.GroupRole;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.RestStatus;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMember;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMemberStatus;
@@ -31,6 +32,22 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
         this.studyGroupMemberRepository = studyGroupMemberRepository;
     }
 
+    // 스터디 그룹장 추가
+    @Transactional
+    @Override
+    public StudyGroupMember registStudyGroupOwner(StudyGroupMemberDTO owner) {
+        // DTO 유효성 검사
+        if(!domainStudyGroupMemberService.isValidDTO(RestStatus.POST, owner))
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+
+        // ACTIVE 처리
+        owner.setMemberEnrolledAt(new Timestamp(System.currentTimeMillis()));
+        owner.setMemberStatus(StudyGroupMemberStatus.ACTIVE);
+        owner.setGroupRole(GroupRole.ROLE_OWNER);
+
+        return studyGroupMemberRepository.save(modelMapper.map(owner, StudyGroupMember.class));
+    }
+
     // 스터디 그룹원 추가
     @Transactional
     @Override
@@ -42,6 +59,7 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
         // ACTIVE 처리
         newMember.setMemberEnrolledAt(new Timestamp(System.currentTimeMillis()));
         newMember.setMemberStatus(StudyGroupMemberStatus.ACTIVE);
+        newMember.setGroupRole(GroupRole.ROLE_MEMBER);
 
         return studyGroupMemberRepository.save(modelMapper.map(newMember, StudyGroupMember.class));
     }
