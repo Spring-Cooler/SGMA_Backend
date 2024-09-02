@@ -5,15 +5,16 @@
 <mapper namespace="com.springcooler.sgma.choice.query.repository.ChoiceMapper">
 
     <resultMap id="choiceResultMap" type="com.springcooler.sgma.choice.query.dto.ChoiceDTO">
-        <id property=""></id>
+        <id property="problemId" column="problem_id"/>
+        <id property="choiceNum" column="choice_num"/>
+        <result property="content" column="content"></result>
     </resultMap>
 
-    <select id="findChoiceById" parameterType="long">
+    <select id="findAllChoices" resultMap="choiceResultMap">
         SELECT
-                A.PROBLEM_CHOICE_ID
+                A.PROBLEM_ID
+               ,A.CHOICE_NUM
                ,A.CONTENT
-               ,A.PROBLEM_ID
-          FROM CHOICE A
-         WHERE A.PROBLEM_ID = #{problemChoiceId}
+        FROM CHOICE A
     </select>
 </mapper>

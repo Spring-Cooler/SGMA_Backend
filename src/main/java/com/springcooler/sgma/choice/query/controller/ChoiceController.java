@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController("queryChoiceController")
 @RequestMapping("/api/problem-choices")
 public class ChoiceController {
@@ -20,9 +22,9 @@ public class ChoiceController {
         this.choiceService = choiceService;
     }
 
-    @GetMapping("/problem-choices/{problemChoiceId}")
-    public ResponseDTO<ChoiceDTO> getChoiceById(@PathVariable long problemChoiceId){
-        ChoiceDTO choiceDTO = choiceService.getChoiceById(problemChoiceId);
-        return ResponseDTO.ok(choiceDTO);
+    @GetMapping("/problem-choices")
+    public ResponseDTO<List<ChoiceDTO>> getAllChoices() {
+        List<ChoiceDTO> choices = choiceService.findAllChoices();
+        return ResponseDTO.ok(choices);
     }
 }
