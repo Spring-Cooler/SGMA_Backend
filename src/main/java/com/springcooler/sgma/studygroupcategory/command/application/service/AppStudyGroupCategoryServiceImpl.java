@@ -1,8 +1,10 @@
 package com.springcooler.sgma.studygroupcategory.command.application.service;
 
 import com.springcooler.sgma.studygroupcategory.command.application.dto.StudyGroupCategoryDTO;
+import com.springcooler.sgma.studygroupcategory.command.domain.aggregate.RestStatus;
 import com.springcooler.sgma.studygroupcategory.command.domain.aggregate.StudyGroupCategory;
 import com.springcooler.sgma.studygroupcategory.command.domain.repository.StudyGroupCategoryRepository;
+import com.springcooler.sgma.studygroupcategory.command.domain.service.DomainStudyGroupCategoryService;
 import com.springcooler.sgma.studygroupcategory.common.exception.CommonException;
 import com.springcooler.sgma.studygroupcategory.common.exception.ErrorCode;
 import org.modelmapper.ModelMapper;
@@ -14,12 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class AppStudyGroupCategoryServiceImpl implements AppStudyGroupCategoryService {
 
     private final ModelMapper modelMapper;
+    private final DomainStudyGroupCategoryService domainStudyGroupCategoryService;
     private final StudyGroupCategoryRepository studyGroupCategoryRepository;
 
     @Autowired
     public AppStudyGroupCategoryServiceImpl(ModelMapper modelMapper,
+                                            DomainStudyGroupCategoryService domainStudyGroupCategoryService,
                                             StudyGroupCategoryRepository studyGroupCategoryRepository) {
         this.modelMapper = modelMapper;
+        this.domainStudyGroupCategoryService = domainStudyGroupCategoryService;
         this.studyGroupCategoryRepository = studyGroupCategoryRepository;
     }
 
@@ -27,10 +32,11 @@ public class AppStudyGroupCategoryServiceImpl implements AppStudyGroupCategorySe
     @Transactional
     @Override
     public StudyGroupCategory registStudyGroupCategory(StudyGroupCategoryDTO newCategory) {
-        StudyGroupCategory category = modelMapper.map(newCategory, StudyGroupCategory.class);
-        if(category.getCategoryName() == null) {
+        // DTO 유효성 검사
+        if(!domainStudyGroupCategoryService.isValidDTO(RestStatus.POST, newCategory))
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
-        }
+
+        StudyGroupCategory category = modelMapper.map(newCategory, StudyGroupCategory.class);
         return studyGroupCategoryRepository.save(category);
     }
 

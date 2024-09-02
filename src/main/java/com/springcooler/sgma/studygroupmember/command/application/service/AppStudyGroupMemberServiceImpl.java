@@ -1,6 +1,7 @@
 package com.springcooler.sgma.studygroupmember.command.application.service;
 
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
+import com.springcooler.sgma.studygroupmember.command.domain.aggregate.RestStatus;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMember;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMemberStatus;
 import com.springcooler.sgma.studygroupmember.command.domain.repository.StudyGroupMemberRepository;
@@ -34,6 +35,10 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
     @Transactional
     @Override
     public StudyGroupMember registStudyGroupMember(StudyGroupMemberDTO newMember) {
+        // DTO 유효성 검사
+        if(!domainStudyGroupMemberService.isValidDTO(RestStatus.POST, newMember))
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+
         // ACTIVE 처리
         newMember.setMemberEnrolledAt(new Timestamp(System.currentTimeMillis()));
         newMember.setMemberStatus(StudyGroupMemberStatus.ACTIVE);
@@ -45,6 +50,10 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
     @Transactional
     @Override
     public StudyGroupMember modifyStudyGroupMember(StudyGroupMemberDTO modifyMember) {
+        // DTO 유효성 검사
+        if(!domainStudyGroupMemberService.isValidDTO(RestStatus.PUT, modifyMember))
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+
         // 기존 엔티티 조회
         StudyGroupMember existingMember = studyGroupMemberRepository.findById(modifyMember.getMemberId())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_MEMBER));

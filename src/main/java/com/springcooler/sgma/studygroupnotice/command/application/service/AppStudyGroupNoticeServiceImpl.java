@@ -1,6 +1,7 @@
 package com.springcooler.sgma.studygroupnotice.command.application.service;
 
 import com.springcooler.sgma.studygroupnotice.command.application.dto.StudyGroupNoticeDTO;
+import com.springcooler.sgma.studygroupnotice.command.domain.aggregate.RestStatus;
 import com.springcooler.sgma.studygroupnotice.command.domain.aggregate.StudyGroupNotice;
 import com.springcooler.sgma.studygroupnotice.command.domain.aggregate.StudyGroupNoticeStatus;
 import com.springcooler.sgma.studygroupnotice.command.domain.repository.StudyGroupNoticeRepository;
@@ -34,6 +35,10 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
     @Transactional
     @Override
     public StudyGroupNotice registStudyGroupNotice(StudyGroupNoticeDTO newNotice) {
+        // DTO 유효성 검사
+        if(!domainStudyGroupNoticeService.isValidDTO(RestStatus.POST, newNotice))
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+
         // 생성 시각, 활성화 여부 초기화
         newNotice.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         newNotice.setActiveStatus(StudyGroupNoticeStatus.ACTIVE);
@@ -46,6 +51,10 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
     @Transactional
     @Override
     public StudyGroupNotice modifyStudyGroupNotice(StudyGroupNoticeDTO modifyNotice) {
+        // DTO 유효성 검사
+        if(!domainStudyGroupNoticeService.isValidDTO(RestStatus.PUT, modifyNotice))
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+
         // 기존 엔티티 조회
         StudyGroupNotice existingNotice =
                 studyGroupNoticeRepository.findById(modifyNotice.getNoticeId())

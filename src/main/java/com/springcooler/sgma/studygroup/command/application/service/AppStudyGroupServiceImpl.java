@@ -1,6 +1,7 @@
 package com.springcooler.sgma.studygroup.command.application.service;
 
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
+import com.springcooler.sgma.studygroup.command.domain.aggregate.RestStatus;
 import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
 import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroupStatus;
 import com.springcooler.sgma.studygroup.command.domain.repository.StudyGroupRepository;
@@ -37,6 +38,10 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     @Transactional
     @Override
     public StudyGroup registStudyGroup(StudyGroupDTO newStudyGroup) {
+        // DTO 유효성 검사
+        if(!domainStudyGroupService.isValidDTO(RestStatus.POST, newStudyGroup))
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+
         // 스터디 그룹 생성 코드
         newStudyGroup.setActiveStatus(StudyGroupStatus.ACTIVE);
         StudyGroup studyGroup =
@@ -77,6 +82,10 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     @Transactional
     @Override
     public StudyGroup modifyStudyGroup(StudyGroupDTO modifyStudyGroup) {
+        // DTO 유효성 검사
+        if(!domainStudyGroupService.isValidDTO(RestStatus.PUT, modifyStudyGroup))
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+
         // 기존 엔티티 조회
         StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
@@ -97,6 +106,10 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     @Transactional
     @Override
     public StudyGroup modifyStudyGroupName(StudyGroupDTO modifyStudyGroup) {
+        // DTO 유효성 검사
+        if(!domainStudyGroupService.isValidDTO(RestStatus.PATCH, modifyStudyGroup))
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+
         // 기존 엔티티 조회
         StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
@@ -110,6 +123,10 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     @Transactional
     @Override
     public StudyGroup modifyStudyGroupCategory(StudyGroupDTO modifyStudyGroup) {
+        // DTO 유효성 검사
+        if(!domainStudyGroupService.isValidDTO(RestStatus.PATCH, modifyStudyGroup))
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+
         // 기존 엔티티 조회
         StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
