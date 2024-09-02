@@ -48,7 +48,7 @@ public class RecruitmentBoard {
 
 
     public void checkAndUpdateStatus(Timestamp currentTime) {
-        if (this.activeStatus == BoardActiveStatus.ACTIVE && currentTime.after(Timestamp.from(createdAt.toInstant().plusSeconds(60)))) {
+        if (this.activeStatus == BoardActiveStatus.ACTIVE && currentTime.after(Timestamp.from(recruitmentEndTime.toInstant()))) {
             this.activeStatus = BoardActiveStatus.INACTIVE;
         }
     }

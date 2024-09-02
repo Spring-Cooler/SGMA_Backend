@@ -47,6 +47,7 @@ public class BatchConfig {
     public Step myStep(JobRepository jobRepository, Tasklet myTasklet, PlatformTransactionManager transactionManager) {
         return new StepBuilder("myStep", jobRepository)
                 .tasklet(myTasklet, transactionManager) // or .chunk(chunkSize, transactionManager)
+                .allowStartIfComplete(true)
                 .build();
     }
 
