@@ -18,19 +18,19 @@ public class RecruitmentBoardCommandController {
     private RecruitmentBoardCommandService recruitmentBoardCommandService;
 
     @PostMapping
-    public ResponseEntity<RecruitmentBoardCommandDTO> createApplicant(@RequestBody RecruitmentBoardCommandDTO studyGroupApplicantCommandDTO) {
+    public ResponseEntity<RecruitmentBoardCommandDTO> createRecruitmentBoard(@RequestBody RecruitmentBoardCommandDTO studyGroupApplicantCommandDTO) {
         recruitmentBoardCommandService.createStudyGroupApplicant(studyGroupApplicantCommandDTO);
         return ResponseEntity.ok(studyGroupApplicantCommandDTO);
     }
 
     @PutMapping("/{recruitmentBoardId}")
-    public ResponseEntity<RecruitmentBoardCommandDTO> updateApplicant(@PathVariable Long recruitmentBoardId, @RequestBody RecruitmentBoardCommandDTO studyGroupApplicantCommandDTO) {
+    public ResponseEntity<RecruitmentBoardCommandDTO> updateRecruitmentBoard(@PathVariable Long recruitmentBoardId, @RequestBody RecruitmentBoardCommandDTO studyGroupApplicantCommandDTO) {
         RecruitmentBoardCommandDTO updatedDto = recruitmentBoardCommandService.updateStudyGroupApplicant(recruitmentBoardId, studyGroupApplicantCommandDTO);
         return updatedDto != null ? ResponseEntity.ok(updatedDto) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{recruitmentBoardId}")
-    public ResponseEntity<Void> deleteApplicant(@PathVariable Long recruitmentBoardId) {
+    public ResponseEntity<Void> deleteRecruitmentBoard(@PathVariable Long recruitmentBoardId) {
         boolean isDeleted = recruitmentBoardCommandService.deleteStudyGroupApplicant(recruitmentBoardId);
         return isDeleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
