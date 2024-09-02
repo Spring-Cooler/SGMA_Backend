@@ -12,7 +12,7 @@
         <result property="groupId" column="GROUP_ID"/>
     </resultMap>
 
-    <select id="findStudyGroupMemberByMemberId" resultMap="studyGroupMemberResultMap" parameterType="long">
+    <select id="findStudyGroupMemberByMemberId" resultMap="studyGroupMemberResultMap" parameterType="Long">
         SELECT
                A.MEMBER_ID
              , A.MEMBER_ENROLLED_AT
@@ -25,7 +25,7 @@
          ORDER BY A.MEMBER_ID
     </select>
 
-    <select id="findStudyGroupMembersByGroupId" resultMap="studyGroupMemberResultMap" parameterType="long">
+    <select id="findStudyGroupMembersByGroupId" resultMap="studyGroupMemberResultMap" parameterType="Long">
         SELECT
                A.MEMBER_ID
              , A.MEMBER_ENROLLED_AT
@@ -38,7 +38,7 @@
          ORDER BY A.MEMBER_ID
     </select>
 
-    <select id="findStudyGroupMembersByUserId" resultMap="studyGroupMemberResultMap" parameterType="long">
+    <select id="findStudyGroupMembersByUserId" resultMap="studyGroupMemberResultMap" parameterType="Long">
         SELECT
                A.MEMBER_ID
              , A.MEMBER_ENROLLED_AT

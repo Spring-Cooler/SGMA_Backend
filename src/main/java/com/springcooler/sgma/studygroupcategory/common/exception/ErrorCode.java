@@ -1,4 +1,4 @@
-package com.springcooler.sgma.studygroup.common.exception;
+package com.springcooler.sgma.studygroupcategory.common.exception;
 
 
 import lombok.AllArgsConstructor;

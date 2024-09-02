@@ -61,6 +61,7 @@ public enum ErrorCode {
     NOT_FOUND_CHOICE(40413, HttpStatus.NOT_FOUND, "문제 선택지가 존재하지 않습니다."),
     NOT_FOUND_SUBMITTED_ANSWER(40414, HttpStatus.NOT_FOUND, "제출된 답변이 존재하지 않습니다."),
     NOT_FOUND_STUDY_GROUP_NOTICE(40415, HttpStatus.NOT_FOUND, "스터디 그룹 공지가 존재하지 않습니다."),
+    NOT_FOUND_STUDY_GROUP_CATEGORY(40416, HttpStatus.NOT_FOUND, "스터디 그룹 카테고리가 존재하지 않습니다."),
 
     //500
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다");

@@ -32,7 +32,7 @@ public class AppStudyGroupCategoryServiceImpl implements AppStudyGroupCategorySe
     // 스터디그룹 카테고리 삭제
     @Transactional
     @Override
-    public void deleteStudyGroupCategory(int categoryId) {
+    public void deleteStudyGroupCategory(Integer categoryId) {
         // 기존 엔티티 조회
         StudyGroupCategory deleteCategory =
                 studyGroupCategoryRepository.findById(categoryId).orElseThrow(
