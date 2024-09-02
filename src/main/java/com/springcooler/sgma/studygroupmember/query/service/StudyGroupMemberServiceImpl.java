@@ -1,5 +1,7 @@
 package com.springcooler.sgma.studygroupmember.query.service;
 
+import com.springcooler.sgma.studygroupmember.common.exception.CommonException;
+import com.springcooler.sgma.studygroupmember.common.exception.ErrorCode;
 import com.springcooler.sgma.studygroupmember.query.dto.StudyGroupMemberDTO;
 import com.springcooler.sgma.studygroupmember.query.repository.StudyGroupMemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +21,31 @@ public class StudyGroupMemberServiceImpl implements StudyGroupMemberService {
 
     // 스터디 그룹원 단건 조회(그룹원 아이디)
     @Override
-    public List<StudyGroupMemberDTO> findStudyGroupMemberByMemberId(long memberId) {
-        return studyGroupMemberMapper.findStudyGroupMemberByMemberId(memberId);
+    public StudyGroupMemberDTO findStudyGroupMemberByMemberId(Long memberId) {
+        StudyGroupMemberDTO member = studyGroupMemberMapper.findStudyGroupMemberByMemberId(memberId);
+        if (member == null) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_MEMBER);
+        }
+        return member;
     }
 
     // 스터디 그룹원 그룹별 조회
     @Override
-    public List<StudyGroupMemberDTO> findStudyGroupMembersByGroupId(long groupId) {
-        return studyGroupMemberMapper.findStudyGroupMembersByGroupId(groupId);
+    public List<StudyGroupMemberDTO> findStudyGroupMembersByGroupId(Long groupId) {
+        List<StudyGroupMemberDTO> members = studyGroupMemberMapper.findStudyGroupMembersByGroupId(groupId);
+        if (members == null || members.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_MEMBER);
+        }
+        return members;
     }
 
     @Override
-    public List<StudyGroupMemberDTO> findStudyGroupMembersByUserId(long userId) {
-        return studyGroupMemberMapper.findStudyGroupMembersByUserId(userId);
+    public List<StudyGroupMemberDTO> findStudyGroupMembersByUserId(Long userId) {
+        List<StudyGroupMemberDTO> members = studyGroupMemberMapper.findStudyGroupMembersByUserId(userId);
+        if (members == null || members.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_MEMBER);
+        }
+        return members;
     }
 
 }

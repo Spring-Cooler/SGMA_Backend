@@ -35,7 +35,7 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
     public StudyGroupMember registStudyGroupMember(StudyGroupMemberDTO newMember) {
         // ACTIVE 처리
         newMember.setMemberEnrolledAt(new Timestamp(System.currentTimeMillis()));
-        newMember.setMemberStatus(StudyGroupMemberStatus.ACTIVE.name());
+        newMember.setMemberStatus(StudyGroupMemberStatus.ACTIVE);
 
         return studyGroupMemberRepository.save(modelMapper.map(newMember, StudyGroupMember.class));
     }
@@ -58,7 +58,7 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
     // 스터디 그룹원 삭제
     @Transactional
     @Override
-    public void deleteStudyGroupMember(long memberId) {
+    public void deleteStudyGroupMember(Long memberId) {
         // 기존 엔티티 조회
         StudyGroupMember deleteMember = studyGroupMemberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException("잘못된 삭제 요청입니다."));
@@ -69,7 +69,7 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
 
         // INACTIVE 처리
         deleteMember.setMemberWithdrawnAt(new Timestamp(System.currentTimeMillis()));
-        deleteMember.setMemberStatus(StudyGroupMemberStatus.INACTIVE.name());
+        deleteMember.setMemberStatus(StudyGroupMemberStatus.INACTIVE);
         studyGroupMemberRepository.save(deleteMember);
     }
 

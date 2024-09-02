@@ -12,6 +12,6 @@ public interface AppStudyGroupMemberService {
     StudyGroupMember modifyStudyGroupMember(StudyGroupMemberDTO modifyMember);
 
     // 스터디 그룹원 삭제
-    void deleteStudyGroupMember(long memberId);
+    void deleteStudyGroupMember(Long memberId);
 
 }

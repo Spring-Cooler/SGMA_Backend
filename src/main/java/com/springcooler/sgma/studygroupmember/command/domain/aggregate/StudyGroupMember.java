@@ -25,8 +25,9 @@ public class StudyGroupMember {
     @Column(name="MEMBER_WITHDRAWN_AT")
     private Timestamp memberWithdrawnAt;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="MEMBER_STATUS")
-    private String memberStatus;
+    private StudyGroupMemberStatus memberStatus;
 
     @Column(name="USER_ID")
     private long userId;
