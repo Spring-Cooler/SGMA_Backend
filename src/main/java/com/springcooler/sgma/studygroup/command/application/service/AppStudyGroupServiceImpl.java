@@ -9,7 +9,6 @@ import com.springcooler.sgma.studygroup.command.infrastructure.service.InfraStud
 import com.springcooler.sgma.studygroup.common.exception.CommonException;
 import com.springcooler.sgma.studygroup.common.exception.ErrorCode;
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

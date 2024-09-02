@@ -7,7 +7,6 @@ import com.springcooler.sgma.studygroupmember.command.domain.repository.StudyGro
 import com.springcooler.sgma.studygroupmember.command.domain.service.DomainStudyGroupMemberService;
 import com.springcooler.sgma.studygroupmember.common.exception.CommonException;
 import com.springcooler.sgma.studygroupmember.common.exception.ErrorCode;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
