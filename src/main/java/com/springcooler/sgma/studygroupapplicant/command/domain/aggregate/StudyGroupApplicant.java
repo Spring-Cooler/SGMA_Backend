@@ -8,7 +8,6 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @IdClass(StudyGroupApplicantId.class)
 public class StudyGroupApplicant {
     @Id
@@ -23,4 +22,6 @@ public class StudyGroupApplicant {
     @Enumerated(EnumType.STRING)
     private ApplicationStatus applicationStatus;
 
+    @Column(name="group_id",nullable = false)
+    private ApplicationStatus groupId;
 }

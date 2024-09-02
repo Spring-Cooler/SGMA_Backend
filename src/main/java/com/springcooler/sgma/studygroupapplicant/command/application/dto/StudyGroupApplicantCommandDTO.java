@@ -7,4 +7,5 @@ public class StudyGroupApplicantCommandDTO {
     private Long userId;
     private String applicationStatus;
     private Long recruitmentBoardId;
+    private Long groupId;
 }
