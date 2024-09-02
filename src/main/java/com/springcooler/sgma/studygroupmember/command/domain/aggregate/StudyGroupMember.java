@@ -17,7 +17,7 @@ public class StudyGroupMember {
     @Id
     @Column(name="MEMBER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long memberId;
+    private Long memberId;
 
     @Column(name="MEMBER_ENROLLED_AT")
     private Timestamp memberEnrolledAt;
@@ -30,9 +30,9 @@ public class StudyGroupMember {
     private StudyGroupMemberStatus memberStatus;
 
     @Column(name="USER_ID")
-    private long userId;
+    private Long userId;
 
     @Column(name="GROUP_ID")
-    private long groupId;
+    private Long groupId;
 
 }

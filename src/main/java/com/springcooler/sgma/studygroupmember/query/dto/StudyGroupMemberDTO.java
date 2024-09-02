@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 public class StudyGroupMemberDTO {
 
     @JsonProperty("member_id")
-    private long memberId;
+    private Long memberId;
 
     @JsonProperty("member_enrolled_at")
     private Timestamp memberEnrolledAt;
@@ -25,9 +25,9 @@ public class StudyGroupMemberDTO {
     private String memberStatus;
 
     @JsonProperty("user_id")
-    private long userId;
+    private Long userId;
 
     @JsonProperty("group_id")
-    private long groupId;
+    private Long groupId;
 
 }
