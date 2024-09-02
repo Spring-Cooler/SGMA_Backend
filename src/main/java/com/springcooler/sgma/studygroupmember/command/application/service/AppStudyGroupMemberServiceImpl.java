@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Service
 public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberService {
@@ -41,7 +41,7 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
 
         // ACTIVE 처리
-        owner.setMemberEnrolledAt(new Timestamp(System.currentTimeMillis()));
+        owner.setMemberEnrolledAt(LocalDateTime.now().withNano(0));
         owner.setMemberStatus(StudyGroupMemberStatus.ACTIVE);
         owner.setGroupRole(GroupRole.ROLE_OWNER);
 
@@ -57,7 +57,7 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
 
         // ACTIVE 처리
-        newMember.setMemberEnrolledAt(new Timestamp(System.currentTimeMillis()));
+        newMember.setMemberEnrolledAt(LocalDateTime.now().withNano(0));
         newMember.setMemberStatus(StudyGroupMemberStatus.ACTIVE);
         newMember.setGroupRole(GroupRole.ROLE_MEMBER);
 
@@ -96,7 +96,7 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_MEMBER);
 
         // INACTIVE 처리
-        deleteMember.setMemberWithdrawnAt(new Timestamp(System.currentTimeMillis()));
+        deleteMember.setMemberWithdrawnAt(LocalDateTime.now().withNano(0));
         deleteMember.setMemberStatus(StudyGroupMemberStatus.INACTIVE);
         studyGroupMemberRepository.save(deleteMember);
     }

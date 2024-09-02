@@ -7,7 +7,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,10 +20,10 @@ public class StudyGroupMemberDTO {
     private Long memberId;
 
     @JsonProperty("member_enrolled_at")
-    private Timestamp memberEnrolledAt;
+    private LocalDateTime memberEnrolledAt;
 
     @JsonProperty("member_withdrawn_at")
-    private Timestamp memberWithdrawnAt;
+    private LocalDateTime memberWithdrawnAt;
 
     @Enumerated(EnumType.STRING)
     @JsonProperty("member_status")
