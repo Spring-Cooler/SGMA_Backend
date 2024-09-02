@@ -2,9 +2,10 @@ package com.springcooler.sgma.studyschedule.command.application.service;
 
 import com.springcooler.sgma.studyschedule.command.application.dto.StudyScheduleDTO;
 import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudySchedule;
+import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudyScheduleStatus;
 import com.springcooler.sgma.studyschedule.command.domain.repository.StudyScheduleRepository;
 import com.springcooler.sgma.studyschedule.command.domain.service.DomainStudyScheduleService;
-import com.springcooler.sgma.studyschedule.command.infrastructure.service.InfraStudyScheduleService;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,16 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
     private final ModelMapper modelMapper;
     private final DomainStudyScheduleService domainStudyScheduleService;
-    private final InfraStudyScheduleService infraStudyScheduleService;
     private final StudyScheduleRepository studyScheduleRepository;
 
     public AppStudyScheduleServiceImpl(ModelMapper modelMapper,
                                        DomainStudyScheduleService domainStudyScheduleService,
-                                       InfraStudyScheduleService infraStudyScheduleService,
                                        StudyScheduleRepository studyScheduleRepository) {
         this.modelMapper = modelMapper;
         this.domainStudyScheduleService = domainStudyScheduleService;
-        this.infraStudyScheduleService = infraStudyScheduleService;
         this.studyScheduleRepository = studyScheduleRepository;
     }
 
@@ -30,43 +28,45 @@ public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
     @Transactional
     @Override
     public StudySchedule registStudySchedule(StudyScheduleDTO createStudySchedule) {
-        createStudySchedule.setNumParticipants(0);
-        createStudySchedule.setTestAverage(0.0);
-        createStudySchedule.setTestStandardDeviation(0.0);
+        createStudySchedule.setActiveStatus(StudyScheduleStatus.ACTIVE.name());
 
-        StudySchedule studySchedule = modelMapper.map(createStudySchedule, StudySchedule.class);
-        return studyScheduleRepository.save(studySchedule);
+        return studyScheduleRepository.save(modelMapper.map(createStudySchedule, StudySchedule.class));
     }
 
     // 스터디 일정 수정
     @Transactional
     @Override
     public StudySchedule modifyStudySchedule(Long scheduleId, StudyScheduleDTO updateStudySchedule) {
-        StudySchedule existingSchedule = studyScheduleRepository.findById(scheduleId).orElse(null);
+        StudySchedule existingSchedule = studyScheduleRepository
+                .findById(scheduleId)
+                .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
 
-        if (existingSchedule != null) {
-            Long currentGroupId = existingSchedule.getGroupId();
-            updateStudySchedule.setScheduleId(existingSchedule.getScheduleId());
-            modelMapper.map(updateStudySchedule, existingSchedule);
-            existingSchedule.setGroupId(currentGroupId);
+        existingSchedule.setTitle(updateStudySchedule.getTitle());
+        existingSchedule.setContent(updateStudySchedule.getContent());
+        existingSchedule.setScheduleStartTime(updateStudySchedule.getScheduleStartTime());
+        existingSchedule.setScheduleEndTime(updateStudySchedule.getScheduleEndTime());
+        existingSchedule.setTestStatus(updateStudySchedule.getTestStatus());
+        existingSchedule.setNumProblemsPerParticipant(updateStudySchedule.getNumProblemsPerParticipant());
 
-            // testStatus가 'n'이면 numProblemsPerParticipant를 0으로 설정
-            if ("N".equalsIgnoreCase(updateStudySchedule.getTestStatus())) {
-                existingSchedule.setNumProblemsPerParticipant(0);
-            }
-            return studyScheduleRepository.save(existingSchedule);
+        // testStatus가 'N'이면 numProblemsPerParticipant를 0으로 설정
+        if ("N".equalsIgnoreCase(updateStudySchedule.getTestStatus())) {
+            existingSchedule.setNumProblemsPerParticipant(0);
         }
-        return null;
+        return studyScheduleRepository.save(existingSchedule);
     }
 
     // 스터디 일정 삭제
-//    @Transactional
-//    @Override
-//    public void deleteStudySchedule(long scheduleId) {
-//        StudySchedule existingSchedule = studyScheduleRepository.findById(scheduleId).orElse(null);
-//        if (existingSchedule != null) {
-//            existingSchedule.setDeleted(true);  // 논리 삭제 설정
-//            studyScheduleRepository.save(existingSchedule);
-//        }
-//    }
+    @Transactional
+    @Override
+    public void deleteStudySchedule(long scheduleId) {
+        StudySchedule deleteSchedule = studyScheduleRepository
+                .findById(scheduleId)
+                .orElseThrow(() -> new EntityNotFoundException("잘못된 삭제 요청입니다."));
+        if (!domainStudyScheduleService.isActive(deleteSchedule.getActiveStatus())) {
+            throw new EntityNotFoundException("잘못된 삭제 요청입니다.");
+        }
+
+        deleteSchedule.setActiveStatus(StudyScheduleStatus.INACTIVE.name());
+        studyScheduleRepository.save(deleteSchedule);
+    }
 }

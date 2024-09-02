@@ -38,7 +38,7 @@ public class StudyScheduleParticipantController {
         List<StudyScheduleParticipantDTO> participants = studyScheduleParticipantService.findStudyScheduleParticipant(scheduleId);
 
         if(participants.isEmpty()) {
-            ResponseMessage responseMessage = new ResponseMessage(404, "해당 일정 ID에 대한 참가자 정보를 찾을 수 없습니다.", null);
+            ResponseMessage responseMessage = new ResponseMessage(404, "조회 실패!", null);
             return new ResponseEntity<>(responseMessage, headers, HttpStatus.NOT_FOUND);
         }
 
@@ -63,7 +63,7 @@ public class StudyScheduleParticipantController {
         List<StudyScheduleParticipantDTO> participantTestResults = studyScheduleParticipantService.findStudyScheduleParticipantTestResult(memberId);
 
         if (participantTestResults.isEmpty()) {
-            ResponseMessage responseMessage = new ResponseMessage(404, "일정 및 참가자에 대한 시험 결과를 찾을 수 없습니다.", null);
+            ResponseMessage responseMessage = new ResponseMessage(404, "조회 실패!", null);
             return new ResponseEntity<>(responseMessage, headers, HttpStatus.NOT_FOUND);
         }
 

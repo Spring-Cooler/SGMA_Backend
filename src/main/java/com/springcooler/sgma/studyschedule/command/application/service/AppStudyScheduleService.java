@@ -12,5 +12,5 @@ public interface AppStudyScheduleService {
     StudySchedule modifyStudySchedule(Long scheduleId, StudyScheduleDTO updateStudySchedule);
 
     // 스터디 일정 삭제
-//    void deleteStudySchedule(long scheduleId);
+    void deleteStudySchedule(long scheduleId);
 }
