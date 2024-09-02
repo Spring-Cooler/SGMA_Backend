@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface RecruitmentBoardCommentMapper {
 
-    List<RecruitmentBoardCommentDTO> studyGroupRecruitmentCommentDTO1();
+    List<RecruitmentBoardCommentDTO> studyGroupRecruitmentCommentDTO1(Long recruitmentBoardId);
 }

@@ -29,6 +29,6 @@
         A.USER_ID,
         A.RECRUITMENT_BOARD_ID
         FROM RECRUITMENT_BOARD_COMMENT A
-        WHERE A.ACTIVE_STATUS = 'ACTIVE'
+        WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.RECRUITMENT_BOARD_ID = #{ recruitmentBoardId }
     </select>
 </mapper>
