@@ -4,10 +4,7 @@ import com.springcooler.sgma.studygroupcategory.command.application.dto.StudyGro
 import com.springcooler.sgma.studygroupcategory.command.application.service.AppStudyGroupCategoryService;
 import com.springcooler.sgma.studygroupcategory.command.domain.aggregate.StudyGroupCategory;
 import com.springcooler.sgma.studygroupcategory.common.ResponseDTO;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
 
 @RestController("commandStudyGroupCategoryController")
 @RequestMapping("/api/study-group/categories")
