@@ -1,5 +1,6 @@
 package com.springcooler.sgma.studygroupcategory.command.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @NoArgsConstructor
@@ -8,6 +9,11 @@ import lombok.*;
 @Setter
 @ToString
 public class StudyGroupCategoryDTO {
-    private int categoryId;
+
+    @JsonProperty("category_id")
+    private Integer categoryId;
+
+    @JsonProperty("category_name")
     private String categoryName;
+
 }

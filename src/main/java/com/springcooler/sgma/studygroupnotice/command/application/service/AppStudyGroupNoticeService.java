@@ -9,6 +9,6 @@ public interface AppStudyGroupNoticeService {
 
     StudyGroupNotice modifyStudyGroupNotice(StudyGroupNoticeDTO modifyNotice);
 
-    void deleteStudyGroupNotice(long noticeId);
+    void deleteStudyGroupNotice(Long noticeId);
 
 }

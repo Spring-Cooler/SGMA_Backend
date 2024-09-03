@@ -22,9 +22,9 @@ class StudyGroupMemberServiceTests {
     void testFindStudyGroupMemberByMemberId(long memberId) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<StudyGroupMemberDTO> studyGroupMembers
+                    StudyGroupMemberDTO studyGroupMember
                             = studyGroupMemberService.findStudyGroupMemberByMemberId(memberId);
-                    studyGroupMembers.forEach(System.out::println);
+                    System.out.println(studyGroupMember);
                 }
         );
     }

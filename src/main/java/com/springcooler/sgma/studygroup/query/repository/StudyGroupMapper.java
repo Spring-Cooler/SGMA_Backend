@@ -8,16 +8,22 @@ import java.util.List;
 @Mapper
 public interface StudyGroupMapper {
 
+    // 스터디그룹 전체 조회
     List<StudyGroupDTO> findAllStudyGroups();
 
-    List<StudyGroupDTO> findStudyGroupsByOwnerId(long ownerId);
+    // 그룹장인 스터디그룹 조회
+    List<StudyGroupDTO> findStudyGroupsByOwnerId(Long ownerId);
 
-    List<StudyGroupDTO> findStudyGroupsByParticipantId(long participantId);
+    // 그룹원인 스터디그룹 조회
+    List<StudyGroupDTO> findStudyGroupsByParticipantId(Long participantId);
 
-    List<StudyGroupDTO> findStudyGroupsByCategoryId(int categoryId);
+    // 스터디그룹 카테고리별 조회
+    List<StudyGroupDTO> findStudyGroupsByCategoryId(Integer categoryId);
 
-    List<StudyGroupDTO> findStudyGroupByGroupId(long groupId);
+    // 스터디그룹 단건 조회(그룹 아이디)
+    StudyGroupDTO findStudyGroupByGroupId(Long groupId);
 
-    List<StudyGroupDTO> findStudyGroupByGroupName(String groupName);
+    // 스터디그룹 단건 조회(그룹 이름)
+    StudyGroupDTO findStudyGroupByGroupName(String groupName);
 
 }

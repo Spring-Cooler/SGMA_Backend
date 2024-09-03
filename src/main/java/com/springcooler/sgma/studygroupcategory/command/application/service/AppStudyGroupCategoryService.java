@@ -9,6 +9,6 @@ public interface AppStudyGroupCategoryService {
     StudyGroupCategory registStudyGroupCategory(StudyGroupCategoryDTO newCategory);
 
     // 스터디그룹 카테고리 삭제
-    void deleteStudyGroupCategory(int categoryId);
+    void deleteStudyGroupCategory(Integer categoryId);
 
 }

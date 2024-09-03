@@ -5,12 +5,13 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface StudyScheduleMapper {
 
     // 스터디 그룹 일정 단건 조회
-    List<StudyScheduleDTO> findStudyScheduleByScheduleId(long scheduleId);
+    StudyScheduleDTO findStudyScheduleByScheduleId(long scheduleId);
 
     // 스터디 그룹 일정 전체 조회
     List<StudyScheduleDTO> findStudyScheduleByGroupId(long groupId);

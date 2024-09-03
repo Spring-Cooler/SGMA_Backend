@@ -1,9 +1,10 @@
 package com.springcooler.sgma.studygroupmember.command.domain.aggregate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="STUDY_GROUP_MEMBER")
@@ -17,21 +18,33 @@ public class StudyGroupMember {
     @Id
     @Column(name="MEMBER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long memberId;
+    @JsonProperty("member_id")
+    private Long memberId;
 
     @Column(name="MEMBER_ENROLLED_AT")
-    private Timestamp memberEnrolledAt;
+    @JsonProperty("member_enrolled_at")
+    private LocalDateTime memberEnrolledAt;
 
     @Column(name="MEMBER_WITHDRAWN_AT")
-    private Timestamp memberWithdrawnAt;
+    @JsonProperty("member_withdrawn_at")
+    private LocalDateTime memberWithdrawnAt;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="MEMBER_STATUS")
-    private String memberStatus;
+    @JsonProperty("member_status")
+    private StudyGroupMemberStatus memberStatus;
 
     @Column(name="USER_ID")
-    private long userId;
+    @JsonProperty("user_id")
+    private Long userId;
 
     @Column(name="GROUP_ID")
-    private long groupId;
+    @JsonProperty("group_id")
+    private Long groupId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="GROUP_ROLE")
+    @JsonProperty("group_role")
+    private GroupRole groupRole;
 
 }
