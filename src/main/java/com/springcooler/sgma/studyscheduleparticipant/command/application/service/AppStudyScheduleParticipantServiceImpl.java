@@ -11,7 +11,7 @@ import com.springcooler.sgma.studyscheduleparticipant.command.domain.aggregate.S
 import com.springcooler.sgma.studyscheduleparticipant.command.domain.repository.StudyScheduleParticipantRepository;
 import com.springcooler.sgma.studyschedule.command.domain.repository.StudyScheduleRepository;
 import com.springcooler.sgma.studyscheduleparticipant.command.domain.service.DomainStudyScheduleParticipantService;
- import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
