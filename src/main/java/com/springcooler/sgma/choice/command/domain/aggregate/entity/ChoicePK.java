@@ -1,4 +1,4 @@
-package com.springcooler.sgma.choice.command.domain.aggregate;
+package com.springcooler.sgma.choice.command.domain.aggregate.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

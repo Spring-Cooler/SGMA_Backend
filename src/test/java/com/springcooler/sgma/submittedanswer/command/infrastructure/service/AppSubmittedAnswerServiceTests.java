@@ -53,14 +53,14 @@ class AppSubmittedAnswerServiceTests {
         assertNotNull(modifySubmittedAnswer);
         log.info("modifySubmittedAnswer: {}", modifySubmittedAnswer);
     }
-
-//    @DisplayName("제출된 문제 채점 테스트")
+//
+//    @DisplayName("제출된 답안 채점 테스트")
 //    @Test
 //    @Order(3)
 //    void testGradeSubmittedAnswers(){
 //
 //        // given
-//        SubmittedAnswerDTO ungradedSubmittedAnswerDTO = new SubmittedAnswerDTO(12,9,2, null);
+//        SubmittedAnswerDTO ungradedSubmittedAnswerDTO = new SubmittedAnswerDTO(1,9,1, "UNGRADED");
 //        log.info("existingSubmittedAnswerDTO: {}", ungradedSubmittedAnswerDTO);
 //
 //        // when
@@ -73,7 +73,16 @@ class AppSubmittedAnswerServiceTests {
 //        // then
 //        assertNotNull(gradedAnswer);
 //    }
+//
+    @DisplayName("참여자 아이디로 채점 테스트")
+    @Test
+    void testGradeSubmittedAnswerByParticipantId(){
 
+        // given
+        int participantId = 1;
 
+        // when
+        appSubmittedAnswerService.gradeSubmittedAnswersByParticipantId(participantId);
+    }
 
 }

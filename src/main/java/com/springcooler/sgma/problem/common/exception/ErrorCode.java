@@ -1,4 +1,4 @@
-package com.springcooler.sgma.choice.common.exception;
+package com.springcooler.sgma.problem.common.exception;
 
 
 import lombok.AllArgsConstructor;

@@ -9,13 +9,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Embeddable
 @ToString
 @Getter
 public class SubmittedAnswerPK implements Serializable {
     @Column(name = "problem_id")
-    private long problemId;
+    private Long problemId;
 
     @Column(name="participant_id")
-    private long participantId;
+    private Long participantId;
 }

@@ -9,4 +9,6 @@ public interface SubmittedAnswerService {
     List<SubmittedAnswerDTO> findAllSubmittedAnswers();
 
     List<SubmittedAnswerDTO> findSubmittedAnswersByProblemId(long problemId);
+
+    List<SubmittedAnswerDTO> getSubmittedAnswersByParticipantId(long participantId);
 }
