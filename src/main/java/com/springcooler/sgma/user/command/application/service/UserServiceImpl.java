@@ -114,6 +114,17 @@ public class UserServiceImpl implements UserService {
 
         String imageUrl = null;
 
+
+        // 닉네임 중복 검증 (닉네임이 변경되는 경우에만)
+        if (userUpdateDTO.getNickname() != null && !userUpdateDTO.getNickname().equals(userEntity.getNickname())) {
+
+            Optional<UserEntity> existingUserWithSameNickname = userRepository.findByNickname(userUpdateDTO.getNickname());
+            if (existingUserWithSameNickname.isPresent()) {
+                throw new CommonException(ErrorCode.DUPLICATE_NICKNAME); // 커스텀 예외 던지기 (DUPLICATE_NICKNAME은 정의된 에러 코드로 가정)
+            }
+        }
+
+
         // 프로필 이미지가 제공된 경우에만 처리
         if (userUpdateDTO.getProfileImage() != null && !userUpdateDTO.getProfileImage().isEmpty()) {
             // 기존 이미지가 있으면 삭제
