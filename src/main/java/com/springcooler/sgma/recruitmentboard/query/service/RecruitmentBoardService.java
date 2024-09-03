@@ -27,8 +27,6 @@ public class RecruitmentBoardService {
     public RecruitmentBoardDTO selectStudyGroupApplicantById(Long recruitmentBoardId){
         SqlSession sqlSession =getSqlSession();
         recruitmentBoardMapper =sqlSession.getMapper(RecruitmentBoardMapper.class);
-//        RecruitmentBoardDTO studyGroupApplicant = recruitmentBoardMapper.selectStudyGroupApplicantDTO(recruitmentBoardId);
-//        return studyGroupApplicant;
         RecruitmentBoardDTO recruitmentBoardDTO = recruitmentBoardMapper.selectStudyGroupApplicantDTO(recruitmentBoardId);
         return recruitmentBoardDTO;
     }

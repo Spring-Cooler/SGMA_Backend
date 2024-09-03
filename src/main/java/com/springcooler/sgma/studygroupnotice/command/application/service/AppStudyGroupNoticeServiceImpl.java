@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Service
 public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeService {
@@ -40,7 +40,7 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
 
         // 생성 시각, 활성화 여부 초기화
-        newNotice.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        newNotice.setCreatedAt(LocalDateTime.now().withNano(0));
         newNotice.setActiveStatus(StudyGroupNoticeStatus.ACTIVE);
 
         return studyGroupNoticeRepository.save(modelMapper.map(newNotice, StudyGroupNotice.class));
@@ -63,7 +63,7 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
         // 바뀐 제목, 내용, 수정 시각 업데이트
         existingNotice.setTitle(modifyNotice.getTitle());
         existingNotice.setContent(modifyNotice.getContent());
-        existingNotice.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        existingNotice.setUpdatedAt(LocalDateTime.now().withNano(0));
 
         return studyGroupNoticeRepository.save(existingNotice);
     }

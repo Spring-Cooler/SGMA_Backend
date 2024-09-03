@@ -7,7 +7,7 @@ import java.util.List;
 public interface StudyScheduleService {
 
     // 스터디 그룹 일정 단건 조회
-    List<StudyScheduleDTO> findStudyScheduleByScheduleId(long scheduleId);
+    StudyScheduleDTO findStudyScheduleByScheduleId(long scheduleId);
 
     // 스터디 그룹 일정 전체 조회
     List<StudyScheduleDTO> findStudyScheduleByGroupId(long groupId);

@@ -18,7 +18,7 @@ public class StudyScheduleServiceImpl implements StudyScheduleService {
 
     // 스터디 그룹 일정 단건 조회
     @Override
-    public List<StudyScheduleDTO> findStudyScheduleByScheduleId(long scheduleId) {
+    public StudyScheduleDTO findStudyScheduleByScheduleId(long scheduleId) {
         return studyScheduleMapper.findStudyScheduleByScheduleId(scheduleId);
     }
 

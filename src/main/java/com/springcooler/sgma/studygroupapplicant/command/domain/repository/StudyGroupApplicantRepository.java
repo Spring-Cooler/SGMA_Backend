@@ -1,6 +1,6 @@
 package com.springcooler.sgma.studygroupapplicant.command.domain.repository;
 
-import com.springcooler.sgma.recruitmentboard.command.domain.aggregate.StudyGroupApplicantId;
+import com.springcooler.sgma.studygroupapplicant.command.domain.aggregate.StudyGroupApplicantId;
 import com.springcooler.sgma.studygroupapplicant.command.domain.aggregate.StudyGroupApplicant;
 import org.springframework.data.jpa.repository.JpaRepository;
 
