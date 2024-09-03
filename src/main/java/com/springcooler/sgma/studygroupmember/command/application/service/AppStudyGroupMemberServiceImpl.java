@@ -35,7 +35,7 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
     // 스터디 그룹장 추가
     @Transactional
     @Override
-    public StudyGroupMember registStudyGroupOwner(StudyGroupMemberDTO owner) {
+    public StudyGroupMemberDTO registStudyGroupOwner(StudyGroupMemberDTO owner) {
         // DTO 유효성 검사
         if(!domainStudyGroupMemberService.isValidDTO(RestStatus.POST, owner))
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
@@ -45,13 +45,17 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
         owner.setMemberStatus(StudyGroupMemberStatus.ACTIVE);
         owner.setGroupRole(GroupRole.ROLE_OWNER);
 
-        return studyGroupMemberRepository.save(modelMapper.map(owner, StudyGroupMember.class));
+        // DTO를 Entity에 매핑 후 저장
+        StudyGroupMember member = modelMapper.map(owner, StudyGroupMember.class);
+        studyGroupMemberRepository.save(member);
+
+        return modelMapper.map(member, StudyGroupMemberDTO.class);
     }
 
     // 스터디 그룹원 추가
     @Transactional
     @Override
-    public StudyGroupMember registStudyGroupMember(StudyGroupMemberDTO newMember) {
+    public StudyGroupMemberDTO registStudyGroupMember(StudyGroupMemberDTO newMember) {
         // DTO 유효성 검사
         if(!domainStudyGroupMemberService.isValidDTO(RestStatus.POST, newMember))
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
@@ -61,13 +65,17 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
         newMember.setMemberStatus(StudyGroupMemberStatus.ACTIVE);
         newMember.setGroupRole(GroupRole.ROLE_MEMBER);
 
-        return studyGroupMemberRepository.save(modelMapper.map(newMember, StudyGroupMember.class));
+        // DTO를 Entity에 매핑 후 저장
+        StudyGroupMember member = modelMapper.map(newMember, StudyGroupMember.class);
+        studyGroupMemberRepository.save(member);
+
+        return modelMapper.map(member, StudyGroupMemberDTO.class);
     }
 
     // 스터디 그룹원 정보 수정
     @Transactional
     @Override
-    public StudyGroupMember modifyStudyGroupMember(StudyGroupMemberDTO modifyMember) {
+    public StudyGroupMemberDTO modifyStudyGroupMember(StudyGroupMemberDTO modifyMember) {
         // DTO 유효성 검사
         if(!domainStudyGroupMemberService.isValidDTO(RestStatus.PUT, modifyMember))
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
@@ -78,9 +86,10 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
 
         // DTO를 엔티티에 매핑
         modelMapper.map(modifyMember, existingMember);
+        studyGroupMemberRepository.save(existingMember);
 
         // 엔티티 저장
-        return studyGroupMemberRepository.save(existingMember);
+        return modelMapper.map(existingMember, StudyGroupMemberDTO.class);
     }
 
     // 스터디 그룹원 삭제

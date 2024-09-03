@@ -1,7 +1,6 @@
 package com.springcooler.sgma.studygroupcategory.command.application.service;
 
 import com.springcooler.sgma.studygroupcategory.command.application.dto.StudyGroupCategoryDTO;
-import com.springcooler.sgma.studygroupcategory.command.domain.aggregate.StudyGroupCategory;
 import com.springcooler.sgma.studygroupcategory.common.exception.CommonException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -27,7 +26,7 @@ class StudyGroupCategoryTests {
         newCategory.setCategoryName("보컬");
 
         //When
-        StudyGroupCategory category = studyGroupCategoryService.registStudyGroupCategory(newCategory);
+        StudyGroupCategoryDTO category = studyGroupCategoryService.registStudyGroupCategory(newCategory);
         if(category != null) {
             log.info(category.toString());
         }

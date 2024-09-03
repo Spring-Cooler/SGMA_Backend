@@ -1,7 +1,6 @@
 package com.springcooler.sgma.studygroup.command.application.service;
 
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
-import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
 import com.springcooler.sgma.studygroup.common.exception.CommonException;
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +30,7 @@ class StudyGroupServiceTests {
         studyGroupInfo.setStudyGroupCategoryId(7);
 
         //When
-        StudyGroup studyGroup = studyGroupService.registStudyGroup(studyGroupInfo);
+        StudyGroupDTO studyGroup = studyGroupService.registStudyGroup(studyGroupInfo);
 
         if (studyGroup != null) {
             log.info(studyGroup.toString());
@@ -51,7 +50,7 @@ class StudyGroupServiceTests {
         studyGroupInfo.setStudyGroupCategoryId(3);
 
         //When
-        StudyGroup studyGroup = studyGroupService.modifyStudyGroup(studyGroupInfo);
+        StudyGroupDTO studyGroup = studyGroupService.modifyStudyGroup(studyGroupInfo);
         if (studyGroup != null) {
             log.info(studyGroup.toString());
         }
@@ -69,7 +68,7 @@ class StudyGroupServiceTests {
         studyGroupInfo.setGroupName("나만의스터디");
 
         //When
-        StudyGroup studyGroup = studyGroupService.modifyStudyGroupName(studyGroupInfo);
+        StudyGroupDTO studyGroup = studyGroupService.modifyStudyGroupName(studyGroupInfo);
         if (studyGroup != null) {
             log.info(studyGroup.toString());
         }
@@ -87,7 +86,7 @@ class StudyGroupServiceTests {
         studyGroupInfo.setStudyGroupCategoryId(8);
 
         //When
-        StudyGroup studyGroup = studyGroupService.modifyStudyGroupCategory(studyGroupInfo);
+        StudyGroupDTO studyGroup = studyGroupService.modifyStudyGroupCategory(studyGroupInfo);
         if (studyGroup != null) {
             log.info(studyGroup.toString());
         }
@@ -121,7 +120,7 @@ class StudyGroupServiceTests {
         int expectedMembers = 4;
 
         //When
-        StudyGroup studyGroup = studyGroupService.registAcceptedMember(applicant);
+        StudyGroupDTO studyGroup = studyGroupService.registAcceptedMember(applicant);
         if (studyGroup != null) {
             log.info(studyGroup.toString());
         }
@@ -140,7 +139,7 @@ class StudyGroupServiceTests {
         int expectedMembers = 2;
 
         //When
-        StudyGroup studyGroup = studyGroupService.deleteQuitMember(memberId, groupId);
+        StudyGroupDTO studyGroup = studyGroupService.deleteQuitMember(memberId, groupId);
         if (studyGroup != null) {
             log.info(studyGroup.toString());
         }

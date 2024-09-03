@@ -37,7 +37,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     // 스터디 그룹 생성
     @Transactional
     @Override
-    public StudyGroup registStudyGroup(StudyGroupDTO newStudyGroup) {
+    public StudyGroupDTO registStudyGroup(StudyGroupDTO newStudyGroup) {
         // DTO 유효성 검사
         if(!domainStudyGroupService.isValidDTO(RestStatus.POST, newStudyGroup))
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
@@ -58,13 +58,13 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         studyGroup.setGroupMembers(1);
         studyGroupRepository.save(studyGroup);
 
-        return studyGroup;
+        return modelMapper.map(studyGroup, StudyGroupDTO.class);
     }
 
     // 스터디 그룹장 신청 승인
     @Transactional
     @Override
-    public StudyGroup registAcceptedMember(StudyGroupMemberDTO newMember) {
+    public StudyGroupDTO registAcceptedMember(StudyGroupMemberDTO newMember) {
         // 스터디 그룹 조회
         StudyGroup existingStudyGroup = studyGroupRepository.findById(newMember.getGroupId())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
@@ -76,13 +76,13 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         existingStudyGroup.setGroupMembers(existingStudyGroup.getGroupMembers() + 1);
         studyGroupRepository.save(existingStudyGroup);
 
-        return existingStudyGroup;
+        return modelMapper.map(existingStudyGroup, StudyGroupDTO.class);
     }
 
     // 스터디 그룹 정보 수정
     @Transactional
     @Override
-    public StudyGroup modifyStudyGroup(StudyGroupDTO modifyStudyGroup) {
+    public StudyGroupDTO modifyStudyGroup(StudyGroupDTO modifyStudyGroup) {
         // DTO 유효성 검사
         if(!domainStudyGroupService.isValidDTO(RestStatus.PUT, modifyStudyGroup))
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
@@ -100,13 +100,15 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         modelMapper.map(modifyStudyGroup, existingStudyGroup);
 
         // 엔티티 저장
-        return studyGroupRepository.save(existingStudyGroup);
+        studyGroupRepository.save(existingStudyGroup);
+
+        return modelMapper.map(existingStudyGroup, StudyGroupDTO.class);
     }
 
     // 스터디 그룹 이름 수정
     @Transactional
     @Override
-    public StudyGroup modifyStudyGroupName(StudyGroupDTO modifyStudyGroup) {
+    public StudyGroupDTO modifyStudyGroupName(StudyGroupDTO modifyStudyGroup) {
         // DTO 유효성 검사
         if(!domainStudyGroupService.isValidDTO(RestStatus.PATCH, modifyStudyGroup))
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
@@ -117,13 +119,17 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
 
         // 변경된 이름 매핑
         existingStudyGroup.setGroupName(modifyStudyGroup.getGroupName());
-        return studyGroupRepository.save(existingStudyGroup);
+
+        // 엔티티 저장
+        studyGroupRepository.save(existingStudyGroup);
+
+        return modelMapper.map(existingStudyGroup, StudyGroupDTO.class);
     }
 
     // 스터디 그룹 카테고리 수정
     @Transactional
     @Override
-    public StudyGroup modifyStudyGroupCategory(StudyGroupDTO modifyStudyGroup) {
+    public StudyGroupDTO modifyStudyGroupCategory(StudyGroupDTO modifyStudyGroup) {
         // DTO 유효성 검사
         if(!domainStudyGroupService.isValidDTO(RestStatus.PATCH, modifyStudyGroup))
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
@@ -134,13 +140,17 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
 
         // 변경된 카테고리 매핑
         existingStudyGroup.setStudyGroupCategoryId(modifyStudyGroup.getStudyGroupCategoryId());
-        return studyGroupRepository.save(existingStudyGroup);
+
+        // 엔티티 저장
+        studyGroupRepository.save(existingStudyGroup);
+
+        return modelMapper.map(existingStudyGroup, StudyGroupDTO.class);
     }
 
     // 스터디 그룹원 탈퇴
     @Transactional
     @Override
-    public StudyGroup deleteQuitMember(long memberId, long groupId) {
+    public StudyGroupDTO deleteQuitMember(long memberId, long groupId) {
         // 스터디 그룹 조회
         StudyGroup existingStudyGroup = studyGroupRepository.findById(groupId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
@@ -152,7 +162,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         existingStudyGroup.setGroupMembers(existingStudyGroup.getGroupMembers() - 1);
         studyGroupRepository.save(existingStudyGroup);
 
-        return existingStudyGroup;
+        return modelMapper.map(existingStudyGroup, StudyGroupDTO.class);
     }
 
     // 스터디 그룹 삭제
