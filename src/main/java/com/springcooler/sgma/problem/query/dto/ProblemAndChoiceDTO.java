@@ -1,4 +1,4 @@
-package com.springcooler.sgma.problem.command.application.dto;
+package com.springcooler.sgma.problem.query.dto;
 
 import lombok.*;
 

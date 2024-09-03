@@ -1,5 +1,6 @@
 package com.springcooler.sgma.problem.query.service;
 
+import com.springcooler.sgma.problem.query.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface ProblemService {
     public List<ProblemDTO> findProblemsByScheduleIdAndParticipantId(long scheduleId, long participantId);
 
     ProblemDTO findProblemByProblemId(long problemId);
+
+    ProblemAndChoiceDTO findProblemAndChoiceByProblemId(long problemId);
 }

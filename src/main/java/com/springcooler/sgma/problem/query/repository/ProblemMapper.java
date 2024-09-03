@@ -1,5 +1,6 @@
 package com.springcooler.sgma.problem.query.repository;
 
+import com.springcooler.sgma.problem.query.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,5 +16,7 @@ public interface ProblemMapper {
     List<ProblemDTO> findProblemsByScheduleIdAndParticipantId(Map<String, Long> map);
 
     ProblemDTO findProblemByProblemId(long problemId);
+
+    ProblemAndChoiceDTO findProblemAndChoiceByProblemId(long problemId);
 }
 

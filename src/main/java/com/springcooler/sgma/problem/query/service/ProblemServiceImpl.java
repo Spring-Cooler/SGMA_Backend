@@ -1,6 +1,7 @@
 package com.springcooler.sgma.problem.query.service;
 
 import com.springcooler.sgma.problem.common.exception.ErrorCode;
+import com.springcooler.sgma.problem.query.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
 import com.springcooler.sgma.problem.query.repository.ProblemMapper;
 import com.springcooler.sgma.problem.common.exception.CommonException;
@@ -56,5 +57,11 @@ public class ProblemServiceImpl implements ProblemService {
             throw new CommonException(ErrorCode.NOT_FOUND_PROBLEM);
         }
         return problem;
+    }
+
+    @Override
+    public ProblemAndChoiceDTO findProblemAndChoiceByProblemId(long problemId) {
+        ProblemAndChoiceDTO problemAndChoiceDTO = problemMapper.findProblemAndChoiceByProblemId(problemId);
+        return problemAndChoiceDTO;
     }
 }
