@@ -1,7 +1,6 @@
 package com.springcooler.sgma.studygroup.command.application.service;
 
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
-import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
 
 public interface AppStudyGroupService {

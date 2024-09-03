@@ -1,6 +1,5 @@
 package com.springcooler.sgma.studygroup.command.domain.aggregate;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
