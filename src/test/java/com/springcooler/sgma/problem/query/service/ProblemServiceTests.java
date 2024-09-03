@@ -1,6 +1,7 @@
 package com.springcooler.sgma.problem.query.service;
 
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@Transactional
+@Slf4j
 class ProblemServiceTests {
 
     @Autowired
@@ -51,6 +52,8 @@ class ProblemServiceTests {
     @MethodSource("getParticipantAndScheduleInfo")
     void testFindProblemsByParticipantIdAndScheduleId(long scheduleId, long participantId) {
         List<ProblemDTO> problems = problemService.findProblemsByScheduleIdAndParticipantId(scheduleId, participantId);
+
+        problems.forEach(x->log.info("problems: {}", problems));
     }
 
     @DisplayName("문제 ID로 정답 조회")
