@@ -33,16 +33,15 @@ public class StudyGroupApplicantCommandController {
         return ResponseEntity.ok(studyGroupApplicantCommandDTO);
     }
 
-    @DeleteMapping("delete/{userId}/{groupId}")
-    public ResponseEntity<Void> deleteApplicant(@PathVariable Long userId, @PathVariable Long groupId){
-        studyGroupApplicantService.cancelStudyGroupApply(userId, groupId);
+    @DeleteMapping("delete/{userId}/{recruitmentBoardId}")
+    public ResponseEntity<Void> deleteApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId){
+        studyGroupApplicantService.cancelStudyGroupApply(userId, recruitmentBoardId);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("approve/{userId}/{groupId}")
-    public ResponseEntity<Void> approveApplicant(@PathVariable Long userId, @PathVariable Long groupId) {
-        studyGroupApplicantService.approveStudyGroupApplicant(userId, groupId);
+    @PostMapping("approve/{userId}/{recruitmentBoardId}")
+    public ResponseEntity<Void> approveApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId) {
+        studyGroupApplicantService.approveStudyGroupApplicant(userId, recruitmentBoardId);
         return ResponseEntity.ok().build();
     }
-
 }

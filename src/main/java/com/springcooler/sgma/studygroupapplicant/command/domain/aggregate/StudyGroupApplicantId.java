@@ -1,4 +1,4 @@
-package com.springcooler.sgma.recruitmentboard.command.domain.aggregate;
+package com.springcooler.sgma.studygroupapplicant.command.domain.aggregate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
