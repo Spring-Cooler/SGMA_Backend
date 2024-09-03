@@ -42,13 +42,14 @@ public class EmailVerificationService {
     public boolean verifyCode(String email, String code) {
         String savedCode = stringRedisTemplate.opsForValue().get(email);  //필기. Redis에서 코드 가져오기
 
-        // 필기. 인증 코드가 일치하면 Redis에서 해당 키 삭제
+        // 필기. 인증 코드가 일치하면 Redis에서 해당 키값(email)을 True로 설정
         if (savedCode != null && savedCode.equals(code)) {
-            stringRedisTemplate.delete(email);
+            // 인증 성공 시 Redis에 True 저장하고 TTL을 1시간으로 설정
+            stringRedisTemplate.opsForValue().set(email, "True", 1, TimeUnit.HOURS);
             return true;
+        } else {
+            return false;
         }
-
-        return false;
     }
 
     //필기. Redis에 코드 저장

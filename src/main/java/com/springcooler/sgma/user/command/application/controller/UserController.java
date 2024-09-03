@@ -4,6 +4,8 @@ import com.springcooler.sgma.user.command.application.dto.EmailVerificationVO;
 import com.springcooler.sgma.user.command.application.dto.RequestUpdateUserDTO;
 import com.springcooler.sgma.user.command.application.dto.UserDTO;
 import com.springcooler.sgma.user.command.application.service.EmailVerificationService;
+import com.springcooler.sgma.user.command.domain.aggregate.AcceptStatus;
+import com.springcooler.sgma.user.command.domain.aggregate.ActiveStatus;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.RequestResistUserVO;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.ResponseEmailMessageVO;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.ResponseUserVO;
@@ -75,15 +77,10 @@ public class UserController {
     public ResponseDTO<?> registNormalUser(@RequestBody RequestResistUserVO newUser) {
         UserDTO userDTO = modelMapper.map(newUser, UserDTO.class);
 
-        // signupPath 설정
-        userDTO.setSignupPath(newUser.getSignupPath());
-
-        // createdAt 현재 시각으로 설정
-        userDTO.setCreatedAt(LocalDateTime.now().withNano(0));
-
         // UserService 호출
         UserDTO savedUserDTO = userService.registUser(userDTO); // 저장된 DTO 반환
-
+        
+        //응답 VO로 변환후 반환
         ResponseUserVO responseUser=modelMapper.map(savedUserDTO,ResponseUserVO.class);
         return ResponseDTO.ok(responseUser);
     }

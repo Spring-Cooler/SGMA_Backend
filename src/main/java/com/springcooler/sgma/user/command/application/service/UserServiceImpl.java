@@ -7,6 +7,9 @@ import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.springcooler.sgma.user.command.application.dto.RequestUpdateUserDTO;
 import com.springcooler.sgma.user.command.application.dto.UserDTO;
+import com.springcooler.sgma.user.command.domain.aggregate.AcceptStatus;
+import com.springcooler.sgma.user.command.domain.aggregate.ActiveStatus;
+import com.springcooler.sgma.user.command.domain.aggregate.SignupPath;
 import com.springcooler.sgma.user.command.domain.aggregate.UserEntity;
 import com.springcooler.sgma.user.command.domain.repository.UserRepository;
 import com.springcooler.sgma.user.common.exception.CommonException;
@@ -16,6 +19,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -29,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +45,10 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final AmazonS3Client s3Client;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;  // StringRedisTemplate 사용
+
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -194,24 +203,47 @@ public class UserServiceImpl implements UserService {
         return convertedFile;
     }
 
-    //필기.
     @Override
     @Transactional
     public UserDTO registUser(UserDTO userDTO) {
 
-    /* 설명. 경우에 따라 ModelMapper는 자의적인 판단으로 필드끼리 매핑하는 경우가 있어
-       정확히 일치되게 매칭하려면 추가할 속성 */
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        // 일반 회원가입인데 동일한 UserIdentifier가 존재하는지 확인(이메일 중복 검증)
+        UserEntity existingUser = userRepository.findByUserIdentifier("NORMAL_" + userDTO.getEmail());
+        if (existingUser != null) {
+            throw new CommonException(ErrorCode.EXIST_USER);
+        }
+
+        // Redis에서 이메일 인증 여부 확인
+        String emailVerificationStatus = stringRedisTemplate.opsForValue().get(userDTO.getEmail());
+
+        if (!"True".equals(emailVerificationStatus)) {
+            log.error("이메일 인증이 완료되지 않았습니다: {}", userDTO.getEmail());
+            throw new CommonException(ErrorCode.EMAIL_VERIFICATION_REQUIRED); // 이메일 인증이 필요하다는 커스텀 예외 던지기
+        }
+
+        // UserDTO 설정 (유효성 검사 후)
+        UserDTO newUserDTO = UserDTO.builder()
+                .userName(userDTO.getUserName())
+                .email(userDTO.getEmail())
+                .signupPath(SignupPath.NORMAL)
+                .createdAt(LocalDateTime.now().withNano(0))
+                .acceptStatus(AcceptStatus.Y)
+                .userStatus(ActiveStatus.ACTIVE)
+                .userIdentifier("NORMAL_" + userDTO.getEmail())
+                .build();
 
         // DTO -> Entity 변환
-        UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
+        UserEntity userEntity = modelMapper.map(newUserDTO, UserEntity.class);
         log.info("Service 계층에서 DTO -> Entity: {}", userEntity);
 
-        /* 설명. BCryptPasswordEncoder 주입 후 암호화(평문 -> 다이제스트) */
+        // 비밀번호 암호화
         userEntity.setEncryptedPwd(bCryptPasswordEncoder.encode(userDTO.getPassword()));
 
         // Entity 저장 후 반환된 Entity 가져오기
         UserEntity savedEntity = userRepository.save(userEntity);
+
+        // 회원가입 성공 후 Redis에서 이메일 키 삭제
+        stringRedisTemplate.delete(userDTO.getEmail());
 
         // 저장된 Entity를 DTO로 변환하여 반환
         return modelMapper.map(savedEntity, UserDTO.class);
@@ -225,7 +257,7 @@ public class UserServiceImpl implements UserService {
         UserEntity loginUser = userRepository.findByUserIdentifier(userIdentifier);
 
         if (loginUser == null) {
-            throw new UsernameNotFoundException(userIdentifier + " 해당 아이디의 유저는 존재하지 않습니다.");
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
 
         /* 설명. 사용자의 권한들을 가져왔다는 가정 */

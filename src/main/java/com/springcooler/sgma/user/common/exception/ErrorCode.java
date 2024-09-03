@@ -40,11 +40,11 @@ public enum ErrorCode {
     LOGIN_FAILURE(40108, HttpStatus.UNAUTHORIZED, "로그인에 실패했습니다"),
     UNAUTHORIZED_ACCESS(40110, HttpStatus.UNAUTHORIZED, "인증되지 않은 접근입니다."),
     EXPIRED_SESSION(40111, HttpStatus.UNAUTHORIZED, "세션이 만료되었습니다."),
-    ACCESS_DENIED(40310, HttpStatus.FORBIDDEN, "접근이 거부되었습니다."),
-
+    EXIST_USER(40113, HttpStatus.UNAUTHORIZED, "이미 회원가입한 회원입니다."),
 
     //403
     FORBIDDEN_ROLE(40300, HttpStatus.FORBIDDEN, "권한이 존재하지 않습니다."),
+    ACCESS_DENIED(40310, HttpStatus.FORBIDDEN, "접근이 거부되었습니다."),
 
     //404
     NOT_FOUND_USER(40401, HttpStatus.NOT_FOUND, "유저가 존재하지 않습니다."),
@@ -62,6 +62,8 @@ public enum ErrorCode {
     NOT_FOUND_CHOICE(40413, HttpStatus.NOT_FOUND, "문제 선택지가 존재하지 않습니다."),
     NOT_FOUND_SUBMITTED_ANSWER(40414, HttpStatus.NOT_FOUND, "제출된 답변이 존재하지 않습니다."),
     NOT_FOUND_STUDY_GROUP_NOTICE(40415, HttpStatus.NOT_FOUND, "스터디 그룹 공지가 존재하지 않습니다."),
+    EMAIL_VERIFICATION_REQUIRED(40416, HttpStatus.BAD_REQUEST
+            , "이메일 인증이 안된 이메일입니다. 이메일 인증을 완료해주세요."),
 
     //500
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다");
