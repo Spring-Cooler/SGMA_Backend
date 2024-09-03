@@ -56,10 +56,11 @@ class SubmittedAnswerServiceTests {
     void testGradeSubmittedAnswerByParticipantId(){
 
         // given
-        long participantId = 1L;
+        long participantId = 3L;
+        log.info("participantId: {}", participantId);
 
         // when
-
+        appSubmittedAnswerServiceImpl.gradeSubmittedAnswersByParticipantId(participantId);
         // then
 
     }
