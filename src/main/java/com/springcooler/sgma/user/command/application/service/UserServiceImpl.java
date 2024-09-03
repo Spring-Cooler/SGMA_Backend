@@ -32,8 +32,6 @@ public class UserServiceImpl implements UserService {
 //    @Value("${cloud.aws.s3.bucket}")
 //    private String bucket;
 
-
-
     //    @Autowired
 //    public UserServiceImpl(UserRepository userRepository, AmazonS3Client s3Client) {
 //        this.userRepository = userRepository;
@@ -179,4 +177,3 @@ public class UserServiceImpl implements UserService {
 //        return convertedFile;
 //    }
 }
-
