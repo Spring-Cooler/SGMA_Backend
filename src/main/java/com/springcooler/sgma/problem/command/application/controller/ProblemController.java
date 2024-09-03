@@ -2,12 +2,12 @@ package com.springcooler.sgma.problem.command.application.controller;
 
 import com.springcooler.sgma.problem.command.application.dto.ProblemDTO;
 import com.springcooler.sgma.problem.command.application.service.AppProblemService;
+import com.springcooler.sgma.problem.command.domain.aggregate.entity.Problem;
+import com.springcooler.sgma.problem.common.ResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
 
 @RestController("commandProblemController")
 @RequestMapping("/api/problems")
@@ -21,19 +21,21 @@ public class ProblemController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> registProblem(@RequestBody ProblemDTO newProblem) {
-        return ResponseEntity.created(URI.create("/api/problems/" + appProblemService.registProblem(newProblem).getProblemId())).build();
+    public ResponseDTO<?> registProblem(@RequestBody ProblemDTO newProblem) {
+            Problem problem = appProblemService.registProblem(newProblem);
+            return ResponseDTO.ok(problem);
     }
 
     @PutMapping("/modify")
-    public ResponseEntity<?> modifyProblem(@RequestBody ProblemDTO modifiedProblem) {
-        return ResponseEntity.created(URI.create("/api/problems/" + appProblemService.modifyProblem(modifiedProblem).getProblemId())).build();
+    public ResponseDTO<?> modifyProblem(@RequestBody ProblemDTO modifiedProblem) {
+        Problem problem = appProblemService.modifyProblem(modifiedProblem);
+        return ResponseDTO.ok(problem);
     }
 
     @DeleteMapping("/{problemId}")
-    public ResponseEntity<?> deleteProblem(@PathVariable("problemId") long problemId) {
+    public ResponseDTO<?> deleteProblem(@PathVariable("problemId") long problemId) {
         appProblemService.deleteProblem(problemId);
 
-        return ResponseEntity.noContent().build();
+        return ResponseDTO.ok(null);
     }
 }
