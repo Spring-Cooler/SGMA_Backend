@@ -19,7 +19,7 @@ public class BatchScheduler {
         this.RecruitmentBoardUpdateTasklet = RecruitmentBoardUpdateTasklet;
     }
 
-    @Scheduled(fixedRate = 30000) // 매 정각마다 실행
+    @Scheduled(fixedRate = 30000) // 30초 마다 실행
     public void runBatchJob() {
         try {
             jobLauncher.run(RecruitmentBoardUpdateTasklet, new JobParametersBuilder().toJobParameters());

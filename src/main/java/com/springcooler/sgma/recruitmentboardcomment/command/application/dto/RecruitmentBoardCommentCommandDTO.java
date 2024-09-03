@@ -1,6 +1,5 @@
 package com.springcooler.sgma.recruitmentboardcomment.command.application.dto;
 
-import com.springcooler.sgma.recruitmentboardcomment.command.domain.aggregate.ActiveStatus;
 import lombok.*;
 
 import java.sql.Timestamp;
