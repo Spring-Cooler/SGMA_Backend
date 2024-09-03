@@ -40,7 +40,7 @@ public class RecruitmentBoardCommandService {
                 .recruitmentBoardId(recruitmentBoardCommandDTO.getRecruitmentBoardId())
                 .title(recruitmentBoardCommandDTO.getTitle())
                 .content(recruitmentBoardCommandDTO.getContent())
-                .createdAt(currentTimestamp)  // 한국 현재 시간을 설정합니다.
+                .createdAt(currentTimestamp)
                 .updatedAt(currentTimestamp)
                 .recruitmentStartTime(adjustedStartTime)
                 .recruitmentEndTime(adjustedEndTime)
@@ -64,19 +64,17 @@ public class RecruitmentBoardCommandService {
             existingApplicant.setRecruitmentStartTime(recruitmentBoardCommandDTO.getRecruitmentStartTime());
             existingApplicant.setRecruitmentEndTime(recruitmentBoardCommandDTO.getRecruitmentEndTime());
 
-            // 현재 시간으로 updatedAt 필드를 갱신합니다.
             ZonedDateTime nowKst = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
             Timestamp currentTimestamp = Timestamp.from(nowKst.toInstant());
             existingApplicant.setUpdatedAt(currentTimestamp);
 
-            // 업데이트된 엔티티를 저장합니다.
+
             RecruitmentBoard updatedApplicant = recruitmentBoardRepository.save(existingApplicant);
 
-            // 업데이트된 엔티티를 DTO로 변환하여 반환합니다.
             return modelMapper.map(updatedApplicant, RecruitmentBoardCommandDTO.class);
         }
 
-        // 해당 ID를 가진 신청자가 없으면 null을 반환합니다.
+
         return null;
     }
 
@@ -98,10 +96,9 @@ public class RecruitmentBoardCommandService {
         return Timestamp.from(nowKst.toInstant());
     }
 
-    // Timestamp에서 특정 시간을 빼는 메서드
     private Timestamp subtractHours(Timestamp timestamp, int hours) {
-        Instant instant = timestamp.toInstant(); // Timestamp를 Instant로 변환
-        Instant newInstant = instant.minus(java.time.Duration.ofHours(hours)); // 지정된 시간만큼 빼기
-        return Timestamp.from(newInstant); // Instant를 Timestamp로 변환
+        Instant instant = timestamp.toInstant();
+        Instant newInstant = instant.minus(java.time.Duration.ofHours(hours));
+        return Timestamp.from(newInstant);
     }
 }

@@ -1,4 +1,4 @@
-package com.springcooler.sgma.recruitmentboardcomment.command.application.service.impl;
+package com.springcooler.sgma.recruitmentboardcomment.command.application.service;
 
 import com.springcooler.sgma.recruitmentboardcomment.command.application.dto.RecruitmentBoardCommentCommandDTO;
 import com.springcooler.sgma.recruitmentboardcomment.command.application.service.RecruitmentBoardCommentCommandService;

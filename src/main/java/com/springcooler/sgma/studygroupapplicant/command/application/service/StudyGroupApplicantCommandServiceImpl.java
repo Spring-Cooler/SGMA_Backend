@@ -59,9 +59,9 @@ public class StudyGroupApplicantCommandServiceImpl implements StudyGroupApplican
     public void approveStudyGroupApplicant(long userId, long recruitmentBoardId) {
         StudyGroupApplicantId studyGroupApplicantId = new StudyGroupApplicantId(userId, recruitmentBoardId);
 
-        // 복합 키를 사용해 엔티티 검색
+        // 복합 키를 사용해 검색
         StudyGroupApplicant studyGroupApplicant = studyGroupApplicantRepository.findById(studyGroupApplicantId).get();
-        ApplicationStatus inputGroupId = studyGroupApplicant.getGroupId();
+        Long inputGroupId = studyGroupApplicant.getGroupId();
 
         // 상태 업데이트
         studyGroupApplicant.setApplicationStatus(ApplicationStatus.ACCEPT);
@@ -70,7 +70,7 @@ public class StudyGroupApplicantCommandServiceImpl implements StudyGroupApplican
         // DTO 생성 및 서비스 호출
         StudyGroupMemberDTO studyGroupMemberDTO = new StudyGroupMemberDTO();
         studyGroupMemberDTO.setUserId(userId);
-        studyGroupMemberDTO.setGroupId(inputGroupId.ordinal());
+        studyGroupMemberDTO.setGroupId(inputGroupId);
 
         infraStudyGroupApplicantService.approveStudyGroupApplicant(studyGroupMemberDTO);
     }

@@ -23,5 +23,5 @@ public class StudyGroupApplicant {
     private ApplicationStatus applicationStatus;
 
     @Column(name="group_id",nullable = false)
-    private ApplicationStatus groupId;
+    private Long groupId;
 }
