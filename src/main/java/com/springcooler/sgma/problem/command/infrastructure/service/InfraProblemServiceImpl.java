@@ -46,4 +46,10 @@ public class InfraProblemServiceImpl implements InfraProblemService {
     public void requestIncreaseNumSubmittedProblems(long scheduleId, long participantId) {
         studyScheduleParticipantService.increaseNumSubmittedProblems(scheduleId, participantId);
     }
+
+
+    @Override
+    public void requestDecreaseNumSubmittedProblems(long scheduleId, long participantId) {
+        studyScheduleParticipantService.decreaseNumSubmittedProblems(scheduleId, participantId);
+    }
 }

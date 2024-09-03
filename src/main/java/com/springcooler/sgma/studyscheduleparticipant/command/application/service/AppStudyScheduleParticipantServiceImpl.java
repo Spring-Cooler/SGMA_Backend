@@ -97,9 +97,28 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
             participant.setSubmissionStatus("Y");
             participantRepository.save(participant);
         }
+
+    }
+    @Transactional
+    @Override
+    public void decreaseNumSubmittedProblems(Long scheduleId, Long participantId) {
+        StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
+
+        participant.setNumSubmittedProblems(participant.getNumSubmittedProblems() - 1);
+        log.debug("participant: {}", participant);
+        participantRepository.save(participant);
+
+        StudySchedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
+
+        if (participant.getNumSubmittedProblems().equals(schedule.getNumProblemsPerParticipant())) {
+            participant.setSubmissionStatus("Y");
+            participantRepository.save(participant);
+        }
     }
 
-    // 특정 참가자의 시험 점수와 백분율 계산
+// 특정 참가자의 시험 점수와 백분율 계산
 //    @Transactional
 //    @Override
 //    public void calculateAndUpdateParticipantScores(Long scheduleId) {
