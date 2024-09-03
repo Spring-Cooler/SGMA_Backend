@@ -4,6 +4,7 @@ import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroup
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.GroupRole;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMember;
 import com.springcooler.sgma.studygroupmember.common.exception.CommonException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Slf4j
 @SpringBootTest
 @Transactional
 class StudyGroupMemberServiceTests {
@@ -32,7 +34,7 @@ class StudyGroupMemberServiceTests {
         //When
         StudyGroupMember member = studyGroupMemberService.registStudyGroupMember(newMember);
         if (member != null) {
-            System.out.println(member);
+            log.info(member.toString());
         }
 
         //Then
@@ -57,7 +59,7 @@ class StudyGroupMemberServiceTests {
         //When
         StudyGroupMember member = studyGroupMemberService.modifyStudyGroupMember(modifyMember);
         if (member != null) {
-            System.out.println(member);
+            log.info(member.toString());
         }
 
         //Then
@@ -72,7 +74,7 @@ class StudyGroupMemberServiceTests {
 
         //When
         studyGroupMemberService.deleteStudyGroupMember(memberId);
-        System.out.println("DELETE SUCCESS");
+        log.info("DELETE SUCCESS");
 
         //Then
         Assertions.assertThrows(CommonException.class,
