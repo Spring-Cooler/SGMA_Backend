@@ -13,7 +13,7 @@ import java.util.List;
 
 @SpringBootTest
 @Transactional
-class StudyScheduleParticipantQueryServiceTests {
+class StudyScheduleParticipantServiceTests {
 
     @Autowired
     private StudyScheduleParticipantService studyScheduleParticipantService;

@@ -14,6 +14,4 @@ public interface StudyScheduleParticipantRepository extends JpaRepository<StudyS
     List<StudyScheduleParticipant> findByScheduleId(Long scheduleId);
 
     Optional<StudyScheduleParticipant> findByScheduleIdAndMemberId(Long scheduleId, Long memberId);
-
-    boolean existsByScheduleIdAndMemberId(Long scheduleId, Long memberId);
 }

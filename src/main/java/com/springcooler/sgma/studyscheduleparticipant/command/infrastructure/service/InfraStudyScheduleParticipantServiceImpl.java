@@ -1,4 +1,5 @@
 package com.springcooler.sgma.studyscheduleparticipant.command.infrastructure.service;
 
 public class InfraStudyScheduleParticipantServiceImpl implements InfraStudyScheduleParticipantService {
+
 }

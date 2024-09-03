@@ -13,7 +13,7 @@ public interface StudyScheduleService {
     List<StudyScheduleDTO> findStudyScheduleByGroupId(long groupId);
 
     // 스터디 그룹 일정 기간별 조회
-    List<StudyScheduleDTO> findStudySchedulesByPeriod(long groupId, String startDate, String endDate);
+//    List<StudyScheduleDTO> findStudySchedulesByPeriod(long groupId, String startDate, String endDate);
 
     // 스터디 그룹 일정 시험의 통계 자료 조회 (scheduleID로 조회)
     StudyScheduleDTO findStudyScheduleByStatistics(long scheduleID);

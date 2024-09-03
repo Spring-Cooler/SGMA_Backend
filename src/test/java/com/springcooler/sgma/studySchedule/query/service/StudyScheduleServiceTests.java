@@ -1,7 +1,6 @@
-package com.springcooler.sgma.studySchedule.query.service;
+package com.springcooler.sgma.studyschedule.query.service;
 
 import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleDTO;
-import com.springcooler.sgma.studyschedule.query.service.StudyScheduleService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,31 +43,31 @@ class StudyScheduleServiceTests {
         Assertions.assertNotNull(ScheduleByGroupId);
     }
 
-    @DisplayName("스터디 그룹 일정 기간별 조회 테스트")
-    @Test
-    void testFindStudySchedulesByPeriod() {
-        // Given
-        long groupId = 1L;
-        String startDate = "2024-09-01";
-        String endDate = "2024-09-30";
-
-        // When
-        List<StudyScheduleDTO> SchedulesByPeriod = studyScheduleService.findStudySchedulesByPeriod(groupId, startDate, endDate);
-
-        // Then
-        Assertions.assertNotNull(SchedulesByPeriod);
-    }
-
-//    @DisplayName("스터디 그룹 일정 시험 통계 조회 테스트")
+//    @DisplayName("스터디 그룹 일정 기간별 조회 테스트")
 //    @Test
-//    void testFindStudyScheduleByStatistics() {
+//    void testFindStudySchedulesByPeriod() {
 //        // Given
-//        long scheduleId = 1L;
+//        long groupId = 1L;
+//        String startDate = "2024-09-01";
+//        String endDate = "2024-09-30";
 //
 //        // When
-//        StudyScheduleDTO ScheduleByStatistics = studyScheduleService.findStudyScheduleByStatistics(scheduleId);
+//        List<StudyScheduleDTO> SchedulesByPeriod = studyScheduleService.findStudySchedulesByPeriod(groupId, startDate, endDate);
 //
 //        // Then
-//        Assertions.assertNotNull(ScheduleByStatistics);
+//        Assertions.assertNotNull(SchedulesByPeriod);
 //    }
+
+    @DisplayName("스터디 그룹 일정 시험 통계 조회 테스트")
+    @Test
+    void testFindStudyScheduleByStatistics() {
+        // Given
+        long scheduleId = 3L;
+
+        // When
+        StudyScheduleDTO ScheduleByStatistics = studyScheduleService.findStudyScheduleByStatistics(scheduleId);
+
+        // Then
+        Assertions.assertNotNull(ScheduleByStatistics);
+    }
 }
