@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -17,7 +18,7 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Service
-public class RecruitmentBoardCommandService {
+public class RecruitmentBoardCommandService implements RecruitmentBoardCommandServiceImpl{
 
     private static final Logger logger = LoggerFactory.getLogger(RecruitmentBoardCommandService.class);
 
@@ -30,6 +31,9 @@ public class RecruitmentBoardCommandService {
         this.modelMapper = modelMapper;
     }
 
+
+    @Override
+    @Transactional
     public RecruitmentBoard createStudyGroupApplicant(RecruitmentBoardCommandDTO recruitmentBoardCommandDTO) {
         Timestamp currentTimestamp = getCurrentTimestamp();
 
@@ -53,7 +57,8 @@ public class RecruitmentBoardCommandService {
 
         return recruitmentBoardRepository.save(recruitmentBoard);
     }
-
+    @Override
+    @Transactional
     public RecruitmentBoardCommandDTO updateStudyGroupApplicant(Long recruitmentBoardId, RecruitmentBoardCommandDTO recruitmentBoardCommandDTO) {
         Optional<RecruitmentBoard> optionalApplicant = recruitmentBoardRepository.findById(recruitmentBoardId);
 
@@ -78,6 +83,8 @@ public class RecruitmentBoardCommandService {
         return null;
     }
 
+    @Override
+    @Transactional
     public boolean deleteStudyGroupApplicant(Long recruitmentBoardId) {
         Optional<RecruitmentBoard> optionalApplicant = recruitmentBoardRepository.findById(recruitmentBoardId);
 

@@ -14,6 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -33,6 +34,7 @@ public class StudyGroupApplicantCommandServiceImpl implements StudyGroupApplican
     }
 
     @Override
+    @Transactional
     public StudyGroupApplicant applyStudyGroup(StudyGroupApplicantCommandDTO studyGroupApplicantCommandDTO) {
         StudyGroupApplicant studyGroupApplicant = StudyGroupApplicant.builder()
                 .userId(studyGroupApplicantCommandDTO.getUserId())
@@ -45,6 +47,7 @@ public class StudyGroupApplicantCommandServiceImpl implements StudyGroupApplican
     }
 
     @Override
+    @Transactional
     public void cancelStudyGroupApply(long userId, long recruitmentBoardId) {
         StudyGroupApplicantId studyGroupApplicantId = new StudyGroupApplicantId(userId, recruitmentBoardId);
         if (!studyGroupApplicantRepository.existsById(studyGroupApplicantId)) {
@@ -56,6 +59,7 @@ public class StudyGroupApplicantCommandServiceImpl implements StudyGroupApplican
 
 
     @Override
+    @Transactional
     public void approveStudyGroupApplicant(long userId, long recruitmentBoardId) {
         StudyGroupApplicantId studyGroupApplicantId = new StudyGroupApplicantId(userId, recruitmentBoardId);
 
