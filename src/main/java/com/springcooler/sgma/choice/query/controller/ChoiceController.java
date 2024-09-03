@@ -1,6 +1,8 @@
 package com.springcooler.sgma.choice.query.controller;
 
 import com.springcooler.sgma.choice.common.ResponseDTO;
+import com.springcooler.sgma.choice.common.exception.CommonException;
+import com.springcooler.sgma.choice.common.exception.ErrorCode;
 import com.springcooler.sgma.choice.query.dto.ChoiceDTO;
 import com.springcooler.sgma.choice.query.service.ChoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +24,21 @@ public class ChoiceController {
         this.choiceService = choiceService;
     }
 
-    @GetMapping("/problem-choices")
-    public ResponseDTO<List<ChoiceDTO>> getAllChoices() {
+    @GetMapping("/")
+    public ResponseDTO<?> getAllChoices() {
         List<ChoiceDTO> choices = choiceService.findAllChoices();
+        if (choices == null || choices.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_CHOICE);
+        }
+        return ResponseDTO.ok(choices);
+    }
+
+    @GetMapping("/problems/{problemId}")
+    public ResponseDTO<?> getChoicesByProblemId(@PathVariable("problemId") long problemId) {
+        List<ChoiceDTO> choices = choiceService.findChoicesByProblemId(problemId);
+        if (choices == null || choices.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_CHOICE);
+        }
         return ResponseDTO.ok(choices);
     }
 }

@@ -1,5 +1,6 @@
 package com.springcooler.sgma.problem.query.service;
 
+import com.springcooler.sgma.problem.query.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @Slf4j
@@ -56,17 +58,18 @@ class ProblemServiceTests {
         problems.forEach(x->log.info("problems: {}", problems));
     }
 
-    @DisplayName("문제 ID로 정답 조회")
+    @DisplayName("문제 ID로 문제와 선지 정보 조회")
     @Test
-    void testFindAnswerByProblemId() {
+    void testFindProblemAndChoiceByProblemId(){
 
-        // given
-        long problemId = 1;
+        //given
+        long problemId = 1L;
 
         // when
-        int answer = problemService.getAnswerByProblemId(problemId);
+        ProblemAndChoiceDTO problemAndChoiceDTO = problemService.findProblemAndChoiceByProblemId(problemId);
 
         // then
-        assertEquals(answer,1);
+        assertNotNull(problemAndChoiceDTO);
+        log.info("problemAndChoiceDTO: {}", problemAndChoiceDTO);
     }
 }
