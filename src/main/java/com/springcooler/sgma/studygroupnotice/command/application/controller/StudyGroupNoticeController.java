@@ -2,7 +2,6 @@ package com.springcooler.sgma.studygroupnotice.command.application.controller;
 
 import com.springcooler.sgma.studygroupnotice.command.application.dto.StudyGroupNoticeDTO;
 import com.springcooler.sgma.studygroupnotice.command.application.service.AppStudyGroupNoticeService;
-import com.springcooler.sgma.studygroupnotice.command.domain.aggregate.StudyGroupNotice;
 import com.springcooler.sgma.studygroupnotice.common.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +20,14 @@ public class StudyGroupNoticeController {
     // 스터디그룹 공지사항 생성
     @PostMapping("/")
     public ResponseDTO<?> registStudyGroupNotice(@RequestBody StudyGroupNoticeDTO newNotice) {
-        StudyGroupNotice notice = studyGroupNoticeService.registStudyGroupNotice(newNotice);
+        StudyGroupNoticeDTO notice = studyGroupNoticeService.registStudyGroupNotice(newNotice);
         return ResponseDTO.ok(notice);
     }
 
     // 스터디그룹 공지사항 정보 수정
     @PutMapping("/")
     public ResponseDTO<?> modifyStudyGroupNotice(@RequestBody StudyGroupNoticeDTO modifyNotice) {
-        StudyGroupNotice notice = studyGroupNoticeService.modifyStudyGroupNotice(modifyNotice);
+        StudyGroupNoticeDTO notice = studyGroupNoticeService.modifyStudyGroupNotice(modifyNotice);
         return ResponseDTO.ok(notice);
     }
 
