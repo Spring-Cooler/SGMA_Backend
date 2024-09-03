@@ -11,6 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 public class AppChoiceServiceImpl implements AppChoiceService {
@@ -44,15 +50,19 @@ public class AppChoiceServiceImpl implements AppChoiceService {
 
 
     @Override
-    public int registChoices(ProblemVO problemVO) {
+    public ProblemVO registChoices(ProblemVO problemVO) {
         long problemID = problemVO.getProblemId();
-        int count = 0;
-        for (int i = 0; i < problemVO.getChoices().length; i++) {
-            ChoiceDTO choice = new ChoiceDTO(problemID, i+1, problemVO.getChoices()[i]);
-            this.registChoice(choice);
-            count+=1;
+        List<String> choices = problemVO.getChoices();
+       List<Choice> choicesToInsert = new ArrayList<>();
+        for (int i = 0; i < choices.size(); i++) {
+            ChoicePK choicePK = new ChoicePK(problemID, i+1);
+            log.info("i: {}", i);
+            Choice newChoice = new Choice(choicePK, choices.get(i));
+            choicesToInsert.add(newChoice);
         }
-        return count;
+        choicesToInsert = choiceRepository.saveAll(choicesToInsert);
+        ProblemVO insertedInfo = new ProblemVO(problemVO.getProblemId(), choicesToInsert.stream().map(x->x.getContent()).collect(Collectors.toList()));
+        return insertedInfo;
     }
 }
 

@@ -14,5 +14,5 @@ public interface AppProblemService {
     void deleteProblem(long problemId);
 
 
-    Map<String,Object> registProblemAndChoice(ProblemAndChoiceDTO newProblemAndChoice);
+    ProblemAndChoiceDTO registProblemAndChoice(ProblemAndChoiceDTO newProblemAndChoice);
 }

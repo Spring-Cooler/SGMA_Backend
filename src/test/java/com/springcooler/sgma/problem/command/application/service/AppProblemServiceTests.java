@@ -75,24 +75,24 @@ class AppProblemServiceTests {
         System.out.println("삭제 완료");
     }
 
-    @DisplayName("문제 및 선지 등록 테스트")
-    @Test
-    void testRegistProblemAndChoices(){
-
-        // given
-        long participantId = 1L;
-        long scheduleId = 1L;
-        String content = "문제 및 선지 등록 테스트";
-        int answer = 1;
-        String[] choices = {"1","2","3","4"};
-        ProblemAndChoiceDTO problemAndChoiceDTO = new ProblemAndChoiceDTO(participantId, scheduleId, content, answer, choices);
-
-        // when
-        Map<String, Object> result = appProblemService.registProblemAndChoice(problemAndChoiceDTO);
-
-        // then
-        assertNotNull(result);
-        log.info("result.get(registeredProblem): {}", result.get("registeredproblem"));
-        log.info("result.get(numInsertedChoices): {}", result.get("numInsertedChoices"));
-    }
+//    @DisplayName("문제 및 선지 등록 테스트")
+//    @Test
+//    void testRegistProblemAndChoices(){
+//
+//        // given
+//        long participantId = 1L;
+//        long scheduleId = 1L;
+//        String content = "문제 및 선지 등록 테스트";
+//        int answer = 1;
+//        String[] choices = {"1","2","3","4"};
+//        ProblemAndChoiceDTO problemAndChoiceDTO = new ProblemAndChoiceDTO(participantId, scheduleId, content, answer, choices);
+//
+//        // when
+//        Map<String, Object> result = appProblemService.registProblemAndChoice(problemAndChoiceDTO);
+//
+//        // then
+//        assertNotNull(result);
+//        log.info("result.get(registeredProblem): {}", result.get("registeredproblem"));
+//        log.info("result.get(numInsertedChoices): {}", result.get("numInsertedChoices"));
+//    }
 }

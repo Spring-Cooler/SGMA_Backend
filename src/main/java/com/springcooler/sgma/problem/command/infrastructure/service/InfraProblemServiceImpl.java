@@ -2,6 +2,7 @@ package com.springcooler.sgma.problem.command.infrastructure.service;
 
 import com.springcooler.sgma.choice.command.application.service.AppChoiceService;
 import com.springcooler.sgma.choice.command.domain.aggregate.vo.ProblemVO;
+import com.springcooler.sgma.problem.command.application.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.command.domain.aggregate.vo.ScheduleParticipantVO;
 import com.springcooler.sgma.problem.command.domain.aggregate.vo.ScheduleVO;
 import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleDTO;
@@ -35,7 +36,7 @@ public class InfraProblemServiceImpl implements InfraProblemService {
 
     @Transactional
     @Override
-    public int requestRegistChoices(long problemId, String[] choices) {
+    public ProblemVO requestRegistChoices(long problemId, List<String> choices) {
         return appChoiceService.registChoices(new ProblemVO(problemId, choices));
     }
 

@@ -1,5 +1,6 @@
 package com.springcooler.sgma.problem.command.application.service;
 
+import com.springcooler.sgma.choice.command.domain.aggregate.vo.ProblemVO;
 import com.springcooler.sgma.problem.command.application.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.command.application.dto.ProblemDTO;
 import com.springcooler.sgma.problem.command.domain.aggregate.entity.Problem;
@@ -62,7 +63,7 @@ public class AppProblemServiceImpl implements AppProblemService{
 
     @Transactional
     @Override
-    public Map<String,Object> registProblemAndChoice(ProblemAndChoiceDTO newProblemAndChoice) {
+    public ProblemAndChoiceDTO registProblemAndChoice(ProblemAndChoiceDTO newProblemAndChoice) {
             Problem problem = new Problem(null,
                     newProblemAndChoice.getContent(),
                     newProblemAndChoice.getAnswer(),
@@ -70,12 +71,8 @@ public class AppProblemServiceImpl implements AppProblemService{
                     newProblemAndChoice.getScheduleId());
 
             Problem registeredProblem = problemRepository.save(problem);
-            int numInsertedChoices = infraProblemService.requestRegistChoices(registeredProblem.getProblemId(), newProblemAndChoice.getChoices());
-            Map<String, Object> resultMap = new HashMap<>();
-            resultMap.put("registeredproblem", registeredProblem);
-            resultMap.put("numInsertedChoices", numInsertedChoices);
-
-        return resultMap;
+            ProblemVO problemVO =infraProblemService.requestRegistChoices(registeredProblem.getProblemId(), newProblemAndChoice.getChoices());
+        return new ProblemAndChoiceDTO(registeredProblem.getProblemId(), registeredProblem.getParticipantId(), registeredProblem.getScheduleId(), registeredProblem.getContent(), registeredProblem.getAnswer(), newProblemAndChoice.getChoices());
 
     }
 }
