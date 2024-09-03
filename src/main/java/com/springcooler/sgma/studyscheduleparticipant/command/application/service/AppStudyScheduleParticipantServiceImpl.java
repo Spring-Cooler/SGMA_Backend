@@ -11,13 +11,14 @@ import com.springcooler.sgma.studyscheduleparticipant.command.domain.aggregate.S
 import com.springcooler.sgma.studyscheduleparticipant.command.domain.repository.StudyScheduleParticipantRepository;
 import com.springcooler.sgma.studyschedule.command.domain.repository.StudyScheduleRepository;
 import com.springcooler.sgma.studyscheduleparticipant.command.domain.service.DomainStudyScheduleParticipantService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Slf4j
 @Service
 public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleParticipantService {
 
@@ -86,6 +87,7 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
 
         participant.setNumSubmittedProblems(participant.getNumSubmittedProblems() + 1);
+        log.debug("participant: {}", participant);
         participantRepository.save(participant);
 
         StudySchedule schedule = scheduleRepository.findById(scheduleId)
