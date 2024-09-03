@@ -1,88 +1,78 @@
 package com.springcooler.sgma.studyscheduleparticipant.command.application.service;
 
-import com.springcooler.sgma.problem.query.dto.ProblemDTO;
-import com.springcooler.sgma.problem.query.service.ProblemService;
+import com.springcooler.sgma.problem.command.domain.repository.ProblemRepository;
+import com.springcooler.sgma.studyschedule.command.application.service.AppStudyScheduleService;
+import com.springcooler.sgma.studyschedule.command.infrastructure.service.InfraStudyScheduleService;
+import com.springcooler.sgma.studyschedule.common.exception.CommonException;
+import com.springcooler.sgma.studyschedule.common.exception.ErrorCode;
 import com.springcooler.sgma.studyscheduleparticipant.command.application.dto.StudyScheduleParticipantDTO;
-import com.springcooler.sgma.submittedanswer.query.dto.SubmittedAnswerDTO;
-import com.springcooler.sgma.submittedanswer.query.service.SubmittedAnswerService;
-import com.springcooler.sgma.problem.query.common.ResponseMessage;
 import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudySchedule;
+import com.springcooler.sgma.studyscheduleparticipant.command.domain.aggregate.RestStatus;
 import com.springcooler.sgma.studyscheduleparticipant.command.domain.aggregate.StudyScheduleParticipant;
 import com.springcooler.sgma.studyscheduleparticipant.command.domain.repository.StudyScheduleParticipantRepository;
 import com.springcooler.sgma.studyschedule.command.domain.repository.StudyScheduleRepository;
+import com.springcooler.sgma.studyscheduleparticipant.command.domain.service.DomainStudyScheduleParticipantService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
+@Slf4j
 @Service
-public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleParticipantService {
+public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleService {
 
     private final StudyScheduleParticipantRepository participantRepository;
     private final StudyScheduleRepository scheduleRepository;
-    private final ProblemService problemService;
-    private final SubmittedAnswerService submittedAnswerService;
+    private final InfraStudyScheduleService infraStudyScheduleService;
+    private final DomainStudyScheduleParticipantService domainStudyScheduleParticipantService;
     private final ModelMapper modelMapper;
 
     @Autowired
     public AppStudyScheduleParticipantServiceImpl(StudyScheduleParticipantRepository participantRepository,
                                                   StudyScheduleRepository scheduleRepository,
-                                                  ProblemService problemService,
-                                                  SubmittedAnswerService submittedAnswerService,
+                                                  InfraStudyScheduleService infraStudyScheduleService,
+                                                  DomainStudyScheduleParticipantService domainStudyScheduleParticipantService,
                                                   ModelMapper modelMapper) {
         this.participantRepository = participantRepository;
         this.scheduleRepository = scheduleRepository;
-        this.problemService = problemService;
-        this.submittedAnswerService = submittedAnswerService;
+        this.infraStudyScheduleService = infraStudyScheduleService;
+        this.domainStudyScheduleParticipantService = domainStudyScheduleParticipantService;
         this.modelMapper = modelMapper;
     }
 
     // 스터디 그룹 일정 참가
     @Transactional
     @Override
-    public StudySchedule registStudyScheduleParticipant(StudyScheduleParticipantDTO newParticipant) {
-        if (newParticipant.getSubmissionStatus() == null) {
-            newParticipant.setSubmissionStatus("N");
-        }
-        if (newParticipant.getNumSubmittedProblems() == null) {
-            newParticipant.setNumSubmittedProblems(0);
-        }
-        if (newParticipant.getTestScore() == null) {
-            newParticipant.setTestScore(0.0);
-        }
-        if (newParticipant.getTestPercentage() == null) {
-            newParticipant.setTestPercentage(0.0);
+    public StudyScheduleParticipant registStudyScheduleParticipant(StudyScheduleParticipantDTO newParticipant) {
+        if (!domainStudyScheduleParticipantService.isValidDTO(RestStatus.POST, newParticipant)) {
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
         }
 
         StudySchedule schedule = scheduleRepository.findById(newParticipant.getScheduleId())
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 일정 ID입니다."));
-
-        // 중복 참가자 여부 확인
-        if (participantRepository.existsByScheduleIdAndMemberId(newParticipant.getScheduleId(), newParticipant.getMemberId())) {
-            throw new IllegalArgumentException("이미 해당 일정에 참가자로 등록되어 있습니다.");
-        }
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
 
         StudyScheduleParticipant participant = modelMapper.map(newParticipant, StudyScheduleParticipant.class);
-        participantRepository.save(participant);
 
+        participantRepository.save(participant);
         schedule.setNumParticipants(schedule.getNumParticipants() + 1);
-        return scheduleRepository.save(schedule);
+        scheduleRepository.save(schedule);
+
+        return participant;
     }
 
     // 스터디 그룹 일정 참가 취소
     @Transactional
     @Override
     public void deleteStudyScheduleParticipant(Long scheduleId, Long memberId) {
-        StudySchedule schedule = scheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 일정 ID입니다."));
+        StudySchedule schedule =
+                scheduleRepository.findById(scheduleId)
+                        .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
 
-        StudyScheduleParticipant participant = participantRepository
-                .findByScheduleIdAndMemberId(scheduleId, memberId)
-                .orElseThrow(() -> new IllegalArgumentException("참가자가 이 일정에 등록되어 있지 않습니다."));
+        StudyScheduleParticipant participant =
+                participantRepository.findByScheduleIdAndMemberId(scheduleId, memberId)
+                        .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
 
         participantRepository.delete(participant);
 
@@ -90,71 +80,70 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
         scheduleRepository.save(schedule);
     }
 
-    // 스터디 그룹 참가자 수정 - 출제 문제 수 업데이트
-//    @Transactional
-//    @Override
-//    public ResponseMessage updateParticipantProblemCount(Long scheduleId, Long memberId) {
-//        List<ProblemDTO> problems = problemService.findProblemsByScheduleIdAndParticipantId(scheduleId, memberId);
-//
-//        long numProblems = problems.stream()
-//                .filter(problem -> problem.getScheduleId() == scheduleId && problem.getParticipantId() == memberId)
-//                .count();
-//
-//        StudyScheduleParticipant participant = participantRepository
-//                .findByScheduleIdAndMemberId(scheduleId, memberId)
-//                .orElseThrow(() -> new IllegalArgumentException("참가자가 이 일정에 등록되어 있지 않습니다."));
-//
-//        participant.setNumSubmittedProblems((int) numProblems);
-//        participantRepository.save(participant);
-//
-//        Map<String, Object> responseMap = new HashMap<>();
-//        responseMap.put("participantId", memberId);
-//        responseMap.put("numSubmittedProblems", numProblems);
-//
-//        StudySchedule schedule = scheduleRepository.findById(scheduleId)
-//                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 일정 ID입니다."));
-//
-//        if (numProblems == schedule.getNumProblemsPerParticipant()) {
-//            participant.setSubmissionStatus("Y");
-//            participantRepository.save(participant);
-//            responseMap.put("submissionStatus", "Y");
-//        } else {
-//            participant.setSubmissionStatus("N");
-//            participantRepository.save(participant);
-//            responseMap.put("submissionStatus", "N");
-//        }
-//
-//        return new ResponseMessage(200, "참가자의 출제 문제 수가 성공적으로 업데이트되었습니다.", responseMap);
-//    }
+    // 출제 문제 수 및 상태 변경
+    @Transactional
+    @Override
+    public void increaseNumSubmittedProblems(Long scheduleId, Long participantId) {
+        StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
 
-    // 특정 참가자의 시험 점수와 백분율 계산
+        participant.setNumSubmittedProblems(participant.getNumSubmittedProblems() + 1);
+        log.debug("participant: {}", participant);
+        participantRepository.save(participant);
+
+        StudySchedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
+
+        if (participant.getNumSubmittedProblems().equals(schedule.getNumProblemsPerParticipant())) {
+            participant.setSubmissionStatus("Y");
+            participantRepository.save(participant);
+        }
+
+    }
+    @Transactional
+    @Override
+    public void decreaseNumSubmittedProblems(Long scheduleId, Long participantId) {
+        StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
+
+        participant.setNumSubmittedProblems(participant.getNumSubmittedProblems() - 1);
+        log.debug("participant: {}", participant);
+        participantRepository.save(participant);
+
+        StudySchedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
+
+        if (participant.getNumSubmittedProblems().equals(schedule.getNumProblemsPerParticipant())) {
+            participant.setSubmissionStatus("Y");
+            participantRepository.save(participant);
+        }
+    }
+
+// 특정 참가자의 시험 점수와 백분율 계산
 //    @Transactional
 //    @Override
-//    public Map<String, Double> calculateParticipantScore(Long scheduleId, Long memberId) {
-//        List<SubmittedAnswerDTO> submittedAnswers = submittedAnswerService.findSubmittedAnswersByProblemId(scheduleId);
+//    public void calculateAndUpdateParticipantScores(Long scheduleId) {
+//        List<StudyScheduleParticipant> participants = participantRepository.findByScheduleId(scheduleId);
 //
-//        long correctAnswersCount = submittedAnswers.stream()
-//                .filter(answer -> "correct".equalsIgnoreCase(answer.getAnswerStatus()))
-//                .count();
+//        for (StudyScheduleParticipant participant : participants) {
+//            if ("Y".equalsIgnoreCase(participant.getSubmissionStatus())) {
+//                // 1. 특정 참가자가 제출한 답안 중 정답의 개수 가져오기 (InfraService 사용)
+//                long correctAnswersCount = infraStudyScheduleService.getCorrectAnswersCount(participant.getParticipantId());
 //
-//        int totalQuestions = submittedAnswers.size();
-//        int maxScore = 100;
+//                // 2. 같은 일정에 참가한 'Y' 상태인 참가자들의 제출한 문제 수 합산
+//                List<StudyScheduleParticipant> participantsWithYStatus = participantRepository.findByScheduleIdAndSubmissionStatus(participant.getScheduleId(), "Y");
+//                int totalSubmittedProblems = participantsWithYStatus.stream()
+//                        .mapToInt(StudyScheduleParticipant::getNumSubmittedProblems)
+//                        .sum();
 //
-//        double score = (double) correctAnswersCount / totalQuestions * maxScore;
-//        double percentage = (correctAnswersCount / (double) totalQuestions) * 100.0;
+//                // 3. 점수 계산
+//                double score = (totalSubmittedProblems / 100.0) * correctAnswersCount;
 //
-//        StudyScheduleParticipant participant = participantRepository
-//                .findByScheduleIdAndMemberId(scheduleId, memberId)
-//                .orElseThrow(() -> new IllegalArgumentException("참가자가 이 일정에 등록되어 있지 않습니다."));
-//
-//        participant.setTestScore(score);
-//        participant.setTestPercentage(percentage);
-//        participantRepository.save(participant);
-//
-//        Map<String, Double> scoreData = new HashMap<>();
-//        scoreData.put("score", score);
-//        scoreData.put("percentage", percentage);
-//
-//        return scoreData;
+//                participant.setTestScore(score);
+//                participant.setTestPercentage((score / totalSubmittedProblems) * 100.0);
+//                participantRepository.save(participant);
+//            }
+//            // 'N' 상태인 경우는 기본값(0점)을 사용하므로 추가 작업이 필요 없음
+//        }
 //    }
 }

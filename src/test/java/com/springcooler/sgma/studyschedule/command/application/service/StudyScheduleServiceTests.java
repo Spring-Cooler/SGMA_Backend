@@ -1,11 +1,8 @@
-package com.springcooler.sgma.studySchedule.command.application.service;
+package com.springcooler.sgma.studyschedule.command.application.service;
 
+import com.springcooler.sgma.studygroupnotice.common.exception.CommonException;
 import com.springcooler.sgma.studyschedule.command.application.dto.StudyScheduleDTO;
-import com.springcooler.sgma.studyschedule.command.application.service.AppStudyScheduleService;
 import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudySchedule;
-import com.springcooler.sgma.studyscheduleparticipant.command.application.dto.StudyScheduleParticipantDTO;
-import com.springcooler.sgma.studyscheduleparticipant.command.application.service.AppStudyScheduleParticipantService;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -53,10 +50,11 @@ class StudyScheduleServiceTests {
         modifySchedule.setScheduleStartTime(Timestamp.valueOf("2024-09-06 10:00:00"));
         modifySchedule.setScheduleEndTime(Timestamp.valueOf("2024-09-19 12:00:00"));
         modifySchedule.setTestStatus("N");
+        modifySchedule.setGroupId(1L);
         modifySchedule.setNumProblemsPerParticipant(4);
 
         // When
-        StudySchedule updatedSchedule = studyScheduleService.modifyStudySchedule(modifySchedule.getScheduleId(), modifySchedule);
+        StudySchedule updatedSchedule = studyScheduleService.modifyStudySchedule(modifySchedule);
 
         // Then
         Assertions.assertNotNull(updatedSchedule);
@@ -67,13 +65,14 @@ class StudyScheduleServiceTests {
     @Test
     void testDeleteStudySchedule() {
         // Given
-        long scheduleId = 1L;
+        Long scheduleId = 2L;
 
         // When
         studyScheduleService.deleteStudySchedule(scheduleId);
+        System.out.println("DELETE SUCCESS");
 
         // Then
-        Assertions.assertThrows(EntityNotFoundException.class,
+        Assertions.assertThrows(CommonException.class,
                 () -> studyScheduleService.deleteStudySchedule(scheduleId));
     }
 
@@ -86,9 +85,6 @@ class StudyScheduleServiceTests {
 //        studyScheduleService.updateScheduleWithParticipantScores(scheduleId);
 //
 //        // Then
-//        StudySchedule updatedSchedule = studyScheduleService.findById(scheduleId)
-//                .orElseThrow(() -> new EntityNotFoundException("해당 스케줄을 찾을 수 없습니다."));
-//
 //        Assertions.assertNotNull(updatedSchedule);
 //    }
 }

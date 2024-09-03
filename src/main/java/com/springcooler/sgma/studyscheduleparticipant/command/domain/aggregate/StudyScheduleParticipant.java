@@ -13,24 +13,24 @@ import lombok.*;
 public class StudyScheduleParticipant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "participant_id")
+    @Column(name = "PARTICIPANT_ID")
     private Long participantId;
 
-    @Column(name = "schedule_id", nullable = false)
+    @Column(name = "SCHEDULE_ID")
     private Long scheduleId;
 
-    @Column(name = "member_id", nullable = false)
+    @Column(name = "MEMBER_ID")
     private Long memberId;
 
-    @Column(name = "submission_status", nullable = false)
+    @Column(name = "SUBMISSION_STATUS")
     private String submissionStatus;
 
-    @Column(name = "num_submitted_problems", nullable = false)
+    @Column(name = "NUM_SUBMITTED_PROBLEMS")
     private Integer numSubmittedProblems;
 
-    @Column(name = "test_score", nullable = false)
+    @Column(name = "TEST_SCORE")
     private Double testScore;
 
-    @Column(name = "test_percentage", nullable = false)
+    @Column(name = "TEST_PERCENTAGE")
     private Double testPercentage;
 }
