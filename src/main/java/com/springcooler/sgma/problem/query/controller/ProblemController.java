@@ -2,6 +2,7 @@ package com.springcooler.sgma.problem.query.controller;
 
 import com.springcooler.sgma.problem.common.ResponseDTO;
 import com.springcooler.sgma.problem.query.common.ResponseMessage;
+import com.springcooler.sgma.problem.query.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
 import com.springcooler.sgma.problem.query.service.ProblemService;
 import com.springcooler.sgma.problem.query.service.ProblemServiceImpl;
@@ -39,8 +40,8 @@ public class ProblemController {
     // 문제 ID로 문제 조회
     @GetMapping("/{problemId}")
     public ResponseDTO<?> getProblemById(@PathVariable("problemId") long problemId) {
-        ProblemDTO problem = problemService.findProblemByProblemId(problemId);
-        return ResponseDTO.ok(problem);
+        ProblemAndChoiceDTO problem = problemService.findProblemAndChoiceByProblemId(problemId);
+        return ResponseDTO.ok(String.valueOf(problem));
     }
 
     // 특정 스케쥴에 해당하는 문제 조회

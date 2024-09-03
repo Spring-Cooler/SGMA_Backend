@@ -18,5 +18,6 @@ public interface ProblemService {
 
     ProblemDTO findProblemByProblemId(long problemId);
 
+    // 문제 ID로 문제와 선지 정보 조회(정답은 일부러 주석처리함)
     ProblemAndChoiceDTO findProblemAndChoiceByProblemId(long problemId);
 }

@@ -14,7 +14,7 @@ public class ProblemAndChoiceDTO {
     private long participantId;
     private long scheduleId;
     private String content;
-    private int answer;
+//    private int answer;
     private List<String> choices;
 
 }

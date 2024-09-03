@@ -16,8 +16,8 @@
         <id property="problemId" column="problem_id"/>
         <result property="participantId" column="participant_id"/>
         <result property="scheduleId" column="schedule_id"/>
-        <result property="content" column="content"/>
-        <result property="answer" column="answer"/>
+        <result property="content" column="PROBLEM_CONTENT"/>
+<!--        <result property="answer" column="answer"/>-->
         <collection property="choices" resultMap="choiceResultMap"/>
     </resultMap>
 
@@ -77,7 +77,7 @@
                     A.PROBLEM_ID
                    ,A.SCHEDULE_ID
                    ,A.CONTENT as PROBLEM_CONTENT
-                   ,A.ANSWER
+--                    ,A.ANSWER
                    ,A.PARTICIPANT_ID
                    ,A.SCHEDULE_ID
                    ,B.CHOICE_NUM

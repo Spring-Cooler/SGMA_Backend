@@ -5,13 +5,14 @@ import com.springcooler.sgma.problem.query.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
 import com.springcooler.sgma.problem.query.repository.ProblemMapper;
 import com.springcooler.sgma.problem.common.exception.CommonException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Slf4j
 @Service
 public class ProblemServiceImpl implements ProblemService {
     private ProblemMapper problemMapper;
@@ -62,6 +63,7 @@ public class ProblemServiceImpl implements ProblemService {
     @Override
     public ProblemAndChoiceDTO findProblemAndChoiceByProblemId(long problemId) {
         ProblemAndChoiceDTO problemAndChoiceDTO = problemMapper.findProblemAndChoiceByProblemId(problemId);
+        log.info("problemAndChoiceDTO: {}", problemAndChoiceDTO);
         return problemAndChoiceDTO;
     }
 }
