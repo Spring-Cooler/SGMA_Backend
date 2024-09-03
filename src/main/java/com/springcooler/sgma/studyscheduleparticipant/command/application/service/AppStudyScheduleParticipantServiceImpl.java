@@ -21,6 +21,7 @@ import java.util.Objects;
 @Slf4j
 @Service
 public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleParticipantService {
+public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleParticipantService {
 
     private final StudyScheduleParticipantRepository participantRepository;
     private final StudyScheduleRepository scheduleRepository;
