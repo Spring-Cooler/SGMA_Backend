@@ -7,6 +7,8 @@ import com.springcooler.sgma.submittedanswer.command.domain.aggregate.SubmittedA
 import com.springcooler.sgma.submittedanswer.command.domain.aggregate.SubmittedAnswerPK;
 import com.springcooler.sgma.submittedanswer.command.domain.repository.SubmittedAnswerRepository;
 import com.springcooler.sgma.submittedanswer.command.infrastructure.service.InfraSubmittedAnswerService;
+import com.springcooler.sgma.submittedanswer.common.exception.CommonException;
+import com.springcooler.sgma.submittedanswer.common.exception.ErrorCode;
 import com.springcooler.sgma.submittedanswer.query.service.SubmittedAnswerService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -38,8 +40,6 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
     @Transactional
     public SubmittedAnswer registSubmittedAnswer(SubmittedAnswerDTO newSubmittedAnswerDTO) {
 
-        SubmittedAnswerPK newSubmittedAnswerPK = new SubmittedAnswerPK(newSubmittedAnswerDTO.getProblemId(), newSubmittedAnswerDTO.getParticipantId());
-
         SubmittedAnswer newSubmittedAnswer = new SubmittedAnswer(newSubmittedAnswerDTO.getProblemId(),newSubmittedAnswerDTO.getParticipantId(), newSubmittedAnswerDTO.getSubmittedAnswer(), newSubmittedAnswerDTO.getAnswerStatus());
         newSubmittedAnswer = submittedAnswerRepository.save(newSubmittedAnswer);
 
@@ -50,7 +50,7 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
     @Override
     public SubmittedAnswer modifySubmittedAnswer(SubmittedAnswerDTO modifySubmittedAnswer) {
         SubmittedAnswerPK modifySubmittedAnswerPK = new SubmittedAnswerPK(modifySubmittedAnswer.getProblemId(), modifySubmittedAnswer.getParticipantId());
-        SubmittedAnswer existingSubmittedAnswer = submittedAnswerRepository.findById(modifySubmittedAnswerPK).orElseThrow(EntityNotFoundException::new);
+        SubmittedAnswer existingSubmittedAnswer = submittedAnswerRepository.findById(modifySubmittedAnswerPK).orElseThrow();
 
         existingSubmittedAnswer.setSubmittedAnswer(modifySubmittedAnswer.getSubmittedAnswer());
 
@@ -70,6 +70,10 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
     @Override
     public void gradeSubmittedAnswersByParticipantId(long participantId) {
         List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByParticipantId(participantId);
+        if (submittedAnswers == null || submittedAnswers.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_SUBMITTED_ANSWER);
+        }
+
         for (SubmittedAnswer submittedAnswer : submittedAnswers) {
             log.info("submittedAnswer before grade: {}", submittedAnswer);
             Long problemId = submittedAnswer.getProblemId();
