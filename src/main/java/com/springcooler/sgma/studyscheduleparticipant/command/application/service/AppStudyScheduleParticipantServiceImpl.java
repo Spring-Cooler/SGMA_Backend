@@ -1,7 +1,6 @@
 package com.springcooler.sgma.studyscheduleparticipant.command.application.service;
 
 import com.springcooler.sgma.problem.command.domain.repository.ProblemRepository;
-import com.springcooler.sgma.studyschedule.command.application.service.AppStudyScheduleService;
 import com.springcooler.sgma.studyschedule.command.infrastructure.service.InfraStudyScheduleService;
 import com.springcooler.sgma.studyschedule.common.exception.CommonException;
 import com.springcooler.sgma.studyschedule.common.exception.ErrorCode;
@@ -21,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 @Slf4j
 @Service
-public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleService {
+public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleParticipantService {
 
     private final StudyScheduleParticipantRepository participantRepository;
     private final StudyScheduleRepository scheduleRepository;
