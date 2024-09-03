@@ -1,6 +1,5 @@
 package com.springcooler.sgma.recruitmentboard.batch;
 
-import lombok.AllArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -20,43 +19,17 @@ public class BatchConfig {
     @Autowired
     private RecruitmentBoardUpdateTasklet recruitmentBoardUpdateTasklet;
 
-//    1 @Autowired
-//    private JobBuilderFactory jobBuilderFactory;
-
-
-//    2 @Autowired
-//    private StepBuilderFactory stepBuilderFactory;
-
-
-
-//    1 @Bean
-//    public Job postStatusUpdateJob(JobRepository jobRepository, Step step) {
-//        return jobBuilderFactory.get("postStatusUpdateJob")
-//                .start(step)
-//                .build();
-//    }
     @Bean
     public Job myJob(JobRepository jobRepository, Step step) {
         return new JobBuilder("myJob", jobRepository)
                 .start(step)
                 .build();
     }
-
-
     @Bean
     public Step myStep(JobRepository jobRepository, Tasklet myTasklet, PlatformTransactionManager transactionManager) {
         return new StepBuilder("myStep", jobRepository)
-                .tasklet(myTasklet, transactionManager) // or .chunk(chunkSize, transactionManager)
+                .tasklet(myTasklet, transactionManager)
                 .allowStartIfComplete(true)
                 .build();
     }
-
-
-//    @Bean
-//    public Step postStatusUpdateStep(PlatformTransactionManager transactionManager) {
-//        return stepBuilderFactory.get("postStatusUpdateStep")
-//                .tasklet(recruitmentBoardUpdateTasklet, transactionManager)
-//                .build();
-//    }
-
 }
