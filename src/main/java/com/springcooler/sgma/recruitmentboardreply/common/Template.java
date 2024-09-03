@@ -1,4 +1,4 @@
-package com.springcooler.sgma.recruitmentboardcomment.common;
+package com.springcooler.sgma.recruitmentboardreply.common;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;

@@ -40,6 +40,7 @@ public class StudyGroupApplicantCommandServiceImpl implements StudyGroupApplican
                 .userId(studyGroupApplicantCommandDTO.getUserId())
                 .applicationStatus(ApplicationStatus.WAIT)
                 .recruitmentBoardId(studyGroupApplicantCommandDTO.getRecruitmentBoardId())
+                .groupId(studyGroupApplicantCommandDTO.getGroupId())
                 .build();
         studyGroupApplicantRepository.save(studyGroupApplicant);
 

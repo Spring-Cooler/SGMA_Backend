@@ -1,5 +1,5 @@
 package com.springcooler.sgma.recruitmentboardreply.command.domain.aggregate;
 
-public enum ActiveStatus1 {
+public enum ActiveStatus {
     ACTIVE,INACTIVE
 }

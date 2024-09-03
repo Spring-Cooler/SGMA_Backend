@@ -1,4 +1,4 @@
 package com.springcooler.sgma.recruitmentboardreply.command.application.controller;
 
-public class RecruitmentBoardReply {
+public class RecruitmentBoardReplyController {
 }

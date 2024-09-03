@@ -1,7 +1,7 @@
 package com.springcooler.sgma.recruitmentboard.command.application.controller;
 
 import com.springcooler.sgma.recruitmentboard.command.application.dto.RecruitmentBoardCommandDTO;
-import com.springcooler.sgma.recruitmentboard.command.application.service.RecruitmentBoardCommandService;
+import com.springcooler.sgma.recruitmentboard.command.application.service.RecruitmentBoardCommandServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class RecruitmentBoardCommandController {
 
     @Autowired
-    private RecruitmentBoardCommandService recruitmentBoardCommandService;
+    private RecruitmentBoardCommandServiceImpl recruitmentBoardCommandService;
 
     @PostMapping
     public ResponseEntity<RecruitmentBoardCommandDTO> createRecruitmentBoard(@RequestBody RecruitmentBoardCommandDTO studyGroupApplicantCommandDTO) {
