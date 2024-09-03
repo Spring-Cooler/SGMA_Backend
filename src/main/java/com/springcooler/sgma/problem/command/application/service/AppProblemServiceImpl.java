@@ -6,7 +6,6 @@ import com.springcooler.sgma.problem.command.application.dto.ProblemDTO;
 import com.springcooler.sgma.problem.command.domain.aggregate.entity.Problem;
 import com.springcooler.sgma.problem.command.domain.repository.ProblemRepository;
 import com.springcooler.sgma.studyscheduleparticipant.command.infrastructure.service.InfraStudyScheduleParticipantService;
-import com.springcooler.sgma.studyscheduleparticipant.command.infrastructure.service.InfraStudyScheduleParticipantService;
 import com.springcooler.sgma.problem.command.infrastructure.service.InfraProblemService;
 import com.springcooler.sgma.problem.common.exception.CommonException;
 import com.springcooler.sgma.problem.common.exception.ErrorCode;
