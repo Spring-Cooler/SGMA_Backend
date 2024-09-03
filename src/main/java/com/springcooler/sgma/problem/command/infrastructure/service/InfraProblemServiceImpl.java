@@ -7,6 +7,7 @@ import com.springcooler.sgma.problem.command.domain.aggregate.vo.SchedulePartici
 import com.springcooler.sgma.problem.command.domain.aggregate.vo.ScheduleVO;
 import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleDTO;
 import com.springcooler.sgma.studyschedule.query.service.StudyScheduleService;
+import com.springcooler.sgma.studyscheduleparticipant.command.application.service.AppStudyScheduleParticipantServiceImpl;
 import com.springcooler.sgma.studyscheduleparticipant.query.dto.StudyScheduleParticipantDTO;
 import com.springcooler.sgma.studyscheduleparticipant.query.service.StudyScheduleParticipantService;
 import jakarta.transaction.Transactional;
@@ -22,16 +23,17 @@ import java.util.Map;
 public class InfraProblemServiceImpl implements InfraProblemService {
 
     private final AppChoiceService appChoiceService;
-    private final StudyScheduleService studyScheduleService;
     private final StudyScheduleParticipantService studyScheduleParticipantService;
+    private final AppStudyScheduleParticipantServiceImpl appStudyScheduleParticipantServiceImpl;
+
 
     @Autowired
     public InfraProblemServiceImpl(AppChoiceService appChoiceService
-    , StudyScheduleService studyScheduleService
-    , StudyScheduleParticipantService studyScheduleParticipantService) {
+            , StudyScheduleParticipantService studyScheduleParticipantService
+            , AppStudyScheduleParticipantServiceImpl appStudyScheduleParticipantServiceImpl) {
         this.appChoiceService = appChoiceService;
-        this.studyScheduleService = studyScheduleService;
         this.studyScheduleParticipantService = studyScheduleParticipantService;
+        this.appStudyScheduleParticipantServiceImpl = appStudyScheduleParticipantServiceImpl;
     }
 
     @Transactional
@@ -40,7 +42,8 @@ public class InfraProblemServiceImpl implements InfraProblemService {
         return appChoiceService.registChoices(new ProblemVO(problemId, choices));
     }
 
-
-
-
+    @Override
+    public void requestIncreaseSubmittedProblems(long scheduleId, long participantId) {
+        appStudyScheduleParticipantServiceImpl.increaseNumSubmittedProblems(scheduleId, participantId);
+    }
 }
