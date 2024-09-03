@@ -1,7 +1,9 @@
 package com.springcooler.sgma.problem.query.service;
 
+import com.springcooler.sgma.problem.common.exception.ErrorCode;
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
 import com.springcooler.sgma.problem.query.repository.ProblemMapper;
+import com.springcooler.sgma.problem.common.exception.CommonException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,22 +21,40 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     public List<ProblemDTO> findAllProblems() {
-        return problemMapper.findAllProblems();
+        List<ProblemDTO> problems = problemMapper.findAllProblems();
+        if(problems == null || problems.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_PROBLEM);
+        }
+        return problems;
     }
 
-    public List<ProblemDTO> findProblemsByScheduleId(long scheduleId){
-        return problemMapper.findProblemsByScheduleId(scheduleId);
+    public List<ProblemDTO> findProblemsByScheduleId(long scheduleId) {
+        List<ProblemDTO> problems = problemMapper.findProblemsByScheduleId(scheduleId);
+        if(problems == null || problems.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_PROBLEM);
+        }
+        return problems;
     }
 
-    public List<ProblemDTO> findProblemsByScheduleIdAndParticipantId(long participantId, long scheduleId){
+    public List<ProblemDTO> findProblemsByScheduleIdAndParticipantId(long scheduleId, long participantId) {
+
         Map<String, Long> map = new HashMap<>();
-        map.put("participantId", participantId);
         map.put("scheduleId", scheduleId);
-        return problemMapper.findProblemsByScheduleIdAndParticipantId(map);
+        map.put("participantId",participantId);
+        List<ProblemDTO> problems = problemMapper.findProblemsByScheduleIdAndParticipantId(map);
+        if (problems == null || problems.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_PROBLEM);
+        }
+        return problems;
     }
 
     @Override
-    public int getAnswerByProblemId(long problemId) {
-        return problemMapper.findAnswerByProblemId(problemId);
+    public ProblemDTO findProblemByProblemId(long problemId) {
+        ProblemDTO problem = problemMapper.findProblemByProblemId(problemId);
+
+        if(problem == null || problem.getProblemId()==0) {
+            throw new CommonException(ErrorCode.NOT_FOUND_PROBLEM);
+        }
+        return problem;
     }
 }

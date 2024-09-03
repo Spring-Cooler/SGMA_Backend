@@ -23,7 +23,7 @@ public class InfraSubmittedAnswerServiceImpl implements InfraSubmittedAnswerServ
 
     @Override
     public int getAnswerByProblemId(long problemId) {
-        return problemService.getAnswerByProblemId(problemId);
+        return problemService.findProblemByProblemId(problemId).getAnswer();
     }
 
 

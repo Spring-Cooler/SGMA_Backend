@@ -14,6 +14,6 @@ public interface ProblemMapper {
 
     List<ProblemDTO> findProblemsByScheduleIdAndParticipantId(Map<String, Long> map);
 
-    int findAnswerByProblemId(long problemId);
+    ProblemDTO findProblemByProblemId(long problemId);
 }
 

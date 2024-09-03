@@ -36,6 +36,13 @@ public class ProblemController {
         List<ProblemDTO> problems = problemService.findAllProblems();
         return ResponseDTO.ok(problems);
         }
+    // 문제 ID로 문제 조회
+    @GetMapping("/{problemId}")
+    public ResponseDTO<?> getProblemById(@PathVariable("problemId") long problemId) {
+        ProblemDTO problem = problemService.findProblemByProblemId(problemId);
+        return ResponseDTO.ok(problem);
+    }
+
     // 특정 스케쥴에 해당하는 문제 조회
     @GetMapping("schedules/{scheduleId}")
     public ResponseDTO<?> getProblemsByScheduleId(@PathVariable("scheduleId") long scheduleId) {
@@ -49,5 +56,7 @@ public class ProblemController {
         List<ProblemDTO> problems = problemService.findProblemsByScheduleIdAndParticipantId(scheduleId, participantId);
         return ResponseDTO.ok(problems);
     }
+
+
 
 }

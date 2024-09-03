@@ -15,5 +15,5 @@ public interface ProblemService {
     // 스케쥴 ID와 참가자 ID로 문제 조회
     public List<ProblemDTO> findProblemsByScheduleIdAndParticipantId(long scheduleId, long participantId);
 
-    int getAnswerByProblemId(long problemId);
+    ProblemDTO findProblemByProblemId(long problemId);
 }

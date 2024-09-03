@@ -44,7 +44,7 @@
            AND A.SCHEDULE_ID = #{scheduleId}
     </select>
 
-    <select id="findAnswerByProblemId" parameterType="long" resultType="int">
+    <select id="findProblemByProblemId" parameterType="long" resultMap="problemResultMap">
         SELECT      A.ANSWER
         FROM        PROBLEM A
         WHERE       A.PROBLEM_ID = #{ problemId }
