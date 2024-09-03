@@ -68,8 +68,4 @@ public class InfraStudyScheduleParticipantServiceImpl implements InfraStudySched
 //    public long getCorrectAnswersCount(long participantId) {
 //        // 특정 참가자의 정답 상태가 "RIGHT"인 답안의 개수를 조회
 //        return submittedAnswerRepository.countByParticipantIdAndAnswerStatus(participantId, "RIGHT");
-<<<<<<< HEAD
 //    }
-=======
-//    }
->>>>>>> 0109b9839241e15fd909db42ee52f8c44270d970

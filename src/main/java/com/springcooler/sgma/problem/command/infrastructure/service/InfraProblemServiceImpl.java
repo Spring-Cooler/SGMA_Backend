@@ -23,16 +23,13 @@ import java.util.Map;
 public class InfraProblemServiceImpl implements InfraProblemService {
 
     private final AppChoiceService appChoiceService;
-    private final StudyScheduleService studyScheduleService;
     private final AppStudyScheduleParticipantService studyScheduleParticipantService;
 
     @Autowired
     public InfraProblemServiceImpl(AppChoiceService appChoiceService
-    , StudyScheduleService studyScheduleService
     , AppStudyScheduleParticipantService studyScheduleParticipantService) {
         this.appChoiceService = appChoiceService;
         this.studyScheduleParticipantService = studyScheduleParticipantService;
-        this.appStudyScheduleParticipantServiceImpl = appStudyScheduleParticipantServiceImpl;
     }
 
     @Transactional

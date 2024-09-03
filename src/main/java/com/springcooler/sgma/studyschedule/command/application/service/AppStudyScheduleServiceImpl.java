@@ -62,11 +62,7 @@ public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
 
         StudySchedule existingSchedule =
                 studyScheduleRepository.findById(modifyStudySchedule.getScheduleId())
-<<<<<<< HEAD
-                        .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
-=======
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
->>>>>>> 0109b9839241e15fd909db42ee52f8c44270d970
 
         existingSchedule.setTitle(modifyStudySchedule.getTitle());
         existingSchedule.setContent(modifyStudySchedule.getContent());
@@ -87,11 +83,7 @@ public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
     public void deleteStudySchedule(Long scheduleId) {
         StudySchedule deleteSchedule =
                 studyScheduleRepository.findById(scheduleId)
-<<<<<<< HEAD
-                        .orElseThrow(() -> new CommonException((ErrorCode.NOT_FOUND_STUDY_SCHEDULE)));
-=======
                 .orElseThrow(() -> new CommonException((ErrorCode.NOT_FOUND_STUDY_SCHEDULE)));
->>>>>>> 0109b9839241e15fd909db42ee52f8c44270d970
 
         if (!domainStudyScheduleService.isActive(deleteSchedule.getActiveStatus())) {
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE);
