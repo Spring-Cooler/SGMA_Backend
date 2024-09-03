@@ -3,6 +3,7 @@ package com.springcooler.sgma.studygroupnotice.command.application.service;
 import com.springcooler.sgma.studygroupnotice.command.application.dto.StudyGroupNoticeDTO;
 import com.springcooler.sgma.studygroupnotice.command.domain.aggregate.StudyGroupNotice;
 import com.springcooler.sgma.studygroupnotice.common.exception.CommonException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @SpringBootTest
 @Transactional
 class StudyGroupNoticeServiceTests {
@@ -29,7 +31,7 @@ class StudyGroupNoticeServiceTests {
         //When
         StudyGroupNotice notice = studyGroupNoticeService.registStudyGroupNotice(newNotice);
         if (notice != null) {
-            System.out.println(notice);
+            log.info(notice.toString());
         }
 
         //Then
@@ -48,7 +50,7 @@ class StudyGroupNoticeServiceTests {
         //When
         StudyGroupNotice notice = studyGroupNoticeService.modifyStudyGroupNotice(modifyNotice);
         if (notice != null) {
-            System.out.println(notice);
+            log.info(notice.toString());
         }
 
         //Then
@@ -63,7 +65,7 @@ class StudyGroupNoticeServiceTests {
 
         //When
         studyGroupNoticeService.deleteStudyGroupNotice(noticeId);
-        System.out.println("DELETE SUCCESS");
+        log.info("DELETE SUCCESS");
 
         //Then
         Assertions.assertThrows(CommonException.class,

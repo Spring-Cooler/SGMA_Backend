@@ -1,6 +1,7 @@
 package com.springcooler.sgma.studygroupmember.query.service;
 
 import com.springcooler.sgma.studygroupmember.query.dto.StudyGroupMemberDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+@Slf4j
 @SpringBootTest
 class StudyGroupMemberServiceTests {
 
@@ -24,7 +26,7 @@ class StudyGroupMemberServiceTests {
                 () -> {
                     StudyGroupMemberDTO studyGroupMember
                             = studyGroupMemberService.findStudyGroupMemberByMemberId(memberId);
-                    System.out.println(studyGroupMember);
+                    log.info(studyGroupMember.toString());
                 }
         );
     }
@@ -37,7 +39,7 @@ class StudyGroupMemberServiceTests {
                 () -> {
                     List<StudyGroupMemberDTO> studyGroupMembers
                             = studyGroupMemberService.findStudyGroupMembersByGroupId(groupId);
-                    studyGroupMembers.forEach(System.out::println);
+                    studyGroupMembers.forEach(x -> log.info(x.toString()));
                 }
         );
     }
@@ -50,7 +52,7 @@ class StudyGroupMemberServiceTests {
                 () -> {
                     List<StudyGroupMemberDTO> studyGroupMembers
                             = studyGroupMemberService.findStudyGroupMembersByUserId(userId);
-                    studyGroupMembers.forEach(System.out::println);
+                    studyGroupMembers.forEach(x -> log.info(x.toString()));
                 }
         );
     }

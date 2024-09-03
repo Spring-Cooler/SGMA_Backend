@@ -1,6 +1,7 @@
 package com.springcooler.sgma.studygroupnotice.query.service;
 
 import com.springcooler.sgma.studygroupnotice.query.dto.StudyGroupNoticeDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+@Slf4j
 @SpringBootTest
 class StudyGroupNoticeServiceTests {
 
@@ -24,7 +26,7 @@ class StudyGroupNoticeServiceTests {
                 () -> {
                     List<StudyGroupNoticeDTO> studyGroupNotices =
                             studyGroupNoticeService.findStudyGroupNoticesByGroupId(groupId);
-                    studyGroupNotices.forEach(System.out::println);
+                    studyGroupNotices.forEach(x -> log.info(x.toString()));
                 }
         );
     }
@@ -37,7 +39,7 @@ class StudyGroupNoticeServiceTests {
                 () -> {
                     StudyGroupNoticeDTO studyGroupNotice =
                             studyGroupNoticeService.findStudyGroupNoticeByNoticeId(noticeId);
-                    System.out.println(studyGroupNotice);
+                    log.info(studyGroupNotice.toString());
                 }
         );
     }
