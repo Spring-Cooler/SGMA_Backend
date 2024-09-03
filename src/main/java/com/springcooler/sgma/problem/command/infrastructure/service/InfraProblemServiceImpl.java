@@ -7,7 +7,7 @@ import com.springcooler.sgma.problem.command.domain.aggregate.vo.SchedulePartici
 import com.springcooler.sgma.problem.command.domain.aggregate.vo.ScheduleVO;
 import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleDTO;
 import com.springcooler.sgma.studyschedule.query.service.StudyScheduleService;
-import com.springcooler.sgma.studyscheduleparticipant.command.application.service.AppStudyScheduleParticipantServiceImpl;
+import com.springcooler.sgma.studyscheduleparticipant.command.application.service.AppStudyScheduleParticipantService;
 import com.springcooler.sgma.studyscheduleparticipant.query.dto.StudyScheduleParticipantDTO;
 import com.springcooler.sgma.studyscheduleparticipant.query.service.StudyScheduleParticipantService;
 import jakarta.transaction.Transactional;
@@ -23,14 +23,13 @@ import java.util.Map;
 public class InfraProblemServiceImpl implements InfraProblemService {
 
     private final AppChoiceService appChoiceService;
-    private final StudyScheduleParticipantService studyScheduleParticipantService;
-    private final AppStudyScheduleParticipantServiceImpl appStudyScheduleParticipantServiceImpl;
-
+    private final StudyScheduleService studyScheduleService;
+    private final AppStudyScheduleParticipantService studyScheduleParticipantService;
 
     @Autowired
     public InfraProblemServiceImpl(AppChoiceService appChoiceService
-            , StudyScheduleParticipantService studyScheduleParticipantService
-            , AppStudyScheduleParticipantServiceImpl appStudyScheduleParticipantServiceImpl) {
+    , StudyScheduleService studyScheduleService
+    , AppStudyScheduleParticipantService studyScheduleParticipantService) {
         this.appChoiceService = appChoiceService;
         this.studyScheduleParticipantService = studyScheduleParticipantService;
         this.appStudyScheduleParticipantServiceImpl = appStudyScheduleParticipantServiceImpl;
@@ -42,8 +41,15 @@ public class InfraProblemServiceImpl implements InfraProblemService {
         return appChoiceService.registChoices(new ProblemVO(problemId, choices));
     }
 
+
     @Override
-    public void requestIncreaseSubmittedProblems(long scheduleId, long participantId) {
-        appStudyScheduleParticipantServiceImpl.increaseNumSubmittedProblems(scheduleId, participantId);
+    public void requestIncreaseNumSubmittedProblems(long scheduleId, long participantId) {
+        studyScheduleParticipantService.increaseNumSubmittedProblems(scheduleId, participantId);
+    }
+
+
+    @Override
+    public void requestDecreaseNumSubmittedProblems(long scheduleId, long participantId) {
+        studyScheduleParticipantService.decreaseNumSubmittedProblems(scheduleId, participantId);
     }
 }

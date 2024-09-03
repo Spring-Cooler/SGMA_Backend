@@ -1,7 +1,6 @@
-package com.springcooler.sgma.studyScheduleParticipant.query.service;
+package com.springcooler.sgma.studyscheduleparticipant.query.service;
 
 import com.springcooler.sgma.studyscheduleparticipant.query.dto.StudyScheduleParticipantDTO;
-import com.springcooler.sgma.studyscheduleparticipant.query.service.StudyScheduleParticipantService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

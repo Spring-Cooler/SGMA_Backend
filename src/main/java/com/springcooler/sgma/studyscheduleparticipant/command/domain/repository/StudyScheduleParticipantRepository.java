@@ -18,4 +18,8 @@ public interface StudyScheduleParticipantRepository extends JpaRepository<StudyS
     Optional<StudyScheduleParticipant> findByScheduleIdAndParticipantId(Long scheduleId, Long participantId);
 
     List<StudyScheduleParticipant> findByScheduleIdAndSubmissionStatus(Long scheduleId, String y);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 0109b9839241e15fd909db42ee52f8c44270d970

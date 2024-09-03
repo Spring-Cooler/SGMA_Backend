@@ -1,6 +1,10 @@
 package com.springcooler.sgma.studyscheduleparticipant.command.application.service;
 
+<<<<<<< HEAD
 import com.springcooler.sgma.studyschedule.command.application.service.AppStudyScheduleService;
+=======
+import com.springcooler.sgma.problem.command.domain.repository.ProblemRepository;
+>>>>>>> 0109b9839241e15fd909db42ee52f8c44270d970
 import com.springcooler.sgma.studyschedule.command.infrastructure.service.InfraStudyScheduleService;
 import com.springcooler.sgma.studyschedule.common.exception.CommonException;
 import com.springcooler.sgma.studyschedule.common.exception.ErrorCode;
@@ -17,6 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+<<<<<<< HEAD
+=======
+import java.util.List;
+>>>>>>> 0109b9839241e15fd909db42ee52f8c44270d970
 @Slf4j
 @Service
 public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleService {
@@ -81,6 +89,7 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleS
     // 출제 문제 수 및 상태 변경
     @Transactional
     @Override
+<<<<<<< HEAD
     public void increaseNumSubmittedProblems(Long scheduleId, Long memberId) {
         StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndMemberId(scheduleId, memberId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
@@ -97,8 +106,45 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleS
             participantRepository.save(participant);
         }
     }
+=======
+    public void increaseNumSubmittedProblems(Long scheduleId, Long participantId) {
+        StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
+>>>>>>> 0109b9839241e15fd909db42ee52f8c44270d970
 
-    // 특정 참가자의 시험 점수와 백분율 계산
+        participant.setNumSubmittedProblems(participant.getNumSubmittedProblems() + 1);
+        log.debug("participant: {}", participant);
+        participantRepository.save(participant);
+
+        StudySchedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
+
+        if (participant.getNumSubmittedProblems().equals(schedule.getNumProblemsPerParticipant())) {
+            participant.setSubmissionStatus("Y");
+            participantRepository.save(participant);
+        }
+
+    }
+    @Transactional
+    @Override
+    public void decreaseNumSubmittedProblems(Long scheduleId, Long participantId) {
+        StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
+
+        participant.setNumSubmittedProblems(participant.getNumSubmittedProblems() - 1);
+        log.debug("participant: {}", participant);
+        participantRepository.save(participant);
+
+        StudySchedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
+
+        if (participant.getNumSubmittedProblems().equals(schedule.getNumProblemsPerParticipant())) {
+            participant.setSubmissionStatus("Y");
+            participantRepository.save(participant);
+        }
+    }
+
+// 특정 참가자의 시험 점수와 백분율 계산
 //    @Transactional
 //    @Override
 //    public void calculateAndUpdateParticipantScores(Long scheduleId) {

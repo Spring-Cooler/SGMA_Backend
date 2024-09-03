@@ -9,4 +9,8 @@ public interface InfraStudyScheduleParticipantService {
 
     // 특정 참가자의 제출 문제 수를 감소시키는 메서드
     void decreaseNumSubmittedProblems(Long scheduleId, Long participantId);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 0109b9839241e15fd909db42ee52f8c44270d970
