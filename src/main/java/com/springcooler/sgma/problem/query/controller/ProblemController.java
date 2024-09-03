@@ -1,5 +1,6 @@
 package com.springcooler.sgma.problem.query.controller;
 
+import com.springcooler.sgma.problem.common.ResponseDTO;
 import com.springcooler.sgma.problem.query.common.ResponseMessage;
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
 import com.springcooler.sgma.problem.query.service.ProblemService;
@@ -19,52 +20,34 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController("queryProblemController")
-@RequestMapping("/api/problems")    // TODO: study-problems로 수정
+@RequestMapping("/api/problems")
 @Slf4j
 public class ProblemController {
 
-    private ProblemService ProblemService;
-    List<ProblemDTO> problems;
+    private ProblemService problemService;
     @Autowired
     public ProblemController(ProblemServiceImpl queryProblemService, List<ProblemDTO> problems) {
-        this.ProblemService = queryProblemService;
-        this.problems = queryProblemService.findAllProblems();
+        this.problemService = queryProblemService;
     }
+
+    // 문제 전체 조회
     @GetMapping("/")
-    public ResponseEntity<ResponseMessage> getAllProblems() {
-        HttpHeaders headers= new HttpHeaders();
-        headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
-        Map<String,Object> responseMap = new HashMap<>();
-
-        responseMap.put("problems",problems);
-
-        ResponseMessage responseMessage = new ResponseMessage(200, "전체 문제 조회 성공", responseMap);
-        return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
-    }
-
+    public ResponseDTO<?> getAllProblems() {
+        List<ProblemDTO> problems = problemService.findAllProblems();
+        return ResponseDTO.ok(problems);
+        }
+    // 특정 스케쥴에 해당하는 문제 조회
     @GetMapping("schedules/{scheduleId}")
-    public ResponseEntity<ResponseMessage> getProblemsByScheduleId(@PathVariable("scheduleId") long scheduleId) {
-        HttpHeaders headers= new HttpHeaders();
-        headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
-        Map<String,Object> responseMap = new HashMap<>();
-        List<ProblemDTO> problemsByScheduleId = problems.stream().filter(problem->problem.getScheduleId() == scheduleId).collect(Collectors.toList());
-        responseMap.put("problemsByScheduleId",problemsByScheduleId);
-
-        ResponseMessage responseMessage = new ResponseMessage(200,"스케쥴 아이디로 문제 조회 성공", responseMap);
-        return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
+    public ResponseDTO<?> getProblemsByScheduleId(@PathVariable("scheduleId") long scheduleId) {
+        List<ProblemDTO> problems = problemService.findProblemsByScheduleId(scheduleId);
+        return ResponseDTO.ok(problems);
     }
 
+    // 일정 ID와 참가자 ID로 문제 조회
     @GetMapping("schedules/{scheduleId}/participants/{participantId}")
-    public ResponseEntity<ResponseMessage> getProblemsByParticipantIdAndScheduleId(@PathVariable("scheduleId") long scheduleId, @PathVariable("participantId") long participantId) {
-        HttpHeaders headers= new HttpHeaders();
-        headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
-        Map<String,Object> responseMap = new HashMap<>();
-        List<ProblemDTO> problemsByParticipantIdAndScheduleId = problems.stream().filter(problem->(problem.getParticipantId() == participantId) && problem.getScheduleId()==scheduleId).collect(Collectors.toList());
-
-        responseMap.put("problemsByParticipantIdAndScheduleId",problemsByParticipantIdAndScheduleId);
-
-        ResponseMessage responseMessage = new ResponseMessage(200,"스케쥴 아이디와 참가자 아이디로 문제 조회 성공", responseMap);
-        return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
+    public ResponseDTO<?> getProblemsByScheduleIdAndParticipantId(@PathVariable("scheduleId") long scheduleId, @PathVariable("participantId") long participantId) {
+        List<ProblemDTO> problems = problemService.findProblemsByScheduleIdAndParticipantId(scheduleId, participantId);
+        return ResponseDTO.ok(problems);
     }
 
 }

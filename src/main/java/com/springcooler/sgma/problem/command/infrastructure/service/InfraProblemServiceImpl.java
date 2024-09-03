@@ -42,7 +42,7 @@ public class InfraProblemServiceImpl implements InfraProblemService {
 
     @Override
     public ScheduleVO requestScheduleInfo(long scheduleId) {
-        StudyScheduleDTO scheduleDTO = studyScheduleService.findStudyScheduleByScheduleId(scheduleId).get(0);
+        StudyScheduleDTO scheduleDTO = studyScheduleService.findStudyScheduleByScheduleId(scheduleId);
         ScheduleVO scheduleVO = new ScheduleVO(scheduleDTO.getScheduleId(), scheduleDTO.getScheduleStartTime(), scheduleDTO.getScheduleEndTime());
         return scheduleVO;
     }
