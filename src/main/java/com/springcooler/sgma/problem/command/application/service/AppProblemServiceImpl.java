@@ -58,11 +58,7 @@ public class AppProblemServiceImpl implements AppProblemService{
         problemRepository.delete(deleteProblem);
     }
 
-    @Transactional
-    @Override
-    public int getAnswerByProblemId(long problemId) {
-        return problemRepository.findById(problemId).orElseThrow(()->new EntityNotFoundException("존재하지 않는 문제입니다.")).getAnswer();
-    }
+
 
     @Transactional
     @Override

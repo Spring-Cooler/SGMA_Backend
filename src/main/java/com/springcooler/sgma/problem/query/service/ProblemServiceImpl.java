@@ -32,4 +32,9 @@ public class ProblemServiceImpl implements ProblemService {
         map.put("scheduleId", scheduleId);
         return problemMapper.findProblemsByScheduleIdAndParticipantId(map);
     }
+
+    @Override
+    public int getAnswerByProblemId(long problemId) {
+        return problemMapper.findAnswerByProblemId(problemId);
+    }
 }

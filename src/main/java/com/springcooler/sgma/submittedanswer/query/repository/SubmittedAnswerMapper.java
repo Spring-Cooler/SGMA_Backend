@@ -10,7 +10,7 @@ public interface SubmittedAnswerMapper {
     List<SubmittedAnswerDTO> findAllSubmittedAnswers();
 
     List<SubmittedAnswerDTO> findSubmittedAnswersByProblemId(long problemId);
-//    List<SubmittedAnswerDTO> findSubmittedAnswersByScheduleId();
-//    List<SubmittedAnswerDTO> findSubmittedAnswersByProblemId();
+
+    List<SubmittedAnswerDTO> findSubmittedAnswersByParticipantId(long participantId);
 
 }

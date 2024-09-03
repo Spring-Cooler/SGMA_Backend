@@ -13,7 +13,6 @@ public interface AppProblemService {
 
     void deleteProblem(long problemId);
 
-    int getAnswerByProblemId(long problemId);
 
     Map<String,Object> registProblemAndChoice(ProblemAndChoiceDTO newProblemAndChoice);
 }

@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @SpringBootTest
 @Transactional
 class ProblemServiceTests {
@@ -49,5 +51,19 @@ class ProblemServiceTests {
     @MethodSource("getParticipantAndScheduleInfo")
     void testFindProblemsByParticipantIdAndScheduleId(long scheduleId, long participantId) {
         List<ProblemDTO> problems = problemService.findProblemsByScheduleIdAndParticipantId(scheduleId, participantId);
+    }
+
+    @DisplayName("문제 ID로 정답 조회")
+    @Test
+    void testFindAnswerByProblemId() {
+
+        // given
+        long problemId = 1;
+
+        // when
+        int answer = problemService.getAnswerByProblemId(problemId);
+
+        // then
+        assertEquals(answer,1);
     }
 }

@@ -1,29 +1,37 @@
 package com.springcooler.sgma.submittedanswer.command.application.service;
 
 
+import com.springcooler.sgma.studyscheduleparticipant.command.domain.aggregate.StudyScheduleParticipant;
 import com.springcooler.sgma.submittedanswer.command.application.dto.SubmittedAnswerDTO;
 import com.springcooler.sgma.submittedanswer.command.domain.aggregate.SubmittedAnswer;
 import com.springcooler.sgma.submittedanswer.command.domain.aggregate.SubmittedAnswerPK;
 import com.springcooler.sgma.submittedanswer.command.domain.repository.SubmittedAnswerRepository;
 import com.springcooler.sgma.submittedanswer.command.infrastructure.service.InfraSubmittedAnswerService;
+import com.springcooler.sgma.submittedanswer.query.service.SubmittedAnswerService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
+@Slf4j
 public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService {
 
     private final ModelMapper modelMapper;
     private final SubmittedAnswerRepository submittedAnswerRepository;
     private final InfraSubmittedAnswerService infraSubmittedAnswerService;
+    SubmittedAnswerService submittedAnswerService;
     @Autowired
-    public AppSubmittedAnswerServiceImpl(ModelMapper modelMapper, SubmittedAnswerRepository submittedAnswerRepository, InfraSubmittedAnswerService infraSubmittedAnswerService) {
+    public AppSubmittedAnswerServiceImpl(ModelMapper modelMapper, SubmittedAnswerRepository submittedAnswerRepository, InfraSubmittedAnswerService infraSubmittedAnswerService, SubmittedAnswerService submittedAnswerService) {
         this.modelMapper = modelMapper;
         this.submittedAnswerRepository = submittedAnswerRepository;
         this.infraSubmittedAnswerService = infraSubmittedAnswerService;
+        this.submittedAnswerService = submittedAnswerService;
     }
 
     @Override
@@ -31,15 +39,8 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
     public SubmittedAnswer registSubmittedAnswer(SubmittedAnswerDTO newSubmittedAnswerDTO) {
 
         SubmittedAnswerPK newSubmittedAnswerPK = new SubmittedAnswerPK(newSubmittedAnswerDTO.getProblemId(), newSubmittedAnswerDTO.getParticipantId());
-//        Integer rightAnswer = infraSubmittedAnswerService.getAnswerByProblemId(newSubmittedAnswerDTO.getProblemId());
-//        if (rightAnswer == newSubmittedAnswerDTO.getSubmittedAnswer()) {
-//                newSubmittedAnswerDTO.setAnswerStatus("RIGHT");
-//        }
-//        else {
-//            newSubmittedAnswerDTO.setAnswerStatus("WRONG");
-//        }
 
-        SubmittedAnswer newSubmittedAnswer = new SubmittedAnswer(newSubmittedAnswerPK, newSubmittedAnswerDTO.getSubmittedAnswer(), newSubmittedAnswerDTO.getAnswerStatus());
+        SubmittedAnswer newSubmittedAnswer = new SubmittedAnswer(newSubmittedAnswerDTO.getProblemId(),newSubmittedAnswerDTO.getParticipantId(), newSubmittedAnswerDTO.getSubmittedAnswer(), newSubmittedAnswerDTO.getAnswerStatus());
         newSubmittedAnswer = submittedAnswerRepository.save(newSubmittedAnswer);
 
         return newSubmittedAnswer;
@@ -64,23 +65,11 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
         SubmittedAnswer foundSubmittedAnswer = submittedAnswerRepository.findById(submittedAnswerPK).orElseThrow(EntityNotFoundException::new);
         return foundSubmittedAnswer;
     }
-    @Transactional
+
     @Override
-    public SubmittedAnswer gradeSubmittedAnswer(SubmittedAnswerDTO submittedAnswerDTO) {
-
-        SubmittedAnswerPK ungradedAnswerPK = new SubmittedAnswerPK(submittedAnswerDTO.getProblemId(), submittedAnswerDTO.getParticipantId());
-        Integer rightAnswer = infraSubmittedAnswerService.getAnswerByProblemId(submittedAnswerDTO.getProblemId());
-        if (rightAnswer == submittedAnswerDTO.getSubmittedAnswer()) {
-            submittedAnswerDTO.setAnswerStatus("RIGHT");
-        } else {
-            submittedAnswerDTO.setAnswerStatus("WRONG");
-        }
-
-        SubmittedAnswer ungradedAnswer = submittedAnswerRepository.findById(ungradedAnswerPK).orElseThrow(EntityNotFoundException::new);
-        ungradedAnswer.setAnswerStatus(submittedAnswerDTO.getAnswerStatus());
-        return submittedAnswerRepository.save(ungradedAnswer);
-
-
-
+    public void gradeSubmittedAnswersByParticipantId(long participantId) {
+        List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByParticipantId(participantId);
+        submittedAnswers.forEach(x->log.info("x: {}", x));
+            log.info("testCOde: {}");
     }
 }
