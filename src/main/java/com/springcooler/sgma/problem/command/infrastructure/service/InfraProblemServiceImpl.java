@@ -41,22 +41,6 @@ public class InfraProblemServiceImpl implements InfraProblemService {
     }
 
 
-    @Override
-    public ScheduleVO requestScheduleInfo(long scheduleId) {
-        StudyScheduleDTO scheduleDTO = studyScheduleService.findStudyScheduleByScheduleId(scheduleId);
-        ScheduleVO scheduleVO = new ScheduleVO(scheduleDTO.getScheduleId(), scheduleDTO.getScheduleStartTime(), scheduleDTO.getScheduleEndTime());
-        return scheduleVO;
-    }
 
-    @Override
-    public ScheduleParticipantVO requestScheduleParticipant(long scheduleId) {
-        List<StudyScheduleParticipantDTO> participants = studyScheduleParticipantService.findStudyScheduleParticipant(scheduleId);
-        ScheduleParticipantVO scheduleParticipantVO = new ScheduleParticipantVO();
-        scheduleParticipantVO.setScheduleId(scheduleId);
-        Map<Long, Long> participantMap = new HashMap<>();
-        participants.stream().forEach(x->participantMap.put(x.getParticipantId(), x.getMemberId()));
-        scheduleParticipantVO.setParticipants(participantMap);
-        return scheduleParticipantVO;
-        //        return studyScheduleService.findStudyScheduleByScheduleId(scheduleId);
-    }
+
 }

@@ -22,43 +22,43 @@ class AppProblemServiceTests {
     @Autowired
     private AppProblemService appProblemService;
 
-    @DisplayName("문제 생성 테스트")
-    @Test
-    void testRegistProblem(){
-        // given
-        ProblemDTO problemDTO = new ProblemDTO();
-        problemDTO.setAnswer(1);
-        problemDTO.setContent("문제생성테스트코드");
-        problemDTO.setParticipantId(1L);
-        problemDTO.setScheduleId(1L);
-        // when
+//    @DisplayName("문제 생성 테스트")
+//    @Test
+//    void testRegistProblem(){
+//        // given
+//        ProblemDTO problemDTO = new ProblemDTO();
+//        problemDTO.setAnswer(1);
+//        problemDTO.setContent("문제생성테스트코드");
+//        problemDTO.setParticipantId(1L);
+//        problemDTO.setScheduleId(1L);
+//        // when
+//
+//        Problem problem = appProblemService.registProblem(problemDTO);
+//        System.out.println("problem : " + problem);
+//
+//        // then
+//        Assertions.assertNotNull(problem);
+//    }
 
-        Problem problem = appProblemService.registProblem(problemDTO);
-        System.out.println("problem : " + problem);
-
-        // then
-        Assertions.assertNotNull(problem);
-    }
-
-    @DisplayName("문제 수정 테스트")
-    @Test
-    void testModifyProblem(){
-
-        // given
-        ProblemDTO problemDTO = new ProblemDTO();
-        problemDTO.setProblemId(11);
-        problemDTO.setAnswer(2);
-        problemDTO.setParticipantId(1);
-        problemDTO.setScheduleId(1);
-        problemDTO.setContent("문제수정테스트");
-
-        // when
-        Problem problem = appProblemService.modifyProblem(problemDTO);
-
-        // then
-        assertNotNull(problem);
-        System.out.println("problem : " + problem);
-    }
+//    @DisplayName("문제 수정 테스트")
+//    @Test
+//    void testModifyProblem(){
+//
+//        // given
+//        ProblemDTO problemDTO = new ProblemDTO();
+//        problemDTO.setProblemId(11);
+//        problemDTO.setAnswer(2);
+//        problemDTO.setParticipantId(1);
+//        problemDTO.setScheduleId(1);
+//        problemDTO.setContent("문제수정테스트");
+//
+//        // when
+//        Problem problem = appProblemService.modifyProblem(problemDTO);
+//
+//        // then
+//        assertNotNull(problem);
+//        System.out.println("problem : " + problem);
+//    }
 
     @DisplayName("문제 삭제 테스트")
     @Test

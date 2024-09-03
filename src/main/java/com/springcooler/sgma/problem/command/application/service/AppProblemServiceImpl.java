@@ -6,6 +6,8 @@ import com.springcooler.sgma.problem.command.application.dto.ProblemDTO;
 import com.springcooler.sgma.problem.command.domain.aggregate.entity.Problem;
 import com.springcooler.sgma.problem.command.domain.repository.ProblemRepository;
 import com.springcooler.sgma.problem.command.infrastructure.service.InfraProblemService;
+import com.springcooler.sgma.problem.common.exception.CommonException;
+import com.springcooler.sgma.problem.common.exception.ErrorCode;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -18,61 +20,67 @@ import java.util.Map;
 
 @Slf4j
 @Service
-public class AppProblemServiceImpl implements AppProblemService{
+public class AppProblemServiceImpl implements AppProblemService {
 
     private final ModelMapper modelMapper;
     private final ProblemRepository problemRepository;
     private final InfraProblemService infraProblemService;
+
     @Autowired
     public AppProblemServiceImpl(ModelMapper modelMapper, ProblemRepository problemRepository, InfraProblemService infraProblemService) {
         this.modelMapper = modelMapper;
         this.problemRepository = problemRepository;
         this.infraProblemService = infraProblemService;
     }
+//
+//    @Transactional
+//    @Override
+//    public Problem registProblem(ProblemDTO newProblem) {
+//        try {
+//            Problem problem = modelMapper.map(newProblem, Problem.class);
+//            problem = problemRepository.save(problem);
+//            return problem;
+//
+//        } catch (Exception e) {
+//            throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
-    @Transactional
-    @Override
-    public Problem registProblem(ProblemDTO newProblem) {
-//        log.info("newProblem: {}", newProblem);
-        Problem problem = modelMapper.map(newProblem, Problem.class);
-//        log.info("problemEntity: {}", problem);
-        problem = problemRepository.save(problem);
-//        log.info("problemSaved: {}", problem);
-        return problem;
-    }
+//    @Transactional
+//    @Override
+//    public void modifyProblem(ProblemDTO modifiedProblem) {
+//        Problem existingProblem = problemRepository.findById(modifiedProblem.getProblemId()).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PROBLEM));
+//
+//        problemRepository.save(modelMapper.map(modifiedProblem, existingProblem));
+//
+//    }
 
-    @Transactional
-    @Override
-    public Problem modifyProblem(ProblemDTO modifiedProblem) {
-        Problem existingProblem = problemRepository.findById(modifiedProblem.getProblemId()).orElseThrow(()->new EntityNotFoundException("Problem not found"));
-
-        modelMapper.map(modifiedProblem, existingProblem);
-
-        return problemRepository.save(existingProblem);
-
-    }
     @Transactional
     @Override
     public void deleteProblem(long problemId) {
-        Problem deleteProblem  = problemRepository.findById(problemId).orElseThrow(()-> new EntityNotFoundException("Problem not found"));
+        Problem deleteProblem = problemRepository.findById(problemId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PROBLEM));
 
         problemRepository.delete(deleteProblem);
     }
 
 
-
     @Transactional
     @Override
     public ProblemAndChoiceDTO registProblemAndChoice(ProblemAndChoiceDTO newProblemAndChoice) {
-            Problem problem = new Problem(null,
-                    newProblemAndChoice.getContent(),
-                    newProblemAndChoice.getAnswer(),
-                    newProblemAndChoice.getParticipantId(),
-                    newProblemAndChoice.getScheduleId());
+        Problem problem = new Problem(null,
+                newProblemAndChoice.getContent(),
+                newProblemAndChoice.getAnswer(),
+                newProblemAndChoice.getParticipantId(),
+                newProblemAndChoice.getScheduleId());
 
+        try {
             Problem registeredProblem = problemRepository.save(problem);
-            ProblemVO problemVO =infraProblemService.requestRegistChoices(registeredProblem.getProblemId(), newProblemAndChoice.getChoices());
-        return new ProblemAndChoiceDTO(registeredProblem.getProblemId(), registeredProblem.getParticipantId(), registeredProblem.getScheduleId(), registeredProblem.getContent(), registeredProblem.getAnswer(), newProblemAndChoice.getChoices());
+            ProblemVO problemVO = infraProblemService.requestRegistChoices(registeredProblem.getProblemId(), newProblemAndChoice.getChoices());
+            return new ProblemAndChoiceDTO(registeredProblem.getProblemId(), registeredProblem.getParticipantId(), registeredProblem.getScheduleId(), registeredProblem.getContent(), registeredProblem.getAnswer(), problemVO.getChoices());
+
+        } catch (Exception e) {
+            throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
 
     }
 }

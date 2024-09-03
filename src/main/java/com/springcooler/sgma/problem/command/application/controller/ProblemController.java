@@ -30,12 +30,12 @@ public class ProblemController {
         ProblemAndChoiceDTO problemAndChoice = appProblemService.registProblemAndChoice(newProblemAndChoice);
         return ResponseDTO.ok(problemAndChoice);
     }
-
-    @PutMapping("/modify")
-    public ResponseDTO<?> modifyProblem(@RequestBody ProblemDTO modifiedProblem) {
-        Problem problem = appProblemService.modifyProblem(modifiedProblem);
-        return ResponseDTO.ok(problem);
-    }
+//
+//    @PutMapping("/modify")
+//    public ResponseDTO<?> modifyProblem(@RequestBody ProblemAndChoiceDTO modifiedProblem) {
+//        ProblemAndChoiceDTO problem = appProblemService.modifyProblem(modifiedProblem);
+//        return ResponseDTO.ok(problem);
+//    }
 
     @DeleteMapping("/{problemId}")
     public ResponseDTO<?> deleteProblem(@PathVariable("problemId") long problemId) {
