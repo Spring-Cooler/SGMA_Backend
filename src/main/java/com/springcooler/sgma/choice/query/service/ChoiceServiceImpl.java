@@ -1,5 +1,7 @@
 package com.springcooler.sgma.choice.query.service;
 
+import com.springcooler.sgma.choice.common.exception.CommonException;
+import com.springcooler.sgma.choice.common.exception.ErrorCode;
 import com.springcooler.sgma.choice.query.dto.ChoiceDTO;
 import com.springcooler.sgma.choice.query.repository.ChoiceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,19 @@ public class ChoiceServiceImpl implements ChoiceService {
     }
     @Override
     public List<ChoiceDTO> findAllChoices() {
-        return choiceMapper.findAllChoices();
+        List<ChoiceDTO> choices = choiceMapper.findAllChoices();
+        if (choices == null || choices.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_CHOICE);
+        }
+        return choices;
     }
 
     @Override
     public List<ChoiceDTO> findChoicesByProblemId(Long problemId) {
-        return choiceMapper.findChoicesByProblemId(problemId);
+        List<ChoiceDTO> choices = choiceMapper.findChoicesByProblemId(problemId);
+        if (choices == null || choices.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_CHOICE);
+        }
+        return choices;
     }
 }

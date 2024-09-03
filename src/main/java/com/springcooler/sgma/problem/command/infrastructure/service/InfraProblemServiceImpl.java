@@ -2,6 +2,7 @@ package com.springcooler.sgma.problem.command.infrastructure.service;
 
 import com.springcooler.sgma.choice.command.application.service.AppChoiceService;
 import com.springcooler.sgma.choice.command.domain.aggregate.vo.ProblemVO;
+import com.springcooler.sgma.problem.command.application.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.command.domain.aggregate.vo.ScheduleParticipantVO;
 import com.springcooler.sgma.problem.command.domain.aggregate.vo.ScheduleVO;
 import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleDTO;
@@ -35,27 +36,11 @@ public class InfraProblemServiceImpl implements InfraProblemService {
 
     @Transactional
     @Override
-    public int requestRegistChoices(long problemId, String[] choices) {
+    public ProblemVO requestRegistChoices(long problemId, List<String> choices) {
         return appChoiceService.registChoices(new ProblemVO(problemId, choices));
     }
 
 
-    @Override
-    public ScheduleVO requestScheduleInfo(long scheduleId) {
-        StudyScheduleDTO scheduleDTO = studyScheduleService.findStudyScheduleByScheduleId(scheduleId);
-        ScheduleVO scheduleVO = new ScheduleVO(scheduleDTO.getScheduleId(), scheduleDTO.getScheduleStartTime(), scheduleDTO.getScheduleEndTime());
-        return scheduleVO;
-    }
 
-    @Override
-    public ScheduleParticipantVO requestScheduleParticipant(long scheduleId) {
-        List<StudyScheduleParticipantDTO> participants = studyScheduleParticipantService.findStudyScheduleParticipant(scheduleId);
-        ScheduleParticipantVO scheduleParticipantVO = new ScheduleParticipantVO();
-        scheduleParticipantVO.setScheduleId(scheduleId);
-        Map<Long, Long> participantMap = new HashMap<>();
-        participants.stream().forEach(x->participantMap.put(x.getParticipantId(), x.getMemberId()));
-        scheduleParticipantVO.setParticipants(participantMap);
-        return scheduleParticipantVO;
-        //        return studyScheduleService.findStudyScheduleByScheduleId(scheduleId);
-    }
+
 }

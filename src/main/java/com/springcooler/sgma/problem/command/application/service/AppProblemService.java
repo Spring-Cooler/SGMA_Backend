@@ -2,17 +2,15 @@ package com.springcooler.sgma.problem.command.application.service;
 
 import com.springcooler.sgma.problem.command.application.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.command.application.dto.ProblemDTO;
-import com.springcooler.sgma.problem.command.domain.aggregate.entity.Problem;
 
-import java.util.Map;
 
 public interface AppProblemService {
-    Problem registProblem(ProblemDTO newProblem);
+//    ProblemAndChoiceDTO registProblem(ProblemDTO newProblem);
 
-    Problem modifyProblem(ProblemDTO modifiedProblem);
+//    ProblemAndChoiceDTO modifyProblem(ProblemDTO modifiedProblem);
 
     void deleteProblem(long problemId);
 
 
-    Map<String,Object> registProblemAndChoice(ProblemAndChoiceDTO newProblemAndChoice);
+    ProblemAndChoiceDTO registProblemAndChoice(ProblemAndChoiceDTO newProblemAndChoice);
 }
