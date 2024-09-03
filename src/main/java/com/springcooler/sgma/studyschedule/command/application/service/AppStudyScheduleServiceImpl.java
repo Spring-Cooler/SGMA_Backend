@@ -1,20 +1,21 @@
 package com.springcooler.sgma.studyschedule.command.application.service;
 
 import com.springcooler.sgma.studyschedule.command.application.dto.StudyScheduleDTO;
+import com.springcooler.sgma.studyschedule.command.domain.aggregate.RestStatus;
 import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudySchedule;
 import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudyScheduleStatus;
 import com.springcooler.sgma.studyschedule.command.domain.repository.StudyScheduleRepository;
 import com.springcooler.sgma.studyschedule.command.domain.service.DomainStudyScheduleService;
+import com.springcooler.sgma.studyschedule.common.exception.CommonException;
+import com.springcooler.sgma.studyschedule.common.exception.ErrorCode;
 import com.springcooler.sgma.studyscheduleparticipant.command.domain.aggregate.StudyScheduleParticipant;
 import com.springcooler.sgma.studyscheduleparticipant.command.domain.repository.StudyScheduleParticipantRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
@@ -37,27 +38,40 @@ public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
     // 스터디 일정 생성
     @Transactional
     @Override
-    public StudySchedule registStudySchedule(StudyScheduleDTO createStudySchedule) {
-        createStudySchedule.setActiveStatus(StudyScheduleStatus.ACTIVE.name());
-        return studyScheduleRepository.save(modelMapper.map(createStudySchedule, StudySchedule.class));
+    public StudySchedule registStudySchedule(StudyScheduleDTO newStudySchedule) {
+        if(!domainStudyScheduleService.isValidDTO(RestStatus.POST, newStudySchedule)) {
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+        }
+
+        if ("N".equalsIgnoreCase(newStudySchedule.getTestStatus())) {
+            newStudySchedule.setNumProblemsPerParticipant(0);
+        }
+
+        newStudySchedule.setActiveStatus(StudyScheduleStatus.ACTIVE.name());
+
+        return studyScheduleRepository.save(modelMapper.map(newStudySchedule, StudySchedule.class));
     }
 
     // 스터디 일정 수정
     @Transactional
     @Override
-    public StudySchedule modifyStudySchedule(Long scheduleId, StudyScheduleDTO updateStudySchedule) {
-        StudySchedule existingSchedule = studyScheduleRepository
-                .findById(scheduleId)
-                .orElseThrow(() -> new EntityNotFoundException("잘못된 수정 요청입니다."));
+    public StudySchedule modifyStudySchedule(StudyScheduleDTO modifyStudySchedule) {
+        if(!domainStudyScheduleService.isValidDTO(RestStatus.POST, modifyStudySchedule)) {
+            throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
+        }
 
-        existingSchedule.setTitle(updateStudySchedule.getTitle());
-        existingSchedule.setContent(updateStudySchedule.getContent());
-        existingSchedule.setScheduleStartTime(updateStudySchedule.getScheduleStartTime());
-        existingSchedule.setScheduleEndTime(updateStudySchedule.getScheduleEndTime());
-        existingSchedule.setTestStatus(updateStudySchedule.getTestStatus());
-        existingSchedule.setNumProblemsPerParticipant(updateStudySchedule.getNumProblemsPerParticipant());
+        StudySchedule existingSchedule =
+                studyScheduleRepository.findById(modifyStudySchedule.getScheduleId())
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
 
-        if ("N".equalsIgnoreCase(updateStudySchedule.getTestStatus())) {
+        existingSchedule.setTitle(modifyStudySchedule.getTitle());
+        existingSchedule.setContent(modifyStudySchedule.getContent());
+        existingSchedule.setScheduleStartTime(modifyStudySchedule.getScheduleStartTime());
+        existingSchedule.setScheduleEndTime(modifyStudySchedule.getScheduleEndTime());
+        existingSchedule.setTestStatus(modifyStudySchedule.getTestStatus());
+        existingSchedule.setNumProblemsPerParticipant(modifyStudySchedule.getNumProblemsPerParticipant());
+
+        if ("N".equalsIgnoreCase(modifyStudySchedule.getTestStatus())) {
             existingSchedule.setNumProblemsPerParticipant(0);
         }
         return studyScheduleRepository.save(existingSchedule);
@@ -66,30 +80,31 @@ public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
     // 스터디 일정 삭제
     @Transactional
     @Override
-    public void deleteStudySchedule(long scheduleId) {
-        StudySchedule deleteSchedule = studyScheduleRepository
-                .findById(scheduleId)
-                .orElseThrow(() -> new EntityNotFoundException("잘못된 삭제 요청입니다."));
+    public void deleteStudySchedule(Long scheduleId) {
+        StudySchedule deleteSchedule =
+                studyScheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new CommonException((ErrorCode.NOT_FOUND_STUDY_SCHEDULE)));
+
         if (!domainStudyScheduleService.isActive(deleteSchedule.getActiveStatus())) {
-            throw new EntityNotFoundException("잘못된 삭제 요청입니다.");
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE);
         }
 
-        deleteSchedule.setActiveStatus(StudyScheduleStatus.INACTIVE.name());
+        deleteSchedule.setActiveStatus(StudyScheduleStatus.INACTIVE);
         studyScheduleRepository.save(deleteSchedule);
     }
 
     // 일정에 따른 참가자들의 시험 평균 및 표준편차 계산 및 업데이트
     @Transactional
     @Override
-    public void updateScheduleWithParticipantScores(Long scheduleId) {
+    public StudySchedule updateScheduleWithParticipantScores(Long scheduleId) {
         List<StudyScheduleParticipant> participants = participantRepository.findByScheduleId(scheduleId);
 
         List<Double> scores = participants.stream()
                 .map(StudyScheduleParticipant::getTestScore)
-                .collect(Collectors.toList());
+                .toList();
 
         if (scores.isEmpty()) {
-            throw new IllegalArgumentException("해당 일정에 등록된 참가자가 없습니다.");
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE);
         }
 
         double average = scores.stream()
@@ -104,10 +119,11 @@ public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
         double standardDeviation = Math.sqrt(variance);
 
         StudySchedule schedule = studyScheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 일정 ID입니다."));
+                .orElseThrow(() -> new CommonException((ErrorCode.NOT_FOUND_STUDY_SCHEDULE)));
 
         schedule.setTestAverage(average);
         schedule.setTestStandardDeviation(standardDeviation);
         studyScheduleRepository.save(schedule);
+        return schedule;
     }
 }

@@ -1,8 +1,7 @@
-package com.springcooler.sgma.studyScheduleParticipant.command.application.service;
+package com.springcooler.sgma.studyscheduleparticipant.command.application.service;
 
-import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudySchedule;
 import com.springcooler.sgma.studyscheduleparticipant.command.application.dto.StudyScheduleParticipantDTO;
-import com.springcooler.sgma.studyscheduleparticipant.command.application.service.AppStudyScheduleParticipantService;
+import com.springcooler.sgma.studyscheduleparticipant.command.domain.aggregate.StudyScheduleParticipant;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -23,12 +22,17 @@ class StudyScheduleParticipantServiceTests {
     void testRegisterParticipant() {
         // Given
         StudyScheduleParticipantDTO newParticipant = new StudyScheduleParticipantDTO();
+        newParticipant.setScheduleId(5L);
+        newParticipant.setMemberId(2L);
+        newParticipant.setSubmissionStatus("N");
 
-        StudySchedule participant = studyScheduleParticipantService.registStudyScheduleParticipant(newParticipant);
-        if (participant != null) {
+        // When
+        StudyScheduleParticipant participant = studyScheduleParticipantService.registStudyScheduleParticipant(newParticipant);
+        if(participant != null) {
             System.out.println(participant);
         }
 
+        // Then
         Assertions.assertNotNull(participant);
     }
 
