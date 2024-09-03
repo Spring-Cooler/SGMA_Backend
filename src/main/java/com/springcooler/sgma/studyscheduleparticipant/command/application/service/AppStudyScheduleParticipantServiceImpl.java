@@ -82,8 +82,8 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
     // 출제 문제 수 및 상태 변경
     @Transactional
     @Override
-    public void increaseNumSubmittedProblems(Long scheduleId, Long memberId) {
-        StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndMemberId(scheduleId, memberId)
+    public void increaseNumSubmittedProblems(Long scheduleId, Long participantId) {
+        StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
 
         participant.setNumSubmittedProblems(participant.getNumSubmittedProblems() + 1);
