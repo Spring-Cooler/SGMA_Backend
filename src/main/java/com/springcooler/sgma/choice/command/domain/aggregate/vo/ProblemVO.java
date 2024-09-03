@@ -2,6 +2,8 @@ package com.springcooler.sgma.choice.command.domain.aggregate.vo;
 
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -9,5 +11,5 @@ import lombok.*;
 @ToString
 public class ProblemVO {
     private long problemId;
-    private String[] choices;
+    private List<String> choices;
 }
