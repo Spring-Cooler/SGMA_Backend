@@ -66,6 +66,7 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
         return foundSubmittedAnswer;
     }
 
+    @Transactional
     @Override
     public void gradeSubmittedAnswersByParticipantId(long participantId) {
         List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByParticipantId(participantId);
