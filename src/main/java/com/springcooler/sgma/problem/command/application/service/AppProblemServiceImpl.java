@@ -77,7 +77,7 @@ public class AppProblemServiceImpl implements AppProblemService {
         try {
             Problem registeredProblem = problemRepository.save(problem);
             ProblemVO problemVO = infraProblemService.requestRegistChoices(registeredProblem.getProblemId(), newProblemAndChoice.getChoices());
-            infraProblemService.requestIncreaseSubmittedProblems(problem.getScheduleId(), problem.getParticipantId());
+            infraProblemService.requestIncreaseNumSubmittedProblems(problem.getScheduleId(), problem.getParticipantId());
             return new ProblemAndChoiceDTO(registeredProblem.getProblemId(), registeredProblem.getParticipantId(), registeredProblem.getScheduleId(), registeredProblem.getContent(), registeredProblem.getAnswer(), problemVO.getChoices());
 
         } catch (Exception e) {

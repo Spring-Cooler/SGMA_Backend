@@ -1,7 +1,5 @@
 package com.springcooler.sgma.studyscheduleparticipant.command.application.service;
 
-import com.springcooler.sgma.problem.command.domain.repository.ProblemRepository;
-import com.springcooler.sgma.studyschedule.command.application.service.AppStudyScheduleService;
 import com.springcooler.sgma.studyschedule.command.infrastructure.service.InfraStudyScheduleService;
 import com.springcooler.sgma.studyschedule.common.exception.CommonException;
 import com.springcooler.sgma.studyschedule.common.exception.ErrorCode;
@@ -18,10 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Objects;
+
 @Slf4j
 @Service
-public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleService {
+public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleParticipantService {
 
     private final StudyScheduleParticipantRepository participantRepository;
     private final StudyScheduleRepository scheduleRepository;
@@ -100,6 +99,7 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleS
         }
 
     }
+
     @Transactional
     @Override
     public void decreaseNumSubmittedProblems(Long scheduleId, Long participantId) {
@@ -113,11 +113,12 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleS
         StudySchedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
 
-        if (participant.getNumSubmittedProblems().equals(schedule.getNumProblemsPerParticipant())) {
-            participant.setSubmissionStatus("Y");
+        if (!Objects.equals(participant.getNumSubmittedProblems(), schedule.getNumProblemsPerParticipant())) {
+            participant.setSubmissionStatus("N");
             participantRepository.save(participant);
         }
     }
+}
 
 // 특정 참가자의 시험 점수와 백분율 계산
 //    @Transactional
@@ -146,4 +147,3 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleS
 //            // 'N' 상태인 경우는 기본값(0점)을 사용하므로 추가 작업이 필요 없음
 //        }
 //    }
-}

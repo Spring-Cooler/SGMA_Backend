@@ -64,8 +64,8 @@ public class InfraStudyScheduleParticipantServiceImpl implements InfraStudySched
     }
 }
 
-//    @Override
-//    public long getCorrectAnswersCount(long participantId) {
-//        // 특정 참가자의 정답 상태가 "RIGHT"인 답안의 개수를 조회
-//        return submittedAnswerRepository.countByParticipantIdAndAnswerStatus(participantId, "RIGHT");
-//    }
+//@Override
+//public long getCorrectAnswersCount(long participantId) {
+//    // 특정 참가자의 정답 상태가 "RIGHT"인 답안의 개수를 조회
+//    return submittedAnswerRepository.countByParticipantIdAndAnswerStatus(participantId, "RIGHT");
+//}
