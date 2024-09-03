@@ -29,6 +29,15 @@
 
     </select>
 
+    <select id="findSubmittedAnswersByParticipantId" resultMap="submittedAnswerResultMap" parameterType="long">
+        SELECT
+                    A.PROBLEM_ID
+                   ,A.PARTICIPANT_ID
+                   ,A.SUBMITTED_ANSWER
+                   ,A.ANSWER_STATUS
+          FROM      SUBMITTED_ANSWER A
+         WHERE      A.PARTICIPANT_ID = # { participantId }
+    </select>
 
 
 </mapper>

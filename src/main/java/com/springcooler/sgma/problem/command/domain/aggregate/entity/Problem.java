@@ -1,4 +1,4 @@
-package com.springcooler.sgma.problem.command.domain.aggregate;
+package com.springcooler.sgma.problem.command.domain.aggregate.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +14,7 @@ public class Problem {
     @Id
     @Column(name="problem_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long problemId;
+    private Long problemId;
 
     @Column(name="content")
     private String content;

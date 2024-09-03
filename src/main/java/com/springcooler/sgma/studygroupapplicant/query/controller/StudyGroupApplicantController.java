@@ -42,7 +42,7 @@ public class StudyGroupApplicantController {
     @GetMapping("user/{userId}")
     public ResponseEntity<?> selectStudyGroupApplicantByUserId(@PathVariable Long userId) {
         try {
-            List<StudyGroupApplicantDTO> studyGroupApplicantDTO =studyGroupApplicantService.selectStudyGroupApplicantByRecruitmentBoardId(userId);
+            List<StudyGroupApplicantDTO> studyGroupApplicantDTO =studyGroupApplicantService.selectStudyGroupApplicantByUserId(userId);
             return ResponseEntity.ok(studyGroupApplicantDTO);
         } catch (Exception e) {
             e.printStackTrace();

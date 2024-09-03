@@ -1,6 +1,7 @@
 package com.springcooler.sgma.studygroup.query.service;
 
 import com.springcooler.sgma.studygroup.query.dto.StudyGroupDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+@Slf4j
 @SpringBootTest
 class StudyGroupServiceTests {
 
@@ -23,7 +25,7 @@ class StudyGroupServiceTests {
         Assertions.assertDoesNotThrow(
             () -> {
                 List<StudyGroupDTO> studyGroups = studyGroupService.findAllStudyGroups();
-                studyGroups.forEach(System.out::println);
+                studyGroups.forEach(x -> log.info(x.toString()));
             }
         );
     }
@@ -35,7 +37,7 @@ class StudyGroupServiceTests {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupDTO> studyGroups = studyGroupService.findStudyGroupsByOwnerId(ownerId);
-                    studyGroups.forEach(System.out::println);
+                    studyGroups.forEach(x -> log.info(x.toString()));
                 }
         );
     }
@@ -47,7 +49,7 @@ class StudyGroupServiceTests {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupDTO> studyGroups = studyGroupService.findStudyGroupsByParticipantId(participantId);
-                    studyGroups.forEach(System.out::println);
+                    studyGroups.forEach(x -> log.info(x.toString()));
                 }
         );
     }
@@ -59,7 +61,7 @@ class StudyGroupServiceTests {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupDTO> studyGroups = studyGroupService.findStudyGroupsByCategoryId(categoryId);
-                    studyGroups.forEach(System.out::println);
+                    studyGroups.forEach(x -> log.info(x.toString()));
                 }
         );
     }
@@ -70,8 +72,8 @@ class StudyGroupServiceTests {
     void testFindStudyGroupByGroupId(long groupId) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    StudyGroupDTO studyGroups = studyGroupService.findStudyGroupByGroupId(groupId);
-                    System.out.println(studyGroups);
+                    StudyGroupDTO studyGroup = studyGroupService.findStudyGroupByGroupId(groupId);
+                    log.info(studyGroup.toString());
                 }
         );
     }
@@ -82,8 +84,8 @@ class StudyGroupServiceTests {
     void testFindStudyGroupByGroupId(String groupName) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    StudyGroupDTO studyGroups = studyGroupService.findStudyGroupByGroupName(groupName);
-                    System.out.println(studyGroups);
+                    StudyGroupDTO studyGroup = studyGroupService.findStudyGroupByGroupName(groupName);
+                    log.info(studyGroup.toString());
                 }
         );
     }

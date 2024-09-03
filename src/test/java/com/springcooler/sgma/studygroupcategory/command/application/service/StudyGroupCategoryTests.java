@@ -1,8 +1,8 @@
 package com.springcooler.sgma.studygroupcategory.command.application.service;
 
 import com.springcooler.sgma.studygroupcategory.command.application.dto.StudyGroupCategoryDTO;
-import com.springcooler.sgma.studygroupcategory.command.domain.aggregate.StudyGroupCategory;
 import com.springcooler.sgma.studygroupcategory.common.exception.CommonException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @SpringBootTest
 @Transactional
 class StudyGroupCategoryTests {
@@ -25,9 +26,9 @@ class StudyGroupCategoryTests {
         newCategory.setCategoryName("보컬");
 
         //When
-        StudyGroupCategory category = studyGroupCategoryService.registStudyGroupCategory(newCategory);
+        StudyGroupCategoryDTO category = studyGroupCategoryService.registStudyGroupCategory(newCategory);
         if(category != null) {
-            System.out.println(category);
+            log.info(category.toString());
         }
 
         //Then
@@ -42,7 +43,7 @@ class StudyGroupCategoryTests {
 
         //When
         studyGroupCategoryService.deleteStudyGroupCategory(categoryId);
-        System.out.println("DELETE SUCCESS");
+        log.info("DELETE SUCCESS");
 
         //Then
         Assertions.assertThrows(CommonException.class,

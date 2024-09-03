@@ -11,10 +11,16 @@ import lombok.*;
 @ToString
 @Entity
 @Table(name="SUBMITTED_ANSWER")
+@IdClass(SubmittedAnswerPK.class)
 public class SubmittedAnswer {
 
-    @EmbeddedId
-    private SubmittedAnswerPK submittedAnswerPK;
+    @Id
+    @Column(name="problem_id")
+    private Long problemId;
+
+    @Id
+    @Column(name="participant_id")
+    private Long participantId;
 
     @Column(name="submitted_answer")
     private int submittedAnswer;
