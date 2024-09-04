@@ -3,11 +3,13 @@ package com.springcooler.sgma.submittedanswer.command.infrastructure.service;
 import com.springcooler.sgma.submittedanswer.command.application.dto.SubmittedAnswerDTO;
 import com.springcooler.sgma.submittedanswer.command.application.service.AppSubmittedAnswerService;
 import com.springcooler.sgma.submittedanswer.command.domain.aggregate.SubmittedAnswer;
-import com.springcooler.sgma.submittedanswer.query.service.SubmittedAnswerService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -17,21 +19,23 @@ class AppSubmittedAnswerServiceTests {
     @Autowired
     private AppSubmittedAnswerService appSubmittedAnswerService;
 
-
-    @DisplayName("문제에 대한 답안 제출 테스트")
+    @DisplayName("답안 제출 테스트")
     @Test
-    @Order(1)
-    void testRegistSubmittedAnswer(){
+    void testRegistAnswers(){
 
         // given
-        SubmittedAnswerDTO newSubmittedAnswerDTO = new SubmittedAnswerDTO(10,10,3, "UNGRADED");
-        log.info("newSubmittedAnswerDTO: {}", newSubmittedAnswerDTO);
+        List<SubmittedAnswerDTO> submittedAnswers = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            SubmittedAnswerDTO answerDTO = new SubmittedAnswerDTO(i+1, 1, 1, "UNGRADED");
+            submittedAnswers.add(answerDTO);
+        }
+
         // when
-        SubmittedAnswer newSubmittedAnswer = appSubmittedAnswerService.registSubmittedAnswer(newSubmittedAnswerDTO);
+        appSubmittedAnswerService.registSubmittedAnswer(submittedAnswers);
 
         // then
-        assertNotNull(newSubmittedAnswer);
-        log.info("newSubmittedAnswer: {}", newSubmittedAnswer);
+
+
     }
     
     @DisplayName("제출 답안 수정 테스트")
@@ -40,7 +44,7 @@ class AppSubmittedAnswerServiceTests {
     void testModifySubmittedAnswer(){
 
         // given
-        SubmittedAnswerDTO newSubmittedAnswerDTO = new SubmittedAnswerDTO(10,10,2, "UNGRADED");
+        SubmittedAnswerDTO newSubmittedAnswerDTO = new SubmittedAnswerDTO(10,4,2, "UNGRADED");
 
         log.info("newSubmittedAnswerDTO: {}", newSubmittedAnswerDTO);
 
@@ -73,16 +77,18 @@ class AppSubmittedAnswerServiceTests {
 //        // then
 //        assertNotNull(gradedAnswer);
 //    }
-//
+
     @DisplayName("참여자 아이디로 채점 테스트")
     @Test
     void testGradeSubmittedAnswerByParticipantId(){
 
         // given
-        int participantId = 1;
+        long scheduleId = 1L;
+
+        long participantId = 1L;
 
         // when
-        appSubmittedAnswerService.gradeSubmittedAnswersByParticipantId(participantId);
+        appSubmittedAnswerService.gradeSubmittedAnswersByScheduleIdAndParticipantId(scheduleId, participantId);
     }
 
 }

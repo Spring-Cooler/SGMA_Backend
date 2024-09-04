@@ -26,9 +26,10 @@ class StudyGroupMemberServiceTests {
     @Test
     void testSaveStudyGroupMember() {
         //Given
-        StudyGroupMemberDTO newMember = new StudyGroupMemberDTO();
-        newMember.setUserId(1L);
-        newMember.setGroupId(5L);
+        StudyGroupMemberDTO newMember = StudyGroupMemberDTO.builder()
+                .userId(1L)
+                .groupId(5L)
+                .build();
 
         //When
         StudyGroupMemberDTO member = studyGroupMemberService.registStudyGroupMember(newMember);
@@ -48,12 +49,13 @@ class StudyGroupMemberServiceTests {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.parse(dateTimeString, formatter);
 
-        StudyGroupMemberDTO modifyMember = new StudyGroupMemberDTO();
-        modifyMember.setMemberId(3L);
-        modifyMember.setMemberEnrolledAt(localDateTime);
-        modifyMember.setUserId(3L);
-        modifyMember.setGroupId(5L);
-        modifyMember.setGroupRole(GroupRole.ROLE_OWNER);
+        StudyGroupMemberDTO modifyMember = StudyGroupMemberDTO.builder()
+                .memberId(3L)
+                .memberEnrolledAt(localDateTime)
+                .userId(3L)
+                .groupId(5L)
+                .groupRole(GroupRole.ROLE_OWNER)
+                .build();
 
         //When
         StudyGroupMemberDTO member = studyGroupMemberService.modifyStudyGroupMember(modifyMember);

@@ -1,7 +1,7 @@
 package com.springcooler.sgma.choice.query.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -9,7 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Setter
 @ToString
 public class ChoiceDTO {
+
+    @JsonProperty("problem_id")
     private long problemId;
+
+    @JsonProperty("choice_num")
     private long choiceNum;
+
+    @JsonProperty("content")
     private String content;
 }

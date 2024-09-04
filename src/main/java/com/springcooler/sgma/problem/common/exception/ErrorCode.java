@@ -57,6 +57,8 @@ public enum ErrorCode {
     NOT_FOUND_SUBMITTED_ANSWER(40414, HttpStatus.NOT_FOUND, "제출된 답변이 존재하지 않습니다."),
     NOT_FOUND_STUDY_GROUP_NOTICE(40415, HttpStatus.NOT_FOUND, "스터디 그룹 공지가 존재하지 않습니다."),
     FORBIDDEN_PROBLEM_SUBMISSION_TIMEOUT(40416, HttpStatus.FORBIDDEN, "유효한 문제 제출 시간이 아닙니다."),
+
+
     //500
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다");
 

@@ -7,6 +7,8 @@ import com.springcooler.sgma.submittedanswer.command.domain.aggregate.SubmittedA
 import com.springcooler.sgma.submittedanswer.command.domain.aggregate.SubmittedAnswerPK;
 import com.springcooler.sgma.submittedanswer.command.domain.repository.SubmittedAnswerRepository;
 import com.springcooler.sgma.submittedanswer.command.infrastructure.service.InfraSubmittedAnswerService;
+import com.springcooler.sgma.submittedanswer.common.exception.CommonException;
+import com.springcooler.sgma.submittedanswer.common.exception.ErrorCode;
 import com.springcooler.sgma.submittedanswer.query.service.SubmittedAnswerService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,32 +28,35 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
     private final ModelMapper modelMapper;
     private final SubmittedAnswerRepository submittedAnswerRepository;
     private final InfraSubmittedAnswerService infraSubmittedAnswerService;
-    SubmittedAnswerService submittedAnswerService;
     @Autowired
-    public AppSubmittedAnswerServiceImpl(ModelMapper modelMapper, SubmittedAnswerRepository submittedAnswerRepository, InfraSubmittedAnswerService infraSubmittedAnswerService, SubmittedAnswerService submittedAnswerService) {
+    public AppSubmittedAnswerServiceImpl(ModelMapper modelMapper
+            , SubmittedAnswerRepository submittedAnswerRepository
+            , InfraSubmittedAnswerService infraSubmittedAnswerService) {
         this.modelMapper = modelMapper;
         this.submittedAnswerRepository = submittedAnswerRepository;
         this.infraSubmittedAnswerService = infraSubmittedAnswerService;
-        this.submittedAnswerService = submittedAnswerService;
     }
 
     @Override
     @Transactional
-    public SubmittedAnswer registSubmittedAnswer(SubmittedAnswerDTO newSubmittedAnswerDTO) {
+    public void registSubmittedAnswer(List<SubmittedAnswerDTO> submittedAnswerDTOs) {
+        List<SubmittedAnswer> submittedAnswers = new ArrayList<>();
 
-        SubmittedAnswerPK newSubmittedAnswerPK = new SubmittedAnswerPK(newSubmittedAnswerDTO.getProblemId(), newSubmittedAnswerDTO.getParticipantId());
+        submittedAnswerDTOs.forEach(
+                submittedAnswer -> {
+                    SubmittedAnswer newSubmittedAnswer = new SubmittedAnswer(submittedAnswer.getProblemId(),submittedAnswer.getParticipantId(), submittedAnswer.getSubmittedAnswer(), submittedAnswer.getAnswerStatus());
+                    submittedAnswers.add(newSubmittedAnswer);
+                }
+        );
+         submittedAnswerRepository.saveAll(submittedAnswers);
 
-        SubmittedAnswer newSubmittedAnswer = new SubmittedAnswer(newSubmittedAnswerDTO.getProblemId(),newSubmittedAnswerDTO.getParticipantId(), newSubmittedAnswerDTO.getSubmittedAnswer(), newSubmittedAnswerDTO.getAnswerStatus());
-        newSubmittedAnswer = submittedAnswerRepository.save(newSubmittedAnswer);
-
-        return newSubmittedAnswer;
     }
 
     @Transactional
     @Override
     public SubmittedAnswer modifySubmittedAnswer(SubmittedAnswerDTO modifySubmittedAnswer) {
         SubmittedAnswerPK modifySubmittedAnswerPK = new SubmittedAnswerPK(modifySubmittedAnswer.getProblemId(), modifySubmittedAnswer.getParticipantId());
-        SubmittedAnswer existingSubmittedAnswer = submittedAnswerRepository.findById(modifySubmittedAnswerPK).orElseThrow(EntityNotFoundException::new);
+        SubmittedAnswer existingSubmittedAnswer = submittedAnswerRepository.findById(modifySubmittedAnswerPK).orElseThrow();
 
         existingSubmittedAnswer.setSubmittedAnswer(modifySubmittedAnswer.getSubmittedAnswer());
 
@@ -68,14 +74,19 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
 
     @Transactional
     @Override
-    public void gradeSubmittedAnswersByParticipantId(long participantId) {
+    public double gradeSubmittedAnswersByScheduleIdAndParticipantId(long scheduleId, long participantId) {
         List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByParticipantId(participantId);
+        if (submittedAnswers == null || submittedAnswers.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_SUBMITTED_ANSWER);
+        }
+        int rightAnswer = 0;
         for (SubmittedAnswer submittedAnswer : submittedAnswers) {
             log.info("submittedAnswer before grade: {}", submittedAnswer);
             Long problemId = submittedAnswer.getProblemId();
             int answer = infraSubmittedAnswerService.getAnswerByProblemId(problemId);
             if (answer == submittedAnswer.getSubmittedAnswer()) {
                 submittedAnswer.setAnswerStatus("RIGHT");
+                rightAnswer++;
             }
             else {
                 submittedAnswer.setAnswerStatus("WRONG");
@@ -83,5 +94,30 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
             log.info("submittedAnswer after grade: {}", submittedAnswer);
         }
         submittedAnswerRepository.saveAll(submittedAnswers);
+        double score =  rightAnswer/(double)submittedAnswers.size();
+        infraSubmittedAnswerService.requestUpdateParticipantScore(scheduleId, participantId, score);
+        return score;
     }
 }
+//    @Transactional
+//    @Override
+//    public void gradeSubmittedAnswersByParticipantId(long participantId) {
+//        List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByParticipantId(participantId);
+//        if (submittedAnswers == null || submittedAnswers.isEmpty()) {
+//            throw new CommonException(ErrorCode.NOT_FOUND_SUBMITTED_ANSWER);
+//        }
+//
+//        for (SubmittedAnswer submittedAnswer : submittedAnswers) {
+//            log.info("submittedAnswer before grade: {}", submittedAnswer);
+//            Long problemId = submittedAnswer.getProblemId();
+//            int answer = infraSubmittedAnswerService.getAnswerByProblemId(problemId);
+//            if (answer == submittedAnswer.getSubmittedAnswer()) {
+//                submittedAnswer.setAnswerStatus("RIGHT");
+//            }
+//            else {
+//                submittedAnswer.setAnswerStatus("WRONG");
+//            }
+//            log.info("submittedAnswer after grade: {}", submittedAnswer);
+//        }
+//        submittedAnswerRepository.saveAll(submittedAnswers);
+//    }

@@ -1,6 +1,5 @@
 package com.springcooler.sgma.submittedanswer.query.service;
 
-import com.springcooler.sgma.submittedanswer.command.application.service.AppSubmittedAnswerServiceImpl;
 import com.springcooler.sgma.submittedanswer.query.dto.SubmittedAnswerDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -19,8 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class SubmittedAnswerServiceTests {
     @Autowired
     private SubmittedAnswerService submittedAnswerService;
-    @Autowired
-    private AppSubmittedAnswerServiceImpl appSubmittedAnswerServiceImpl;
 
     @DisplayName("제출 답안 전체 조회 테스트")
     @Test
@@ -51,19 +48,6 @@ class SubmittedAnswerServiceTests {
         submittedAnswers.forEach(x-> log.info("x: {}", x));
     }
 
-    @DisplayName("제출 답안 채점 테스트")
-    @Test
-    void testGradeSubmittedAnswerByParticipantId(){
-
-        // given
-        long participantId = 3L;
-        log.info("participantId: {}", participantId);
-
-        // when
-        appSubmittedAnswerServiceImpl.gradeSubmittedAnswersByParticipantId(participantId);
-        // then
-
-    }
 
 
 }

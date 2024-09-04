@@ -1,5 +1,6 @@
 package com.springcooler.sgma.problem.query.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @NoArgsConstructor
@@ -9,10 +10,19 @@ import lombok.*;
 @ToString
 public class ProblemDTO {
 
-private long problemId;
-private String content;
-private int answer;
-private long participantId;
-private long scheduleId;
+    @JsonProperty("problem_id")
+    private long problemId;
+
+    @JsonProperty("content")
+    private String content;
+
+    @JsonProperty("answer")
+    private int answer;
+
+    @JsonProperty("participant_id")
+    private long participantId;
+
+    @JsonProperty("schedule_id")
+    private long scheduleId;
 
 }

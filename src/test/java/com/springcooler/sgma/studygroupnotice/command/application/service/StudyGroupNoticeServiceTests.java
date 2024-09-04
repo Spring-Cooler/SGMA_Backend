@@ -22,10 +22,11 @@ class StudyGroupNoticeServiceTests {
     @Test
     void testRegistStudyGroupNotice() {
         //Given
-        StudyGroupNoticeDTO newNotice = new StudyGroupNoticeDTO();
-        newNotice.setTitle("테스트용 제목");
-        newNotice.setContent("테스트용 내용");
-        newNotice.setGroupId(1L);
+        StudyGroupNoticeDTO newNotice = StudyGroupNoticeDTO.builder()
+                .title("테스트용 제목")
+                .content("테스트용 내용")
+                .groupId(1L)
+                .build();
 
         //When
         StudyGroupNoticeDTO notice = studyGroupNoticeService.registStudyGroupNotice(newNotice);
@@ -41,10 +42,11 @@ class StudyGroupNoticeServiceTests {
     @Test
     void testModifyStudyGroupNotice() {
         //Given
-        StudyGroupNoticeDTO modifyNotice = new StudyGroupNoticeDTO();
-        modifyNotice.setNoticeId(1L);
-        modifyNotice.setTitle("바뀐 제목");
-        modifyNotice.setContent("바뀐 내용");
+        StudyGroupNoticeDTO modifyNotice = StudyGroupNoticeDTO.builder()
+                .noticeId(1L)
+                .title("바뀐 제목")
+                .content("바뀐 내용")
+                .build();
 
         //When
         StudyGroupNoticeDTO notice = studyGroupNoticeService.modifyStudyGroupNotice(modifyNotice);

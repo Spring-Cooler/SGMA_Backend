@@ -2,11 +2,12 @@ package com.springcooler.sgma.submittedanswer.command.application.controller;
 
 import com.springcooler.sgma.submittedanswer.command.application.dto.SubmittedAnswerDTO;
 import com.springcooler.sgma.submittedanswer.command.application.service.AppSubmittedAnswerService;
+import com.springcooler.sgma.submittedanswer.common.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
+import java.util.List;
+
 
 @RestController("commandSubmittedAnswerController")
 @RequestMapping("/api/submitted-answers/")
@@ -20,15 +21,23 @@ public class SubmittedAnswerController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> registSubmittedAnswer(@RequestBody SubmittedAnswerDTO newSubmittedAnswer){
-        return ResponseEntity.created(URI.create("/api/submitted-answers/" + appSubmittedAnswerService.registSubmittedAnswer(newSubmittedAnswer).getAnswerStatus())).build();
+    public ResponseDTO<?> registSubmittedAnswer(@RequestBody List<SubmittedAnswerDTO> newSubmittedAnswer){
+        appSubmittedAnswerService.registSubmittedAnswer(newSubmittedAnswer);
+        return ResponseDTO.ok(null);
     }
 
     @PutMapping("/")
-    public ResponseEntity<?> modifySubmittedAnswer(@RequestBody SubmittedAnswerDTO modifySubmittedAnswer){
-        return ResponseEntity.created(URI.create("/api/submitted-answers/" + appSubmittedAnswerService.modifySubmittedAnswer(modifySubmittedAnswer).getAnswerStatus())).build();
+    public ResponseDTO<?> modifySubmittedAnswer(@RequestBody SubmittedAnswerDTO modifySubmittedAnswer){
+        return ResponseDTO.ok(appSubmittedAnswerService.modifySubmittedAnswer(modifySubmittedAnswer));
     }
 
+
+    @PutMapping("/grade/{scheduleId}/{participantId}")
+    public ResponseDTO<?> gradeSubmittedAnswerByParticipantId(@PathVariable long scheduleId, @PathVariable long participantId){
+        return ResponseDTO.ok(String.valueOf(appSubmittedAnswerService.gradeSubmittedAnswersByScheduleIdAndParticipantId(scheduleId, participantId)));
+    }
+
+    }
 //    @PutMapping("/grade/")// TODO: 시험 종료시 해당 시험에 해당하는 문제 한번에 채점
 //    public ResponseEntity<?> gradeSubmittedAnswer(@RequestBody SubmittedAnswerDTO answerToGrade){
 //
@@ -36,4 +45,4 @@ public class SubmittedAnswerController {
 //    }
 
 
-}
+
