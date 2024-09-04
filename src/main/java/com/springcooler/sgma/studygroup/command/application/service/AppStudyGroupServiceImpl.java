@@ -48,7 +48,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
                 .activeStatus(StudyGroupStatus.ACTIVE)
                 .groupMembers(0)
                 .userId(newStudyGroup.getUserId())
-                .groupId(newStudyGroup.getGroupId())
+                .studyGroupCategoryId(newStudyGroup.getStudyGroupCategoryId())
                 .build();
 
         StudyGroup studyGroup =

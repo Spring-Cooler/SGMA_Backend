@@ -74,8 +74,8 @@ public class StudyGroupController {
 
     // 스터디 그룹원 탈퇴
     @DeleteMapping("/member")
-    public ResponseDTO<?> deleteQuitMember(@RequestParam("member-id") long memberId,
-                                              @RequestParam("group-id") long groupId) {
+    public ResponseDTO<?> deleteQuitMember(@RequestParam("member-id") Long memberId,
+                                              @RequestParam("group-id") Long groupId) {
         StudyGroupDTO studyGroup = studyGroupService.deleteQuitMember(memberId, groupId);
         ResponseStudyGroupVO res = modelMapper.map(studyGroup, ResponseStudyGroupVO.class);
         return ResponseDTO.ok(res);
@@ -83,7 +83,7 @@ public class StudyGroupController {
 
     // 스터디 그룹 삭제
     @DeleteMapping("/{groupId}")
-    public ResponseDTO<?> deleteStudyGroup(@PathVariable long groupId) {
+    public ResponseDTO<?> deleteStudyGroup(@PathVariable Long groupId) {
         studyGroupService.deleteStudyGroup(groupId);
         return ResponseDTO.ok(null);
     }

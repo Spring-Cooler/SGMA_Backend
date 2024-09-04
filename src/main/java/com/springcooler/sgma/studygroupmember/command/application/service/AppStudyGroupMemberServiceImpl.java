@@ -70,7 +70,7 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
                 .memberStatus(StudyGroupMemberStatus.ACTIVE)
                 .userId(newMember.getUserId())
                 .groupId(newMember.getGroupId())
-                .groupRole(GroupRole.ROLE_OWNER)
+                .groupRole(GroupRole.ROLE_MEMBER)
                 .build();
 
         // DTO를 Entity에 매핑 후 저장
