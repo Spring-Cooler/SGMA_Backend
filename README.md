@@ -71,6 +71,11 @@
 ![image](https://github.com/user-attachments/assets/7d0b0f43-37e2-40f4-b0ad-dcbae3119718)
 
 #### WBS
+https://docs.google.com/spreadsheets/d/1XVX6lAse2VZzDybUvryL8GyeM3-PO_EZMFG10hMVJSk/edit?gid=1079017783#gid=1079017783
+![image](https://github.com/user-attachments/assets/2f0abf09-c2aa-4413-98b7-32ecfdbcaed9)
+
+
+
 
 #### 요구사항 정의서
 
@@ -79,11 +84,9 @@ https://docs.google.com/spreadsheets/d/1XVX6lAse2VZzDybUvryL8GyeM3-PO_EZMFG10hMV
 
 
 
-#### REST API 설계
 
 #### System Architecture
-
-#### 설치 환경
+![image](https://github.com/user-attachments/assets/3faadf7f-4ef8-4fa4-aac2-df55110a2721)
 
 
 
