@@ -1,6 +1,7 @@
 package com.springcooler.sgma.recruitmentboard.command.application.service;
 
 import com.springcooler.sgma.recruitmentboard.command.application.dto.RecruitmentBoardCommandDTO;
+import com.springcooler.sgma.recruitmentboard.command.domain.aggregate.BoardActiveStatus;
 import com.springcooler.sgma.recruitmentboard.command.domain.aggregate.RecruitmentBoard;
 import com.springcooler.sgma.recruitmentboard.command.domain.repository.RecruitmentBoardRepository;
 import org.junit.jupiter.api.Assertions;
@@ -92,8 +93,8 @@ class StudyGroupApplicantCommandServiceTests {
             studyGroupApplicantCommandService.deleteStudyGroupApplicant(1L);
             studyGroupApplicantCommandDto=true;
         }
-        if(studyGroupApplicantCommandDto==true){
-            Assertions.assertEquals(optionalApplicant.get().getActiveStatus(),"INACTIVE");
+        if(studyGroupApplicantCommandDto){
+            Assertions.assertEquals(optionalApplicant.get().getActiveStatus(), BoardActiveStatus.DELETED);
         }
 
     }

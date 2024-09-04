@@ -1,6 +1,6 @@
 package com.springcooler.sgma.studyschedule.command.application.service;
 
-import com.springcooler.sgma.studygroupnotice.common.exception.CommonException;
+import com.springcooler.sgma.studyschedule.common.exception.CommonException;
 import com.springcooler.sgma.studyschedule.command.application.dto.StudyScheduleDTO;
 import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudySchedule;
 import org.junit.jupiter.api.Assertions;
@@ -66,7 +66,7 @@ class StudyScheduleServiceTests {
     @Test
     void testDeleteStudySchedule() {
         // Given
-        Long scheduleId = 8L;
+        Long scheduleId = 7L;
 
         // When
         studyScheduleService.deleteStudySchedule(scheduleId);

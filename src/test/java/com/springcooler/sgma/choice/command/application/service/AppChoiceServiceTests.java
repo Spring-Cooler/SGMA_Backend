@@ -7,10 +7,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
+@Transactional
 @Slf4j
 class AppChoiceServiceTests {
 
@@ -39,7 +41,7 @@ class AppChoiceServiceTests {
     void testModifyChoice(){
 
         // given
-        long problemId = 10L;
+        long problemId = 1L;
         int choiceNum = 1;
         ChoiceDTO modifyChoice = new ChoiceDTO(problemId, choiceNum,"선지 수정 테스트");
 

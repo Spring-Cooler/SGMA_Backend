@@ -8,13 +8,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-//@Transactional
+@Transactional
     @Slf4j
 class AppProblemServiceTests {
 
@@ -44,7 +45,7 @@ class AppProblemServiceTests {
 
         // given
         long participantId = 9L;
-        long scheduleId = 3L;
+        long scheduleId = 4L;
         String content = "문제 및 선지 등록 테스트";
         int answer = 1;
         List<String> choices = new ArrayList<>();

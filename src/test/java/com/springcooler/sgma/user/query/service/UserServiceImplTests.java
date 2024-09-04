@@ -51,13 +51,13 @@ class UserServiceImplTests {
     void getUserByNickname_success() {
         log.info("회원 닉네임으로 사용자 조회 테스트 시작");
 
-        // 이미 데이터베이스에 존재하는 nickname "조짠국"에 대한 테스트
-        UserDTO foundUser = userService.getUserByNickname("조짠국");
+        // 이미 데이터베이스에 존재하는 nickname "조찬국"에 대한 테스트
+        UserDTO foundUser = userService.getUserByNickname("alice01");
 
         log.info("조회된 사용자 정보: {}", foundUser);
 
         assertThat(foundUser).isNotNull();
-        assertThat(foundUser.getNickname()).isEqualTo("조짠국");
+        assertThat(foundUser.getNickname()).isEqualTo("alice01");
         assertThat(foundUser.getEmail()).isEqualTo("alice@example.com");
 
         log.info("회원 닉네임으로 사용자 조회 테스트 성공");
