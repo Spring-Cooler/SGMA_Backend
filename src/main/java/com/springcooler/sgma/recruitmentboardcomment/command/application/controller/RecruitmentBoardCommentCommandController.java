@@ -4,6 +4,7 @@ package com.springcooler.sgma.recruitmentboardcomment.command.application.contro
 import com.springcooler.sgma.recruitmentboardcomment.command.application.dto.RecruitmentBoardCommentCommandDTO;
 import com.springcooler.sgma.recruitmentboardcomment.command.application.service.RecruitmentBoardCommentCommandService;
 import com.springcooler.sgma.recruitmentboardcomment.command.domain.aggregate.RecruitmentBoardComment;
+import com.springcooler.sgma.recruitmentboardcomment.common.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,22 +24,22 @@ public class RecruitmentBoardCommentCommandController {
 
     @PostMapping("/{recruitmentBoardId}")
     @Operation(summary = "모집글 댓글 작성")
-    public ResponseEntity<RecruitmentBoardComment> createComment(@PathVariable Long recruitmentBoardId, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
+    public ResponseDTO<RecruitmentBoardComment> createComment(@PathVariable Long recruitmentBoardId, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
         RecruitmentBoardComment createdComment = recruitmentBoardCommentCommandService.createRecruitmentBoardComment(recruitmentBoardId, recruitmentBoardCommentCommandDTO);
-        return new ResponseEntity<>(createdComment, HttpStatus.CREATED);
+        return ResponseDTO.ok(createdComment);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "모집글 댓글 수정")
-    public ResponseEntity<RecruitmentBoardComment> updateComment(@PathVariable Long id, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
+    public ResponseDTO<?> updateComment(@PathVariable Long id, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
         RecruitmentBoardComment updatedComment = recruitmentBoardCommentCommandService.updateRecruitmentBoardComment(id, recruitmentBoardCommentCommandDTO);
-        return new ResponseEntity<>(updatedComment, HttpStatus.OK);
+        return ResponseDTO.ok(updatedComment);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "모집글 댓글 삭제")
-    public ResponseEntity<RecruitmentBoardComment> deleteComment(@PathVariable Long id, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
+    public ResponseDTO<?> deleteComment(@PathVariable Long id, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
         recruitmentBoardCommentCommandService.deleteRecruitmentBoardComment(id, recruitmentBoardCommentCommandDTO);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseDTO.ok(HttpStatus.NO_CONTENT);
     }
 }

@@ -1,5 +1,6 @@
 package com.springcooler.sgma.recruitmentboardcomment.query.controller;
 
+import com.springcooler.sgma.recruitmentboardcomment.common.ResponseDTO;
 import com.springcooler.sgma.recruitmentboardcomment.query.dto.RecruitmentBoardCommentDTO;
 import com.springcooler.sgma.recruitmentboardcomment.query.service.RecruitmentBoardCommentService;
 
@@ -22,8 +23,8 @@ public class RecruitmentBoardCommentController {
 
     @GetMapping("getAll/BoardCommand/{recruitmentBoardId}")
     @Operation(summary = "모집글에 해당하는 모든 댓글 조회")
-    public List<RecruitmentBoardCommentDTO> findBoardCommentByRecruitmentBoardId(@PathVariable Long recruitmentBoardId){
+    public ResponseDTO<?> findBoardCommentByRecruitmentBoardId(@PathVariable Long recruitmentBoardId){
         List<RecruitmentBoardCommentDTO> recruitmentBoardCommentDTO = recruitmentBoardCommentService.studyGroupRecruitmentComment(recruitmentBoardId);
-        return recruitmentBoardCommentDTO;
+        return ResponseDTO.ok(recruitmentBoardCommentDTO);
     }
 }
