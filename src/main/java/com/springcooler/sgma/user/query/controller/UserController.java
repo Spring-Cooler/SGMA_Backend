@@ -36,22 +36,23 @@ public class UserController {
 
     // 사용자 ID로 조회
     @GetMapping("/user-id/{userId}")
-    public ResponseDTO<?> getUserById(@PathVariable Long userId) {
+    public ResponseDTO<UserDTO> getUserById(@PathVariable("userId") Long userId) {
         UserDTO userDTO = userService.getUserByUserId(userId);
         return ResponseDTO.ok(userDTO);
     }
 
-    // 이전의 이름으로 조회하는 메서드
+    // 닉네임으로 사용자 조회
     @GetMapping("/nickname/{nickname}")
-    public ResponseDTO<UserDTO> getUserByName(@PathVariable String nickname) {
+    public ResponseDTO<UserDTO> getUserByName(@PathVariable("nickname") String nickname) {
         UserDTO userDTO = userService.getUserByNickname(nickname);
         return ResponseDTO.ok(userDTO);
     }
 
-    //회원별 댓글 조회 api
+    // 회원별 댓글 조회 API
     @GetMapping("/comments/{userId}")
-    public UserCommentsAndRepliesDTO getCommentsAndRepliesByUserId(@PathVariable Long userId) {
+    public UserCommentsAndRepliesDTO getCommentsAndRepliesByUserId(@PathVariable("userId") Long userId) {
         return recruitmentCommentService.getCommentsAndRepliesByUserId(userId);
     }
 }
+
 

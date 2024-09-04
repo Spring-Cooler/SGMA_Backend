@@ -27,7 +27,7 @@ public class ResponseUserVO {
     private String email;
 
     @JsonProperty("user_status")
-    private ActiveStatus userStatus;  // Enum 타입으로 정의
+    private ActiveStatus userStatus;
 
     @JsonProperty("created_at")
     private LocalDateTime createdAt;
@@ -39,8 +39,11 @@ public class ResponseUserVO {
     private String profileImage;
 
     @JsonProperty("accept_status")
-    private AcceptStatus acceptStatus;  // Enum 타입으로 정의
+    private AcceptStatus acceptStatus;
 
     @JsonProperty("signup_path")
-    private SignupPath signupPath;  // Enum 타입으로 정의
+    private SignupPath signupPath;
+
+    @JsonProperty("user_identifier")
+    private String userIdentifier; // 신규 추가
 }
