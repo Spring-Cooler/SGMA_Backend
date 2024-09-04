@@ -41,4 +41,11 @@ public class StudyGroupApplicantCommandController {
         studyGroupApplicantService.approveStudyGroupApplicant(userId, recruitmentBoardId);
         return ResponseDTO.ok("ok");
     }
+
+    @PutMapping("reject/{userId}/{recruitmentBoardId}")
+    @Operation(summary = "스터디 그룹 지원 거절")
+    public ResponseDTO<?> rejectApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId) {
+        studyGroupApplicantService.rejectStudyGroupApplicant(userId, recruitmentBoardId);
+        return ResponseDTO.ok("ok");
+    }
 }
