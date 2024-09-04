@@ -28,13 +28,13 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
     private final ModelMapper modelMapper;
     private final SubmittedAnswerRepository submittedAnswerRepository;
     private final InfraSubmittedAnswerService infraSubmittedAnswerService;
-    SubmittedAnswerService submittedAnswerService;
     @Autowired
-    public AppSubmittedAnswerServiceImpl(ModelMapper modelMapper, SubmittedAnswerRepository submittedAnswerRepository, InfraSubmittedAnswerService infraSubmittedAnswerService, SubmittedAnswerService submittedAnswerService) {
+    public AppSubmittedAnswerServiceImpl(ModelMapper modelMapper
+            , SubmittedAnswerRepository submittedAnswerRepository
+            , InfraSubmittedAnswerService infraSubmittedAnswerService) {
         this.modelMapper = modelMapper;
         this.submittedAnswerRepository = submittedAnswerRepository;
         this.infraSubmittedAnswerService = infraSubmittedAnswerService;
-        this.submittedAnswerService = submittedAnswerService;
     }
 
     @Override
@@ -94,8 +94,9 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
             log.info("submittedAnswer after grade: {}", submittedAnswer);
         }
         submittedAnswerRepository.saveAll(submittedAnswers);
-
-        return rightAnswer/(double)submittedAnswers.size();
+        double score =  rightAnswer/(double)submittedAnswers.size();
+        infraSubmittedAnswerService.requestUpdateParticipantScore(scheduleId, participantId, score);
+        return score;
     }
 }
 //    @Transactional

@@ -6,25 +6,27 @@ import com.springcooler.sgma.studyschedule.command.domain.repository.StudySchedu
 import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudySchedule;
 import com.springcooler.sgma.studyschedule.common.exception.CommonException;
 import com.springcooler.sgma.studyschedule.common.exception.ErrorCode;
-import com.springcooler.sgma.submittedanswer.command.domain.repository.SubmittedAnswerRepository;
+import com.springcooler.sgma.submittedanswer.command.application.service.AppSubmittedAnswerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 public class InfraStudyScheduleParticipantServiceImpl implements InfraStudyScheduleParticipantService {
 
     private final StudyScheduleParticipantRepository participantRepository;
     private final StudyScheduleRepository scheduleRepository;
-    private final SubmittedAnswerRepository answerRepository;
+    private final AppSubmittedAnswerService appSubmittedAnswerService;
 
     @Autowired
     public InfraStudyScheduleParticipantServiceImpl(StudyScheduleParticipantRepository participantRepository,
                                                     StudyScheduleRepository scheduleRepository,
-                                                    SubmittedAnswerRepository answerRepository) {
+                                                    AppSubmittedAnswerService appSubmittedAnswerService) {
         this.participantRepository = participantRepository;
         this.scheduleRepository = scheduleRepository;
-        this.answerRepository = answerRepository;
+        this.appSubmittedAnswerService = appSubmittedAnswerService;
     }
 
     @Transactional
@@ -67,21 +69,16 @@ public class InfraStudyScheduleParticipantServiceImpl implements InfraStudySched
         }
     }
 
-//    @Transactional
-//    @Override
-//    public double gradeAndUpdateParticipantScore(long scheduleId, long participantId) {
-//        // 1. 참가자의 답안 채점
-//        double score = appStudyScheduleParticipantService.gradeSubmittedAnswersByParticipantId(scheduleId, participantId);
-//
-//        // 2. 채점 결과를 해당 참가자에 업데이트
-//        StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
-//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
-//
-//        participant.setTestScore(score);
-//        participant.setTestPercentage(score * 100);
-//
-//        participantRepository.save(participant);
-//
-//        return score;
-//    }
+    @Transactional
+    @Override
+    public double gradeAndUpdateParticipantScore(long scheduleId, long participantId) {
+        double score = appSubmittedAnswerService.gradeSubmittedAnswersByParticipantId(scheduleId, participantId);
+        log.debug("score: {}", score);
+        StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
+
+        participantRepository.save(participant);
+
+        return score;
+    }
 }
