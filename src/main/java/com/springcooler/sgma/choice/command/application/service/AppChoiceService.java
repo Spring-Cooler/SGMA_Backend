@@ -7,7 +7,7 @@ import com.springcooler.sgma.choice.command.domain.aggregate.vo.ProblemVO;
 
 public interface AppChoiceService {
     Choice registChoice(ChoiceDTO newChoiceDTO);
-    Choice modifyChoice(ChoiceDTO modifyChoiceDTO);
+    ChoiceDTO modifyChoice(ChoiceDTO modifyChoiceDTO);
     ProblemVO registChoices(ProblemVO problemVO);
 
 }
