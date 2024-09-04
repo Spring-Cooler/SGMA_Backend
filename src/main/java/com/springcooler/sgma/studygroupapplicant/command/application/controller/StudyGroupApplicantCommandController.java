@@ -32,20 +32,20 @@ public class StudyGroupApplicantCommandController {
     @Operation(summary = "스터디 그룹 지원 신청취소")
     public ResponseDTO<?> deleteApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId){
         studyGroupApplicantService.cancelStudyGroupApply(userId, recruitmentBoardId);
-        return ResponseDTO.ok("ok");
+        return ResponseDTO.ok("지원 신청 취소");
     }
 
     @PostMapping("approve/{userId}/{recruitmentBoardId}")
     @Operation(summary = "스터디 그룹 지원 승인")
     public ResponseDTO<?> approveApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId) {
         studyGroupApplicantService.approveStudyGroupApplicant(userId, recruitmentBoardId);
-        return ResponseDTO.ok("ok");
+        return ResponseDTO.ok("지원 승인 성공");
     }
 
     @PutMapping("reject/{userId}/{recruitmentBoardId}")
     @Operation(summary = "스터디 그룹 지원 거절")
     public ResponseDTO<?> rejectApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId) {
         studyGroupApplicantService.rejectStudyGroupApplicant(userId, recruitmentBoardId);
-        return ResponseDTO.ok("ok");
+        return ResponseDTO.ok("지원 승인 거절");
     }
 }

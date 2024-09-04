@@ -4,6 +4,7 @@ import com.springcooler.sgma.recruitmentboard.query.dto.RecruitmentBoardDTO;
 import com.springcooler.sgma.recruitmentboard.query.service.RecruitmentBoardService;
 
 
+import com.springcooler.sgma.recruitmentboardcomment.common.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,26 +29,21 @@ public class RecruitmentBoardController {
 
     @GetMapping("getAll")
     @Operation(summary = "모집글 전체 조회")
-    public ResponseEntity<?> findAllRecruitmentBoardApplicantList() {
+    public ResponseDTO<?> findAllRecruitmentBoardApplicantList() {
         List<RecruitmentBoardDTO> studyGroupApplicants = recruitmentBoardService.studyGroupRecruitment();
         if(studyGroupApplicants.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("모집 글이 존재하지 않습니다");
+            return ResponseDTO.ok("모집 글이 존재하지 않습니다");
         }
         else
-            return ResponseEntity.ok(studyGroupApplicants);
+            return ResponseDTO.ok(studyGroupApplicants);
     }
 
 
     @GetMapping("getstudygroup/{recruitmentBoardId}")
     @Operation(summary = "모집글 Id로 조회")
-    public ResponseEntity<?> findRecruitmentBoardByRecruitmentBoardId(@PathVariable Long recruitmentBoardId) {
-        try {
+    public ResponseDTO<?> findRecruitmentBoardByRecruitmentBoardId(@PathVariable Long recruitmentBoardId) {
             RecruitmentBoardDTO applicantDTO = recruitmentBoardService.selectStudyGroupApplicantById(recruitmentBoardId);
-            return ResponseEntity.ok(applicantDTO);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("해당 번호의 글이 존재하지 않습니다");
-        }
+            return ResponseDTO.ok(applicantDTO);
     }
 }
+

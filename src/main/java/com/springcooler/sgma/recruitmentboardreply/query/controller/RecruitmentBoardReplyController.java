@@ -1,5 +1,6 @@
 package com.springcooler.sgma.recruitmentboardreply.query.controller;
 
+import com.springcooler.sgma.recruitmentboardcomment.common.ResponseDTO;
 import com.springcooler.sgma.recruitmentboardreply.query.dto.RecruitmentBoardReplyDTO;
 import com.springcooler.sgma.recruitmentboardreply.query.service.RecruitmentBoardReplyService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,9 +23,9 @@ public class RecruitmentBoardReplyController {
 
     @GetMapping("getAllReply")
     @Operation(summary = "모든 대댓글 조회")
-    public List<RecruitmentBoardReplyDTO> findAllRecruitmentBoardApplicantList(){
+    public ResponseDTO<?> findAllRecruitmentBoardApplicantList(){
         List<RecruitmentBoardReplyDTO> recruitmentBoardReplyDTO = recruitmentBoardReplyService.getAllRecruitmentBoardReply();
-        return recruitmentBoardReplyDTO;
+        return ResponseDTO.ok(recruitmentBoardReplyDTO);
     }
 
 }
