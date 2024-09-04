@@ -17,6 +17,6 @@ public interface AppStudyScheduleParticipantService {
 
     void decreaseNumSubmittedProblems(Long scheduleId, Long participantId);
 
-    // 참가자의 시험 점수와 백분율 계산
-//    void calculateAndUpdateParticipantScores(Long scheduleId);
+    // 특정 참가자의 시험 점수와 백분율 계산 및 저장
+    void gradeSubmittedAnswersByParticipantId(long scheduleId, long participantId, double score);
 }

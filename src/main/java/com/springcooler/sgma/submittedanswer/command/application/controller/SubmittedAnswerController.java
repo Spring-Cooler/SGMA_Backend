@@ -31,6 +31,7 @@ public class SubmittedAnswerController {
         return ResponseDTO.ok(appSubmittedAnswerService.modifySubmittedAnswer(modifySubmittedAnswer));
     }
 
+
     @PutMapping("/grade/{scheduleId}/{participantId}")
     public ResponseDTO<?> gradeSubmittedAnswerByParticipantId(@PathVariable long scheduleId, @PathVariable long participantId){
         return ResponseDTO.ok(String.valueOf(appSubmittedAnswerService.gradeSubmittedAnswersByParticipantId(scheduleId, participantId)));
