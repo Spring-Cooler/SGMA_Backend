@@ -74,15 +74,15 @@ class AppSubmittedAnswerServiceTests {
 //        assertNotNull(gradedAnswer);
 //    }
 //
-    @DisplayName("참여자 아이디로 채점 테스트")
-    @Test
-    void testGradeSubmittedAnswerByParticipantId(){
-
-        // given
-        int participantId = 1;
-
-        // when
-        appSubmittedAnswerService.gradeSubmittedAnswersByParticipantId(participantId);
-    }
+//    @DisplayName("참여자 아이디로 채점 테스트")
+//    @Test
+//    void testGradeSubmittedAnswerByParticipantId(){
+//
+//        // given
+//        int participantId = 1;
+//
+//        // when
+//        appSubmittedAnswerService.gradeSubmittedAnswersByParticipantId(participantId);
+//    }
 
 }

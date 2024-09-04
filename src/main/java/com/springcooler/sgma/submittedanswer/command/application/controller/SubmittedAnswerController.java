@@ -4,10 +4,8 @@ import com.springcooler.sgma.submittedanswer.command.application.dto.SubmittedAn
 import com.springcooler.sgma.submittedanswer.command.application.service.AppSubmittedAnswerService;
 import com.springcooler.sgma.submittedanswer.common.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 
 @RestController("commandSubmittedAnswerController")
 @RequestMapping("/api/submitted-answers/")
@@ -29,10 +27,12 @@ public class SubmittedAnswerController {
     public ResponseDTO<?> modifySubmittedAnswer(@RequestBody SubmittedAnswerDTO modifySubmittedAnswer){
         return ResponseDTO.ok(appSubmittedAnswerService.modifySubmittedAnswer(modifySubmittedAnswer));
     }
-    @PutMapping("/grade/{participantId}")
-    public ResponseDTO<?> gradeSubmittedAnswerByParticipantId(@PathVariable long participantId){
-//        appSubmittedAnswerService.gradeSubmittedAnswersByParticipantId(participantId);
-        return ResponseDTO.ok(null);
+
+    @PutMapping("/grade/{scheduleId}/{participantId}")
+    public ResponseDTO<?> gradeSubmittedAnswerByParticipantId(@PathVariable long scheduleId, @PathVariable long participantId){
+        return ResponseDTO.ok(String.valueOf(appSubmittedAnswerService.gradeSubmittedAnswersByParticipantId(scheduleId, participantId)));
+    }
+
     }
 //    @PutMapping("/grade/")// TODO: 시험 종료시 해당 시험에 해당하는 문제 한번에 채점
 //    public ResponseEntity<?> gradeSubmittedAnswer(@RequestBody SubmittedAnswerDTO answerToGrade){
@@ -41,4 +41,4 @@ public class SubmittedAnswerController {
 //    }
 
 
-}
+

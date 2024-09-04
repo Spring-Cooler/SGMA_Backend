@@ -12,5 +12,8 @@ public interface AppSubmittedAnswerService {
 
     SubmittedAnswer findSubmittedAnswerByProblemIdAndParticipantId(long problemId, long participantId);
 
+    double gradeSubmittedAnswersByParticipantId(long scheduleId, long participantId);
+
 //    void gradeSubmittedAnswersByParticipantId(long participantId);
+
 }
