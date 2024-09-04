@@ -61,6 +61,12 @@
 #### DDD
 
 #### DB 모델링
+1. 개념 모델링
+![image](https://github.com/user-attachments/assets/e6dea257-6429-4be1-91f4-fa653914148e)
+2. 논리 모델링
+![image](https://github.com/user-attachments/assets/d75544e3-92d9-4e47-b33b-5f595c5c4fcb)
+3. 물리 모델링
+![image](https://github.com/user-attachments/assets/7d0b0f43-37e2-40f4-b0ad-dcbae3119718)
 
 #### WBS
 
