@@ -50,7 +50,10 @@
         A.LIKES,
         A.GROUP_ID,
         A.STUDY_GROUP_CATEGORY_ID
+<!--        ,B.CONTENT,-->
+<!--        B.CREATED_AT-->
         FROM RECRUITMENT_BOARD A
+<!--        JOIN RECRUITMENT_BOARD A ON A.RECRUITMENT_BOARD_ID=B.RECRUITMENT_BOARD_COMMENT-->
         WHERE A.RECRUITMENT_BOARD_ID = #{ recruitmentBoardId }
     </select>
 

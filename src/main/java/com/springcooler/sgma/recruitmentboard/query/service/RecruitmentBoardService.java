@@ -30,6 +30,7 @@ public class RecruitmentBoardService {
         SqlSession sqlSession =getSqlSession();
         recruitmentBoardMapper =sqlSession.getMapper(RecruitmentBoardMapper.class);
         RecruitmentBoardDTO recruitmentBoardDTO = recruitmentBoardMapper.selectStudyGroupApplicantDTO(recruitmentBoardId);
+        System.out.println(recruitmentBoardDTO);
         return recruitmentBoardDTO;
     }
 }

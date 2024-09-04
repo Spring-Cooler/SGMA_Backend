@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Builder
+@Builder(toBuilder = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

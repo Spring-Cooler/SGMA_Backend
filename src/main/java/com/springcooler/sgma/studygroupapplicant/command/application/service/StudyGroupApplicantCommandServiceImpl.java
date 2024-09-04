@@ -1,6 +1,9 @@
 package com.springcooler.sgma.studygroupapplicant.command.application.service;
 
 
+import com.springcooler.sgma.recruitmentboardcomment.command.application.dto.RecruitmentBoardCommentCommandDTO;
+import com.springcooler.sgma.recruitmentboardcomment.command.domain.aggregate.ActiveStatus;
+import com.springcooler.sgma.recruitmentboardcomment.command.domain.aggregate.RecruitmentBoardComment;
 import com.springcooler.sgma.studygroupapplicant.command.domain.aggregate.StudyGroupApplicantId;
 import com.springcooler.sgma.studygroup.command.application.service.AppStudyGroupService;
 import com.springcooler.sgma.studygroupapplicant.command.application.dto.StudyGroupApplicantCommandDTO;
@@ -15,6 +18,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 
 @Service
@@ -40,6 +45,7 @@ public class StudyGroupApplicantCommandServiceImpl implements StudyGroupApplican
                 .userId(studyGroupApplicantCommandDTO.getUserId())
                 .applicationStatus(ApplicationStatus.WAIT)
                 .recruitmentBoardId(studyGroupApplicantCommandDTO.getRecruitmentBoardId())
+                .groupId(studyGroupApplicantCommandDTO.getGroupId())
                 .build();
         studyGroupApplicantRepository.save(studyGroupApplicant);
 
@@ -77,5 +83,13 @@ public class StudyGroupApplicantCommandServiceImpl implements StudyGroupApplican
         studyGroupMemberDTO.setGroupId(inputGroupId);
 
         infraStudyGroupApplicantService.approveStudyGroupApplicant(studyGroupMemberDTO);
+    }
+
+    @Override
+    @Transactional
+    public void rejectStudyGroupApplicant(long userId, long recruitmentBoardId) {
+        StudyGroupApplicantId studyGroupApplicantId = new StudyGroupApplicantId(userId, recruitmentBoardId);
+        StudyGroupApplicant studyGroupApplicant = studyGroupApplicantRepository.findById(studyGroupApplicantId).get();
+        studyGroupApplicant.setApplicationStatus(ApplicationStatus.REJECT);
     }
 }

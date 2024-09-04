@@ -3,7 +3,6 @@ package com.springcooler.sgma.recruitmentboard.batch;
 import com.springcooler.sgma.recruitmentboard.command.domain.aggregate.BoardActiveStatus;
 import com.springcooler.sgma.recruitmentboard.command.domain.aggregate.RecruitmentBoard;
 import com.springcooler.sgma.recruitmentboard.command.domain.repository.RecruitmentBoardRepository;
-import com.springcooler.sgma.recruitmentboardcomment.command.domain.aggregate.ActiveStatus;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;

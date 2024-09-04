@@ -15,8 +15,10 @@ public interface StudyGroupApplicantCommandService {
 
     void cancelStudyGroupApply(long userId, long groupId);
 
-
+    // 스터디 그룹 신청 승인
     void approveStudyGroupApplicant(long userId, long groupId);
 
+    // 스터디 그룹 신청 거절
+    void rejectStudyGroupApplicant(long userId, long groupId);
 
 }

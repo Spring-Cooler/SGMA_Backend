@@ -26,8 +26,8 @@ public class RecruitmentBoardCommentCommandServiceImpl implements RecruitmentBoa
         this.recruitmentBoardCommentRepository = recruitmentBoardCommentRepository;
     }
 
-    @Override
     @Transactional
+    @Override
     public RecruitmentBoardComment createRecruitmentBoardComment(Long recruitmentBoardId,RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
         RecruitmentBoardComment recruitmentBoardComment = RecruitmentBoardComment.builder()
                 .content(recruitmentBoardCommentCommandDTO.getContent())
@@ -57,15 +57,21 @@ public class RecruitmentBoardCommentCommandServiceImpl implements RecruitmentBoa
             throw new EntityNotFoundException("수정할 댓글이 없습니다.");
         }
     }
+
+
     @Override
     @Transactional
-    public RecruitmentBoardComment deleteRecruitmentBoardComment (Long recruitmentBoardCommentId,RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO){
+    public RecruitmentBoardComment deleteRecruitmentBoardComment(Long recruitmentBoardCommentId, RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
         Optional<RecruitmentBoardComment> optionalRecruitmentBoardComment = recruitmentBoardCommentRepository.findById(recruitmentBoardCommentId);
 
         if (optionalRecruitmentBoardComment.isPresent()) {
             RecruitmentBoardComment recruitmentBoardComment = optionalRecruitmentBoardComment.get();
-            recruitmentBoardComment.setActiveStatus(ActiveStatus.INACTIVE);
-            return recruitmentBoardCommentRepository.save(recruitmentBoardComment);
+
+            RecruitmentBoardComment updatedRecruitmentBoardComment = recruitmentBoardComment.toBuilder()
+                    .activeStatus(ActiveStatus.INACTIVE)
+                    .build();
+
+            return recruitmentBoardCommentRepository.save(updatedRecruitmentBoardComment);
         } else {
             throw new EntityNotFoundException("삭제할 댓글이 없습니다.");
         }

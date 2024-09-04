@@ -14,7 +14,7 @@ import static com.springcooler.sgma.recruitmentboardcomment.common.Template.getS
 @Service
 @Slf4j
 public class RecruitmentBoardCommentService {
-    private RecruitmentBoardCommentMapper recruitmentBoardCommentMapper;
+//    private RecruitmentBoardCommentMapper recruitmentBoardCommentMapper;
 
     public List<RecruitmentBoardCommentDTO> studyGroupRecruitmentComment(Long recruitmentBoardId) {
         SqlSession sqlSession = getSqlSession();

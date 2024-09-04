@@ -1,11 +1,10 @@
 package com.springcooler.sgma.studygroupapplicant.command.application.controller;
 
-import com.springcooler.sgma.studygroup.command.application.service.AppStudyGroupService;
-import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
+import com.springcooler.sgma.recruitmentboard.common.ResponseDTO;
 import com.springcooler.sgma.studygroupapplicant.command.application.dto.StudyGroupApplicantCommandDTO;
 import com.springcooler.sgma.studygroupapplicant.command.application.service.StudyGroupApplicantCommandService;
 
-import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
@@ -22,26 +21,31 @@ public class StudyGroupApplicantCommandController {
     @Autowired
     private StudyGroupApplicantCommandService studyGroupApplicantService;
 
-    @Autowired
-    private AppStudyGroupService appStudyGroupService;
-
-
-
     @PostMapping("apply")
-    public ResponseEntity<StudyGroupApplicantCommandDTO> applyApplicant(@RequestBody StudyGroupApplicantCommandDTO studyGroupApplicantCommandDTO){
+    @Operation(summary = "스터디 그룹 지원 신청")
+    public ResponseDTO<?> applyApplicant(@RequestBody StudyGroupApplicantCommandDTO studyGroupApplicantCommandDTO){
         studyGroupApplicantService.applyStudyGroup(studyGroupApplicantCommandDTO);
-        return ResponseEntity.ok(studyGroupApplicantCommandDTO);
+        return ResponseDTO.ok(studyGroupApplicantCommandDTO);
     }
 
     @DeleteMapping("delete/{userId}/{recruitmentBoardId}")
-    public ResponseEntity<Void> deleteApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId){
+    @Operation(summary = "스터디 그룹 지원 신청취소")
+    public ResponseDTO<?> deleteApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId){
         studyGroupApplicantService.cancelStudyGroupApply(userId, recruitmentBoardId);
-        return ResponseEntity.ok().build();
+        return ResponseDTO.ok("ok");
     }
 
     @PostMapping("approve/{userId}/{recruitmentBoardId}")
-    public ResponseEntity<Void> approveApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId) {
+    @Operation(summary = "스터디 그룹 지원 승인")
+    public ResponseDTO<?> approveApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId) {
         studyGroupApplicantService.approveStudyGroupApplicant(userId, recruitmentBoardId);
-        return ResponseEntity.ok().build();
+        return ResponseDTO.ok("ok");
+    }
+
+    @PutMapping("reject/{userId}/{recruitmentBoardId}")
+    @Operation(summary = "스터디 그룹 지원 거절")
+    public ResponseDTO<?> rejectApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId) {
+        studyGroupApplicantService.rejectStudyGroupApplicant(userId, recruitmentBoardId);
+        return ResponseDTO.ok("ok");
     }
 }

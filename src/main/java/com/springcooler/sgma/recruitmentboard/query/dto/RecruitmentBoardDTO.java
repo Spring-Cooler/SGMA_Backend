@@ -17,4 +17,5 @@ public class RecruitmentBoardDTO {
     private Long groupId;
     private int studyGroupCategoryId;
     private Long UserId;
+    private String content;
 }
