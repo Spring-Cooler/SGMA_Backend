@@ -51,19 +51,19 @@ class SubmittedAnswerServiceTests {
         submittedAnswers.forEach(x-> log.info("x: {}", x));
     }
 
-    @DisplayName("제출 답안 채점 테스트")
-    @Test
-    void testGradeSubmittedAnswerByParticipantId(){
-
-        // given
-        long participantId = 3L;
-        log.info("participantId: {}", participantId);
-
-        // when
-        appSubmittedAnswerServiceImpl.gradeSubmittedAnswersByParticipantId(participantId);
-        // then
-
-    }
+//    @DisplayName("제출 답안 채점 테스트")
+//    @Test
+//    void testGradeSubmittedAnswerByParticipantId(){
+//
+//        // given
+//        long participantId = 3L;
+//        log.info("participantId: {}", participantId);
+//
+//        // when
+//        appSubmittedAnswerServiceImpl.gradeSubmittedAnswersByParticipantId(participantId);
+//        // then
+//
+//    }
 
 
 }

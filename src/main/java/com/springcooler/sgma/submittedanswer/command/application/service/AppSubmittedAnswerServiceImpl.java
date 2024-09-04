@@ -68,18 +68,19 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
 
     @Transactional
     @Override
-    public void gradeSubmittedAnswersByParticipantId(long participantId) {
+    public double gradeSubmittedAnswersByParticipantId(long scheduleId, long participantId) {
         List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByParticipantId(participantId);
         if (submittedAnswers == null || submittedAnswers.isEmpty()) {
             throw new CommonException(ErrorCode.NOT_FOUND_SUBMITTED_ANSWER);
         }
-
+        int rightAnswer = 0;
         for (SubmittedAnswer submittedAnswer : submittedAnswers) {
             log.info("submittedAnswer before grade: {}", submittedAnswer);
             Long problemId = submittedAnswer.getProblemId();
             int answer = infraSubmittedAnswerService.getAnswerByProblemId(problemId);
             if (answer == submittedAnswer.getSubmittedAnswer()) {
                 submittedAnswer.setAnswerStatus("RIGHT");
+                rightAnswer++;
             }
             else {
                 submittedAnswer.setAnswerStatus("WRONG");
@@ -87,5 +88,7 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
             log.info("submittedAnswer after grade: {}", submittedAnswer);
         }
         submittedAnswerRepository.saveAll(submittedAnswers);
+
+        return rightAnswer/(double)submittedAnswers.size();
     }
 }
