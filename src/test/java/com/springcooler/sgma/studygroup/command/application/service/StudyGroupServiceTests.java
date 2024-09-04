@@ -117,9 +117,10 @@ class StudyGroupServiceTests {
     @Test
     void testAcceptApplication() {
         //Given
-        StudyGroupMemberDTO applicant = new StudyGroupMemberDTO();
-        applicant.setUserId(1L);
-        applicant.setGroupId(5L);
+        StudyGroupMemberDTO applicant = StudyGroupMemberDTO.builder()
+                .userId(1L)
+                .groupId(5L)
+                .build();
         int expectedMembers = 4;
 
         //When
