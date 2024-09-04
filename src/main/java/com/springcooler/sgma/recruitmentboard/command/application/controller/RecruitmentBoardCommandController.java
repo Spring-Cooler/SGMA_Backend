@@ -1,7 +1,9 @@
 package com.springcooler.sgma.recruitmentboard.command.application.controller;
 
 import com.springcooler.sgma.recruitmentboard.command.application.dto.RecruitmentBoardCommandDTO;
-import com.springcooler.sgma.recruitmentboard.command.application.service.RecruitmentBoardCommandServiceImpl;
+import com.springcooler.sgma.recruitmentboard.command.application.service.RecruitmentBoardCommandService;
+import com.springcooler.sgma.recruitmentboard.common.ResponseDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +17,24 @@ import org.springframework.web.bind.annotation.*;
 public class RecruitmentBoardCommandController {
 
     @Autowired
-    private RecruitmentBoardCommandServiceImpl recruitmentBoardCommandService;
+    private RecruitmentBoardCommandService recruitmentBoardCommandService;
 
     @PostMapping
-    public ResponseEntity<RecruitmentBoardCommandDTO> createRecruitmentBoard(@RequestBody RecruitmentBoardCommandDTO studyGroupApplicantCommandDTO) {
+    @Operation(summary = "모집글 작성")
+    public ResponseDTO<?> createRecruitmentBoard(@RequestBody RecruitmentBoardCommandDTO studyGroupApplicantCommandDTO) {
         recruitmentBoardCommandService.createStudyGroupApplicant(studyGroupApplicantCommandDTO);
-        return ResponseEntity.ok(studyGroupApplicantCommandDTO);
+        return ResponseDTO.ok(studyGroupApplicantCommandDTO);
     }
 
     @PutMapping("/{recruitmentBoardId}")
-    public ResponseEntity<RecruitmentBoardCommandDTO> updateRecruitmentBoard(@PathVariable Long recruitmentBoardId, @RequestBody RecruitmentBoardCommandDTO studyGroupApplicantCommandDTO) {
+    @Operation(summary = "모집글 수정")
+    public ResponseDTO<?> updateRecruitmentBoard(@PathVariable Long recruitmentBoardId, @RequestBody RecruitmentBoardCommandDTO studyGroupApplicantCommandDTO) {
         RecruitmentBoardCommandDTO updatedDto = recruitmentBoardCommandService.updateStudyGroupApplicant(recruitmentBoardId, studyGroupApplicantCommandDTO);
-        return updatedDto != null ? ResponseEntity.ok(updatedDto) : ResponseEntity.notFound().build();
+        return ResponseDTO.ok(studyGroupApplicantCommandDTO);
     }
 
     @DeleteMapping("/{recruitmentBoardId}")
+    @Operation(summary = "모집글 삭제")
     public ResponseEntity<Void> deleteRecruitmentBoard(@PathVariable Long recruitmentBoardId) {
         boolean isDeleted = recruitmentBoardCommandService.deleteStudyGroupApplicant(recruitmentBoardId);
         return isDeleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();

@@ -2,14 +2,16 @@ package com.springcooler.sgma.recruitmentboardreply.query.controller;
 
 import com.springcooler.sgma.recruitmentboardreply.query.dto.RecruitmentBoardReplyDTO;
 import com.springcooler.sgma.recruitmentboardreply.query.service.RecruitmentBoardReplyService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@RestController("RecruitmentBoardReplyCommandController")
+@RequestMapping("api/reply/")
 public class RecruitmentBoardReplyController {
     RecruitmentBoardReplyService recruitmentBoardReplyService;
 
@@ -18,7 +20,8 @@ public class RecruitmentBoardReplyController {
         this.recruitmentBoardReplyService = recruitmentBoardReplyService;
     }
 
-    @GetMapping("/getAllReply")
+    @GetMapping("getAllReply")
+    @Operation(summary = "모든 대댓글 조회")
     public List<RecruitmentBoardReplyDTO> findAllRecruitmentBoardApplicantList(){
         List<RecruitmentBoardReplyDTO> recruitmentBoardReplyDTO = recruitmentBoardReplyService.getAllRecruitmentBoardReply();
         return recruitmentBoardReplyDTO;

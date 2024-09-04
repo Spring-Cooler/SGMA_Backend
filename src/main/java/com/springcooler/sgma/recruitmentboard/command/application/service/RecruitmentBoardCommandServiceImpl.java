@@ -64,34 +64,24 @@ public class RecruitmentBoardCommandServiceImpl implements RecruitmentBoardComma
 
         if (optionalApplicant.isPresent()) {
             RecruitmentBoard existingApplicant = optionalApplicant.get();
+            existingApplicant.setTitle(recruitmentBoardCommandDTO.getTitle());
+            existingApplicant.setContent(recruitmentBoardCommandDTO.getContent());
+            existingApplicant.setRecruitmentStartTime(recruitmentBoardCommandDTO.getRecruitmentStartTime());
+            existingApplicant.setRecruitmentEndTime(recruitmentBoardCommandDTO.getRecruitmentEndTime());
 
             ZonedDateTime nowKst = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
             Timestamp currentTimestamp = Timestamp.from(nowKst.toInstant());
+            existingApplicant.setUpdatedAt(currentTimestamp);
 
-            RecruitmentBoard updatedApplicant = RecruitmentBoard.builder()
-                    .recruitmentBoardId(existingApplicant.getRecruitmentBoardId())  // 기존 ID 유지
-                    .title(recruitmentBoardCommandDTO.getTitle())
-                    .content(recruitmentBoardCommandDTO.getContent())
-                    .recruitmentStartTime(recruitmentBoardCommandDTO.getRecruitmentStartTime())
-                    .recruitmentEndTime(recruitmentBoardCommandDTO.getRecruitmentEndTime())
-                    .createdAt(existingApplicant.getCreatedAt())  // 기존 생성 시간 유지
-                    .updatedAt(currentTimestamp)  // 현재 시간으로 업데이트
-                    .activeStatus(existingApplicant.getActiveStatus())  // 기존 상태 유지
-                    .likes(existingApplicant.getLikes())  // 기존 좋아요 수 유지
-                    .group_id(existingApplicant.getGroup_id())  // 기존 그룹 ID 유지
-                    .study_group_category_id(existingApplicant.getStudy_group_category_id())  // 기존 카테고리 ID 유지
-                    .build();
 
-            updatedApplicant = recruitmentBoardRepository.save(updatedApplicant);
+            RecruitmentBoard updatedApplicant = recruitmentBoardRepository.save(existingApplicant);
 
             return modelMapper.map(updatedApplicant, RecruitmentBoardCommandDTO.class);
         }
 
+
         return null;
     }
-
-
-
 
     @Override
     @Transactional

@@ -4,11 +4,10 @@ package com.springcooler.sgma.recruitmentboardreply.command.domain.aggregate;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 import java.sql.Timestamp;
 
 @Entity
-@Builder
+@Builder(toBuilder = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

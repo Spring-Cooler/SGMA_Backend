@@ -1,8 +1,10 @@
 package com.springcooler.sgma.studygroupapplicant.query.controller;
 
+import com.springcooler.sgma.recruitmentboard.common.ResponseDTO;
 import com.springcooler.sgma.recruitmentboard.query.dto.RecruitmentBoardDTO;
 import com.springcooler.sgma.studygroupapplicant.query.dto.StudyGroupApplicantDTO;
 import com.springcooler.sgma.studygroupapplicant.query.service.StudyGroupApplicantService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,27 +29,17 @@ public class StudyGroupApplicantController {
     }
 
     @GetMapping("recruitment/{recruitmentBoardId}")
-    public ResponseEntity<?> findStudyGroupApplicantByRecruitmentBoardId(@PathVariable Long recruitmentBoardId) {
-        try {
-            List<StudyGroupApplicantDTO> studyGroupApplicantDTO =studyGroupApplicantService.selectStudyGroupApplicantByRecruitmentBoardId(recruitmentBoardId);
-            return ResponseEntity.ok(studyGroupApplicantDTO);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-        }
+    @Operation(summary = "스터디 그룹별 지원 조회")
+    public ResponseDTO<?> findStudyGroupApplicantByRecruitmentBoardId(@PathVariable Long recruitmentBoardId) {
+        List<StudyGroupApplicantDTO> studyGroupApplicantDTO =studyGroupApplicantService.selectStudyGroupApplicantByRecruitmentBoardId(recruitmentBoardId);
+        return ResponseDTO.ok(studyGroupApplicantDTO);
     }
 
 
     @GetMapping("user/{userId}")
-    public ResponseEntity<?> selectStudyGroupApplicantByUserId(@PathVariable Long userId) {
-        try {
-            List<StudyGroupApplicantDTO> studyGroupApplicantDTO =studyGroupApplicantService.selectStudyGroupApplicantByUserId(userId);
-            return ResponseEntity.ok(studyGroupApplicantDTO);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-        }
+    @Operation(summary = "회원별 지원 조회")
+    public ResponseDTO<?> selectStudyGroupApplicantByUserId(@PathVariable Long userId) {
+        List<StudyGroupApplicantDTO> studyGroupApplicantDTO =studyGroupApplicantService.selectStudyGroupApplicantByUserId(userId);
+        return ResponseDTO.ok(studyGroupApplicantDTO);
     }
 }

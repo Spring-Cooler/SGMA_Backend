@@ -4,7 +4,7 @@ import com.springcooler.sgma.recruitmentboard.query.dto.RecruitmentBoardDTO;
 import com.springcooler.sgma.recruitmentboard.query.service.RecruitmentBoardService;
 
 
-
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/study-group-applicant")
+@RequestMapping("api/recruitment-board")
 public class RecruitmentBoardController {
 
     private final RecruitmentBoardService recruitmentBoardService;
@@ -26,9 +26,8 @@ public class RecruitmentBoardController {
         this.recruitmentBoardService = studyGroupApplicantService;
     }
 
-
-
     @GetMapping("getAll")
+    @Operation(summary = "모집글 전체 조회")
     public ResponseEntity<?> findAllRecruitmentBoardApplicantList() {
         List<RecruitmentBoardDTO> studyGroupApplicants = recruitmentBoardService.studyGroupRecruitment();
         if(studyGroupApplicants.isEmpty()) {
@@ -40,6 +39,7 @@ public class RecruitmentBoardController {
 
 
     @GetMapping("getstudygroup/{recruitmentBoardId}")
+    @Operation(summary = "모집글 Id로 조회")
     public ResponseEntity<?> findRecruitmentBoardByRecruitmentBoardId(@PathVariable Long recruitmentBoardId) {
         try {
             RecruitmentBoardDTO applicantDTO = recruitmentBoardService.selectStudyGroupApplicantById(recruitmentBoardId);
