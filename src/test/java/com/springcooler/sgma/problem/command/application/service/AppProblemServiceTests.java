@@ -28,7 +28,7 @@ class AppProblemServiceTests {
     void testDeleteProblem(){
 
         // given
-        long deleteProblemId = 12L;
+        long deleteProblemId = 10L;
 
         // when
         appProblemService.deleteProblem(deleteProblemId);
