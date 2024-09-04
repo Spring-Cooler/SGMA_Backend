@@ -28,6 +28,7 @@ class StudyScheduleServiceTests {
         newSchedule.setContent("테스트 일정 내용");
         newSchedule.setScheduleStartTime(Timestamp.valueOf("2024-09-01 10:00:00"));
         newSchedule.setScheduleEndTime(Timestamp.valueOf("2024-09-09 12:00:00"));
+        newSchedule.setNumParticipants(0);
         newSchedule.setTestStatus("Y");
         newSchedule.setGroupId(1L);
         newSchedule.setNumProblemsPerParticipant(4);
@@ -65,7 +66,7 @@ class StudyScheduleServiceTests {
     @Test
     void testDeleteStudySchedule() {
         // Given
-        Long scheduleId = 2L;
+        Long scheduleId = 8L;
 
         // When
         studyScheduleService.deleteStudySchedule(scheduleId);
@@ -76,15 +77,16 @@ class StudyScheduleServiceTests {
                 () -> studyScheduleService.deleteStudySchedule(scheduleId));
     }
 
-//    @DisplayName("스터디 그룹 일정 참가자 평균점수 및 표준편차 업데이트 테스트")
-//    @Test
-//    void testUpdateScheduleWithParticipantScores() {
-//        // Given
-//
-//        // When
-//        studyScheduleService.updateScheduleWithParticipantScores(scheduleId);
-//
-//        // Then
-//        Assertions.assertNotNull(updatedSchedule);
-//    }
+    @DisplayName("스터디 그룹 일정 참가자 평균점수 및 표준편차 업데이트 테스트")
+    @Test
+    void testUpdateScheduleWithParticipantScores() {
+        // Given
+        Long scheduleId = 4L;
+
+        // When
+        StudySchedule updatedSchedule = studyScheduleService.updateScheduleWithParticipantScores(scheduleId);
+
+        // Then
+        Assertions.assertNotNull(updatedSchedule);
+    }
 }
