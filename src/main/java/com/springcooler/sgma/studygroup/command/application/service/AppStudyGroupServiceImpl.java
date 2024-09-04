@@ -55,9 +55,10 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
                 studyGroupRepository.save(modelMapper.map(tempStudyGroup, StudyGroup.class));
 
         // 스터디 그룹장 추가 요청 코드
-        StudyGroupMemberDTO owner = new StudyGroupMemberDTO();
-        owner.setUserId(studyGroup.getUserId());
-        owner.setGroupId(studyGroup.getGroupId());
+        StudyGroupMemberDTO owner = StudyGroupMemberDTO.builder()
+                .userId(studyGroup.getUserId())
+                .groupId(studyGroup.getGroupId())
+                .build();
         infraStudyGroupService.registStudyGroupOwner(owner);
 
         // 스터디 그룹원 수 1명으로 초기화
