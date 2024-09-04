@@ -39,10 +39,10 @@ public class StudyScheduleServiceImpl implements StudyScheduleService {
     }
 
     // 스터디 그룹 일정 기간별 조회
-//    @Override
-//    public List<StudyScheduleDTO> findStudySchedulesByPeriod(long groupId, String startDate, String endDate) {
-//        return studyScheduleMapper.findStudySchedulesByPeriod(groupId, startDate, endDate);
-//    }
+    @Override
+    public List<StudyScheduleDTO> findStudySchedulesByPeriod(long groupId, String startDate, String endDate) {
+        return studyScheduleMapper.findStudySchedulesByPeriod(groupId, startDate, endDate);
+    }
 
     // 스터디 그룹 일정 시험의 통계 자료 조회
     @Override

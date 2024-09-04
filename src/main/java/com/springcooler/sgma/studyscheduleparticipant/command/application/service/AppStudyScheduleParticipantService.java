@@ -15,7 +15,7 @@ public interface AppStudyScheduleParticipantService {
     // 출제 문제수 및 출제 상태 변경
     void increaseNumSubmittedProblems(Long scheduleId, Long memberId);
 
-    void decreaseNumSubmittedProblems(Long scheduleId, Long participnatId);
+    void decreaseNumSubmittedProblems(Long scheduleId, Long participantId);
 
     // 참가자의 시험 점수와 백분율 계산
 //    void calculateAndUpdateParticipantScores(Long scheduleId);

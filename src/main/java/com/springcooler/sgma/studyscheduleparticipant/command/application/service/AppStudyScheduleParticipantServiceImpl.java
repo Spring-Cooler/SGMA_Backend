@@ -1,7 +1,5 @@
 package com.springcooler.sgma.studyscheduleparticipant.command.application.service;
 
-import com.springcooler.sgma.problem.command.domain.repository.ProblemRepository;
-import com.springcooler.sgma.studyschedule.command.infrastructure.service.InfraStudyScheduleService;
 import com.springcooler.sgma.studyschedule.common.exception.CommonException;
 import com.springcooler.sgma.studyschedule.common.exception.ErrorCode;
 import com.springcooler.sgma.studyscheduleparticipant.command.application.dto.StudyScheduleParticipantDTO;
@@ -11,6 +9,7 @@ import com.springcooler.sgma.studyscheduleparticipant.command.domain.aggregate.S
 import com.springcooler.sgma.studyscheduleparticipant.command.domain.repository.StudyScheduleParticipantRepository;
 import com.springcooler.sgma.studyschedule.command.domain.repository.StudyScheduleRepository;
 import com.springcooler.sgma.studyscheduleparticipant.command.domain.service.DomainStudyScheduleParticipantService;
+import com.springcooler.sgma.submittedanswer.command.infrastructure.service.InfraSubmittedAnswerService;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,25 +17,27 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
+
 @Slf4j
 @Service
 public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleParticipantService {
 
     private final StudyScheduleParticipantRepository participantRepository;
     private final StudyScheduleRepository scheduleRepository;
-    private final InfraStudyScheduleService infraStudyScheduleService;
+    private final InfraSubmittedAnswerService infraSubmittedAnswerService;
     private final DomainStudyScheduleParticipantService domainStudyScheduleParticipantService;
     private final ModelMapper modelMapper;
 
     @Autowired
     public AppStudyScheduleParticipantServiceImpl(StudyScheduleParticipantRepository participantRepository,
                                                   StudyScheduleRepository scheduleRepository,
-                                                  InfraStudyScheduleService infraStudyScheduleService,
+                                                  InfraSubmittedAnswerService infraSubmittedAnswerService,
                                                   DomainStudyScheduleParticipantService domainStudyScheduleParticipantService,
                                                   ModelMapper modelMapper) {
         this.participantRepository = participantRepository;
         this.scheduleRepository = scheduleRepository;
-        this.infraStudyScheduleService = infraStudyScheduleService;
+        this.infraSubmittedAnswerService = infraSubmittedAnswerService;
         this.domainStudyScheduleParticipantService = domainStudyScheduleParticipantService;
         this.modelMapper = modelMapper;
     }
@@ -99,6 +100,7 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
         }
 
     }
+
     @Transactional
     @Override
     public void decreaseNumSubmittedProblems(Long scheduleId, Long participantId) {
@@ -112,13 +114,13 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
         StudySchedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
 
-        if (participant.getNumSubmittedProblems().equals(schedule.getNumProblemsPerParticipant())) {
-            participant.setSubmissionStatus("Y");
+        if (!Objects.equals(participant.getNumSubmittedProblems(), schedule.getNumProblemsPerParticipant())) {
+            participant.setSubmissionStatus("N");
             participantRepository.save(participant);
         }
     }
 
-// 특정 참가자의 시험 점수와 백분율 계산
+    // 특정 참가자의 시험 점수와 백분율 계산
 //    @Transactional
 //    @Override
 //    public void calculateAndUpdateParticipantScores(Long scheduleId) {
@@ -126,23 +128,21 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
 //
 //        for (StudyScheduleParticipant participant : participants) {
 //            if ("Y".equalsIgnoreCase(participant.getSubmissionStatus())) {
-//                // 1. 특정 참가자가 제출한 답안 중 정답의 개수 가져오기 (InfraService 사용)
-//                long correctAnswersCount = infraStudyScheduleService.getCorrectAnswersCount(participant.getParticipantId());
+//                // 1. 특정 참가자가 제출한 답안 중 정답의 개수 가져오기
+//                long correctAnswersCount = infraSubmittedAnswerService.getCorrectAnswersCount(participant.getParticipantId());
 //
 //                // 2. 같은 일정에 참가한 'Y' 상태인 참가자들의 제출한 문제 수 합산
-//                List<StudyScheduleParticipant> participantsWithYStatus = participantRepository.findByScheduleIdAndSubmissionStatus(participant.getScheduleId(), "Y");
+//                List<StudyScheduleParticipant> participantsWithYStatus = participantRepository.findByScheduleIdAndSubmissionStatus(scheduleId, "Y");
 //                int totalSubmittedProblems = participantsWithYStatus.stream()
 //                        .mapToInt(StudyScheduleParticipant::getNumSubmittedProblems)
 //                        .sum();
 //
 //                // 3. 점수 계산
-//                double score = (totalSubmittedProblems / 100.0) * correctAnswersCount;
-//
+//                double score = (totalSubmittedProblems > 0) ? (correctAnswersCount / (double) totalSubmittedProblems) * 100 : 0.0;
 //                participant.setTestScore(score);
-//                participant.setTestPercentage((score / totalSubmittedProblems) * 100.0);
+//                participant.setTestPercentage(score); // Assuming percentage is equal to score in this case
 //                participantRepository.save(participant);
 //            }
-//            // 'N' 상태인 경우는 기본값(0점)을 사용하므로 추가 작업이 필요 없음
 //        }
 //    }
 }

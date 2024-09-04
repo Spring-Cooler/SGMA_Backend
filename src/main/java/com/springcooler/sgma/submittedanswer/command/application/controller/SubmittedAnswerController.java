@@ -31,7 +31,7 @@ public class SubmittedAnswerController {
     }
     @PutMapping("/grade/{participantId}")
     public ResponseDTO<?> gradeSubmittedAnswerByParticipantId(@PathVariable long participantId){
-        appSubmittedAnswerService.gradeSubmittedAnswersByParticipantId(participantId);
+//        appSubmittedAnswerService.gradeSubmittedAnswersByParticipantId(participantId);
         return ResponseDTO.ok(null);
     }
 //    @PutMapping("/grade/")// TODO: 시험 종료시 해당 시험에 해당하는 문제 한번에 채점
