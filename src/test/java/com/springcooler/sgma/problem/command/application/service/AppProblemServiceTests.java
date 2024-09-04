@@ -55,10 +55,10 @@ class AppProblemServiceTests {
         ProblemAndChoiceDTO problemAndChoiceDTO = new ProblemAndChoiceDTO(null, participantId, scheduleId, content, answer, choices);
 
         // when
-
+        ProblemAndChoiceDTO resultDTO =  appProblemService.registProblemAndChoice(problemAndChoiceDTO);
         // then
         assertNotNull(problemAndChoiceDTO);
-        log.info("problemAndChoiceDTO.getContent(): {}", problemAndChoiceDTO.getContent());
-        log.info("problemAndChoiceDTO.getChoices(): {}", problemAndChoiceDTO.getChoices());
+        log.info("problemAndChoiceDTO.getContent(): {}", resultDTO.getContent());
+        log.info("problemAndChoiceDTO.getChoices(): {}", resultDTO.getChoices());
     }
 }
