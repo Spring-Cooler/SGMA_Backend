@@ -44,10 +44,11 @@ class StudyGroupServiceTests {
     @Test
     void testModifyStudyGroup() {
         //Given
-        StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
-        studyGroupInfo.setGroupId(1L);
-        studyGroupInfo.setGroupName("반짝반짝");
-        studyGroupInfo.setStudyGroupCategoryId(3);
+        StudyGroupDTO studyGroupInfo = StudyGroupDTO.builder()
+                .groupId(1L)
+                .groupName("반짝반짝")
+                .studyGroupCategoryId(3)
+                .build();
 
         //When
         StudyGroupDTO studyGroup = studyGroupService.modifyStudyGroup(studyGroupInfo);
@@ -63,9 +64,10 @@ class StudyGroupServiceTests {
     @Test
     void testModifyStudyGroupName() {
         //Given
-        StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
-        studyGroupInfo.setGroupId(5L);
-        studyGroupInfo.setGroupName("나만의스터디");
+        StudyGroupDTO studyGroupInfo = StudyGroupDTO.builder()
+                .groupId(5L)
+                .groupName("나만의스터디")
+                .build();
 
         //When
         StudyGroupDTO studyGroup = studyGroupService.modifyStudyGroupName(studyGroupInfo);
@@ -81,9 +83,10 @@ class StudyGroupServiceTests {
     @Test
     void testModifyStudyGroupCategory() {
         //Given
-        StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
-        studyGroupInfo.setGroupId(5L);
-        studyGroupInfo.setStudyGroupCategoryId(8);
+        StudyGroupDTO studyGroupInfo = StudyGroupDTO.builder()
+                .groupId(5L)
+                .studyGroupCategoryId(8)
+                .build();
 
         //When
         StudyGroupDTO studyGroup = studyGroupService.modifyStudyGroupCategory(studyGroupInfo);

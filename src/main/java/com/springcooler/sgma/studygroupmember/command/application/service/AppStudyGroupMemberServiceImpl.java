@@ -41,12 +41,16 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
 
         // ACTIVE 처리
-        owner.setMemberEnrolledAt(LocalDateTime.now().withNano(0));
-        owner.setMemberStatus(StudyGroupMemberStatus.ACTIVE);
-        owner.setGroupRole(GroupRole.ROLE_OWNER);
+        StudyGroupMemberDTO tempMember = StudyGroupMemberDTO.builder()
+                .memberEnrolledAt(LocalDateTime.now().withNano(0))
+                .memberStatus(StudyGroupMemberStatus.ACTIVE)
+                .userId(owner.getUserId())
+                .groupId(owner.getGroupId())
+                .groupRole(GroupRole.ROLE_OWNER)
+                .build();
 
         // DTO를 Entity에 매핑 후 저장
-        StudyGroupMember member = modelMapper.map(owner, StudyGroupMember.class);
+        StudyGroupMember member = modelMapper.map(tempMember, StudyGroupMember.class);
         studyGroupMemberRepository.save(member);
 
         return modelMapper.map(member, StudyGroupMemberDTO.class);
@@ -61,12 +65,16 @@ public class AppStudyGroupMemberServiceImpl implements AppStudyGroupMemberServic
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
 
         // ACTIVE 처리
-        newMember.setMemberEnrolledAt(LocalDateTime.now().withNano(0));
-        newMember.setMemberStatus(StudyGroupMemberStatus.ACTIVE);
-        newMember.setGroupRole(GroupRole.ROLE_MEMBER);
+        StudyGroupMemberDTO tempMember = StudyGroupMemberDTO.builder()
+                .memberEnrolledAt(LocalDateTime.now().withNano(0))
+                .memberStatus(StudyGroupMemberStatus.ACTIVE)
+                .userId(newMember.getUserId())
+                .groupId(newMember.getGroupId())
+                .groupRole(GroupRole.ROLE_OWNER)
+                .build();
 
         // DTO를 Entity에 매핑 후 저장
-        StudyGroupMember member = modelMapper.map(newMember, StudyGroupMember.class);
+        StudyGroupMember member = modelMapper.map(tempMember, StudyGroupMember.class);
         studyGroupMemberRepository.save(member);
 
         return modelMapper.map(member, StudyGroupMemberDTO.class);

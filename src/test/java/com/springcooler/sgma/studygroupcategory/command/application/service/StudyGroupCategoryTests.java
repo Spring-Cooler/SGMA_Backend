@@ -22,8 +22,9 @@ class StudyGroupCategoryTests {
     @Test
     void testRegistStudyGroupCategory() {
         //Given
-        StudyGroupCategoryDTO newCategory = new StudyGroupCategoryDTO();
-        newCategory.setCategoryName("보컬");
+        StudyGroupCategoryDTO newCategory = StudyGroupCategoryDTO.builder()
+                .categoryName("보컬")
+                .build();
 
         //When
         StudyGroupCategoryDTO category = studyGroupCategoryService.registStudyGroupCategory(newCategory);

@@ -40,10 +40,15 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
 
         // 생성 시각, 활성화 여부 초기화
-        newNotice.setCreatedAt(LocalDateTime.now().withNano(0));
-        newNotice.setActiveStatus(StudyGroupNoticeStatus.ACTIVE);
+        StudyGroupNoticeDTO tempNotice = StudyGroupNoticeDTO.builder()
+                .title(newNotice.getTitle())
+                .content(newNotice.getContent())
+                .createdAt(LocalDateTime.now().withNano(0))
+                .activeStatus(StudyGroupNoticeStatus.ACTIVE)
+                .groupId(newNotice.getGroupId())
+                .build();
 
-        StudyGroupNotice notice = modelMapper.map(newNotice, StudyGroupNotice.class);
+        StudyGroupNotice notice = modelMapper.map(tempNotice, StudyGroupNotice.class);
         studyGroupNoticeRepository.save(notice);
 
         return modelMapper.map(notice, StudyGroupNoticeDTO.class);
