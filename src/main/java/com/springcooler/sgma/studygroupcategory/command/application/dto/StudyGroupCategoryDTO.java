@@ -1,6 +1,5 @@
 package com.springcooler.sgma.studygroupcategory.command.application.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @NoArgsConstructor
