@@ -74,6 +74,11 @@
 
 #### 요구사항 정의서
 
+https://docs.google.com/spreadsheets/d/1XVX6lAse2VZzDybUvryL8GyeM3-PO_EZMFG10hMVJSk/edit?gid=0#gid=0
+![image](https://github.com/user-attachments/assets/ad2a9474-3dd2-4e5c-bdf4-fa0e48cb4d55)
+
+
+
 #### REST API 설계
 
 #### System Architecture
