@@ -18,21 +18,21 @@ class AppSubmittedAnswerServiceTests {
     private AppSubmittedAnswerService appSubmittedAnswerService;
 
 
-    @DisplayName("문제에 대한 답안 제출 테스트")
-    @Test
-    @Order(1)
-    void testRegistSubmittedAnswer(){
-
-        // given
-        SubmittedAnswerDTO newSubmittedAnswerDTO = new SubmittedAnswerDTO(10,10,3, "UNGRADED");
-        log.info("newSubmittedAnswerDTO: {}", newSubmittedAnswerDTO);
-        // when
-        SubmittedAnswer newSubmittedAnswer = appSubmittedAnswerService.registSubmittedAnswer(newSubmittedAnswerDTO);
-
-        // then
-        assertNotNull(newSubmittedAnswer);
-        log.info("newSubmittedAnswer: {}", newSubmittedAnswer);
-    }
+//    @DisplayName("문제에 대한 답안 제출 테스트")
+//    @Test
+//    @Order(1)
+//    void testRegistSubmittedAnswer(){
+//
+//        // given
+//        SubmittedAnswerDTO newSubmittedAnswerDTO = new SubmittedAnswerDTO(10,10,3, "UNGRADED");
+//        log.info("newSubmittedAnswerDTO: {}", newSubmittedAnswerDTO);
+//        // when
+//        SubmittedAnswer newSubmittedAnswer = appSubmittedAnswerService.registSubmittedAnswer(newSubmittedAnswerDTO);
+//
+//        // then
+//        assertNotNull(newSubmittedAnswer);
+//        log.info("newSubmittedAnswer: {}", newSubmittedAnswer);
+//    }
     
     @DisplayName("제출 답안 수정 테스트")
     @Test

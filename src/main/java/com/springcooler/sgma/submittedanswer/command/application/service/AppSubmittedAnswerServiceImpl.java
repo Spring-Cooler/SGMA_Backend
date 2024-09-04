@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,12 +39,17 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
 
     @Override
     @Transactional
-    public SubmittedAnswer registSubmittedAnswer(SubmittedAnswerDTO newSubmittedAnswerDTO) {
+    public void registSubmittedAnswer(List<SubmittedAnswerDTO> submittedAnswerDTOs) {
+        List<SubmittedAnswer> submittedAnswers = new ArrayList<>();
 
-        SubmittedAnswer newSubmittedAnswer = new SubmittedAnswer(newSubmittedAnswerDTO.getProblemId(),newSubmittedAnswerDTO.getParticipantId(), newSubmittedAnswerDTO.getSubmittedAnswer(), newSubmittedAnswerDTO.getAnswerStatus());
-        newSubmittedAnswer = submittedAnswerRepository.save(newSubmittedAnswer);
+        submittedAnswerDTOs.forEach(
+                submittedAnswer -> {
+                    SubmittedAnswer newSubmittedAnswer = new SubmittedAnswer(submittedAnswer.getProblemId(),submittedAnswer.getParticipantId(), submittedAnswer.getSubmittedAnswer(), submittedAnswer.getAnswerStatus());
+                    submittedAnswers.add(newSubmittedAnswer);
+                }
+        );
+         submittedAnswerRepository.saveAll(submittedAnswers);
 
-        return newSubmittedAnswer;
     }
 
     @Transactional

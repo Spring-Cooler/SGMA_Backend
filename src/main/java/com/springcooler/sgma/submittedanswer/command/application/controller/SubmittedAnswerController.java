@@ -6,6 +6,8 @@ import com.springcooler.sgma.submittedanswer.common.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController("commandSubmittedAnswerController")
 @RequestMapping("/api/submitted-answers/")
@@ -19,8 +21,9 @@ public class SubmittedAnswerController {
     }
 
     @PostMapping("/")
-    public ResponseDTO<?> registSubmittedAnswer(@RequestBody SubmittedAnswerDTO newSubmittedAnswer){
-        return ResponseDTO.ok(appSubmittedAnswerService.registSubmittedAnswer(newSubmittedAnswer));
+    public ResponseDTO<?> registSubmittedAnswer(@RequestBody List<SubmittedAnswerDTO> newSubmittedAnswer){
+        appSubmittedAnswerService.registSubmittedAnswer(newSubmittedAnswer);
+        return ResponseDTO.ok(null);
     }
 
     @PutMapping("/")
