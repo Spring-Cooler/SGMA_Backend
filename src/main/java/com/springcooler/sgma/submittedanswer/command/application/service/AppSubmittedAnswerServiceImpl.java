@@ -68,18 +68,30 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
 
     @Transactional
     @Override
+<<<<<<< HEAD
     public void gradeSubmittedAnswersByParticipantId(long participantId) {
+=======
+    public double gradeSubmittedAnswersByParticipantId(long scheduleId, long participantId) {
+>>>>>>> 0f6c58feede98b581129115d6b402051ada28868
         List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByParticipantId(participantId);
         if (submittedAnswers == null || submittedAnswers.isEmpty()) {
             throw new CommonException(ErrorCode.NOT_FOUND_SUBMITTED_ANSWER);
         }
+<<<<<<< HEAD
 
+=======
+        int rightAnswer = 0;
+>>>>>>> 0f6c58feede98b581129115d6b402051ada28868
         for (SubmittedAnswer submittedAnswer : submittedAnswers) {
             log.info("submittedAnswer before grade: {}", submittedAnswer);
             Long problemId = submittedAnswer.getProblemId();
             int answer = infraSubmittedAnswerService.getAnswerByProblemId(problemId);
             if (answer == submittedAnswer.getSubmittedAnswer()) {
                 submittedAnswer.setAnswerStatus("RIGHT");
+<<<<<<< HEAD
+=======
+                rightAnswer++;
+>>>>>>> 0f6c58feede98b581129115d6b402051ada28868
             }
             else {
                 submittedAnswer.setAnswerStatus("WRONG");
@@ -87,5 +99,33 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
             log.info("submittedAnswer after grade: {}", submittedAnswer);
         }
         submittedAnswerRepository.saveAll(submittedAnswers);
+<<<<<<< HEAD
     }
+=======
+
+        return rightAnswer/(double)submittedAnswers.size();
+    }
+//    @Transactional
+//    @Override
+//    public void gradeSubmittedAnswersByParticipantId(long participantId) {
+//        List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByParticipantId(participantId);
+//        if (submittedAnswers == null || submittedAnswers.isEmpty()) {
+//            throw new CommonException(ErrorCode.NOT_FOUND_SUBMITTED_ANSWER);
+//        }
+//
+//        for (SubmittedAnswer submittedAnswer : submittedAnswers) {
+//            log.info("submittedAnswer before grade: {}", submittedAnswer);
+//            Long problemId = submittedAnswer.getProblemId();
+//            int answer = infraSubmittedAnswerService.getAnswerByProblemId(problemId);
+//            if (answer == submittedAnswer.getSubmittedAnswer()) {
+//                submittedAnswer.setAnswerStatus("RIGHT");
+//            }
+//            else {
+//                submittedAnswer.setAnswerStatus("WRONG");
+//            }
+//            log.info("submittedAnswer after grade: {}", submittedAnswer);
+//        }
+//        submittedAnswerRepository.saveAll(submittedAnswers);
+//    }
+>>>>>>> 0f6c58feede98b581129115d6b402051ada28868
 }
