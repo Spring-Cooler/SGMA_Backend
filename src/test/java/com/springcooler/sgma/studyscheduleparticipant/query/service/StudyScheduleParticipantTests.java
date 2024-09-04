@@ -1,4 +1,4 @@
-package com.springcooler.sgma.studyscheduleparticipant.command.application.service;
+package com.springcooler.sgma.studyscheduleparticipant.query.service;
 
 import com.springcooler.sgma.studyscheduleparticipant.query.dto.StudyScheduleParticipantDTO;
 import com.springcooler.sgma.studyscheduleparticipant.query.service.StudyScheduleParticipantService;
