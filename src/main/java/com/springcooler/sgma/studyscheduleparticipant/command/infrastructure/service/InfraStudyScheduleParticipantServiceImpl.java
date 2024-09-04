@@ -67,9 +67,21 @@ public class InfraStudyScheduleParticipantServiceImpl implements InfraStudySched
         }
     }
 
+//    @Transactional
 //    @Override
-//    public long getCorrectAnswersCount(long participantId) {
-//        // 특정 참가자의 정답 상태가 "RIGHT"인 답안의 개수를 조회
-//        return answerRepository.countByParticipantIdAndAnswerStatus(participantId, "RIGHT");
+//    public double gradeAndUpdateParticipantScore(long scheduleId, long participantId) {
+//        // 1. 참가자의 답안 채점
+//        double score = appStudyScheduleParticipantService.gradeSubmittedAnswersByParticipantId(scheduleId, participantId);
+//
+//        // 2. 채점 결과를 해당 참가자에 업데이트
+//        StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
+//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
+//
+//        participant.setTestScore(score);
+//        participant.setTestPercentage(score * 100);
+//
+//        participantRepository.save(participant);
+//
+//        return score;
 //    }
 }

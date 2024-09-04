@@ -121,28 +121,5 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
     }
 
     // 특정 참가자의 시험 점수와 백분율 계산
-//    @Transactional
-//    @Override
-//    public void calculateAndUpdateParticipantScores(Long scheduleId) {
-//        List<StudyScheduleParticipant> participants = participantRepository.findByScheduleId(scheduleId);
-//
-//        for (StudyScheduleParticipant participant : participants) {
-//            if ("Y".equalsIgnoreCase(participant.getSubmissionStatus())) {
-//                // 1. 특정 참가자가 제출한 답안 중 정답의 개수 가져오기
-//                long correctAnswersCount = infraSubmittedAnswerService.getCorrectAnswersCount(participant.getParticipantId());
-//
-//                // 2. 같은 일정에 참가한 'Y' 상태인 참가자들의 제출한 문제 수 합산
-//                List<StudyScheduleParticipant> participantsWithYStatus = participantRepository.findByScheduleIdAndSubmissionStatus(scheduleId, "Y");
-//                int totalSubmittedProblems = participantsWithYStatus.stream()
-//                        .mapToInt(StudyScheduleParticipant::getNumSubmittedProblems)
-//                        .sum();
-//
-//                // 3. 점수 계산
-//                double score = (totalSubmittedProblems > 0) ? (correctAnswersCount / (double) totalSubmittedProblems) * 100 : 0.0;
-//                participant.setTestScore(score);
-//                participant.setTestPercentage(score); // Assuming percentage is equal to score in this case
-//                participantRepository.save(participant);
-//            }
-//        }
-//    }
+
 }

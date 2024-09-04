@@ -12,12 +12,8 @@ public interface AppSubmittedAnswerService {
 
     SubmittedAnswer findSubmittedAnswerByProblemIdAndParticipantId(long problemId, long participantId);
 
-<<<<<<< HEAD
-    void gradeSubmittedAnswersByParticipantId(long participantId);
-=======
     double gradeSubmittedAnswersByParticipantId(long scheduleId, long participantId);
 
 //    void gradeSubmittedAnswersByParticipantId(long participantId);
 
->>>>>>> 0f6c58feede98b581129115d6b402051ada28868
 }
