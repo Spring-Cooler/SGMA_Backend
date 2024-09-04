@@ -6,6 +6,7 @@ import com.springcooler.sgma.studyschedule.command.domain.repository.StudySchedu
 import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudySchedule;
 import com.springcooler.sgma.studyschedule.common.exception.CommonException;
 import com.springcooler.sgma.studyschedule.common.exception.ErrorCode;
+import com.springcooler.sgma.submittedanswer.command.domain.repository.SubmittedAnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,12 +16,15 @@ public class InfraStudyScheduleParticipantServiceImpl implements InfraStudySched
 
     private final StudyScheduleParticipantRepository participantRepository;
     private final StudyScheduleRepository scheduleRepository;
+    private final SubmittedAnswerRepository answerRepository;
 
     @Autowired
     public InfraStudyScheduleParticipantServiceImpl(StudyScheduleParticipantRepository participantRepository,
-                                                    StudyScheduleRepository scheduleRepository) {
+                                                    StudyScheduleRepository scheduleRepository,
+                                                    SubmittedAnswerRepository answerRepository) {
         this.participantRepository = participantRepository;
         this.scheduleRepository = scheduleRepository;
+        this.answerRepository = answerRepository;
     }
 
     @Transactional
@@ -62,10 +66,10 @@ public class InfraStudyScheduleParticipantServiceImpl implements InfraStudySched
             participantRepository.save(participant);
         }
     }
-}
 
-//@Override
-//public long getCorrectAnswersCount(long participantId) {
-//    // 특정 참가자의 정답 상태가 "RIGHT"인 답안의 개수를 조회
-//    return submittedAnswerRepository.countByParticipantIdAndAnswerStatus(participantId, "RIGHT");
-//}
+//    @Override
+//    public long getCorrectAnswersCount(long participantId) {
+//        // 특정 참가자의 정답 상태가 "RIGHT"인 답안의 개수를 조회
+//        return answerRepository.countByParticipantIdAndAnswerStatus(participantId, "RIGHT");
+//    }
+}

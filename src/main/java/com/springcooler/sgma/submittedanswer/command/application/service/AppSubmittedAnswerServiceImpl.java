@@ -66,26 +66,26 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
         return foundSubmittedAnswer;
     }
 
-    @Transactional
-    @Override
-    public void gradeSubmittedAnswersByParticipantId(long participantId) {
-        List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByParticipantId(participantId);
-        if (submittedAnswers == null || submittedAnswers.isEmpty()) {
-            throw new CommonException(ErrorCode.NOT_FOUND_SUBMITTED_ANSWER);
-        }
-
-        for (SubmittedAnswer submittedAnswer : submittedAnswers) {
-            log.info("submittedAnswer before grade: {}", submittedAnswer);
-            Long problemId = submittedAnswer.getProblemId();
-            int answer = infraSubmittedAnswerService.getAnswerByProblemId(problemId);
-            if (answer == submittedAnswer.getSubmittedAnswer()) {
-                submittedAnswer.setAnswerStatus("RIGHT");
-            }
-            else {
-                submittedAnswer.setAnswerStatus("WRONG");
-            }
-            log.info("submittedAnswer after grade: {}", submittedAnswer);
-        }
-        submittedAnswerRepository.saveAll(submittedAnswers);
-    }
+//    @Transactional
+//    @Override
+//    public void gradeSubmittedAnswersByParticipantId(long participantId) {
+//        List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByParticipantId(participantId);
+//        if (submittedAnswers == null || submittedAnswers.isEmpty()) {
+//            throw new CommonException(ErrorCode.NOT_FOUND_SUBMITTED_ANSWER);
+//        }
+//
+//        for (SubmittedAnswer submittedAnswer : submittedAnswers) {
+//            log.info("submittedAnswer before grade: {}", submittedAnswer);
+//            Long problemId = submittedAnswer.getProblemId();
+//            int answer = infraSubmittedAnswerService.getAnswerByProblemId(problemId);
+//            if (answer == submittedAnswer.getSubmittedAnswer()) {
+//                submittedAnswer.setAnswerStatus("RIGHT");
+//            }
+//            else {
+//                submittedAnswer.setAnswerStatus("WRONG");
+//            }
+//            log.info("submittedAnswer after grade: {}", submittedAnswer);
+//        }
+//        submittedAnswerRepository.saveAll(submittedAnswers);
+//    }
 }
