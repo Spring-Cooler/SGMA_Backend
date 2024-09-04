@@ -58,7 +58,10 @@
 ## 설계 문서
 ---
 #### DDD
-
+1. Event Storming
+![image](https://github.com/user-attachments/assets/b11ddb78-7874-4dfd-a8c0-ebfdbd41e238)
+2. Bounded Context
+![image](https://github.com/user-attachments/assets/3efdd6c0-09bb-4ac0-ae83-d0e399f39ccd)
 #### DB 모델링
 1. 개념 모델링
 ![image](https://github.com/user-attachments/assets/e6dea257-6429-4be1-91f4-fa653914148e)
