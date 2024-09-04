@@ -10,6 +10,7 @@ import com.springcooler.sgma.choice.common.exception.ErrorCode;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +25,11 @@ import java.util.stream.Collectors;
 public class AppChoiceServiceImpl implements AppChoiceService {
 
     private final ChoiceRepository choiceRepository;
-
+    private final ModelMapper modelMapper;
     @Autowired
-    public AppChoiceServiceImpl(ChoiceRepository choiceRepository) {
+    public AppChoiceServiceImpl(ChoiceRepository choiceRepository , ModelMapper modelMapper) {
         this.choiceRepository = choiceRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Transactional
@@ -43,11 +45,12 @@ public class AppChoiceServiceImpl implements AppChoiceService {
 
     @Transactional
     @Override
-    public Choice modifyChoice(ChoiceDTO modifyChoiceDTO) {
+    public ChoiceDTO modifyChoice(ChoiceDTO modifyChoiceDTO) {
         ChoicePK choicePK = new ChoicePK(modifyChoiceDTO.getProblemId(), modifyChoiceDTO.getChoiceNum());
         Choice existingChoice = choiceRepository.findById(choicePK).orElseThrow(EntityNotFoundException::new);
         existingChoice.setContent(modifyChoiceDTO.getContent());
-        return choiceRepository.save(existingChoice);
+        Choice modifiedChoice = choiceRepository.save(existingChoice);
+        return new ChoiceDTO(modifiedChoice.getChoicePK().getProblemId(), modifiedChoice.getChoicePK().getChoiceNum(), modifiedChoice.getContent());
     }
 
 
