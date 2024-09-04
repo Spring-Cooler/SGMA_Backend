@@ -43,15 +43,22 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
 
         // 스터디 그룹 생성 코드
-        newStudyGroup.setGroupMembers(0);
-        newStudyGroup.setActiveStatus(StudyGroupStatus.ACTIVE);
+        StudyGroupDTO tempStudyGroup = StudyGroupDTO.builder()
+                .groupName(newStudyGroup.getGroupName())
+                .activeStatus(StudyGroupStatus.ACTIVE)
+                .groupMembers(0)
+                .userId(newStudyGroup.getUserId())
+                .studyGroupCategoryId(newStudyGroup.getStudyGroupCategoryId())
+                .build();
+
         StudyGroup studyGroup =
-                studyGroupRepository.save(modelMapper.map(newStudyGroup, StudyGroup.class));
+                studyGroupRepository.save(modelMapper.map(tempStudyGroup, StudyGroup.class));
 
         // 스터디 그룹장 추가 요청 코드
-        StudyGroupMemberDTO owner = new StudyGroupMemberDTO();
-        owner.setUserId(studyGroup.getUserId());
-        owner.setGroupId(studyGroup.getGroupId());
+        StudyGroupMemberDTO owner = StudyGroupMemberDTO.builder()
+                .userId(studyGroup.getUserId())
+                .groupId(studyGroup.getGroupId())
+                .build();
         infraStudyGroupService.registStudyGroupOwner(owner);
 
         // 스터디 그룹원 수 1명으로 초기화
@@ -91,13 +98,9 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
 
-        // 활성화 여부, 그룹원 수, 그룹장은 기존 정보 그대로
-        modifyStudyGroup.setActiveStatus(StudyGroupStatus.ACTIVE);
-        modifyStudyGroup.setGroupMembers(existingStudyGroup.getGroupMembers());
-        modifyStudyGroup.setUserId(existingStudyGroup.getUserId());
-
-        // DTO를 엔티티에 매핑
-        modelMapper.map(modifyStudyGroup, existingStudyGroup);
+        // 변경된 정보 매핑
+        existingStudyGroup.setGroupName(modifyStudyGroup.getGroupName());
+        existingStudyGroup.setStudyGroupCategoryId(modifyStudyGroup.getStudyGroupCategoryId());
 
         // 엔티티 저장
         studyGroupRepository.save(existingStudyGroup);
