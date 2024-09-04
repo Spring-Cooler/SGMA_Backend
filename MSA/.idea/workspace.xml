@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d5e5979-5b0f-4313-88eb-0d37ccf910f7" name="Changes" comment="Refactor: 패키지 구조 수정">
-      <change afterPath="$PROJECT_DIR$/.idea/MSA.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Schedule.sgma.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Schedule.sgma.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/User.sgma.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/User.sgma.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/com.springcooler.sgma.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/com.springcooler.sgma.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/sgma.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/sgma.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/sgma_gateway.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-    </list>
+    <list default="true" id="8d5e5979-5b0f-4313-88eb-0d37ccf910f7" name="Changes" comment="Feat: FeignClient를 통해 신청자도메인과 스터디그룹 도메인 통신" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,21 +45,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "woodart8"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;woodart8&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Spring-Cooler/SGMA_Backend.git",
-    "accountId": "bc4e9f10-3722-43c0-a0df-6cbed824d78b"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Spring-Cooler/SGMA_Backend.git&quot;,
+    &quot;accountId&quot;: &quot;bc4e9f10-3722-43c0-a0df-6cbed824d78b&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2lbIxVnzRp5dY2igY7YJ7FtnFQJ" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
@@ -84,11 +67,21 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Gradle.Build Eureka.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.EurekaServerApplication.executor": "Run",
     "git-widget-placeholder": "develop",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/User/Desktop/kibeom/SGMA/MSA",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "run.configurations.included.in.services": "true",
     "vue.rearranger.settings.migration": "true"
@@ -168,6 +161,7 @@
       <option name="presentableId" value="Default" />
       <updated>1725442595760</updated>
       <workItem from="1725442596840" duration="213000" />
+      <workItem from="1725450648792" duration="653000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor: 패키지 구조 수정">
       <option name="closed" value="true" />
@@ -177,7 +171,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725442692640</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Feat: FeignClient를 통해 신청자도메인과 스터디그룹 도메인 통신">
+      <option name="closed" value="true" />
+      <created>1725450721250</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1725450721250</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,6 +187,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactor: 패키지 구조 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor: 패키지 구조 수정" />
+    <MESSAGE value="Feat: FeignClient를 통해 신청자도메인과 스터디그룹 도메인 통신" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat: FeignClient를 통해 신청자도메인과 스터디그룹 도메인 통신" />
   </component>
 </project>
