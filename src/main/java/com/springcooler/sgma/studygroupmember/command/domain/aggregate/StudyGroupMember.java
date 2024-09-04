@@ -3,7 +3,7 @@ package com.springcooler.sgma.studygroupmember.command.domain.aggregate;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="STUDY_GROUP_MEMBER")
@@ -17,21 +17,26 @@ public class StudyGroupMember {
     @Id
     @Column(name="MEMBER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long memberId;
+    private Long memberId;
 
     @Column(name="MEMBER_ENROLLED_AT")
-    private Timestamp memberEnrolledAt;
+    private LocalDateTime memberEnrolledAt;
 
     @Column(name="MEMBER_WITHDRAWN_AT")
-    private Timestamp memberWithdrawnAt;
+    private LocalDateTime memberWithdrawnAt;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="MEMBER_STATUS")
-    private String memberStatus;
+    private StudyGroupMemberStatus memberStatus;
 
     @Column(name="USER_ID")
-    private long userId;
+    private Long userId;
 
     @Column(name="GROUP_ID")
-    private long groupId;
+    private Long groupId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="GROUP_ROLE")
+    private GroupRole groupRole;
 
 }

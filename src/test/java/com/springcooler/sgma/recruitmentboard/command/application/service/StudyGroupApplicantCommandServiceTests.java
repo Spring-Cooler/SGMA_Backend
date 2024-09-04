@@ -21,7 +21,7 @@ import java.util.Optional;
 class StudyGroupApplicantCommandServiceTests {
 
     @Autowired
-    private RecruitmentBoardCommandService studyGroupApplicantCommandService;
+    private RecruitmentBoardCommandServiceImpl studyGroupApplicantCommandService;
 
     @Autowired
     private RecruitmentBoardRepository studyGroupApplicantRepository;

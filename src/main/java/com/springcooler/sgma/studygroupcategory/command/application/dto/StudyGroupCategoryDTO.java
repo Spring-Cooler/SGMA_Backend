@@ -4,10 +4,9 @@ import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
 public class StudyGroupCategoryDTO {
-    private int categoryId;
+    private Integer categoryId;
     private String categoryName;
 }

@@ -1,15 +1,13 @@
 package com.springcooler.sgma.studygroupapplicant.command.domain.aggregate;
 
-import com.springcooler.sgma.recruitmentboard.command.domain.aggregate.StudyGroupApplicantId;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Builder
+@Builder(toBuilder = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @IdClass(StudyGroupApplicantId.class)
 public class StudyGroupApplicant {
     @Id
@@ -24,4 +22,6 @@ public class StudyGroupApplicant {
     @Enumerated(EnumType.STRING)
     private ApplicationStatus applicationStatus;
 
+    @Column(name="group_id",nullable = false)
+    private Long groupId;
 }

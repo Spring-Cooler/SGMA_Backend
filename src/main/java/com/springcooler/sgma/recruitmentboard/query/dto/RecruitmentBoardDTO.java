@@ -16,5 +16,5 @@ public class RecruitmentBoardDTO {
     private int likes;
     private Long groupId;
     private int studyGroupCategoryId;
-    private Long UserId;
+    private String content;
 }

@@ -1,20 +1,20 @@
 package com.springcooler.sgma.studygroupnotice.command.application.dto;
 
+import com.springcooler.sgma.studygroupnotice.command.domain.aggregate.StudyGroupNoticeStatus;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
 public class StudyGroupNoticeDTO {
-    private long noticeId;
+    private Long noticeId;
     private String title;
     private String content;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
-    private String activeStatus;
-    private long groupId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private StudyGroupNoticeStatus activeStatus;
+    private Long groupId;
 }

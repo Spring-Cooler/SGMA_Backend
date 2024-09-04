@@ -12,6 +12,7 @@
         <result property="numParticipants" column="NUM_PARTICIPANTS"/>
         <result property="groupId" column="GROUP_ID"/>
         <result property="numProblemsPerParticipant" column="NUM_PROBLEMS_PER_PARTICIPANT"/>
+        <result property="activeStatus" column="ACTIVE_STATUS"/>
         <result property="testStatus" column="TEST_STATUS"/>
         <result property="testAverage" column="TEST_AVERAGE"/>
         <result property="testStandardDeviation" column="TEST_STANDARD_DEVIATION"/>
@@ -20,17 +21,18 @@
     <!-- 스터디 그룹 일정 단건 조회 (Schedule ID로) -->
     <select id="findStudyScheduleByScheduleId" resultMap="studySchedule">
         SELECT
-        SCHEDULE_ID,
-        TITLE,
-        CONTENT,
-        SCHEDULE_START_TIME,
-        SCHEDULE_END_TIME,
-        NUM_PARTICIPANTS,
-        TEST_STATUS,
-        TEST_AVERAGE,
-        TEST_STANDARD_DEVIATION,
-        GROUP_ID,
-        NUM_PROBLEMS_PER_PARTICIPANT
+            SCHEDULE_ID
+            , TITLE
+            , CONTENT
+            , SCHEDULE_START_TIME
+            , SCHEDULE_END_TIME
+            , NUM_PARTICIPANTS
+            , ACTIVE_STATUS
+            , TEST_STATUS
+            , TEST_AVERAGE
+            , TEST_STANDARD_DEVIATION
+            , GROUP_ID
+            , NUM_PROBLEMS_PER_PARTICIPANT
         FROM STUDY_SCHEDULE
         WHERE SCHEDULE_ID = #{scheduleId}
     </select>
@@ -38,17 +40,18 @@
     <!-- 스터디 그룹 일정 전체 조회 (Group ID로) -->
     <select id="findStudyScheduleByGroupId" resultMap="studySchedule">
         SELECT
-            SCHEDULE_ID,
-            TITLE,
-            CONTENT,
-            SCHEDULE_START_TIME,
-            SCHEDULE_END_TIME,
-            NUM_PARTICIPANTS,
-            TEST_STATUS,
-            TEST_AVERAGE,
-            TEST_STANDARD_DEVIATION,
-            GROUP_ID,
-            NUM_PROBLEMS_PER_PARTICIPANT
+            SCHEDULE_ID
+            , TITLE
+            , CONTENT
+            , SCHEDULE_START_TIME
+            , SCHEDULE_END_TIME
+            , NUM_PARTICIPANTS
+            , ACTIVE_STATUS
+            , TEST_STATUS
+            , TEST_AVERAGE
+            , TEST_STANDARD_DEVIATION
+            , GROUP_ID
+            , NUM_PROBLEMS_PER_PARTICIPANT
         FROM STUDY_SCHEDULE
         WHERE GROUP_ID = #{groupId}
     </select>
@@ -56,17 +59,18 @@
     <!-- 스터디 그룹 일정 기간별 조회 -->
     <select id="findStudySchedulesByPeriod" resultMap="studySchedule">
         SELECT
-            SCHEDULE_ID,
-            TITLE,
-            CONTENT,
-            SCHEDULE_START_TIME,
-            SCHEDULE_END_TIME,
-            NUM_PARTICIPANTS,
-            TEST_STATUS,
-            TEST_AVERAGE,
-            TEST_STANDARD_DEVIATION,
-            GROUP_ID,
-            NUM_PROBLEMS_PER_PARTICIPANT
+              SCHEDULE_ID
+            , TITLE
+            , CONTENT
+            , SCHEDULE_START_TIME
+            , SCHEDULE_END_TIME
+            , NUM_PARTICIPANTS
+            , ACTIVE_STATUS
+            , TEST_STATUS
+            , TEST_AVERAGE
+            , TEST_STANDARD_DEVIATION
+            , GROUP_ID
+            , NUM_PROBLEMS_PER_PARTICIPANT
         FROM STUDY_SCHEDULE
         WHERE GROUP_ID = #{groupId} AND SCHEDULE_START_TIME >= #{startDate} AND #{endDate} >= SCHEDULE_END_TIME
     </select>
@@ -74,17 +78,18 @@
     <!-- 스터디 그룹 일정 시험의 통계 자료 조회 -->
     <select id="findStudyScheduleByStatistics" resultMap="studySchedule">
         SELECT
-            SCHEDULE_ID,
-            TITLE,
-            CONTENT,
-            SCHEDULE_START_TIME,
-            SCHEDULE_END_TIME,
-            NUM_PARTICIPANTS,
-            TEST_STATUS,
-            TEST_AVERAGE,
-            TEST_STANDARD_DEVIATION,
-            GROUP_ID,
-            NUM_PROBLEMS_PER_PARTICIPANT
+              SCHEDULE_ID
+            , TITLE
+            , CONTENT
+            , SCHEDULE_START_TIME
+            , SCHEDULE_END_TIME
+            , NUM_PARTICIPANTS
+            , ACTIVE_STATUS
+            , TEST_STATUS
+            , TEST_AVERAGE
+            , TEST_STANDARD_DEVIATION
+            , GROUP_ID
+            , NUM_PROBLEMS_PER_PARTICIPANT
         FROM STUDY_SCHEDULE
         WHERE SCHEDULE_ID = #{scheduleId} AND TEST_STATUS = 'Y'
     </select>

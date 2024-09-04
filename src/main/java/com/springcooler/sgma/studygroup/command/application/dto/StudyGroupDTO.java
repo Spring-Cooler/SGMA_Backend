@@ -1,17 +1,17 @@
 package com.springcooler.sgma.studygroup.command.application.dto;
 
+import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroupStatus;
 import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
 public class StudyGroupDTO {
     private Long groupId;
     private String groupName;
-    private String activeStatus;
-    private int groupMembers;
-    private long userId;
-    private int studyGroupCategoryId;
+    private StudyGroupStatus activeStatus;
+    private Integer groupMembers;
+    private Long userId;
+    private Integer studyGroupCategoryId;
 }

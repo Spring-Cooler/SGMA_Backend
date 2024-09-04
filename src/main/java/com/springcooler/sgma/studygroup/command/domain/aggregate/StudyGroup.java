@@ -15,21 +15,22 @@ public class StudyGroup {
     @Id
     @Column(name="GROUP_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long groupId;
+    private Long groupId;
 
     @Column(name="GROUP_NAME")
     private String groupName;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="ACTIVE_STATUS")
-    private String activeStatus;
+    private StudyGroupStatus activeStatus;
 
     @Column(name="GROUP_MEMBERS")
-    private int groupMembers;
+    private Integer groupMembers;
 
     @Column(name="USER_ID")
-    private long userId;
+    private Long userId;
 
     @Column(name="STUDY_GROUP_CATEGORY_ID")
-    private int studyGroupCategoryId;
+    private Integer studyGroupCategoryId;
 
 }

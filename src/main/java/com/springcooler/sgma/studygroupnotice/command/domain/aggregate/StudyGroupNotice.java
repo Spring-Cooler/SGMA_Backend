@@ -3,7 +3,7 @@ package com.springcooler.sgma.studygroupnotice.command.domain.aggregate;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="STUDY_GROUP_NOTICE")
@@ -17,7 +17,7 @@ public class StudyGroupNotice {
     @Id
     @Column(name="NOTICE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long noticeId;
+    private Long noticeId;
 
     @Column(name="TITLE")
     private String title;
@@ -26,15 +26,16 @@ public class StudyGroupNotice {
     private String content;
 
     @Column(name="CREATED_AT")
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name="UPDATED_AT")
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="ACTIVE_STATUS")
-    private String activeStatus;
+    private StudyGroupNoticeStatus activeStatus;
 
     @Column(name="GROUP_ID")
-    private long groupId;
+    private Long groupId;
 
 }

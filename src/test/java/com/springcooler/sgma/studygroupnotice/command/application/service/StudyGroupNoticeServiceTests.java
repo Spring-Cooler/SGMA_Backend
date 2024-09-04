@@ -1,8 +1,8 @@
 package com.springcooler.sgma.studygroupnotice.command.application.service;
 
 import com.springcooler.sgma.studygroupnotice.command.application.dto.StudyGroupNoticeDTO;
-import com.springcooler.sgma.studygroupnotice.command.domain.aggregate.StudyGroupNotice;
-import jakarta.persistence.EntityNotFoundException;
+import com.springcooler.sgma.studygroupnotice.common.exception.CommonException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @SpringBootTest
 @Transactional
 class StudyGroupNoticeServiceTests {
@@ -21,15 +22,16 @@ class StudyGroupNoticeServiceTests {
     @Test
     void testRegistStudyGroupNotice() {
         //Given
-        StudyGroupNoticeDTO newNotice = new StudyGroupNoticeDTO();
-        newNotice.setTitle("테스트용 제목");
-        newNotice.setContent("테스트용 내용");
-        newNotice.setGroupId(1L);
+        StudyGroupNoticeDTO newNotice = StudyGroupNoticeDTO.builder()
+                .title("테스트용 제목")
+                .content("테스트용 내용")
+                .groupId(1L)
+                .build();
 
         //When
-        StudyGroupNotice notice = studyGroupNoticeService.registStudyGroupNotice(newNotice);
+        StudyGroupNoticeDTO notice = studyGroupNoticeService.registStudyGroupNotice(newNotice);
         if (notice != null) {
-            System.out.println(notice);
+            log.info(notice.toString());
         }
 
         //Then
@@ -40,15 +42,16 @@ class StudyGroupNoticeServiceTests {
     @Test
     void testModifyStudyGroupNotice() {
         //Given
-        StudyGroupNoticeDTO modifyNotice = new StudyGroupNoticeDTO();
-        modifyNotice.setNoticeId(1L);
-        modifyNotice.setTitle("바뀐 제목");
-        modifyNotice.setContent("바뀐 내용");
+        StudyGroupNoticeDTO modifyNotice = StudyGroupNoticeDTO.builder()
+                .noticeId(1L)
+                .title("바뀐 제목")
+                .content("바뀐 내용")
+                .build();
 
         //When
-        StudyGroupNotice notice = studyGroupNoticeService.modifyStudyGroupNotice(modifyNotice);
+        StudyGroupNoticeDTO notice = studyGroupNoticeService.modifyStudyGroupNotice(modifyNotice);
         if (notice != null) {
-            System.out.println(notice);
+            log.info(notice.toString());
         }
 
         //Then
@@ -63,10 +66,10 @@ class StudyGroupNoticeServiceTests {
 
         //When
         studyGroupNoticeService.deleteStudyGroupNotice(noticeId);
-        System.out.println("DELETE SUCCESS");
+        log.info("DELETE SUCCESS");
 
         //Then
-        Assertions.assertThrows(EntityNotFoundException.class,
+        Assertions.assertThrows(CommonException.class,
                 () -> studyGroupNoticeService.deleteStudyGroupNotice(noticeId));
     }
 }

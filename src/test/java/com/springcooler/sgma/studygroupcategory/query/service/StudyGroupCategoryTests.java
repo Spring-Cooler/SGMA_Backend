@@ -1,6 +1,7 @@
 package com.springcooler.sgma.studygroupcategory.query.service;
 
 import com.springcooler.sgma.studygroupcategory.query.dto.StudyGroupCategoryDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+@Slf4j
 @SpringBootTest
 class StudyGroupCategoryTests {
 
@@ -23,7 +25,7 @@ class StudyGroupCategoryTests {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupCategoryDTO> categories = studyGroupCategoryService.findAllStudyGroupCategories();
-                    categories.forEach(System.out::println);
+                    categories.forEach(x -> log.info(x.toString()));
                 }
         );
     }
@@ -34,9 +36,9 @@ class StudyGroupCategoryTests {
     void testFindStudyGroupCategoryByCategoryId(int categoryId) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<StudyGroupCategoryDTO> categories =
+                    StudyGroupCategoryDTO category =
                             studyGroupCategoryService.findStudyGroupCategoryByCategoryId(categoryId);
-                    categories.forEach(System.out::println);
+                    log.info(category.toString());
                 }
         );
     }

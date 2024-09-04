@@ -1,9 +1,9 @@
 package com.springcooler.sgma.studygroup.command.application.service;
 
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
-import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
+import com.springcooler.sgma.studygroup.common.exception.CommonException;
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
-import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @SpringBootTest
 @Transactional
 class StudyGroupServiceTests {
@@ -29,10 +30,10 @@ class StudyGroupServiceTests {
         studyGroupInfo.setStudyGroupCategoryId(7);
 
         //When
-        StudyGroup studyGroup = studyGroupService.registStudyGroup(studyGroupInfo);
+        StudyGroupDTO studyGroup = studyGroupService.registStudyGroup(studyGroupInfo);
 
         if (studyGroup != null) {
-            System.out.println(studyGroup);
+            log.info(studyGroup.toString());
         }
 
         //Then
@@ -43,15 +44,16 @@ class StudyGroupServiceTests {
     @Test
     void testModifyStudyGroup() {
         //Given
-        StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
-        studyGroupInfo.setGroupId(1L);
-        studyGroupInfo.setGroupName("반짝반짝");
-        studyGroupInfo.setStudyGroupCategoryId(3);
+        StudyGroupDTO studyGroupInfo = StudyGroupDTO.builder()
+                .groupId(1L)
+                .groupName("반짝반짝")
+                .studyGroupCategoryId(3)
+                .build();
 
         //When
-        StudyGroup studyGroup = studyGroupService.modifyStudyGroup(studyGroupInfo);
+        StudyGroupDTO studyGroup = studyGroupService.modifyStudyGroup(studyGroupInfo);
         if (studyGroup != null) {
-            System.out.println(studyGroup);
+            log.info(studyGroup.toString());
         }
 
         //Then
@@ -62,14 +64,15 @@ class StudyGroupServiceTests {
     @Test
     void testModifyStudyGroupName() {
         //Given
-        StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
-        studyGroupInfo.setGroupId(5L);
-        studyGroupInfo.setGroupName("나만의스터디");
+        StudyGroupDTO studyGroupInfo = StudyGroupDTO.builder()
+                .groupId(5L)
+                .groupName("나만의스터디")
+                .build();
 
         //When
-        StudyGroup studyGroup = studyGroupService.modifyStudyGroupName(studyGroupInfo);
+        StudyGroupDTO studyGroup = studyGroupService.modifyStudyGroupName(studyGroupInfo);
         if (studyGroup != null) {
-            System.out.println(studyGroup);
+            log.info(studyGroup.toString());
         }
 
         //Then
@@ -80,14 +83,15 @@ class StudyGroupServiceTests {
     @Test
     void testModifyStudyGroupCategory() {
         //Given
-        StudyGroupDTO studyGroupInfo = new StudyGroupDTO();
-        studyGroupInfo.setGroupId(5L);
-        studyGroupInfo.setStudyGroupCategoryId(8);
+        StudyGroupDTO studyGroupInfo = StudyGroupDTO.builder()
+                .groupId(5L)
+                .studyGroupCategoryId(8)
+                .build();
 
         //When
-        StudyGroup studyGroup = studyGroupService.modifyStudyGroupCategory(studyGroupInfo);
+        StudyGroupDTO studyGroup = studyGroupService.modifyStudyGroupCategory(studyGroupInfo);
         if (studyGroup != null) {
-            System.out.println(studyGroup);
+            log.info(studyGroup.toString());
         }
 
         //Then
@@ -102,10 +106,10 @@ class StudyGroupServiceTests {
 
         //When
         studyGroupService.deleteStudyGroup(groupId);
-        System.out.println("DELETE SUCCESS");
+        log.info("DELETE SUCCESS");
 
         //Then
-        Assertions.assertThrows(EntityNotFoundException.class,
+        Assertions.assertThrows(CommonException.class,
                 () -> studyGroupService.deleteStudyGroup(groupId));
     }
 
@@ -113,15 +117,16 @@ class StudyGroupServiceTests {
     @Test
     void testAcceptApplication() {
         //Given
-        StudyGroupMemberDTO applicant = new StudyGroupMemberDTO();
-        applicant.setUserId(1L);
-        applicant.setGroupId(5L);
+        StudyGroupMemberDTO applicant = StudyGroupMemberDTO.builder()
+                .userId(1L)
+                .groupId(5L)
+                .build();
         int expectedMembers = 4;
 
         //When
-        StudyGroup studyGroup = studyGroupService.registAcceptedMember(applicant);
+        StudyGroupDTO studyGroup = studyGroupService.registAcceptedMember(applicant);
         if (studyGroup != null) {
-            System.out.println(studyGroup);
+            log.info(studyGroup.toString());
         }
 
         //Then
@@ -135,12 +140,12 @@ class StudyGroupServiceTests {
         //Given
         long memberId = 2L;
         long groupId = 1L;
-        int expectedMembers = 4;
+        int expectedMembers = 2;
 
         //When
-        StudyGroup studyGroup = studyGroupService.deleteQuitMember(memberId, groupId);
+        StudyGroupDTO studyGroup = studyGroupService.deleteQuitMember(memberId, groupId);
         if (studyGroup != null) {
-            System.out.println(studyGroup);
+            log.info(studyGroup.toString());
         }
 
         //Then

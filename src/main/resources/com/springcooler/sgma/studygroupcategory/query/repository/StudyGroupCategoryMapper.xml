@@ -16,7 +16,7 @@
          ORDER BY A.STUDY_GROUP_CATEGORY_ID
     </select>
 
-    <select id="findStudyGroupCategoryByCategoryId" resultMap="studyGroupCategoryResultMap" parameterType="int">
+    <select id="findStudyGroupCategoryByCategoryId" resultMap="studyGroupCategoryResultMap" parameterType="Integer">
         SELECT
                A.STUDY_GROUP_CATEGORY_ID
              , A.STUDY_GROUP_CATEGORY_NAME

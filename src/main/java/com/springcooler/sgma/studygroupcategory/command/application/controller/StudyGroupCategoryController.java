@@ -2,35 +2,39 @@ package com.springcooler.sgma.studygroupcategory.command.application.controller;
 
 import com.springcooler.sgma.studygroupcategory.command.application.dto.StudyGroupCategoryDTO;
 import com.springcooler.sgma.studygroupcategory.command.application.service.AppStudyGroupCategoryService;
-import org.springframework.http.ResponseEntity;
+import com.springcooler.sgma.studygroupcategory.command.domain.aggregate.vo.RequestStudyGroupCategoryVO;
+import com.springcooler.sgma.studygroupcategory.command.domain.aggregate.vo.ResponseStudyGroupCategoryVO;
+import com.springcooler.sgma.studygroupcategory.common.ResponseDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
 
 @RestController("commandStudyGroupCategoryController")
 @RequestMapping("/api/study-group/categories")
 public class StudyGroupCategoryController {
 
+    private final ModelMapper modelMapper;
     private final AppStudyGroupCategoryService studyGroupCategoryService;
 
-    public StudyGroupCategoryController(AppStudyGroupCategoryService studyGroupCategoryService) {
+    public StudyGroupCategoryController(ModelMapper modelMapper,
+                                        AppStudyGroupCategoryService studyGroupCategoryService) {
+        this.modelMapper = modelMapper;
         this.studyGroupCategoryService = studyGroupCategoryService;
     }
 
     // 스터디그룹 카테고리 생성
     @PostMapping("/")
-    public ResponseEntity<?> registerStudyGroupCategory(@RequestBody StudyGroupCategoryDTO newCategory) {
-        return ResponseEntity
-                .created(URI.create("/api/study-group/categories/"
-                        + studyGroupCategoryService.registStudyGroupCategory(newCategory).getCategoryId()))
-                .build();
+    public ResponseDTO<?> registerStudyGroupCategory(@RequestBody RequestStudyGroupCategoryVO newCategory) {
+        StudyGroupCategoryDTO category = modelMapper.map(newCategory, StudyGroupCategoryDTO.class);
+        category = studyGroupCategoryService.registStudyGroupCategory(category);
+        ResponseStudyGroupCategoryVO res = modelMapper.map(category, ResponseStudyGroupCategoryVO.class);
+        return ResponseDTO.ok(res);
     }
 
     // 스터디그룹 카테고리 삭제
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<?> deleteStudyGroupCategory(@PathVariable int categoryId) {
+    public ResponseDTO<?> deleteStudyGroupCategory(@PathVariable Integer categoryId) {
         studyGroupCategoryService.deleteStudyGroupCategory(categoryId);
-        return ResponseEntity.noContent().build();
+        return ResponseDTO.ok(null);
     }
 
 }

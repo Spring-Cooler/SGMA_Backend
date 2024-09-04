@@ -1,8 +1,9 @@
 package com.springcooler.sgma.studygroupmember.command.application.service;
 
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
-import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMember;
-import jakarta.persistence.EntityNotFoundException;
+import com.springcooler.sgma.studygroupmember.command.domain.aggregate.GroupRole;
+import com.springcooler.sgma.studygroupmember.common.exception.CommonException;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Slf4j
 @SpringBootTest
 @Transactional
 class StudyGroupMemberServiceTests {
@@ -25,14 +26,15 @@ class StudyGroupMemberServiceTests {
     @Test
     void testSaveStudyGroupMember() {
         //Given
-        StudyGroupMemberDTO newMember = new StudyGroupMemberDTO();
-        newMember.setUserId(1L);
-        newMember.setGroupId(5L);
+        StudyGroupMemberDTO newMember = StudyGroupMemberDTO.builder()
+                .userId(1L)
+                .groupId(5L)
+                .build();
 
         //When
-        StudyGroupMember member = studyGroupMemberService.registStudyGroupMember(newMember);
+        StudyGroupMemberDTO member = studyGroupMemberService.registStudyGroupMember(newMember);
         if (member != null) {
-            System.out.println(member);
+            log.info(member.toString());
         }
 
         //Then
@@ -46,20 +48,19 @@ class StudyGroupMemberServiceTests {
         String dateTimeString = "2023-09-07 21:30:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.parse(dateTimeString, formatter);
-        Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
-        StudyGroupMemberDTO modifyMember = new StudyGroupMemberDTO();
-        modifyMember.setMemberId(20L);
-        modifyMember.setMemberEnrolledAt(timestamp);
-        modifyMember.setMemberWithdrawnAt(new Timestamp(System.currentTimeMillis()));
-        modifyMember.setMemberStatus("INACTIVE");
-        modifyMember.setUserId(5L);
-        modifyMember.setGroupId(5L);
+        StudyGroupMemberDTO modifyMember = StudyGroupMemberDTO.builder()
+                .memberId(3L)
+                .memberEnrolledAt(localDateTime)
+                .userId(3L)
+                .groupId(5L)
+                .groupRole(GroupRole.ROLE_OWNER)
+                .build();
 
         //When
-        StudyGroupMember member = studyGroupMemberService.modifyStudyGroupMember(modifyMember);
+        StudyGroupMemberDTO member = studyGroupMemberService.modifyStudyGroupMember(modifyMember);
         if (member != null) {
-            System.out.println(member);
+            log.info(member.toString());
         }
 
         //Then
@@ -70,14 +71,14 @@ class StudyGroupMemberServiceTests {
     @Test
     void testDeleteStudyGroupMember() {
         //Given
-        long memberId = 5L;
+        long memberId = 6L;
 
         //When
         studyGroupMemberService.deleteStudyGroupMember(memberId);
-        System.out.println("DELETE SUCCESS");
+        log.info("DELETE SUCCESS");
 
         //Then
-        Assertions.assertThrows(EntityNotFoundException.class,
+        Assertions.assertThrows(CommonException.class,
                 () -> studyGroupMemberService.deleteStudyGroupMember(memberId));
     }
 }

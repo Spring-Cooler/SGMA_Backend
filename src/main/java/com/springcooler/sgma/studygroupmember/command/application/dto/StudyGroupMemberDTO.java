@@ -1,19 +1,21 @@
 package com.springcooler.sgma.studygroupmember.command.application.dto;
 
+import com.springcooler.sgma.studygroupmember.command.domain.aggregate.GroupRole;
+import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMemberStatus;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
 public class StudyGroupMemberDTO {
-    private long memberId;
-    private Timestamp memberEnrolledAt;
-    private Timestamp memberWithdrawnAt;
-    private String memberStatus;
-    private long userId;
-    private long groupId;
+    private Long memberId;
+    private LocalDateTime memberEnrolledAt;
+    private LocalDateTime memberWithdrawnAt;
+    private StudyGroupMemberStatus memberStatus;
+    private Long userId;
+    private Long groupId;
+    private GroupRole groupRole;
 }
