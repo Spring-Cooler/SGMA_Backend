@@ -74,7 +74,7 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
 
     @Transactional
     @Override
-    public double gradeSubmittedAnswersByParticipantId(long scheduleId, long participantId) {
+    public double gradeSubmittedAnswersByScheduleIdAndParticipantId(long scheduleId, long participantId) {
         List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByParticipantId(participantId);
         if (submittedAnswers == null || submittedAnswers.isEmpty()) {
             throw new CommonException(ErrorCode.NOT_FOUND_SUBMITTED_ANSWER);

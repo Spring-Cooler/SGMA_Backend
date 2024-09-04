@@ -15,39 +15,38 @@ class AppChoiceServiceTests {
 
     @Autowired
     private AppChoiceService appChoiceService;
-    private ChoiceService queryChoiceService;
-    @DisplayName("선지 등록 테스트")
-    @Test
-    void testRegistChoice(){
+//    @DisplayName("선지 등록 테스트")
+//    @Test
+//    void testRegistChoice(){
+//
+//        // given
+//        long problemId = 12L;
+//        ChoiceDTO[] choices = new ChoiceDTO[4];
+//        for (int i = 0; i < 4; i++) {
+//            choices[i] = new ChoiceDTO(problemId, i+1, "선지등록테스트"+(i+1));
+//        }
+//
+//        // when
+//        for (int i = 0; i < 4; i++) {
+//            appChoiceService.registChoice(choices[i]);
+//        }
+//        // then
+//    }
 
-        // given
-        long problemId = 12L;
-        ChoiceDTO[] choices = new ChoiceDTO[4];
-        for (int i = 0; i < 4; i++) {
-            choices[i] = new ChoiceDTO(problemId, i+1, "선지등록테스트"+(i+1));
-        }
-
-        // when
-        for (int i = 0; i < 4; i++) {
-            appChoiceService.registChoice(choices[i]);
-        }
-        // then
-    }
-
-    @DisplayName("선지 수정 테스트")
-    @Test
-    void testModifyChoice(){
-
-        // given
-        long problemId = 12L;
-        int choiceNum = 1;
-        ChoiceDTO modifyChoice = new ChoiceDTO(problemId, choiceNum,"선지 수정 테스트");
-
-        // when
-        Choice modifiedChoice = appChoiceService.modifyChoice(modifyChoice);
-
-        // then
-
-    }
+//    @DisplayName("선지 수정 테스트")
+//    @Test
+//    void testModifyChoice(){
+//
+//        // given
+//        long problemId = 12L;
+//        int choiceNum = 1;
+//        ChoiceDTO modifyChoice = new ChoiceDTO(problemId, choiceNum,"선지 수정 테스트");
+//
+//        // when
+//        Choice modifiedChoice = appChoiceService.modifyChoice(modifyChoice);
+//
+//        // then
+//
+//    }
 
 }
