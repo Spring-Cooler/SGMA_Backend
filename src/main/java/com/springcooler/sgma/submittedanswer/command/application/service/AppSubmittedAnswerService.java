@@ -5,8 +5,10 @@ import com.springcooler.sgma.studyscheduleparticipant.query.dto.StudySchedulePar
 import com.springcooler.sgma.submittedanswer.command.application.dto.SubmittedAnswerDTO;
 import com.springcooler.sgma.submittedanswer.command.domain.aggregate.SubmittedAnswer;
 
+import java.util.List;
+
 public interface AppSubmittedAnswerService {
-    SubmittedAnswer registSubmittedAnswer(SubmittedAnswerDTO newSubmittedAnswerDTO);
+    void registSubmittedAnswer(List<SubmittedAnswerDTO> submittedAnswers);
 
     SubmittedAnswer modifySubmittedAnswer(SubmittedAnswerDTO modifySubmittedAnswer);
 
