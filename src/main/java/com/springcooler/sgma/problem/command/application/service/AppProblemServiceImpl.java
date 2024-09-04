@@ -5,6 +5,7 @@ import com.springcooler.sgma.problem.command.application.dto.ProblemAndChoiceDTO
 import com.springcooler.sgma.problem.command.application.dto.ProblemDTO;
 import com.springcooler.sgma.problem.command.domain.aggregate.entity.Problem;
 import com.springcooler.sgma.problem.command.domain.repository.ProblemRepository;
+import com.springcooler.sgma.studyscheduleparticipant.command.infrastructure.service.InfraStudyScheduleParticipantService;
 import com.springcooler.sgma.problem.command.infrastructure.service.InfraProblemService;
 import com.springcooler.sgma.problem.common.exception.CommonException;
 import com.springcooler.sgma.problem.common.exception.ErrorCode;
@@ -59,7 +60,7 @@ public class AppProblemServiceImpl implements AppProblemService {
     @Override
     public void deleteProblem(long problemId) {
         Problem deleteProblem = problemRepository.findById(problemId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PROBLEM));
-
+        infraProblemService.requestDecreaseNumSubmittedProblems(deleteProblem.getScheduleId(), deleteProblem.getParticipantId());
         problemRepository.delete(deleteProblem);
     }
 
@@ -76,6 +77,7 @@ public class AppProblemServiceImpl implements AppProblemService {
         try {
             Problem registeredProblem = problemRepository.save(problem);
             ProblemVO problemVO = infraProblemService.requestRegistChoices(registeredProblem.getProblemId(), newProblemAndChoice.getChoices());
+            infraProblemService.requestIncreaseNumSubmittedProblems(problem.getScheduleId(), problem.getParticipantId());
             return new ProblemAndChoiceDTO(registeredProblem.getProblemId(), registeredProblem.getParticipantId(), registeredProblem.getScheduleId(), registeredProblem.getContent(), registeredProblem.getAnswer(), problemVO.getChoices());
 
         } catch (Exception e) {

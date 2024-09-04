@@ -10,5 +10,8 @@ import java.util.List;
 
 
 public interface SubmittedAnswerRepository extends JpaRepository<SubmittedAnswer, SubmittedAnswerPK> {
-List<SubmittedAnswer> findByParticipantId(Long participantId);
+    List<SubmittedAnswer> findByParticipantId(Long participantId);
+
+    // 특정 참가자의 정답 상태가 "RIGHT"인 답안의 개수를 조회하는 메서드
+//    long countByParticipantIdAndAnswerStatus(Long participantId, String answerStatus);
 }

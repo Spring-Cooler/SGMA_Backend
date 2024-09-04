@@ -2,7 +2,6 @@ package com.springcooler.sgma.studygroupmember.command.application.service;
 
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
 import com.springcooler.sgma.studygroupmember.command.domain.aggregate.GroupRole;
-import com.springcooler.sgma.studygroupmember.command.domain.aggregate.StudyGroupMember;
 import com.springcooler.sgma.studygroupmember.common.exception.CommonException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -32,7 +31,7 @@ class StudyGroupMemberServiceTests {
         newMember.setGroupId(5L);
 
         //When
-        StudyGroupMember member = studyGroupMemberService.registStudyGroupMember(newMember);
+        StudyGroupMemberDTO member = studyGroupMemberService.registStudyGroupMember(newMember);
         if (member != null) {
             log.info(member.toString());
         }
@@ -57,7 +56,7 @@ class StudyGroupMemberServiceTests {
         modifyMember.setGroupRole(GroupRole.ROLE_OWNER);
 
         //When
-        StudyGroupMember member = studyGroupMemberService.modifyStudyGroupMember(modifyMember);
+        StudyGroupMemberDTO member = studyGroupMemberService.modifyStudyGroupMember(modifyMember);
         if (member != null) {
             log.info(member.toString());
         }

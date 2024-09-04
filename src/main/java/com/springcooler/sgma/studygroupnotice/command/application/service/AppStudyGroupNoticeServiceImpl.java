@@ -34,7 +34,7 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
     // 스터디그룹 공지사항 생성
     @Transactional
     @Override
-    public StudyGroupNotice registStudyGroupNotice(StudyGroupNoticeDTO newNotice) {
+    public StudyGroupNoticeDTO registStudyGroupNotice(StudyGroupNoticeDTO newNotice) {
         // DTO 유효성 검사
         if(!domainStudyGroupNoticeService.isValidDTO(RestStatus.POST, newNotice))
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
@@ -43,14 +43,17 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
         newNotice.setCreatedAt(LocalDateTime.now().withNano(0));
         newNotice.setActiveStatus(StudyGroupNoticeStatus.ACTIVE);
 
-        return studyGroupNoticeRepository.save(modelMapper.map(newNotice, StudyGroupNotice.class));
+        StudyGroupNotice notice = modelMapper.map(newNotice, StudyGroupNotice.class);
+        studyGroupNoticeRepository.save(notice);
+
+        return modelMapper.map(notice, StudyGroupNoticeDTO.class);
     }
 
 
     // 스터디그룹 공지사항 정보 수정
     @Transactional
     @Override
-    public StudyGroupNotice modifyStudyGroupNotice(StudyGroupNoticeDTO modifyNotice) {
+    public StudyGroupNoticeDTO modifyStudyGroupNotice(StudyGroupNoticeDTO modifyNotice) {
         // DTO 유효성 검사
         if(!domainStudyGroupNoticeService.isValidDTO(RestStatus.PUT, modifyNotice))
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
@@ -65,7 +68,9 @@ public class AppStudyGroupNoticeServiceImpl implements AppStudyGroupNoticeServic
         existingNotice.setContent(modifyNotice.getContent());
         existingNotice.setUpdatedAt(LocalDateTime.now().withNano(0));
 
-        return studyGroupNoticeRepository.save(existingNotice);
+        studyGroupNoticeRepository.save(existingNotice);
+
+        return modelMapper.map(existingNotice, StudyGroupNoticeDTO.class);
     }
 
     // 스터디그룹 공지사항 삭제

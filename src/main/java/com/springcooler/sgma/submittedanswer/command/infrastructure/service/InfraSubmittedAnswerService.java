@@ -7,4 +7,5 @@ import java.util.List;
 public interface InfraSubmittedAnswerService {
     int getAnswerByProblemId(long problemId);
 
+//    long getCorrectAnswersCount(Long participantId);
 }

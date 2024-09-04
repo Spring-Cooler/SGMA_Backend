@@ -2,7 +2,6 @@ package com.springcooler.sgma.studygroup.command.application.controller;
 
 import com.springcooler.sgma.studygroup.command.application.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.command.application.service.AppStudyGroupService;
-import com.springcooler.sgma.studygroup.command.domain.aggregate.StudyGroup;
 import com.springcooler.sgma.studygroup.common.ResponseDTO;
 import com.springcooler.sgma.studygroupmember.command.application.dto.StudyGroupMemberDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -24,35 +23,35 @@ public class StudyGroupController {
     // 스터디 그룹 생성
     @PostMapping("/")
     public ResponseDTO<?> registStudyGroup(@RequestBody StudyGroupDTO newStudyGroup) {
-        StudyGroup studyGroup = studyGroupService.registStudyGroup(newStudyGroup);
+        StudyGroupDTO studyGroup = studyGroupService.registStudyGroup(newStudyGroup);
         return ResponseDTO.ok(studyGroup);
     }
 
     // 스터디 그룹장 신청 승인
     @PostMapping("/member")
     public ResponseDTO<?> registAcceptedMember(@RequestBody StudyGroupMemberDTO newMember) {
-        StudyGroup studyGroup = studyGroupService.registAcceptedMember(newMember);
+        StudyGroupDTO studyGroup = studyGroupService.registAcceptedMember(newMember);
         return ResponseDTO.ok(studyGroup);
     }
 
     // 스터디 그룹 정보 수정
     @PutMapping("/")
     public ResponseDTO<?> modifyStudyGroup(@RequestBody StudyGroupDTO modifyStudyGroup) {
-        StudyGroup studyGroup = studyGroupService.modifyStudyGroup(modifyStudyGroup);
+        StudyGroupDTO studyGroup = studyGroupService.modifyStudyGroup(modifyStudyGroup);
         return ResponseDTO.ok(studyGroup);
     }
 
     // 스터디 그룹 이름 수정
     @PatchMapping("/group-name")
     public ResponseDTO<?> modifyStudyGroupName(@RequestBody StudyGroupDTO modifyStudyGroup) {
-        StudyGroup studyGroup = studyGroupService.modifyStudyGroupName(modifyStudyGroup);
+        StudyGroupDTO studyGroup = studyGroupService.modifyStudyGroupName(modifyStudyGroup);
         return ResponseDTO.ok(studyGroup);
     }
 
     // 스터디 그룹 카테고리 수정
     @PatchMapping("/category")
     public ResponseDTO<?> modifyStudyGroupCategory(@RequestBody StudyGroupDTO modifyStudyGroup) {
-        StudyGroup studyGroup = studyGroupService.modifyStudyGroupCategory(modifyStudyGroup);
+        StudyGroupDTO studyGroup = studyGroupService.modifyStudyGroupCategory(modifyStudyGroup);
         return ResponseDTO.ok(studyGroup);
     }
 
@@ -60,7 +59,7 @@ public class StudyGroupController {
     @DeleteMapping("/member")
     public ResponseDTO<?> deleteQuitMember(@RequestParam("member-id") long memberId,
                                               @RequestParam("group-id") long groupId) {
-        StudyGroup studyGroup = studyGroupService.deleteQuitMember(memberId, groupId);
+        StudyGroupDTO studyGroup = studyGroupService.deleteQuitMember(memberId, groupId);
         return ResponseDTO.ok(studyGroup);
     }
 

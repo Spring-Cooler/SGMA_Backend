@@ -31,13 +31,15 @@ public class AppStudyGroupCategoryServiceImpl implements AppStudyGroupCategorySe
     // 스터디그룹 카테고리 생성
     @Transactional
     @Override
-    public StudyGroupCategory registStudyGroupCategory(StudyGroupCategoryDTO newCategory) {
+    public StudyGroupCategoryDTO registStudyGroupCategory(StudyGroupCategoryDTO newCategory) {
         // DTO 유효성 검사
         if(!domainStudyGroupCategoryService.isValidDTO(RestStatus.POST, newCategory))
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
 
         StudyGroupCategory category = modelMapper.map(newCategory, StudyGroupCategory.class);
-        return studyGroupCategoryRepository.save(category);
+        studyGroupCategoryRepository.save(category);
+
+        return modelMapper.map(category, StudyGroupCategoryDTO.class);
     }
 
     // 스터디그룹 카테고리 삭제

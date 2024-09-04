@@ -13,39 +13,40 @@ import lombok.*;
 public class StudySchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="schedule_id")
+    @Column(name="SCHEDULE_ID")
     private Long scheduleId;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String title;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "schedule_start_time",columnDefinition = "TIMESTAMP", nullable = false)
+    @Column(name = "SCHEDULE_START_TIME",columnDefinition = "TIMESTAMP")
     private java.sql.Timestamp scheduleStartTime;
 
-    @Column(name = "schedule_end_time",columnDefinition = "TIMESTAMP", nullable = false)
+    @Column(name = "SCHEDULE_END_TIME",columnDefinition = "TIMESTAMP")
     private java.sql.Timestamp scheduleEndTime;
 
-    @Column(name = "num_participants", nullable = false)
-    private int numParticipants;
+    @Column(name = "NUM_PARTICIPANTS")
+    private Integer numParticipants;
 
-    @Column(name="active_status")
-    private String activeStatus;
+    @Enumerated(EnumType.STRING)
+    @Column(name="ACTIVE_STATUS")
+    private StudyScheduleStatus activeStatus;
 
-    @Column(name="test_status", columnDefinition = "TEXT", nullable = false)
+    @Column(name="TEST_STATUS", columnDefinition = "TEXT")
     private String testStatus;
 
-    @Column(name="test_average")
-    private double testAverage;
+    @Column(name="TEST_AVERAGE")
+    private Double testAverage;
 
-    @Column(name="test_standard_deviation")
-    private double testStandardDeviation;
+    @Column(name="TEST_STANDARD_DEVIATION")
+    private Double testStandardDeviation;
 
-    @Column(name="group_id")
-    private long groupId;
+    @Column(name="GROUP_ID")
+    private Long groupId;
 
-    @Column(name="num_problems_per_participant")
-    private int numProblemsPerParticipant;
+    @Column(name="NUM_PROBLEMS_PER_PARTICIPANT")
+    private Integer numProblemsPerParticipant;
 }
