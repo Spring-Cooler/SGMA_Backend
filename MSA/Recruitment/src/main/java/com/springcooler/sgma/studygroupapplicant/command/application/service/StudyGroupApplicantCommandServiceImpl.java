@@ -74,6 +74,7 @@ public class StudyGroupApplicantCommandServiceImpl implements StudyGroupApplican
         RequestStudyGroupMemberVO newMember = new RequestStudyGroupMemberVO();
         newMember.setUserId(userId);
         newMember.setGroupId(inputGroupId);
+        System.out.println(newMember);
 
         infraStudyGroupApplicantService.registAcceptedMember(newMember);
     }
