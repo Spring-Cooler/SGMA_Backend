@@ -1,5 +1,5 @@
 # SGMA
----
+
 
 ### Team _Spring-Cooler_
 > 스프링을 더 멋지게
