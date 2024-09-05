@@ -1,6 +1,6 @@
 # SGMA
 
-![image](https://github.com/user-attachments/assets/a76c1d71-31bf-4370-982e-e1a962404352)
+![image](https://github.com/user-attachments/assets/551a2c5d-d3f6-4fd8-846f-fa80557d841e)
 
 ## 목차
 1. [팀 소개](#팀-소개)
