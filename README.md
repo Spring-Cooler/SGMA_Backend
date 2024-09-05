@@ -23,7 +23,7 @@
 
 | MariaDB                                                                   | Redis                                                                               | AWS S3 Bucket                                                                                              |
 | ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| ![MariaDB](https://img.shields.io/badge/MariaDB-003545.svg?&logo=mariadb) | ![Redis](https://img.shields.io/badge/Redis-DC382D.svg?&logo=redis&logoColor=white) | ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white) |
+| ![MariaDB](https://img.shields.io/badge/MariaDB-003545.svg?&logo=mariadb) | ![Redis](https://img.shields.io/badge/Redis-DC382D.svg?&logo=redis&logoColor=white) | ![AWS](https://img.shields.io/badge/AWS_S3-569A31?style=flat&logo=amazons3&logoColor=white)|
 
 ### 3. Tool
 
