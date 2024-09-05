@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d5e5979-5b0f-4313-88eb-0d37ccf910f7" name="Changes" comment="Feat: FeignClient를 통해 신청자도메인과 스터디그룹 도메인 통신" />
+    <list default="true" id="8d5e5979-5b0f-4313-88eb-0d37ccf910f7" name="Changes" comment="Feat: FeignClient를 통해 신청자도메인과 스터디그룹 도메인 통신">
+      <change beforePath="$PROJECT_DIR$/Group/src/main/java/com/springcooler/sgma/studygroup/command/application/service/AppStudyGroupService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Group/src/main/java/com/springcooler/sgma/studygroup/command/application/service/AppStudyGroupService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Group/src/main/java/com/springcooler/sgma/studygroup/command/application/service/AppStudyGroupServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Group/src/main/java/com/springcooler/sgma/studygroup/command/application/service/AppStudyGroupServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Group/src/main/java/com/springcooler/sgma/studygroupcategory/command/domain/aggregate/StudyGroupCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/Group/src/main/java/com/springcooler/sgma/studygroupcategory/command/domain/aggregate/StudyGroupCategory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Group/src/main/java/com/springcooler/sgma/studygroupmember/query/repository/StudyGroupMemberMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Group/src/main/java/com/springcooler/sgma/studygroupmember/query/repository/StudyGroupMemberMapper.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,7 +80,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.EurekaServerApplication.executor": "Run",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "feature/study-group",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/User/Desktop/kibeom/SGMA/MSA",
     "node.js.detected.package.eslint": "true",
@@ -162,6 +167,7 @@
       <updated>1725442595760</updated>
       <workItem from="1725442596840" duration="213000" />
       <workItem from="1725450648792" duration="653000" />
+      <workItem from="1725519119103" duration="554000" />
     </task>
     <task id="LOCAL-00001" summary="Refactor: 패키지 구조 수정">
       <option name="closed" value="true" />
