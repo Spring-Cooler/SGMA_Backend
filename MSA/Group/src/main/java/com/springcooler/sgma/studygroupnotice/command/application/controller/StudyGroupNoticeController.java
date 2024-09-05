@@ -43,7 +43,7 @@ public class StudyGroupNoticeController {
 
     // 스터디그룹 공지사항 삭제
     @DeleteMapping("/{noticeId}")
-    public ResponseDTO<?> deleteStudyGroupNotice(@PathVariable Long noticeId) {
+    public ResponseDTO<?> deleteStudyGroupNotice(@PathVariable("noticeId") Long noticeId) {
         studyGroupNoticeService.deleteStudyGroupNotice(noticeId);
         return ResponseDTO.ok(null);
     }

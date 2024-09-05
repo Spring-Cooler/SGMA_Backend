@@ -24,14 +24,14 @@ public class StudyGroupNoticeController {
 
     // 스터디그룹 공지사항 전체 조회(스터디그룹 아이디)
     @GetMapping("/group-id/{groupId}")
-    public ResponseDTO<?> findStudyGroupNoticesByGroupId(@PathVariable Long groupId) {
+    public ResponseDTO<?> findStudyGroupNoticesByGroupId(@PathVariable("groupId") Long groupId) {
         List<StudyGroupNoticeDTO> notices = studyGroupNoticeService.findStudyGroupNoticesByGroupId(groupId);
         return ResponseDTO.ok(notices);
     }
 
     // 스터디그룹 공지사항 단건 조회(공지사항 아이디)
     @GetMapping("/{noticeId}")
-    public ResponseDTO<?> findStudyGroupNoticeByNoticeId(@PathVariable Long noticeId) {
+    public ResponseDTO<?> findStudyGroupNoticeByNoticeId(@PathVariable("noticeId") Long noticeId) {
         StudyGroupNoticeDTO notice = studyGroupNoticeService.findStudyGroupNoticeByNoticeId(noticeId);
         return ResponseDTO.ok(notice);
     }

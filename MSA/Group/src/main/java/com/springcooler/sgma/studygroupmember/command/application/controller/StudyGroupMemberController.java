@@ -42,7 +42,7 @@ public class StudyGroupMemberController {
     }
 
     @DeleteMapping("/{memberId}")
-    public ResponseDTO<?> deleteStudyGroupMember(@PathVariable Long memberId) {
+    public ResponseDTO<?> deleteStudyGroupMember(@PathVariable("memberId") Long memberId) {
         studyGroupMemberService.deleteStudyGroupMember(memberId);
         return ResponseDTO.ok(null);
     }
