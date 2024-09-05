@@ -14,32 +14,32 @@
 ---
 ## 기술 스택
 
-#### 1. Backend
+### 1. Backend
 
 | Java 17                                                                           | Spring Boot                                                                                              | Spring Data JPA                                                                                   | MyBatis                                                                                                 | Hibernate                                                                       | Spring Security                                                                                                   | JWT                                                                                      | Gradle                                                                 | JUnit5                                                                                             |
 | --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | ![Java](https://img.shields.io/badge/Java-17-007396.svg?&logo=java&color=red)<br> | ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3-6DB33F.svg?&logo=spring-boot&color=lightgreen) | ![Spring Data JPA](https://img.shields.io/badge/Spring_Data_JPA-6DB33F.svg?&logo=spring-data-JPA) | ![MyBatis](https://img.shields.io/badge/MyBatis-FE6602.svg?&logo=mybatis5&logoColor=white&color=FE6602) | ![Hibernate](https://img.shields.io/badge/Hibernate-59666C.svg?&logo=hibernate) | ![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F.svg?&logo=spring-security&logoColor=white) | ![JWT](https://img.shields.io/badge/JWT-000000.svg?&logo=json-web-token&logoColor=white) | ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?&logo=gradle) | ![JUnit5](https://img.shields.io/badge/JUnit5-25A162.svg?&logo=junit5&logoColor=white&color=green) |
 
-#### 2. Database
+### 2. Database
 
 | MariaDB                                                                   | Redis                                                                               | AWS S3 Bucket                                                                                              |
 | ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | ![MariaDB](https://img.shields.io/badge/MariaDB-003545.svg?&logo=mariadb) | ![Redis](https://img.shields.io/badge/Redis-DC382D.svg?&logo=redis&logoColor=white) | ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white) |
 
-#### 3. Tool
+### 3. Tool
 
 | <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"> &nbsp; | <img src="https://img.shields.io/badge/DA%23-0B6121.svg?style=flat&logo=draw.io&logoColor=white"> &nbsp; | ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white) | ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white) |
 | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 ## 프로젝트 개요
 ---
-#### 1. 배경
+### 1. 배경
 1. 팀 스터디의 효율성을 향상시킬 수 있는 도구가 필요함
 2. 일정 관리, 학슴 진도 파악 등 스터디의 정보를 한 곳에서 모아볼 수 있는 서비스가 없음
-#### 2. 서비스 목표
+### 2. 서비스 목표
 > 팀 스터디의 모든 과정을 쉽게 관리 및 각 멤버가 자신의 학습 목표를 달성할 수 있도록 도움
 
-#### 3. 차별점
+### 3. 차별점
 |         | 팀원모집 | 일정관리 | 문제 출제 | 일정관리 |
 | ------- | ---- | ---- | ----- | ---- |
 | Studyin | ㅇ    | ㅇ    |       | ㅇ    |
@@ -47,22 +47,22 @@
 | 공작소     | ㅇ    | ㅇ    |       | ㅇ    |
 | SGMA    | ㅇ    | ㅇ    | ㅇ     | ㅇ    |
 
-#### 4. 핵심 기능
+### 4. 핵심 기능
 1. 스터디 그룹 생성 및 모집
 2. 학습 내용 확인 및 공유
 3. 학습 성취도 시각화
-#### 5. 기대 효과
+### 5. 기대 효과
 > 단순한 학습의 장을 넘어, 체계적이고 효과적인 학습 플랫폼으로 발전할 수 있을 것으로 기대
 
 
 ## 설계 문서
 ---
-#### DDD
+### DDD
 1. Event Storming
 ![image](https://github.com/user-attachments/assets/b11ddb78-7874-4dfd-a8c0-ebfdbd41e238)
 2. Bounded Context
 ![image](https://github.com/user-attachments/assets/3efdd6c0-09bb-4ac0-ae83-d0e399f39ccd)
-#### DB 모델링
+### DB 모델링
 1. 개념 모델링
 ![image](https://github.com/user-attachments/assets/e6dea257-6429-4be1-91f4-fa653914148e)
 2. 논리 모델링
@@ -70,10 +70,12 @@
 3. 물리 모델링
 ![image](https://github.com/user-attachments/assets/7d0b0f43-37e2-40f4-b0ad-dcbae3119718)
 
-#### WBS
+### WBS
 https://docs.google.com/spreadsheets/d/1XVX6lAse2VZzDybUvryL8GyeM3-PO_EZMFG10hMVJSk/edit?gid=1079017783#gid=1079017783
 ![image](https://github.com/user-attachments/assets/2f0abf09-c2aa-4413-98b7-32ecfdbcaed9)
 
+### 주요 기능 FLOW CHART
+![문제관련 drawio (1)](https://github.com/user-attachments/assets/59625632-7ce8-4300-b085-945d176620f8)
 
 
 
