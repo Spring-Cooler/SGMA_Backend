@@ -115,7 +115,7 @@
 #### 1. 개념 모델링 <a id="1-개념-모델링"></a>
 ![image](https://github.com/user-attachments/assets/e6dea257-6429-4be1-91f4-fa653914148e)
 #### 2. 논리 모델링 <a id="2-논리-모델링"></a>
-![image](https://github.com/user-attachments/assets/d75544e3-92d9-4e47-b33료b-5f595c5c4fcb)
+![image](https://github.com/user-attachments/assets/1279589a-cdf3-46af-902e-638f330085de)
 #### 3. 물리 모델링 <a id="3-물리-모델링"></a>
 ![image](https://github.com/user-attachments/assets/7d0b0f43-37e2-40f4-b0ad-dcbae3119718)
 
