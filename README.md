@@ -39,7 +39,7 @@
 | [<img src="https://img.shields.io/badge/Github-Link-181717?logo=Github">](https://github.com/Chochanguk) | [<img src="https://img.shields.io/badge/Github-Link-181717?logo=Github">](https://github.com/1etterh)   | [<img src="https://img.shields.io/badge/Github-Link-181717?logo=Github">](https://github.com/minseokKim6823)                | [<img src="https://img.shields.io/badge/Github-Link-181717?logo=Github">](https://github.com/woodart8)            | [<img src="https://img.shields.io/badge/Github-Link-181717?logo=Github">](https://github.com/sorrri)    |
 | ESTJ                                                                                                     | ISTP                                                                                                    | ESTP                                                                                                                        | INFJ                                                                                                              | ESTJ                                                                                                    |
 <br>
-[팀 노션](https://amber-vise-de0.notion.site/3-_-1da69b5acbe84d79be8e57bbf7cd7cee)
+[팀-노션](https://amber-vise-de0.notion.site/3-_-1da69b5acbe84d79be8e57bbf7cd7cee)
 
 ---
 ## 기술 스택 <a id="기술-스택"></a>
