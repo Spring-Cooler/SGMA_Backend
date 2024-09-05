@@ -1,4 +1,4 @@
-# SGMA
+![SGMA_WBS](https://github.com/user-attachments/assets/ef7230ca-6b43-40ee-8ff4-97c19525daf2)# SGMA
 
 
 ### Team _Spring-Cooler_
@@ -72,7 +72,8 @@
 
 ### WBS
 https://docs.google.com/spreadsheets/d/1XVX6lAse2VZzDybUvryL8GyeM3-PO_EZMFG10hMVJSk/edit?gid=1079017783#gid=1079017783
-![image](https://github.com/user-attachments/assets/2f0abf09-c2aa-4413-98b7-32ecfdbcaed9)
+![image](https://github.com/user-attachments/assets/a774eb95-abf2-4d62-8998-5ae1c7171101)
+
 
 ### 주요 기능 FLOW CHART
 ![문제관련 drawio (1)](https://github.com/user-attachments/assets/59625632-7ce8-4300-b085-945d176620f8)
@@ -88,7 +89,8 @@ https://docs.google.com/spreadsheets/d/1XVX6lAse2VZzDybUvryL8GyeM3-PO_EZMFG10hMV
 
 
 #### System Architecture
-![image](https://github.com/user-attachments/assets/3faadf7f-4ef8-4fa4-aac2-df55110a2721)
+![image](https://github.com/user-attachments/assets/88199112-1940-4cba-96ea-cd7031117c78)
+
 
 
 
