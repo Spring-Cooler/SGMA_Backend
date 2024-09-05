@@ -71,9 +71,7 @@
 
 ### WBS
 https://docs.google.com/spreadsheets/d/1XVX6lAse2VZzDybUvryL8GyeM3-PO_EZMFG10hMVJSk/edit?gid=1079017783#gid=1079017783
-![image](https://github.com/user-attachments/assets/715d0a13-95ff-47dd-b8b6-29aeaefdf032)
-
-
+![image](https://github.com/user-attachments/assets/a5f97514-d78e-476b-a472-b76dd4a22eee)
 
 
 
