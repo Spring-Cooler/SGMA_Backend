@@ -1,6 +1,3 @@
-![SGMA_WBS](https://github.com/user-attachments/assets/ef7230ca-6b43-40ee-8ff4-97c19525daf2)# SGMA
-
-
 ### Team _Spring-Cooler_
 > 스프링을 더 멋지게
 
