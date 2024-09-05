@@ -1,3 +1,5 @@
+# SGMA
+
 ### Team _Spring-Cooler_
 > 스프링을 더 멋지게
 
@@ -69,7 +71,8 @@
 
 ### WBS
 https://docs.google.com/spreadsheets/d/1XVX6lAse2VZzDybUvryL8GyeM3-PO_EZMFG10hMVJSk/edit?gid=1079017783#gid=1079017783
-![image](https://github.com/user-attachments/assets/a774eb95-abf2-4d62-8998-5ae1c7171101)
+![image](https://github.com/user-attachments/assets/ff64e663-07c5-49bd-bd20-f9d1127da36c)
+
 
 
 ### 주요 기능 FLOW CHART
