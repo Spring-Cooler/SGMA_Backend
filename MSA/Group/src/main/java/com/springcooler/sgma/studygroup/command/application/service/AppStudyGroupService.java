@@ -21,9 +21,9 @@ public interface AppStudyGroupService {
     StudyGroupDTO modifyStudyGroupCategory(StudyGroupDTO modifyStudyGroup);
 
     // 스터디 그룹원 탈퇴
-    StudyGroupDTO deleteQuitMember(long memberId, long groupId);
+    StudyGroupDTO deleteQuitMember(Long memberId, Long groupId);
 
     // 스터디 그룹 삭제
-    void deleteStudyGroup(long groupId);
+    void deleteStudyGroup(Long groupId);
 
 }

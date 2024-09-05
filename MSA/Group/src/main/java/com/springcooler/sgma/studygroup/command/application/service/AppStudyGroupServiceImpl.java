@@ -153,7 +153,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     // 스터디 그룹원 탈퇴
     @Transactional
     @Override
-    public StudyGroupDTO deleteQuitMember(long memberId, long groupId) {
+    public StudyGroupDTO deleteQuitMember(Long memberId, Long groupId) {
         // 스터디 그룹 조회
         StudyGroup existingStudyGroup = studyGroupRepository.findById(groupId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
@@ -171,7 +171,7 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
     // 스터디 그룹 삭제
     @Transactional
     @Override
-    public void deleteStudyGroup(long groupId) {
+    public void deleteStudyGroup(Long groupId) {
         // 스터디 그룹 조회
         StudyGroup deleteStudyGroup = studyGroupRepository.findById(groupId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
