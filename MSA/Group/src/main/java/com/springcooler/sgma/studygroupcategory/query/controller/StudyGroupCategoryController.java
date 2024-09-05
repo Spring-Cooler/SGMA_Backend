@@ -31,7 +31,7 @@ public class StudyGroupCategoryController {
 
     // 스터디그룹 카테고리 단건 조회(카테고리 아이디)
     @GetMapping("/{categoryId}")
-    public ResponseDTO<?> findStudyGroupCategoryByCategoryId(@PathVariable Integer categoryId) {
+    public ResponseDTO<?> findStudyGroupCategoryByCategoryId(@PathVariable("categoryId") Integer categoryId) {
         StudyGroupCategoryDTO category = studyGroupCategoryService.findStudyGroupCategoryByCategoryId(categoryId);
         return ResponseDTO.ok(category);
     }

@@ -83,7 +83,7 @@ public class StudyGroupController {
 
     // 스터디 그룹 삭제
     @DeleteMapping("/{groupId}")
-    public ResponseDTO<?> deleteStudyGroup(@PathVariable Long groupId) {
+    public ResponseDTO<?> deleteStudyGroup(@PathVariable("groupId") Long groupId) {
         studyGroupService.deleteStudyGroup(groupId);
         return ResponseDTO.ok(null);
     }

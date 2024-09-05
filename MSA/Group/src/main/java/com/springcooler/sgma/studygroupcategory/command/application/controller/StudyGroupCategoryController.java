@@ -32,7 +32,7 @@ public class StudyGroupCategoryController {
 
     // 스터디그룹 카테고리 삭제
     @DeleteMapping("/{categoryId}")
-    public ResponseDTO<?> deleteStudyGroupCategory(@PathVariable Integer categoryId) {
+    public ResponseDTO<?> deleteStudyGroupCategory(@PathVariable("categoryId") Integer categoryId) {
         studyGroupCategoryService.deleteStudyGroupCategory(categoryId);
         return ResponseDTO.ok(null);
     }

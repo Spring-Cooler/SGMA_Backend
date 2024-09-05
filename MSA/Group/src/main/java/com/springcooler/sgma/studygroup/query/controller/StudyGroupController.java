@@ -28,35 +28,35 @@ public class StudyGroupController {
 
     // 그룹장인 스터디 그룹 조회
     @GetMapping("/owner/{ownerId}")
-    public ResponseDTO<?> findStudyGroupsByOwnerId(@PathVariable long ownerId) {
+    public ResponseDTO<?> findStudyGroupsByOwnerId(@PathVariable("ownerId") Long ownerId) {
         List<StudyGroupDTO> studyGroups = studyGroupService.findStudyGroupsByOwnerId(ownerId);
         return ResponseDTO.ok(studyGroups);
     }
 
     // 그룹원인 스터디 그룹 조회
     @GetMapping("/participant/{participantId}")
-    public ResponseDTO<?> findStudyGroupsByParticipantId(@PathVariable long participantId) {
+    public ResponseDTO<?> findStudyGroupsByParticipantId(@PathVariable("participantId") Long participantId) {
         List<StudyGroupDTO> studyGroups = studyGroupService.findStudyGroupsByParticipantId(participantId);
         return ResponseDTO.ok(studyGroups);
     }
 
     // 스터디 그룹 카테고리별 조회
     @GetMapping("/category/{categoryId}")
-    public ResponseDTO<?> findStudyGroupsByCategoryId(@PathVariable int categoryId) {
+    public ResponseDTO<?> findStudyGroupsByCategoryId(@PathVariable("categoryId") Integer categoryId) {
         List<StudyGroupDTO> studyGroups = studyGroupService.findStudyGroupsByCategoryId(categoryId);
         return ResponseDTO.ok(studyGroups);
     }
 
     // 스터디 그룹 단건 조회(그룹 아이디)
     @GetMapping("/{groupId}")
-    public ResponseDTO<?> findStudyGroupByGroupId(@PathVariable long groupId) {
+    public ResponseDTO<?> findStudyGroupByGroupId(@PathVariable("groupId") Long groupId) {
         StudyGroupDTO studyGroup = studyGroupService.findStudyGroupByGroupId(groupId);
         return ResponseDTO.ok(studyGroup);
     }
 
     // 스터디 그룹 단건 조회(그룹 이름)
     @GetMapping("/group-name/{groupName}")
-    public ResponseDTO<?> findStudyGroupByGroupName(@PathVariable String groupName) {
+    public ResponseDTO<?> findStudyGroupByGroupName(@PathVariable("groupName") String groupName) {
         StudyGroupDTO studyGroup = studyGroupService.findStudyGroupByGroupName(groupName);
         return ResponseDTO.ok(studyGroup);
     }
