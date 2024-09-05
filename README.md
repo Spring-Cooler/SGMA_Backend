@@ -91,10 +91,12 @@
 ![image](https://github.com/user-attachments/assets/88199112-1940-4cba-96ea-cd7031117c78)
 
 
-#### [요구사항 정의서](https://docs.google.com/spreadsheets/d/1XVX6lAse2VZzDybUvryL8GyeM3-PO_EZMFG10hMVJSk/edit?gid=0#gid=0)
+#### 요구사항 정의서
+[요구사항 정의서] 바로가기](https://docs.google.com/spreadsheets/d/1XVX6lAse2VZzDybUvryL8GyeM3-PO_EZMFG10hMVJSk/edit?gid=0#gid=0)
 ![image](https://github.com/user-attachments/assets/ad2a9474-3dd2-4e5c-bdf4-fa0e48cb4d55)
 
-### [WBS](https://docs.google.com/spreadsheets/d/1XVX6lAse2VZzDybUvryL8GyeM3-PO_EZMFG10hMVJSk/edit?gid=1079017783#gid=1079017783)
+### WBS 
+[WBS 바로가기](https://docs.google.com/spreadsheets/d/1XVX6lAse2VZzDybUvryL8GyeM3-PO_EZMFG10hMVJSk/edit?gid=1079017783#gid=1079017783)
 ![image](https://github.com/user-attachments/assets/a5f97514-d78e-476b-a472-b76dd4a22eee)
 
 
