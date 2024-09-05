@@ -25,16 +25,16 @@ public class StudyGroupApplicantController {
 
     @GetMapping("recruitment/{recruitmentBoardId}")
     @Operation(summary = "스터디 그룹별 지원 조회")
-    public ResponseDTO<?> findStudyGroupApplicantByRecruitmentBoardId(@PathVariable Long recruitmentBoardId) {
-        List<StudyGroupApplicantDTO> studyGroupApplicantDTO =studyGroupApplicantService.selectStudyGroupApplicantByRecruitmentBoardId(recruitmentBoardId);
+    public ResponseDTO<?> findStudyGroupApplicantByRecruitmentBoardId(@PathVariable("recruitmentBoardId") Long recruitmentBoardId) {
+        List<StudyGroupApplicantDTO> studyGroupApplicantDTO =studyGroupApplicantService.findStudyGroupApplicantByRecruitmentBoardId(recruitmentBoardId);
         return ResponseDTO.ok(studyGroupApplicantDTO);
     }
 
 
     @GetMapping("user/{userId}")
     @Operation(summary = "회원별 지원 조회")
-    public ResponseDTO<?> selectStudyGroupApplicantByUserId(@PathVariable Long userId) {
-        List<StudyGroupApplicantDTO> studyGroupApplicantDTO =studyGroupApplicantService.selectStudyGroupApplicantByUserId(userId);
+    public ResponseDTO<?> selectStudyGroupApplicantByUserId(@PathVariable("userId") Long userId) {
+        List<StudyGroupApplicantDTO> studyGroupApplicantDTO =studyGroupApplicantService.findStudyGroupApplicantByUserId(userId);
         return ResponseDTO.ok(studyGroupApplicantDTO);
     }
 }

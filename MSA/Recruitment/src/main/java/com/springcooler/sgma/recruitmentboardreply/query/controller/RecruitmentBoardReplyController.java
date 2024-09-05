@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController("RecruitmentBoardReplyCommandController")
-@RequestMapping("api/reply/")
+@RequestMapping("api/reply")
 public class RecruitmentBoardReplyController {
     RecruitmentBoardReplyService recruitmentBoardReplyService;
 
@@ -21,7 +21,7 @@ public class RecruitmentBoardReplyController {
         this.recruitmentBoardReplyService = recruitmentBoardReplyService;
     }
 
-    @GetMapping("getAllReply")
+    @GetMapping("/")
     @Operation(summary = "모든 대댓글 조회")
     public ResponseDTO<?> findAllRecruitmentBoardApplicantList(){
         List<RecruitmentBoardReplyDTO> recruitmentBoardReplyDTO = recruitmentBoardReplyService.getAllRecruitmentBoardReply();
