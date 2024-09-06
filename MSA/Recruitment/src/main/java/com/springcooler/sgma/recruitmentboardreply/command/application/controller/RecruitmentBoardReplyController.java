@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/reply/")
+@RequestMapping("api/recruitment-board/reply/")
 @RequiredArgsConstructor
 public class RecruitmentBoardReplyController {
     private RecruitmentBoardReplyService recruitmentBoardReplyService;
@@ -31,14 +31,14 @@ public class RecruitmentBoardReplyController {
 
     @PutMapping("/{recruitmentBoardId}")
     @Operation(summary = "댓글에 대한 대댓글 수정")
-    public ResponseDTO<?> updateReply(@PathVariable Long recruitmentBoardId, @RequestBody RecruitmentBoardReplyDTO recruitmentBoardReplyDTO) {
+    public ResponseDTO<?> updateReply(@PathVariable("recruitmentBoardId") Long recruitmentBoardId, @RequestBody RecruitmentBoardReplyDTO recruitmentBoardReplyDTO) {
         recruitmentBoardReplyService.updateRecruitmentReply(recruitmentBoardId, recruitmentBoardReplyDTO);
         return ResponseDTO.ok(recruitmentBoardReplyDTO);
     }
 
     @DeleteMapping("/{recruitmentBoardId}")
     @Operation(summary = "댓글에 대한 대댓글 삭제")
-    public ResponseDTO<?> deleteReply(@PathVariable Long recruitmentBoardId) {
+    public ResponseDTO<?> deleteReply(@PathVariable("recruitmentBoardId") Long recruitmentBoardId) {
         recruitmentBoardReplyService.deleteRecruitmentReply(recruitmentBoardId);
         return ResponseDTO.ok("ok");
     }
