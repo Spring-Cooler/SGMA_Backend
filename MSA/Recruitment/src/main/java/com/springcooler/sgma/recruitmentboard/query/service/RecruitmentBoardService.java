@@ -1,36 +1,41 @@
 package com.springcooler.sgma.recruitmentboard.query.service;
 
+import com.springcooler.sgma.recruitmentboard.common.exception.CommonException;
+import com.springcooler.sgma.recruitmentboard.common.exception.ErrorCode;
 import com.springcooler.sgma.recruitmentboard.query.dto.RecruitmentBoardDTO;
 import com.springcooler.sgma.recruitmentboard.query.repository.RecruitmentBoardMapper;
 import lombok.extern.log4j.Log4j2;
-import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.List;
-
-import static com.springcooler.sgma.studygroupapplicant.common.Template.getSqlSession;
-
 
 @Service
 @Log4j2
 public class RecruitmentBoardService {
 
-    private RecruitmentBoardMapper recruitmentBoardMapper;
-    @Transactional
-    public List<RecruitmentBoardDTO> studyGroupRecruitment() {
-        SqlSession sqlSession = getSqlSession();
-        RecruitmentBoardMapper mapper = sqlSession.getMapper(RecruitmentBoardMapper.class);
-        List<RecruitmentBoardDTO> studyGroupApplicantDTOS = mapper.studyGroupRecruitment();
-        return studyGroupApplicantDTOS;
+    private final RecruitmentBoardMapper recruitmentBoardMapper;
+
+    @Autowired
+    public RecruitmentBoardService(RecruitmentBoardMapper recruitmentBoardMapper) {
+        this.recruitmentBoardMapper = recruitmentBoardMapper;
     }
-    @Transactional
-    public RecruitmentBoardDTO selectStudyGroupApplicantById(Long recruitmentBoardId){
-        SqlSession sqlSession =getSqlSession();
-        recruitmentBoardMapper =sqlSession.getMapper(RecruitmentBoardMapper.class);
-        RecruitmentBoardDTO recruitmentBoardDTO = recruitmentBoardMapper.selectStudyGroupApplicantDTO(recruitmentBoardId);
-        System.out.println(recruitmentBoardDTO);
-        return recruitmentBoardDTO;
+
+    public List<RecruitmentBoardDTO> findAllRecruitmentBoards() {
+        List<RecruitmentBoardDTO> recruitmentBoards = recruitmentBoardMapper.findAllRecruitmentBoards();
+        if(recruitmentBoards == null || recruitmentBoards.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_RECRUITMENT_BOARD);
+        }
+        return recruitmentBoards;
     }
+
+    public RecruitmentBoardDTO findRecruitmentBoardByBoardId(Long recruitmentBoardId){
+        RecruitmentBoardDTO recruitmentBoard =
+                recruitmentBoardMapper.findRecruitmentBoardByBoardId(recruitmentBoardId);
+        if(recruitmentBoard == null) {
+            throw new CommonException(ErrorCode.NOT_FOUND_RECRUITMENT_BOARD);
+        }
+        return recruitmentBoard;
+    }
+
 }

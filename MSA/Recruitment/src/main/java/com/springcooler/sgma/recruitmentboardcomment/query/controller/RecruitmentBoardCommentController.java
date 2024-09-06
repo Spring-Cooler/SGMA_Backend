@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/recruitment-board-comment")
+@RestController("queryRecruitmentBoardCommentController")
+@RequestMapping("/api/recruitment-board/comment")
 public class RecruitmentBoardCommentController {
     private final RecruitmentBoardCommentService recruitmentBoardCommentService;
 

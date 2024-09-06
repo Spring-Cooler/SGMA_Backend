@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("RecruitmentBoardReplyCommandController")
-@RequestMapping("api/reply")
+@RestController("queryRecruitmentBoardReplyController")
+@RequestMapping("/api/recruitment-board/reply")
 public class RecruitmentBoardReplyController {
     RecruitmentBoardReplyService recruitmentBoardReplyService;
 
