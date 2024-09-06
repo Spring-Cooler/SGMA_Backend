@@ -22,6 +22,7 @@ public class StudyGroupBoardCommentController {
         this.studyGroupBoardCommentService = studyGroupBoardCommentService;
     }
 
+    // 게시글별 댓글 전체 조회
     @GetMapping("/board-id/{boardId}")
     public ResponseDTO<?> findStudyGroupBoardCommentsByBoardId(@PathVariable("boardId") Long boardId) {
         List<StudyGroupBoardCommentDTO> comments =
@@ -29,6 +30,7 @@ public class StudyGroupBoardCommentController {
         return ResponseDTO.ok(comments);
     }
 
+    // 그룹원별 댓글 전체 조회
     @GetMapping("/member-id/{memberId}")
     public ResponseDTO<?> findStudyGroupBoardCommentsByMemberId(@PathVariable("memberId") Long memberId) {
         List<StudyGroupBoardCommentDTO> comments =

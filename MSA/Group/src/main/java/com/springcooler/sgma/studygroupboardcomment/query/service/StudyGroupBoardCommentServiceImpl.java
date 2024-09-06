@@ -17,6 +17,7 @@ public class StudyGroupBoardCommentServiceImpl implements StudyGroupBoardComment
         this.studyGroupBoardCommentMapper = studyGroupBoardCommentMapper;
     }
 
+    // 게시글별 댓글 전체 조회
     @Override
     public List<StudyGroupBoardCommentDTO> findStudyGroupBoardCommentsByBoardId(Long boardId) {
         List<StudyGroupBoardCommentDTO> comments =
@@ -27,6 +28,7 @@ public class StudyGroupBoardCommentServiceImpl implements StudyGroupBoardComment
         return comments;
     }
 
+    // 그룹원별 댓글 전체 조회
     @Override
     public List<StudyGroupBoardCommentDTO> findStudyGroupBoardCommentsByMemberId(Long memberId) {
         List<StudyGroupBoardCommentDTO> comments =
