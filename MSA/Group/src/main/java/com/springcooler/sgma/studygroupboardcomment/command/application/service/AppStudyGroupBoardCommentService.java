@@ -4,10 +4,13 @@ import com.springcooler.sgma.studygroupboardcomment.command.application.dto.Stud
 
 public interface AppStudyGroupBoardCommentService {
 
+    // 댓글 작성
     StudyGroupBoardCommentDTO registStudyGroupBoardComment(StudyGroupBoardCommentDTO newComment);
 
+    // 댓글 수정
     StudyGroupBoardCommentDTO modifyStudyGroupBoardComment(StudyGroupBoardCommentDTO modifyComment);
 
+    // 댓글 삭제
     void deleteStudyGroupBoardComment(Long commentId);
 
 }

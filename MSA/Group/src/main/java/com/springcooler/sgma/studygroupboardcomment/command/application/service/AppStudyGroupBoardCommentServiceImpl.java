@@ -30,6 +30,7 @@ public class AppStudyGroupBoardCommentServiceImpl implements AppStudyGroupBoardC
         this.studyGroupBoardCommentRepository = studyGroupBoardCommentRepository;
     }
 
+    // 댓글 작성
     @Override
     public StudyGroupBoardCommentDTO registStudyGroupBoardComment(StudyGroupBoardCommentDTO newComment) {
         // DTO 유효성 검사
@@ -52,6 +53,7 @@ public class AppStudyGroupBoardCommentServiceImpl implements AppStudyGroupBoardC
         return modelMapper.map(comment, StudyGroupBoardCommentDTO.class);
     }
 
+    // 댓글 수정
     @Override
     public StudyGroupBoardCommentDTO modifyStudyGroupBoardComment(StudyGroupBoardCommentDTO modifyComment) {
         // DTO 유효성 검사
@@ -72,6 +74,7 @@ public class AppStudyGroupBoardCommentServiceImpl implements AppStudyGroupBoardC
         return modelMapper.map(existingComment, StudyGroupBoardCommentDTO.class);
     }
 
+    // 댓글 삭제
     @Override
     public void deleteStudyGroupBoardComment(Long commentId) {
         // 기존 엔티티 조회
