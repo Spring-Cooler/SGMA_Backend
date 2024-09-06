@@ -82,6 +82,7 @@ public class AppStudyGroupBoardCommentServiceImpl implements AppStudyGroupBoardC
         if(!domainStudyGroupBoardCommentService.isActive(deleteComment.getActiveStatus()))
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_BOARD_COMMENT);
 
+        // INACTIVE 처리
         deleteComment.setActiveStatus(StudyGroupBoardCommentStatus.INACTIVE);
         studyGroupBoardCommentRepository.save(deleteComment);
     }
