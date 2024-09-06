@@ -15,7 +15,7 @@
         <result property="groupId" column="GROUP_ID"/>
     </resultMap>
 
-    <select id="findStudyGroupBoardsByGroupId" resultMap="studyGroupBoardResultMap">
+    <select id="findStudyGroupBoardsByGroupId" resultMap="studyGroupBoardResultMap" parameterType="Long">
         SELECT
                A.STUDY_GROUP_BOARD_ID
              , A.TITLE
@@ -30,7 +30,7 @@
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.GROUP_ID = #{ groupId }
     </select>
 
-    <select id="findStudyGroupBoardsByMemberId" resultMap="studyGroupBoardResultMap">
+    <select id="findStudyGroupBoardsByMemberId" resultMap="studyGroupBoardResultMap" parameterType="Long">
         SELECT
                A.STUDY_GROUP_BOARD_ID
              , A.TITLE
@@ -45,7 +45,7 @@
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.MEMBER_ID = #{ memberId }
     </select>
 
-    <select id="findStudyGroupBoardsByTitle" resultMap="studyGroupBoardResultMap">
+    <select id="findStudyGroupBoardsByTitle" resultMap="studyGroupBoardResultMap" parameterType="string">
         SELECT
                A.STUDY_GROUP_BOARD_ID
              , A.TITLE
@@ -60,7 +60,7 @@
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.TITLE LIKE CONCAT('%', #{title}, '%')
     </select>
 
-    <select id="findStudyGroupBoardByBoardId" resultMap="studyGroupBoardResultMap">
+    <select id="findStudyGroupBoardByBoardId" resultMap="studyGroupBoardResultMap" parameterType="Long">
         SELECT
                A.STUDY_GROUP_BOARD_ID
              , A.TITLE

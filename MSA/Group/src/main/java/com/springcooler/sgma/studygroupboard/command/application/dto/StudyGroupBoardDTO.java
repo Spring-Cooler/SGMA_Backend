@@ -1,9 +1,6 @@
 package com.springcooler.sgma.studygroupboard.command.application.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.springcooler.sgma.studygroupboard.command.domain.aggregate.StudyGroupBoardStatus;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
