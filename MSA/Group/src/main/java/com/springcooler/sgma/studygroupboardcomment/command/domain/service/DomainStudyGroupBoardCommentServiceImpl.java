@@ -18,7 +18,7 @@ public class DomainStudyGroupBoardCommentServiceImpl implements DomainStudyGroup
                         studyGroupBoardCommentDTO.getStudyGroupBoardId() == null) return false;
                 break;
             case PUT:
-                if(studyGroupBoardCommentDTO.getStudyGroupBoardId() == null ||
+                if(studyGroupBoardCommentDTO.getStudyGroupBoardCommentId() == null ||
                         studyGroupBoardCommentDTO.getContent() == null) return false;
                 break;
         }
