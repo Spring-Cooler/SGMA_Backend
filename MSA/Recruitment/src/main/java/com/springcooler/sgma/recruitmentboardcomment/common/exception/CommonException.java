@@ -1,6 +1,5 @@
 package com.springcooler.sgma.recruitmentboardcomment.common.exception;
 
-import com.springcooler.sgma.recruitmentboardreply.common.exception.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

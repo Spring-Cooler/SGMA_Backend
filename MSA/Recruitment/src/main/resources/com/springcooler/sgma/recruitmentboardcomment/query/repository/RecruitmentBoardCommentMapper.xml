@@ -4,21 +4,18 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springcooler.sgma.recruitmentboardcomment.query.repository.RecruitmentBoardCommentMapper">
 
-    <resultMap id="studyGroupRecruitmentComment1" type="RecruitmentComment">
+    <resultMap id="studyGroupRecruitmentComment" type="com.springcooler.sgma.recruitmentboardcomment.query.dto.RecruitmentBoardCommentDTO">
         <id property="recruitmentBoardCommentId" column="RECRUITMENT_BOARD_COMMENT_ID"/>
         <result property="content" column="CONTENT"/>
         <result property="createdAt" column="CREATED_AT"/>
         <result property="updatedAt" column="UPDATED_AT"/>
+        <result property="activeStatus" column="ACTIVE_STATUS"/>
+        <result property="anonymousStatus" column="ANONYMOUS_STATUS"/>
         <result property="userId" column="USER_ID"/>
         <result property="recruitmentBoardId" column="RECRUITMENT_BOARD_ID"/>
-        <result property="anonymousStatus" column="ANONYMOUS_STATUS"/>
     </resultMap>
 
-    <resultMap id="studyGroupRecruitmentComment2" type="RecruitmentComment" extends="studyGroupRecruitmentComment1">
-        <result property="activeStatus" column="ACTIVE_STATUS"/>
-    </resultMap>
-
-    <select id="studyGroupRecruitmentCommentDTO1" resultMap="studyGroupRecruitmentComment2">
+    <select id="findStudyGroupRecruitmentCommentByBoardId" resultMap="studyGroupRecruitmentComment">
         SELECT
         A.RECRUITMENT_BOARD_COMMENT_ID,
         A.CONTENT,
@@ -31,4 +28,5 @@
         FROM RECRUITMENT_BOARD_COMMENT A
         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.RECRUITMENT_BOARD_ID = #{ recruitmentBoardId }
     </select>
+
 </mapper>

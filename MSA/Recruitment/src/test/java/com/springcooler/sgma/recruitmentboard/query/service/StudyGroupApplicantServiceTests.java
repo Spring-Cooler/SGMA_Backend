@@ -16,29 +16,31 @@ import java.util.List;
 class StudyGroupApplicantServiceTests {
 
     @Autowired
-    RecruitmentBoardService studyGroupApplicantService;
+    RecruitmentBoardService recruitmentBoardService;
 
-    @DisplayName("스터디 그룹 지원 전체 조회 테스트")
+    @DisplayName("스터디 그룹 모집글 전체 조회 테스트")
     @Test
-    void testStudyGroupRecruitment() {
+    void testFindAllRecruitmentBoards() {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<RecruitmentBoardDTO> studyGroupApplicantDTOS = studyGroupApplicantService.studyGroupRecruitment();
-                    studyGroupApplicantDTOS.forEach(System.out::println);
+                    List<RecruitmentBoardDTO> recruitmentBoards = recruitmentBoardService.findAllRecruitmentBoards();
+                    recruitmentBoards.forEach(System.out::println);
                 }
         );
     }
 
-    @DisplayName("스터디 그룹 지원 단 건 조회 테스트")
+    @DisplayName("스터디 그룹 모집글 단건 조회 테스트")
     @Test
-    void testSelectStudyGroupApplicantById() {
+    void testFindRecruitmentBoardByBoardId() {
 
-        Long recruitmentBoardId = 1L;
-        RecruitmentBoardDTO actualApplicant = studyGroupApplicantService.selectStudyGroupApplicantById(recruitmentBoardId);
-        RecruitmentBoardDTO expectedApplicant = new RecruitmentBoardDTO();
-        expectedApplicant.setRecruitmentBoardId(recruitmentBoardId);
+        Assertions.assertDoesNotThrow(
+                () -> {
+                    RecruitmentBoardDTO recruitmentBoard =
+                            recruitmentBoardService.findRecruitmentBoardByBoardId(1L);
+                    System.out.println(recruitmentBoard);
+                }
+        );
 
-        Assertions.assertEquals(actualApplicant.getRecruitmentBoardId(),expectedApplicant.getRecruitmentBoardId());
     }
 }
 
