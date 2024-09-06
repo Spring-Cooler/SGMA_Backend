@@ -1,6 +1,9 @@
 package com.springcooler.sgma.recruitmentboardlike.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.springcooler.sgma.recruitmentboardlike.common.exception.CommonException;
 import com.springcooler.sgma.recruitmentboardlike.common.exception.ErrorCode;
 import com.springcooler.sgma.recruitmentboardlike.common.exception.ExceptionDTO;
@@ -17,6 +20,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ResponseDTO<T> {
 
     @JsonIgnore
