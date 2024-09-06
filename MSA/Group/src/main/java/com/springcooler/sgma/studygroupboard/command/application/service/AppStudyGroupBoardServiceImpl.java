@@ -79,12 +79,15 @@ public class AppStudyGroupBoardServiceImpl implements AppStudyGroupBoardService 
 
     @Override
     public void deleteStudyGroupBoard(Long boardId) {
+        // 기존 엔티티 조회
         StudyGroupBoard deleteBoard = studyGroupBoardRepository.findById(boardId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_BOARD));
 
+        // 유효성 검사
         if(!domainStudyGroupBoardService.isActive(deleteBoard.getActiveStatus()))
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_BOARD);
 
+        // INACTIVE 처리
         deleteBoard.setActiveStatus(StudyGroupBoardStatus.INACTIVE);
         studyGroupBoardRepository.save(deleteBoard);
     }
