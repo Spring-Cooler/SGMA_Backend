@@ -9,19 +9,19 @@ import org.springframework.stereotype.Service;
 public class DomainStudyGroupBoardServiceImpl implements DomainStudyGroupBoardService{
 
     @Override
-    public boolean isValidDTO(RestStatus restStatus, StudyGroupBoardDTO studyGroupboardDTO) {
-        if(studyGroupboardDTO == null) return false;
+    public boolean isValidDTO(RestStatus restStatus, StudyGroupBoardDTO studyGroupBoardDTO) {
+        if(studyGroupBoardDTO == null) return false;
         switch (restStatus) {
             case POST:
-                if(studyGroupboardDTO.getTitle() == null ||
-                        studyGroupboardDTO.getContent() == null ||
-                        studyGroupboardDTO.getMemberId() == null ||
-                        studyGroupboardDTO.getGroupId() == null) return false;
+                if(studyGroupBoardDTO.getTitle() == null ||
+                        studyGroupBoardDTO.getContent() == null ||
+                        studyGroupBoardDTO.getMemberId() == null ||
+                        studyGroupBoardDTO.getGroupId() == null) return false;
                 break;
             case PUT:
-                if(studyGroupboardDTO.getStudyGroupBoardId() == null ||
-                        studyGroupboardDTO.getTitle() == null ||
-                        studyGroupboardDTO.getContent() == null) return false;
+                if(studyGroupBoardDTO.getStudyGroupBoardId() == null ||
+                        studyGroupBoardDTO.getTitle() == null ||
+                        studyGroupBoardDTO.getContent() == null) return false;
                 break;
         }
 

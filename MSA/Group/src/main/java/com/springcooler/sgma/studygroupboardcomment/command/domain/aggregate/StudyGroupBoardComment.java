@@ -1,4 +1,4 @@
-package com.springcooler.sgma.studygroupboard.command.domain.aggregate;
+package com.springcooler.sgma.studygroupboardcomment.command.domain.aggregate;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,21 +6,18 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="STUDY_GROUP_BOARD")
+@Table(name="STUDY_GROUP_BOARD_COMMENT")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class StudyGroupBoard {
+public class StudyGroupBoardComment {
 
     @Id
-    @Column(name="STUDY_GROUP_BOARD_ID")
+    @Column(name="STUDY_GROUP_BOARD_COMMENT_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long studyGroupBoardId;
-
-    @Column(name="TITLE")
-    private String title;
+    private Long studyGroupBoardCommentId;
 
     @Column(name="CONTENT")
     private String content;
@@ -33,15 +30,12 @@ public class StudyGroupBoard {
 
     @Enumerated(EnumType.STRING)
     @Column(name="ACTIVE_STATUS")
-    private StudyGroupBoardStatus activeStatus;
-
-    @Column(name="LIKES")
-    private Integer likes;
+    private StudyGroupBoardCommentStatus activeStatus;
 
     @Column(name="MEMBER_ID")
     private Long memberId;
 
-    @Column(name="GROUP_ID")
-    private Long groupId;
+    @Column(name="STUDY_GROUP_BOARD_ID")
+    private Long studyGroupBoardId;
 
 }

@@ -6,7 +6,7 @@ import com.springcooler.sgma.studygroupboard.command.domain.aggregate.StudyGroup
 
 public interface DomainStudyGroupBoardService {
 
-    boolean isValidDTO(RestStatus restStatus, StudyGroupBoardDTO studyGroupboardDTO);
+    boolean isValidDTO(RestStatus restStatus, StudyGroupBoardDTO studyGroupBoardDTO);
 
     boolean isActive(StudyGroupBoardStatus activeStatus);
 
