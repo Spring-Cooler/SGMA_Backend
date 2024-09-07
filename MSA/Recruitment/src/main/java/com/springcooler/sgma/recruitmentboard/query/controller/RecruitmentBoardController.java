@@ -25,7 +25,7 @@ public class RecruitmentBoardController {
         this.recruitmentBoardService = studyGroupApplicantService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     @Operation(summary = "모집글 전체 조회")
     public ResponseDTO<?> findAllRecruitmentBoards() {
         List<RecruitmentBoardDTO> recruitmentBoards = recruitmentBoardService.findAllRecruitmentBoards();
