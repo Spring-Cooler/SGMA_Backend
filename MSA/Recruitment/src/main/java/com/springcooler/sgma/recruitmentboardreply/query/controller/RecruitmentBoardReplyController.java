@@ -24,7 +24,7 @@ public class RecruitmentBoardReplyController {
     @GetMapping
     @Operation(summary = "모든 대댓글 조회")
     public ResponseDTO<?> findAllRecruitmentBoardApplicantList(){
-        List<RecruitmentBoardReplyDTO> recruitmentBoardReplyDTO = recruitmentBoardReplyService.getAllRecruitmentBoardReply();
+        List<RecruitmentBoardReplyDTO> recruitmentBoardReplyDTO = recruitmentBoardReplyService.findAllRecruitmentBoardReply();
         return ResponseDTO.ok(recruitmentBoardReplyDTO);
     }
 

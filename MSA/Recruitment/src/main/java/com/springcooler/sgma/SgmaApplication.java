@@ -1,5 +1,9 @@
 package com.springcooler.sgma;
 
+
+import com.springcooler.sgma.recruitmentboardcomment.command.domain.aggregate.RecruitmentBoardComment;
+import com.springcooler.sgma.recruitmentboardlike.query.service.RecruitmentBoardLikeService;
+import com.springcooler.sgma.recruitmentboardreply.query.service.RecruitmentBoardReplyService;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,4 +20,5 @@ public class SgmaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SgmaApplication.class, args);
 	}
+
 }
