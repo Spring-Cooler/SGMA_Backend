@@ -9,4 +9,8 @@ import java.util.List;
 public interface RecruitmentBoardLikeMapper {
 
     List<RecruitmentBoardLikeDTO> findrecruitmentBoardLike();
+
+    List<RecruitmentBoardLikeDTO> findrecruitmentBoardLikeByUserId(Long userId);
+
+    List<RecruitmentBoardLikeDTO> findrecruitmentBoardLikeByRecruitmentBoardId(Long recruitmentBoardId);
 }

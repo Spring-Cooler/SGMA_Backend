@@ -16,4 +16,20 @@
             A.RECRUITMENT_BOARD_ID
         FROM RECRUITMENT_BOARD_LIKE A
     </select>
+
+    <select id="findrecruitmentBoardLikeByUserId" resultMap="recruitmentBoardLike">
+        SELECT
+            A.USER_ID,
+            A.RECRUITMENT_BOARD_ID
+        FROM RECRUITMENT_BOARD_LIKE A
+        WHERE A.USER_ID =#{ userId }
+    </select>
+
+    <select id="findrecruitmentBoardLikeByRecruitmentBoardId" resultMap="recruitmentBoardLike">
+        SELECT
+        A.USER_ID,
+        A.RECRUITMENT_BOARD_ID
+        FROM RECRUITMENT_BOARD_LIKE A
+        WHERE A.RECRUITMENT_BOARD_ID =#{ recruitmentBoardId }
+    </select>
 </mapper>
