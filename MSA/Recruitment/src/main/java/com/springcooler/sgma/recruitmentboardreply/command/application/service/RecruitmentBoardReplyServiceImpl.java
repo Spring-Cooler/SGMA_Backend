@@ -1,9 +1,9 @@
 package com.springcooler.sgma.recruitmentboardreply.command.application.service;
 
 
-import com.springcooler.sgma.recruitmentboardcomment.command.domain.aggregate.ActiveStatus;
 import com.springcooler.sgma.recruitmentboardcomment.command.domain.aggregate.RecruitmentBoardComment;
 import com.springcooler.sgma.recruitmentboardreply.command.application.dto.RecruitmentBoardReplyDTO;
+import com.springcooler.sgma.recruitmentboardreply.command.domain.aggregate.ActiveStatus;
 import com.springcooler.sgma.recruitmentboardreply.command.domain.aggregate.AnonymousStatus;
 import com.springcooler.sgma.recruitmentboardreply.command.domain.aggregate.RecruitmentBoardReply;
 import com.springcooler.sgma.recruitmentboardreply.command.domain.repository.RecruitmentBoardReplyRepository;
@@ -34,12 +34,14 @@ public class RecruitmentBoardReplyServiceImpl implements RecruitmentBoardReplySe
     @Transactional
     public RecruitmentBoardReply createRecruitBoardReply(RecruitmentBoardReplyDTO recruitmentBoardReplyDTO) {
         RecruitmentBoardReply recruitmentBoardReply = RecruitmentBoardReply.builder()
+                .activeStatus(ActiveStatus.ACTIVE)
+                .anonymousStatus(AnonymousStatus.N)
                 .content(recruitmentBoardReplyDTO.getContent())
                 .createdAt(Timestamp.from(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toInstant()))
                 .updatedAt(Timestamp.from(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toInstant()))
-                .anonymousStatus(AnonymousStatus.N)
                 .userId(recruitmentBoardReplyDTO.getUserId())
                 .recruitmentBoardReplyId(recruitmentBoardReplyDTO.getRecruitmentBoardReplyId())
+                .recruitmentBoardCommentId(recruitmentBoardReplyDTO.getRecruitmentBoardCommentId())
                 .build();
         return recruitmentBoardReplyRepository.save(recruitmentBoardReply);
     }

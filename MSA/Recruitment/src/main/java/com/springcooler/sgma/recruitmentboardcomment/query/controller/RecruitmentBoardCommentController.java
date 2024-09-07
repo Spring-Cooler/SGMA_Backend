@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController("queryRecruitmentBoardCommentController")
-@RequestMapping("/api/recruitment-board/comment")
+@RequestMapping("/api/recruitment-board-comments")
 public class RecruitmentBoardCommentController {
     private final RecruitmentBoardCommentService recruitmentBoardCommentService;
 
@@ -23,7 +23,7 @@ public class RecruitmentBoardCommentController {
         this.recruitmentBoardCommentService = recruitmentBoardCommentService;
     }
 
-    @GetMapping("/board-id/{recruitmentBoardId}")
+    @GetMapping("{recruitmentBoardId}")
     @Operation(summary = "모집글에 해당하는 모든 댓글 조회")
     public ResponseDTO<?> findBoardCommentByRecruitmentBoardId(@PathVariable("recruitmentBoardId") Long recruitmentBoardId){
         List<RecruitmentBoardCommentDTO> recruitmentBoardCommentDTO =

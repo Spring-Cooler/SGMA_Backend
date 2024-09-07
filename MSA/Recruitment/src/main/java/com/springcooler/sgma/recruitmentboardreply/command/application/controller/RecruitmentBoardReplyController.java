@@ -12,17 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/recruitment-board/reply/")
+@RequestMapping("api/recruitment-board-reply")
 @RequiredArgsConstructor
 public class RecruitmentBoardReplyController {
-    private RecruitmentBoardReplyService recruitmentBoardReplyService;
+    private final RecruitmentBoardReplyService recruitmentBoardReplyService;
 
-    @Autowired
-    public RecruitmentBoardReplyController(RecruitmentBoardReplyService recruitmentBoardReplyService) {
-        this.recruitmentBoardReplyService = recruitmentBoardReplyService;
-    }
 
-    @PostMapping("write")
+    @PostMapping
     @Operation(summary = "댓글에 대한 대댓글 작성")
     public ResponseDTO<?> writeReply(@RequestBody RecruitmentBoardReplyDTO recruitmentBoardReplyDTO){
         recruitmentBoardReplyService.createRecruitBoardReply(recruitmentBoardReplyDTO);
