@@ -19,11 +19,9 @@ public class RecruitmentBoardLikeService {
     }
 
     public List<RecruitmentBoardLikeDTO> findAllRecruitmentBoardLike() {
-
         List<RecruitmentBoardLikeDTO> likes = recruitmentBoardLikeMapper.findrecruitmentBoardLike();
         log.info("=====================" + likes);
         return likes;
-
     }
 
     public List<RecruitmentBoardLikeDTO> findrecruitmentBoardLikeByUserId(Long userId) {

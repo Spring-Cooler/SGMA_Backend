@@ -19,7 +19,6 @@ public class RecruitmentBoardLikeController {
     RecruitmentBoardLikeService recruitmentBoardLikeService;
 
     @Autowired
-
     public RecruitmentBoardLikeController(RecruitmentBoardLikeService recruitmentBoardLikeService) {
         this.recruitmentBoardLikeService = recruitmentBoardLikeService;
     }

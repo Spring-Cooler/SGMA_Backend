@@ -1,6 +1,10 @@
 package com.springcooler.sgma.recruitmentboardlike.command.application.service;
 
 
+import com.springcooler.sgma.recruitmentboardlike.command.domain.aggregate.RecruitmentBoardLike;
+import org.springframework.stereotype.Service;
+
+@Service
 public interface RecruitmentBoardLikeCommandService {
-    void addLike(Long recruitmentBoardId, Long userId);
+    RecruitmentBoardLike checkLike(Long recruitmentBoardId, Long userId);
 }
