@@ -26,7 +26,11 @@
      - [개념 모델링](#1-개념-모델링)
      - [논리 모델링](#2-논리-모델링)
      - [물리 모델링](#3-물리-모델링)
-   - [동료 평가](#동료평가)
+5. [산출물](#산출물)
+
+
+
+- [동료 평가](#동료평가)
 
 ---
 
@@ -122,6 +126,24 @@
 #### 3. 물리 모델링 <a id="3-물리-모델링"></a>
 ![image](https://github.com/user-attachments/assets/8a79a240-e42b-4341-a202-77a251d1a636)
 
+### 산출물<a id="산출물"></a>
+
+#### 회원가입을 위한 이메일 인증
+![image](https://github.com/user-attachments/assets/64cdbec0-460d-48c4-9e9c-f30296c8c677)
+![image](https://github.com/user-attachments/assets/2e39b1ac-1af6-46d4-b132-be6ca4f2b9ef)
+
+#### Redis를 이용한 이메일 인증번호 저장
+![image](https://github.com/user-attachments/assets/918c81ea-5664-45ea-ba57-fbaff65a7d4f)
+
+#### 로그인 후 토큰 발급
+![image](https://github.com/user-attachments/assets/c64aa1df-a63f-4210-b8bb-bc6e4938e567)
+
+#### 회원정보 수정 및 S3를 이용한 파일 저장
+![image](https://github.com/user-attachments/assets/22b5047e-fee1-4a8b-8c5a-7ec17d13576e)
+![image](https://github.com/user-attachments/assets/6d46b6fa-6d98-4ead-bb10-b5b1dd843449)
+
+#### Spring Batch와 Scheduling을 이용한 게시글 활성화 여부 관리
+![image](https://github.com/user-attachments/assets/c15026df-42f4-4397-9500-312cb759cf5e)
 
 ### 📜 동료평가 <a id="동료평가"></a>
 
