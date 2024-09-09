@@ -14,6 +14,5 @@ public interface AppSubmittedAnswerService {
 
     double gradeSubmittedAnswersByScheduleIdAndParticipantId(long scheduleId, long participantId);
 
-//    void gradeSubmittedAnswersByParticipantId(long participantId);
 
 }

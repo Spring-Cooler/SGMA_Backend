@@ -20,12 +20,9 @@ import java.util.Map;
 public class SubmittedAnswerController {
 
     SubmittedAnswerService submittedAnswerService;
-//    List<SubmittedAnswerDTO> submittedAnswerDTOs;
-
     @Autowired
     public SubmittedAnswerController(SubmittedAnswerService submittedAnswerService) {
         this.submittedAnswerService = submittedAnswerService;
-//        this.submittedAnswerDTOs = submittedAnswerService.findAllSubmittedAnswers();
     }
     @GetMapping("/")
     public ResponseEntity<ResponseMessage> getAllSubmittedAnswers() {
@@ -41,7 +38,7 @@ public class SubmittedAnswerController {
     }
 
     @GetMapping("/problems/{problemId}")
-    public ResponseEntity<ResponseMessage> getSubmittedAnswersByProblemId(@PathVariable long problemId){
+    public ResponseEntity<ResponseMessage> getSubmittedAnswersByProblemId(@PathVariable("problemId") long problemId){
         HttpHeaders headers= new HttpHeaders();
         headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
         Map<String, Object> responseMap = new HashMap<>();

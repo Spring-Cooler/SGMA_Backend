@@ -5,19 +5,15 @@ import com.springcooler.sgma.choice.command.domain.aggregate.entity.Choice;
 import com.springcooler.sgma.choice.command.domain.aggregate.entity.ChoicePK;
 import com.springcooler.sgma.choice.command.domain.aggregate.vo.ProblemVO;
 import com.springcooler.sgma.choice.command.domain.repository.ChoiceRepository;
-import com.springcooler.sgma.choice.common.exception.CommonException;
-import com.springcooler.sgma.choice.common.exception.ErrorCode;
+
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,23 +21,11 @@ import java.util.stream.Collectors;
 public class AppChoiceServiceImpl implements AppChoiceService {
 
     private final ChoiceRepository choiceRepository;
-    private final ModelMapper modelMapper;
     @Autowired
-    public AppChoiceServiceImpl(ChoiceRepository choiceRepository , ModelMapper modelMapper) {
+    public AppChoiceServiceImpl(ChoiceRepository choiceRepository) {
         this.choiceRepository = choiceRepository;
-        this.modelMapper = modelMapper;
-    }
-
-    @Transactional
-    @Override
-    public Choice registChoice(ChoiceDTO newChoiceDTO) {
-
-        ChoicePK choicePK = new ChoicePK(newChoiceDTO.getProblemId(), newChoiceDTO.getChoiceNum());
-        Choice choice = new Choice(choicePK, newChoiceDTO.getContent());
-        return choiceRepository.save(choice);
 
     }
-
 
     @Transactional
     @Override
@@ -53,7 +37,7 @@ public class AppChoiceServiceImpl implements AppChoiceService {
         return new ChoiceDTO(modifiedChoice.getChoicePK().getProblemId(), modifiedChoice.getChoicePK().getChoiceNum(), modifiedChoice.getContent());
     }
 
-
+    @Transactional
     @Override
     public ProblemVO registChoices(ProblemVO problemVO) {
             long problemID = problemVO.getProblemId();

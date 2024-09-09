@@ -33,16 +33,12 @@ public class SubmittedAnswerController {
 
 
     @PutMapping("/grade/{scheduleId}/{participantId}")
-    public ResponseDTO<?> gradeSubmittedAnswerByParticipantId(@PathVariable long scheduleId, @PathVariable long participantId){
+    public ResponseDTO<?> gradeSubmittedAnswerByParticipantId(@PathVariable("scheduleId") long scheduleId, @PathVariable("participantId") long participantId){
         return ResponseDTO.ok(String.valueOf(appSubmittedAnswerService.gradeSubmittedAnswersByScheduleIdAndParticipantId(scheduleId, participantId)));
     }
 
     }
-//    @PutMapping("/grade/")// TODO: 시험 종료시 해당 시험에 해당하는 문제 한번에 채점
-//    public ResponseEntity<?> gradeSubmittedAnswer(@RequestBody SubmittedAnswerDTO answerToGrade){
-//
-//        return ResponseEntity.created(URI.create("/api/submitted-answers/grade/" + appSubmittedAnswerService.gradeSubmittedAnswer(answerToGrade).getAnswerStatus())).build();
-//    }
+
 
 
 

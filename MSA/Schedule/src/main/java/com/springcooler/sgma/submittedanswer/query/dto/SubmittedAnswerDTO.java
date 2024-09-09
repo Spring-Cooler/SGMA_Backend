@@ -1,7 +1,6 @@
 package com.springcooler.sgma.submittedanswer.query.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import lombok.*;
 
 @NoArgsConstructor
