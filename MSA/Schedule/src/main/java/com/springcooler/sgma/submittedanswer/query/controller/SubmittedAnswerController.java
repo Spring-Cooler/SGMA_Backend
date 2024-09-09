@@ -41,7 +41,7 @@ public class SubmittedAnswerController {
     }
 
     @GetMapping("/problems/{problemId}")
-    public ResponseEntity<ResponseMessage> getSubmittedAnswersByProblemId(@PathVariable long problemId){
+    public ResponseEntity<ResponseMessage> getSubmittedAnswersByProblemId(@PathVariable("problemId") long problemId){
         HttpHeaders headers= new HttpHeaders();
         headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
         Map<String, Object> responseMap = new HashMap<>();
