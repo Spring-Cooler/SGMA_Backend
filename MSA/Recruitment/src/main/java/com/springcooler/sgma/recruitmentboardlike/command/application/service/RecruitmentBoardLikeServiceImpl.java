@@ -3,7 +3,6 @@ package com.springcooler.sgma.recruitmentboardlike.command.application.service;
 import com.springcooler.sgma.recruitmentboardlike.command.domain.aggregate.RecruitmentBoardLike;
 import com.springcooler.sgma.recruitmentboardlike.command.domain.repository.RecruitmentBoardLikeRepository;
 import com.springcooler.sgma.recruitmentboardlike.query.dto.RecruitmentBoardLikeDTO;
-import com.springcooler.sgma.recruitmentboardlike.query.repository.RecruitmentBoardLikeMapper;
 import com.springcooler.sgma.recruitmentboardlike.query.service.RecruitmentBoardLikeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

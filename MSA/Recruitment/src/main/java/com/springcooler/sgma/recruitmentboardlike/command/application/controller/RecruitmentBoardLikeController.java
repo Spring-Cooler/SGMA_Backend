@@ -16,7 +16,7 @@ public class RecruitmentBoardLikeController {
 
     @PostMapping("/like/{recruitmentBoardId}/{userId}")
     @Operation(summary = "모집글에 좋아요 추가 또는 취소")
-    public ResponseDTO<?> checkLike(@PathVariable Long recruitmentBoardId, @PathVariable Long userId) {
+    public ResponseDTO<?> checkLike(@PathVariable("recruitmentBoardId") Long recruitmentBoardId, @PathVariable("userId") Long userId) {
         RecruitmentBoardLike result = recruitmentBoardLikeService.checkLike(recruitmentBoardId, userId);
         if (result == null) {
             return ResponseDTO.ok("좋아요가 취소되었습니다.");
