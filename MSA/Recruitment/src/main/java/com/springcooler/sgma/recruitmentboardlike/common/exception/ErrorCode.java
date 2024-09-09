@@ -67,6 +67,7 @@ public enum ErrorCode {
     NOT_FOUND_APPLICANT(40419, HttpStatus.NOT_FOUND, "신청자가 존재하지 않습니다."),
     NOT_FOUND_REPLY(40420, HttpStatus.NOT_FOUND, "댓글이 존재하지 않습니다."),
 
+
     //500
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다");
 
