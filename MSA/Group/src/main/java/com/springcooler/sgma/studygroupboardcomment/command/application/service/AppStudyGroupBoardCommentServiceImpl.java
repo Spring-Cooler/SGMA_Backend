@@ -11,6 +11,7 @@ import com.springcooler.sgma.studygroupboardcomment.common.exception.ErrorCode;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +32,7 @@ public class AppStudyGroupBoardCommentServiceImpl implements AppStudyGroupBoardC
     }
 
     // 댓글 작성
+    @Transactional
     @Override
     public StudyGroupBoardCommentDTO registStudyGroupBoardComment(StudyGroupBoardCommentDTO newComment) {
         // DTO 유효성 검사
@@ -54,6 +56,7 @@ public class AppStudyGroupBoardCommentServiceImpl implements AppStudyGroupBoardC
     }
 
     // 댓글 수정
+    @Transactional
     @Override
     public StudyGroupBoardCommentDTO modifyStudyGroupBoardComment(StudyGroupBoardCommentDTO modifyComment) {
         // DTO 유효성 검사
@@ -75,6 +78,7 @@ public class AppStudyGroupBoardCommentServiceImpl implements AppStudyGroupBoardC
     }
 
     // 댓글 삭제
+    @Transactional
     @Override
     public void deleteStudyGroupBoardComment(Long commentId) {
         // 기존 엔티티 조회
