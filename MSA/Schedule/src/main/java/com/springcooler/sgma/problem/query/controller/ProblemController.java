@@ -1,24 +1,14 @@
 package com.springcooler.sgma.problem.query.controller;
 
 import com.springcooler.sgma.problem.common.ResponseDTO;
-import com.springcooler.sgma.problem.query.common.ResponseMessage;
 import com.springcooler.sgma.problem.query.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.query.dto.ProblemDTO;
 import com.springcooler.sgma.problem.query.service.ProblemService;
 import com.springcooler.sgma.problem.query.service.ProblemServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.nio.charset.Charset;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController("queryProblemController")
 @RequestMapping("/api/problems")
@@ -27,7 +17,7 @@ public class ProblemController {
 
     private ProblemService problemService;
     @Autowired
-    public ProblemController(ProblemServiceImpl queryProblemService, List<ProblemDTO> problems) {
+    public ProblemController(ProblemServiceImpl queryProblemService) {
         this.problemService = queryProblemService;
     }
 
@@ -37,6 +27,7 @@ public class ProblemController {
         List<ProblemDTO> problems = problemService.findAllProblems();
         return ResponseDTO.ok(problems);
         }
+
     // 문제 ID로 문제 조회
     @GetMapping("/{problemId}")
     public ResponseDTO<?> getProblemById(@PathVariable("problemId") long problemId) {
