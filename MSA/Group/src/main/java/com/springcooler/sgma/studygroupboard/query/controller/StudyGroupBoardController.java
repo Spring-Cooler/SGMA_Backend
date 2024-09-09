@@ -43,6 +43,13 @@ public class StudyGroupBoardController {
         return ResponseDTO.ok(boards);
     }
 
+    // 게시글 내용으로 조회
+    @GetMapping("/content/{content}")
+    public ResponseDTO<?> findStudyGroupBoardsByContent(@PathVariable("content") String content) {
+        List<StudyGroupBoardDTO> boards = studyGroupBoardService.findStudyGroupBoardsByContent(content);
+        return ResponseDTO.ok(boards);
+    }
+
     // 게시글 단건 조회
     @GetMapping("/{boardId}")
     public ResponseDTO<?> findStudyGroupBoardsByBoardId(@PathVariable("boardId") Long boardId) {

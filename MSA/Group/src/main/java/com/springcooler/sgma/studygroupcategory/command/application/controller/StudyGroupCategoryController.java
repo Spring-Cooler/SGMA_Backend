@@ -22,7 +22,7 @@ public class StudyGroupCategoryController {
     }
 
     // 스터디그룹 카테고리 생성
-    @PostMapping("/")
+    @PostMapping
     public ResponseDTO<?> registerStudyGroupCategory(@RequestBody RequestStudyGroupCategoryVO newCategory) {
         StudyGroupCategoryDTO category = modelMapper.map(newCategory, StudyGroupCategoryDTO.class);
         category = studyGroupCategoryService.registStudyGroupCategory(category);

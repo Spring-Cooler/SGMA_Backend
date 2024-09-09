@@ -20,7 +20,7 @@ public class StudyGroupController {
     }
 
     // 스터디 그룹 전체 조회
-    @GetMapping("/")
+    @GetMapping
     public ResponseDTO<?> findAllStudyGroups() {
         List<StudyGroupDTO> studyGroups = studyGroupService.findAllStudyGroups();
         return ResponseDTO.ok(studyGroups);

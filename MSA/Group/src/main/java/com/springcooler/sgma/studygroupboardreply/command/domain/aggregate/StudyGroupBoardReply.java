@@ -28,6 +28,10 @@ public class StudyGroupBoardReply {
     @Column(name="UPDATED_AT")
     private LocalDateTime updatedAt;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name="ACTIVE_STATUS")
+    private StudyGroupBoardReplyStatus activeStatus;
+
     @Column(name="MEMBER_ID")
     private Long memberId;
 

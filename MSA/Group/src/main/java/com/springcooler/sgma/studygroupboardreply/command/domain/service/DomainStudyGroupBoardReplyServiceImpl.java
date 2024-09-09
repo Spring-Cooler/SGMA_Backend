@@ -2,6 +2,7 @@ package com.springcooler.sgma.studygroupboardreply.command.domain.service;
 
 import com.springcooler.sgma.studygroupboardreply.command.domain.aggregate.RestStatus;
 import com.springcooler.sgma.studygroupboardreply.command.application.dto.StudyGroupBoardReplyDTO;
+import com.springcooler.sgma.studygroupboardreply.command.domain.aggregate.StudyGroupBoardReplyStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +24,11 @@ public class DomainStudyGroupBoardReplyServiceImpl implements DomainStudyGroupBo
         }
 
         return true;
+    }
+
+    @Override
+    public boolean isActive(StudyGroupBoardReplyStatus activeStatus) {
+        return activeStatus.equals(StudyGroupBoardReplyStatus.ACTIVE);
     }
 
 }
