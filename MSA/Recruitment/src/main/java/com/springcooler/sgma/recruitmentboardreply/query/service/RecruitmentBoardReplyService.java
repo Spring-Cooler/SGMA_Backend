@@ -20,7 +20,7 @@ public class RecruitmentBoardReplyService {
         this.recruitmentBoardReplyMapper = recruitmentBoardReplyMapper;
     }
 
-    public List<RecruitmentBoardReplyDTO> getAllRecruitmentBoardReply(){
+    public List<RecruitmentBoardReplyDTO> findAllRecruitmentBoardReply(){
         List<RecruitmentBoardReplyDTO> replies =recruitmentBoardReplyMapper.findRecruitmentBoardReplies();
         if(replies == null || replies.isEmpty()) {
             throw new CommonException(ErrorCode.NOT_FOUND_RECRUITMENT_BOARD_REPLY);

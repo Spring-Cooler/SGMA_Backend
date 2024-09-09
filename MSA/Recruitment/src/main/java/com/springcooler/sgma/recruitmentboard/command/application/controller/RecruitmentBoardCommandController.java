@@ -28,14 +28,14 @@ public class RecruitmentBoardCommandController {
 
     @PutMapping("/{recruitmentBoardId}")
     @Operation(summary = "모집글 수정")
-    public ResponseDTO<?> updateRecruitmentBoard(@PathVariable Long recruitmentBoardId, @RequestBody RecruitmentBoardCommandDTO studyGroupApplicantCommandDTO) {
+    public ResponseDTO<?> updateRecruitmentBoard(@PathVariable("recruitmentBoardId") Long recruitmentBoardId, @RequestBody RecruitmentBoardCommandDTO studyGroupApplicantCommandDTO) {
         RecruitmentBoardCommandDTO updatedDto = recruitmentBoardCommandService.updateStudyGroupApplicant(recruitmentBoardId, studyGroupApplicantCommandDTO);
         return ResponseDTO.ok(updatedDto);
     }
 
     @DeleteMapping("/{recruitmentBoardId}")
     @Operation(summary = "모집글 삭제")
-    public ResponseDTO<?> deleteRecruitmentBoard(@PathVariable Long recruitmentBoardId) {
+    public ResponseDTO<?> deleteRecruitmentBoard(@PathVariable("recruitmentBoardId") Long recruitmentBoardId) {
         boolean isDeleted = recruitmentBoardCommandService.deleteStudyGroupApplicant(recruitmentBoardId);
         return isDeleted ? ResponseDTO.ok("ok"): ResponseDTO.ok("notFound");
     }

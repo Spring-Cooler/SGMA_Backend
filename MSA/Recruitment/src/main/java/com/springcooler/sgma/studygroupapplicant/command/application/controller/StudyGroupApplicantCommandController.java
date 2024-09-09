@@ -21,30 +21,30 @@ public class StudyGroupApplicantCommandController {
     @Autowired
     private StudyGroupApplicantCommandService studyGroupApplicantService;
 
-    @PostMapping("apply")
+    @PostMapping
     @Operation(summary = "스터디 그룹 지원 신청")
     public ResponseDTO<?> applyApplicant(@RequestBody StudyGroupApplicantCommandDTO studyGroupApplicantCommandDTO){
         studyGroupApplicantService.applyStudyGroup(studyGroupApplicantCommandDTO);
         return ResponseDTO.ok(studyGroupApplicantCommandDTO);
     }
 
-    @DeleteMapping("delete/{userId}/{recruitmentBoardId}")
+    @DeleteMapping("{userId}/{recruitmentBoardId}")
     @Operation(summary = "스터디 그룹 지원 신청취소")
-    public ResponseDTO<?> deleteApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId){
+    public ResponseDTO<?> deleteApplicant(@PathVariable("userId") Long userId, @PathVariable("recruitmentBoardId") Long recruitmentBoardId){
         studyGroupApplicantService.cancelStudyGroupApply(userId, recruitmentBoardId);
         return ResponseDTO.ok("지원 신청 취소");
     }
 
-    @PostMapping("approve/{userId}/{recruitmentBoardId}")
+    @PostMapping("{userId}/{recruitmentBoardId}")
     @Operation(summary = "스터디 그룹 지원 승인")
-    public ResponseDTO<?> approveApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId) {
+    public ResponseDTO<?> approveApplicant(@PathVariable("userId") Long userId, @PathVariable("recruitmentBoardId") Long recruitmentBoardId) {
         studyGroupApplicantService.approveStudyGroupApplicant(userId, recruitmentBoardId);
         return ResponseDTO.ok("지원 승인 성공");
     }
 
-    @PutMapping("reject/{userId}/{recruitmentBoardId}")
+    @PutMapping("{userId}/{recruitmentBoardId}")
     @Operation(summary = "스터디 그룹 지원 거절")
-    public ResponseDTO<?> rejectApplicant(@PathVariable Long userId, @PathVariable Long recruitmentBoardId) {
+    public ResponseDTO<?> rejectApplicant(@PathVariable("userId") Long userId, @PathVariable("recruitmentBoardId") Long recruitmentBoardId) {
         studyGroupApplicantService.rejectStudyGroupApplicant(userId, recruitmentBoardId);
         return ResponseDTO.ok("지원 승인 거절");
     }
