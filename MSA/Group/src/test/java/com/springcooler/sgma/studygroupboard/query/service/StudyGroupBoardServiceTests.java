@@ -44,7 +44,7 @@ class StudyGroupBoardServiceTests {
         );
     }
 
-    @DisplayName("게시글 그룹별 조회 테스트")
+    @DisplayName("게시글 제목으로 조회 테스트")
     @ParameterizedTest
     @ValueSource(strings = "험")
     void testFindStudyGroupBoardsByTitle(String title) {
@@ -57,7 +57,20 @@ class StudyGroupBoardServiceTests {
         );
     }
 
-    @DisplayName("게시글 그룹별 조회 테스트")
+    @DisplayName("게시글 내용으로 조회 테스트")
+    @ParameterizedTest
+    @ValueSource(strings = "다음")
+    void testFindStudyGroupBoardsByContent(String content) {
+        Assertions.assertDoesNotThrow(
+                () -> {
+                    List<StudyGroupBoardDTO> boards =
+                            studyGroupBoardService.findStudyGroupBoardsByContent(content);
+                    boards.forEach(x -> log.info(x.toString()));
+                }
+        );
+    }
+
+    @DisplayName("게시글 단건 조회 테스트")
     @ParameterizedTest
     @ValueSource(longs = 3L)
     void testFindStudyGroupBoardByBoardId(Long boardId) {
