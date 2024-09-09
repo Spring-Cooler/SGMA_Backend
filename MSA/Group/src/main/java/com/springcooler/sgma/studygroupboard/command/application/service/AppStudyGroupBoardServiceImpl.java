@@ -11,6 +11,7 @@ import com.springcooler.sgma.studygroupboard.common.exception.ErrorCode;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -30,6 +31,7 @@ public class AppStudyGroupBoardServiceImpl implements AppStudyGroupBoardService 
         this.studyGroupBoardRepository = studyGroupBoardRepository;
     }
 
+    @Transactional
     @Override
     public StudyGroupBoardDTO registStudyGroupBoard(StudyGroupBoardDTO newBoard) {
         System.out.println(newBoard);
@@ -57,6 +59,7 @@ public class AppStudyGroupBoardServiceImpl implements AppStudyGroupBoardService 
         return modelMapper.map(board, StudyGroupBoardDTO.class);
     }
 
+    @Transactional
     @Override
     public StudyGroupBoardDTO modifyStudyGroupBoard(StudyGroupBoardDTO modifyBoard) {
         // DTO 유효성 검사
@@ -77,6 +80,7 @@ public class AppStudyGroupBoardServiceImpl implements AppStudyGroupBoardService 
         return modelMapper.map(existingBoard, StudyGroupBoardDTO.class);
     }
 
+    @Transactional
     @Override
     public void deleteStudyGroupBoard(Long boardId) {
         // 기존 엔티티 조회
