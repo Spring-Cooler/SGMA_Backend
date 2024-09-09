@@ -24,21 +24,21 @@ public class RecruitmentBoardCommentCommandController {
 
     @PostMapping("/{recruitmentBoardId}")
     @Operation(summary = "모집글 댓글 작성")
-    public ResponseDTO<RecruitmentBoardComment> createComment(@PathVariable Long recruitmentBoardId, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
+    public ResponseDTO<RecruitmentBoardComment> createComment(@PathVariable("recruitmentBoardId") Long recruitmentBoardId, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
         RecruitmentBoardComment createdComment = recruitmentBoardCommentCommandService.createRecruitmentBoardComment(recruitmentBoardId, recruitmentBoardCommentCommandDTO);
         return ResponseDTO.ok(createdComment);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "모집글 댓글 수정")
-    public ResponseDTO<?> updateComment(@PathVariable Long id, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
+    public ResponseDTO<?> updateComment(@PathVariable("id") Long id, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
         RecruitmentBoardComment updatedComment = recruitmentBoardCommentCommandService.updateRecruitmentBoardComment(id, recruitmentBoardCommentCommandDTO);
         return ResponseDTO.ok(updatedComment);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "모집글 댓글 삭제")
-    public ResponseDTO<?> deleteComment(@PathVariable Long id, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
+    public ResponseDTO<?> deleteComment(@PathVariable("id") Long id, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
         recruitmentBoardCommentCommandService.deleteRecruitmentBoardComment(id, recruitmentBoardCommentCommandDTO);
         return ResponseDTO.ok(HttpStatus.NO_CONTENT);
     }

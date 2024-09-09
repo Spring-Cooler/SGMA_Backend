@@ -21,11 +21,11 @@ public class RecruitmentBoardCommentCommandDTO {
 
     private Timestamp updatedAt;
 
-    private long userId;
+    private Long userId;
 
     private String activeStatus;
 
-    private long recruitmentBoardId;
+    private Long recruitmentBoardId;
 
     private String anonymousStatus;
 }
