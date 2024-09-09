@@ -15,14 +15,14 @@ public class RecruitmentBoardLikeController {
     private final RecruitmentBoardLikeServiceImpl recruitmentBoardLikeService;
 
     @PostMapping("/like/{recruitmentBoardId}/{userId}")
-    @Operation(summary = "모집글에 좋아요 추가 또는 취소")
+    @Operation(summary = "모집글 좋아요 추가")
     public ResponseDTO<?> addLike(@PathVariable("recruitmentBoardId") Long recruitmentBoardId, @PathVariable("userId") Long userId) {
         RecruitmentBoardLike result = recruitmentBoardLikeService.addLike(recruitmentBoardId, userId);
         return ResponseDTO.ok(result);
     }
 
     @DeleteMapping("/like/{recruitmentBoardId}/{userId}")
-    @Operation(summary = "모집글에 좋아요 추가 또는 취소")
+    @Operation(summary = "모집글 좋아요 취소")
     public ResponseDTO<?> deleteLike(@PathVariable("recruitmentBoardId") Long recruitmentBoardId, @PathVariable("userId") Long userId) {
         RecruitmentBoardLike result = recruitmentBoardLikeService.deleteLike(recruitmentBoardId, userId);
         return ResponseDTO.ok(result);
