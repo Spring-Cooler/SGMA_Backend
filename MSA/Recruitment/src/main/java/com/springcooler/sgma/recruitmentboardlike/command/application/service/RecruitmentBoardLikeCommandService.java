@@ -6,5 +6,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface RecruitmentBoardLikeCommandService {
-    RecruitmentBoardLike checkLike(Long recruitmentBoardId, Long userId);
+    RecruitmentBoardLike addLike(Long recruitmentBoardId, Long userId);
+    RecruitmentBoardLike deleteLike(Long recruitmentBoardId, Long userId);
 }

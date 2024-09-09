@@ -19,15 +19,14 @@ public class RecruitmentBoardLikeServiceImpl implements RecruitmentBoardLikeComm
     private final RecruitmentBoardLikeRepository recruitmentBoardLikeRepository;
 
     @Override
-    public RecruitmentBoardLike checkLike(Long recruitmentBoardId, Long userId) {
+    public RecruitmentBoardLike addLike(Long recruitmentBoardId, Long userId) {
         List<RecruitmentBoardLikeDTO> recruitmentBoardLikes = recruitmentBoardLikeService.findAllRecruitmentBoardLike();
 
         for (RecruitmentBoardLikeDTO like : recruitmentBoardLikes) {
             if (like.getRecruitmentBoardId().equals(recruitmentBoardId) && like.getUserId().equals(userId)) {
                 RecruitmentBoardLike recruitmentLike = recruitmentBoardLikeRepository.findByRecruitmentBoardIdAndUserId(recruitmentBoardId, userId);
                 if (recruitmentLike != null) {
-                    recruitmentBoardLikeRepository.delete(recruitmentLike);
-                    System.out.println("좋아요가 취소되었습니다.");
+                    System.out.println("이미 좋아요를 눌렀습니다");
                     return null;
                 }
             }
@@ -39,4 +38,24 @@ public class RecruitmentBoardLikeServiceImpl implements RecruitmentBoardLikeComm
         System.out.println("좋아요 추가 성공!");
         return recruitmentBoardLikeRepository.save(recruitmentLike);
     }
+
+    @Override
+    public RecruitmentBoardLike deleteLike(Long recruitmentBoardId, Long userId) {
+        List<RecruitmentBoardLikeDTO> recruitmentBoardLikes = recruitmentBoardLikeService.findAllRecruitmentBoardLike();
+
+        for (RecruitmentBoardLikeDTO like : recruitmentBoardLikes) {
+            if (like.getRecruitmentBoardId().equals(recruitmentBoardId) && like.getUserId().equals(userId)) {
+                RecruitmentBoardLike recruitmentLike = recruitmentBoardLikeRepository.findByRecruitmentBoardIdAndUserId(recruitmentBoardId, userId);
+                if (recruitmentLike != null) {
+                    recruitmentBoardLikeRepository.delete(recruitmentLike);
+                    System.out.println("좋아요가 취소되었습니다.");
+                    return null;
+                }
+            } else {
+                System.out.println("좋아요를 누르지 않았습니다.");
+                return null;
+            }
+        }return null;
+    }
 }
+
