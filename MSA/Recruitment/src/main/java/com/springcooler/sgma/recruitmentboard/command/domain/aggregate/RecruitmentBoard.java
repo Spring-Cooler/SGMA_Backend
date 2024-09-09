@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 
 @Entity
-@Builder
+@Builder(toBuilder = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
