@@ -20,12 +20,9 @@ import java.util.Map;
 public class SubmittedAnswerController {
 
     SubmittedAnswerService submittedAnswerService;
-//    List<SubmittedAnswerDTO> submittedAnswerDTOs;
-
     @Autowired
     public SubmittedAnswerController(SubmittedAnswerService submittedAnswerService) {
         this.submittedAnswerService = submittedAnswerService;
-//        this.submittedAnswerDTOs = submittedAnswerService.findAllSubmittedAnswers();
     }
     @GetMapping("/")
     public ResponseEntity<ResponseMessage> getAllSubmittedAnswers() {

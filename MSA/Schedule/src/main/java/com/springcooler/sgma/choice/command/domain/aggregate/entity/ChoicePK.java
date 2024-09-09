@@ -1,6 +1,5 @@
 package com.springcooler.sgma.choice.command.domain.aggregate.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
