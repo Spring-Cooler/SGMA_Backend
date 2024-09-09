@@ -64,6 +64,9 @@ public enum ErrorCode {
     NOT_FOUND_STUDY_GROUP_CATEGORY(40416, HttpStatus.NOT_FOUND, "스터디 그룹 카테고리가 존재하지 않습니다."),
     NOT_FOUND_LIKE(40417, HttpStatus.NOT_FOUND, "삭제할 좋아요가 존재하지 않습니다."),
     ALREADY_EXISTS(40418, HttpStatus.BAD_REQUEST, "이미 좋아요한 모집글 입니다."),
+    NOT_FOUND_APPLICANT(40419, HttpStatus.NOT_FOUND, "신청자가 존재하지 않습니다."),
+    NOT_FOUND_REPLY(40420, HttpStatus.NOT_FOUND, "댓글이 존재하지 않습니다."),
+
 
     //500
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다");

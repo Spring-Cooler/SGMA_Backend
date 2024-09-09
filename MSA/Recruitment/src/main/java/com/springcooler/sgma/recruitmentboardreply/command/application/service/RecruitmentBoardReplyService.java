@@ -6,7 +6,7 @@ import com.springcooler.sgma.recruitmentboardreply.command.application.dto.Recru
 import com.springcooler.sgma.recruitmentboardreply.command.domain.aggregate.RecruitmentBoardReply;
 
 public interface RecruitmentBoardReplyService {
-    RecruitmentBoardReply createRecruitBoardReply(RecruitmentBoardReplyDTO recruitmentBoardReplyDTO);
+    RecruitmentBoardReply createRecruitBoardReply(Long recruitmentBoardCommentId,RecruitmentBoardReplyDTO recruitmentBoardReplyDTO);
 
     RecruitmentBoardReply updateRecruitmentReply(Long recruitmentBoardCommentId, RecruitmentBoardReplyDTO recruitmentBoardReplyDTO);
 

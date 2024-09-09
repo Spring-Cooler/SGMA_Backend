@@ -18,10 +18,10 @@ public class RecruitmentBoardReplyController {
     private final RecruitmentBoardReplyService recruitmentBoardReplyService;
 
 
-    @PostMapping
+    @PostMapping("/{recruitmentBoardCommentId}")
     @Operation(summary = "댓글에 대한 대댓글 작성")
-    public ResponseDTO<?> writeReply(@RequestBody RecruitmentBoardReplyDTO recruitmentBoardReplyDTO){
-        recruitmentBoardReplyService.createRecruitBoardReply(recruitmentBoardReplyDTO);
+    public ResponseDTO<?> writeReply(@PathVariable("recruitmentBoardCommentId") Long recruitmentBoardCommentId,@RequestBody RecruitmentBoardReplyDTO recruitmentBoardReplyDTO){
+        recruitmentBoardReplyService.createRecruitBoardReply(recruitmentBoardCommentId,recruitmentBoardReplyDTO);
         return ResponseDTO.ok(recruitmentBoardReplyDTO);
     }
 

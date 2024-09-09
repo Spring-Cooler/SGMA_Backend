@@ -1,6 +1,8 @@
 package com.springcooler.sgma.studygroupapplicant.command.application.service;
 
 
+import com.springcooler.sgma.recruitmentboardlike.common.exception.CommonException;
+import com.springcooler.sgma.recruitmentboardlike.common.exception.ErrorCode;
 import com.springcooler.sgma.studygroupapplicant.command.domain.aggregate.StudyGroupApplicantId;
 import com.springcooler.sgma.studygroupapplicant.command.application.dto.StudyGroupApplicantCommandDTO;
 import com.springcooler.sgma.studygroupapplicant.command.domain.aggregate.ApplicationStatus;
@@ -50,7 +52,7 @@ public class StudyGroupApplicantCommandServiceImpl implements StudyGroupApplican
     public void cancelStudyGroupApply(long userId, long recruitmentBoardId) {
         StudyGroupApplicantId studyGroupApplicantId = new StudyGroupApplicantId(userId, recruitmentBoardId);
         if (!studyGroupApplicantRepository.existsById(studyGroupApplicantId)) {
-            throw new EntityNotFoundException("신청자를 찾을 수 없습니다.");
+            throw new CommonException(ErrorCode.NOT_FOUND_APPLICANT);
         }
         studyGroupApplicantRepository.deleteById(studyGroupApplicantId);
     }
