@@ -19,6 +19,7 @@ public class StudyGroupBoardLikeServiceImpl implements StudyGroupBoardLikeServic
         this.studyGroupBoardLikeMapper = studyGroupBoardLikeMapper;
     }
 
+    // 게시글 아이디로 좋아요 조회
     @Override
     public List<StudyGroupBoardLikeDTO> findStudyGroupBoardLikesByBoardId(Long boardId) {
         List<StudyGroupBoardLikeDTO> likes = studyGroupBoardLikeMapper.findStudyGroupBoardLikesByBoardId(boardId);
@@ -28,6 +29,7 @@ public class StudyGroupBoardLikeServiceImpl implements StudyGroupBoardLikeServic
         return likes;
     }
 
+    // 그룹원 아이디로 좋아요 조회
     @Override
     public List<StudyGroupBoardLikeDTO> findStudyGroupBoardLikesByMemberId(Long memberId) {
         List<StudyGroupBoardLikeDTO> likes = studyGroupBoardLikeMapper.findStudyGroupBoardLikesByMemberId(memberId);
