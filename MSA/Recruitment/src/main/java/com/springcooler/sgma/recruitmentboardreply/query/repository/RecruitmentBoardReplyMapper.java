@@ -9,4 +9,5 @@ import java.util.List;
 public interface RecruitmentBoardReplyMapper {
     List<RecruitmentBoardReplyDTO> findRecruitmentBoardReplies();
 
+    List<RecruitmentBoardReplyDTO> findRecruitmentBoardRepliesByBoardId(Long recruitmentBoardId);
 }

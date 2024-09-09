@@ -1,7 +1,10 @@
 package com.springcooler.sgma.recruitmentboardreply.command.application.service;
 
 
+import com.springcooler.sgma.recruitmentboard.command.domain.aggregate.RecruitmentBoard;
 import com.springcooler.sgma.recruitmentboardcomment.command.domain.aggregate.RecruitmentBoardComment;
+import com.springcooler.sgma.recruitmentboardlike.common.exception.CommonException;
+import com.springcooler.sgma.recruitmentboardlike.common.exception.ErrorCode;
 import com.springcooler.sgma.recruitmentboardreply.command.application.dto.RecruitmentBoardReplyDTO;
 import com.springcooler.sgma.recruitmentboardreply.command.domain.aggregate.ActiveStatus;
 import com.springcooler.sgma.recruitmentboardreply.command.domain.aggregate.AnonymousStatus;
@@ -23,6 +26,7 @@ public class RecruitmentBoardReplyServiceImpl implements RecruitmentBoardReplySe
     private RecruitmentBoardReplyRepository recruitmentBoardReplyRepository;
 
 
+
     @Autowired
     public RecruitmentBoardReplyServiceImpl(RecruitmentBoardReplyRepository recruitmentBoardReplyRepository) {
         this.recruitmentBoardReplyRepository = recruitmentBoardReplyRepository;
@@ -32,7 +36,7 @@ public class RecruitmentBoardReplyServiceImpl implements RecruitmentBoardReplySe
 
     @Override
     @Transactional
-    public RecruitmentBoardReply createRecruitBoardReply(RecruitmentBoardReplyDTO recruitmentBoardReplyDTO) {
+    public RecruitmentBoardReply createRecruitBoardReply(Long recruitmentBoardCommentId,RecruitmentBoardReplyDTO recruitmentBoardReplyDTO) {
         RecruitmentBoardReply recruitmentBoardReply = RecruitmentBoardReply.builder()
                 .activeStatus(ActiveStatus.ACTIVE)
                 .anonymousStatus(AnonymousStatus.N)
@@ -41,7 +45,7 @@ public class RecruitmentBoardReplyServiceImpl implements RecruitmentBoardReplySe
                 .updatedAt(Timestamp.from(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toInstant()))
                 .userId(recruitmentBoardReplyDTO.getUserId())
                 .recruitmentBoardReplyId(recruitmentBoardReplyDTO.getRecruitmentBoardReplyId())
-                .recruitmentBoardCommentId(recruitmentBoardReplyDTO.getRecruitmentBoardCommentId())
+                .recruitmentBoardCommentId(recruitmentBoardCommentId)
                 .build();
         return recruitmentBoardReplyRepository.save(recruitmentBoardReply);
     }
@@ -57,16 +61,20 @@ public class RecruitmentBoardReplyServiceImpl implements RecruitmentBoardReplySe
                     .content(recruitmentBoardReplyDTO.getContent())
                     .updatedAt(Timestamp.from(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toInstant()))
                     .build();
-
             return recruitmentBoardReplyRepository.save(updatedRecruitmentBoardReply);
         } else {
-            throw new EntityNotFoundException("수정할 댓글이 없습니다.");
+            throw new CommonException(ErrorCode.NOT_FOUND_REPLY);
         }
     }
 
     @Override
     @Transactional
     public void deleteRecruitmentReply(Long recruitmentBoardReplyId) {
-        recruitmentBoardReplyRepository.deleteById(recruitmentBoardReplyId);
+        Optional<RecruitmentBoardReply> optionalRecruitmentBoardReply = recruitmentBoardReplyRepository.findById(recruitmentBoardReplyId);
+        if (optionalRecruitmentBoardReply.isPresent()) {
+            recruitmentBoardReplyRepository.deleteById(recruitmentBoardReplyId);
+        } else {
+            throw new CommonException(ErrorCode.NOT_FOUND_REPLY);
+        }
     }
 }

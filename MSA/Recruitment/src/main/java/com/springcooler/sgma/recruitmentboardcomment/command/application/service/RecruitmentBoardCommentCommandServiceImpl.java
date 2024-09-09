@@ -6,6 +6,8 @@ import com.springcooler.sgma.recruitmentboardcomment.command.domain.aggregate.Ac
 import com.springcooler.sgma.recruitmentboardcomment.command.domain.aggregate.AnonymousStatus;
 import com.springcooler.sgma.recruitmentboardcomment.command.domain.aggregate.RecruitmentBoardComment;
 import com.springcooler.sgma.recruitmentboardcomment.command.domain.repository.RecruitmentBoardCommentRepository;
+import com.springcooler.sgma.recruitmentboardlike.common.exception.CommonException;
+import com.springcooler.sgma.recruitmentboardlike.common.exception.ErrorCode;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +56,7 @@ public class RecruitmentBoardCommentCommandServiceImpl implements RecruitmentBoa
 
             return recruitmentBoardCommentRepository.save(recruitmentBoardComment);
         } else {
-            throw new EntityNotFoundException("수정할 댓글이 없습니다.");
+            throw new CommonException(ErrorCode.NOT_FOUND_REPLY);
         }
     }
 
@@ -73,7 +75,7 @@ public class RecruitmentBoardCommentCommandServiceImpl implements RecruitmentBoa
 
             return recruitmentBoardCommentRepository.save(updatedRecruitmentBoardComment);
         } else {
-            throw new EntityNotFoundException("삭제할 댓글이 없습니다.");
+            throw new CommonException(ErrorCode.NOT_FOUND_REPLY);
         }
     }
 }

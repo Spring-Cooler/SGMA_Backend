@@ -6,6 +6,7 @@ import com.springcooler.sgma.recruitmentboardreply.query.service.RecruitmentBoar
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +26,12 @@ public class RecruitmentBoardReplyController {
     @Operation(summary = "모든 대댓글 조회")
     public ResponseDTO<?> findAllRecruitmentBoardApplicantList(){
         List<RecruitmentBoardReplyDTO> recruitmentBoardReplyDTO = recruitmentBoardReplyService.findAllRecruitmentBoardReply();
+        return ResponseDTO.ok(recruitmentBoardReplyDTO);
+    }
+    @GetMapping("{recruitmentBoardCommentId}")
+    @Operation(summary = "모집글 댓글에 해당하는 모든 대댓글 조회")
+    public ResponseDTO<?> findBoardCommentByRecruitmentBoardId(@PathVariable("recruitmentBoardCommentId") Long recruitmentBoardCommentId){
+        List<RecruitmentBoardReplyDTO> recruitmentBoardReplyDTO = recruitmentBoardReplyService.findAllRecruitmentBoardReplyByRecruitmentBoardId(recruitmentBoardCommentId);
         return ResponseDTO.ok(recruitmentBoardReplyDTO);
     }
 

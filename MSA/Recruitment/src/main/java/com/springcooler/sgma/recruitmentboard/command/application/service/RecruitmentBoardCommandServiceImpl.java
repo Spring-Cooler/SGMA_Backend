@@ -4,6 +4,8 @@ import com.springcooler.sgma.recruitmentboard.command.application.dto.Recruitmen
 import com.springcooler.sgma.recruitmentboard.command.domain.aggregate.BoardActiveStatus;
 import com.springcooler.sgma.recruitmentboard.command.domain.aggregate.RecruitmentBoard;
 import com.springcooler.sgma.recruitmentboard.command.domain.repository.RecruitmentBoardRepository;
+import com.springcooler.sgma.recruitmentboardlike.common.exception.CommonException;
+import com.springcooler.sgma.recruitmentboardlike.common.exception.ErrorCode;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,9 +96,8 @@ public class RecruitmentBoardCommandServiceImpl implements RecruitmentBoardComma
             recruitmentBoardRepository.save(applicantUpdate);
             return true;
         } else {
-            System.out.println("해당 ID를 가진 신청자를 찾을 수 없습니다.");
+            throw new CommonException(ErrorCode.NOT_FOUND_APPLICANT);
         }
-        return false;
     }
     private Timestamp getCurrentTimestamp() {
         ZonedDateTime nowKst = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
