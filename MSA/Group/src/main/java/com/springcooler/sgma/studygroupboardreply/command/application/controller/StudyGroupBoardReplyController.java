@@ -23,7 +23,7 @@ public class StudyGroupBoardReplyController {
         this.studyGroupBoardReplyService = studyGroupBoardReplyService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseDTO<?> registStudyGroupBoardReply(@RequestBody RequestStudyGroupBoardReplyVO newReply) {
         StudyGroupBoardReplyDTO reply = modelMapper.map(newReply, StudyGroupBoardReplyDTO.class);
         reply = studyGroupBoardReplyService.registStudyGroupBoardReply(reply);
@@ -31,7 +31,7 @@ public class StudyGroupBoardReplyController {
         return ResponseDTO.ok(res);
     }
 
-    @PutMapping("/")
+    @PutMapping
     public ResponseDTO<?> modifyStudyGroupBoardReply(@RequestBody RequestStudyGroupBoardReplyVO modifyReply) {
         StudyGroupBoardReplyDTO reply = modelMapper.map(modifyReply, StudyGroupBoardReplyDTO.class);
         reply = studyGroupBoardReplyService.modifyStudyGroupBoardReply(reply);

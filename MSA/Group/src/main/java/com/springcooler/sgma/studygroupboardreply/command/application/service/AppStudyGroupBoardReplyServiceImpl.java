@@ -3,6 +3,7 @@ package com.springcooler.sgma.studygroupboardreply.command.application.service;
 import com.springcooler.sgma.studygroupboardreply.command.application.dto.StudyGroupBoardReplyDTO;
 import com.springcooler.sgma.studygroupboardreply.command.domain.aggregate.RestStatus;
 import com.springcooler.sgma.studygroupboardreply.command.domain.aggregate.StudyGroupBoardReply;
+import com.springcooler.sgma.studygroupboardreply.command.domain.aggregate.StudyGroupBoardReplyStatus;
 import com.springcooler.sgma.studygroupboardreply.command.domain.repository.StudyGroupBoardReplyRepository;
 import com.springcooler.sgma.studygroupboardreply.command.domain.service.DomainStudyGroupBoardReplyService;
 import com.springcooler.sgma.studygroupboardreply.common.exception.CommonException;
@@ -43,6 +44,7 @@ public class AppStudyGroupBoardReplyServiceImpl implements AppStudyGroupBoardRep
                 .content(newReply.getContent())
                 .createdAt(LocalDateTime.now().withNano(0))
                 .updatedAt(LocalDateTime.now().withNano(0))
+                .activeStatus(StudyGroupBoardReplyStatus.ACTIVE)
                 .memberId(newReply.getMemberId())
                 .studyGroupBoardCommentId(newReply.getStudyGroupBoardCommentId())
                 .build();
@@ -77,10 +79,16 @@ public class AppStudyGroupBoardReplyServiceImpl implements AppStudyGroupBoardRep
     @Override
     public void deleteStudyGroupBoardReply(Long replyId) {
         // 기존 엔티티 조회
-        StudyGroupBoardReply existingReply = studyGroupBoardReplyRepository.findById(replyId)
+        StudyGroupBoardReply deleteReply = studyGroupBoardReplyRepository.findById(replyId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_BOARD_REPLY));
 
-        studyGroupBoardReplyRepository.delete(existingReply);
+        // 유효성 검사
+        if(!domainStudyGroupBoardReplyService.isActive(deleteReply.getActiveStatus()))
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_BOARD_REPLY);
+
+        // INACTIVE 처리
+        deleteReply.setActiveStatus(StudyGroupBoardReplyStatus.INACTIVE);
+        studyGroupBoardReplyRepository.save(deleteReply);
     }
 
 }

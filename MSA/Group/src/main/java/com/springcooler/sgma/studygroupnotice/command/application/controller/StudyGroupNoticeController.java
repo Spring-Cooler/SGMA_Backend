@@ -24,7 +24,7 @@ public class StudyGroupNoticeController {
     }
 
     // 스터디그룹 공지사항 생성
-    @PostMapping("/")
+    @PostMapping
     public ResponseDTO<?> registStudyGroupNotice(@RequestBody RequestStudyGroupNoticeVO newNotice) {
         StudyGroupNoticeDTO notice = modelMapper.map(newNotice, StudyGroupNoticeDTO.class);
         notice = studyGroupNoticeService.registStudyGroupNotice(notice);
@@ -33,7 +33,7 @@ public class StudyGroupNoticeController {
     }
 
     // 스터디그룹 공지사항 정보 수정
-    @PutMapping("/")
+    @PutMapping
     public ResponseDTO<?> modifyStudyGroupNotice(@RequestBody RequestStudyGroupNoticeVO modifyNotice) {
         StudyGroupNoticeDTO notice = modelMapper.map(modifyNotice, StudyGroupNoticeDTO.class);
         notice = studyGroupNoticeService.modifyStudyGroupNotice(notice);

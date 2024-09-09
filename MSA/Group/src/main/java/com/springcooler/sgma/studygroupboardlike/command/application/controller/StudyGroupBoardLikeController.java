@@ -24,7 +24,7 @@ public class StudyGroupBoardLikeController {
     }
 
     // 좋아요
-    @PostMapping("/")
+    @PostMapping
     public ResponseDTO<?> registStudyGroupBoardLike(@RequestBody RequestStudyGroupBoardLikeVO newLike) {
         StudyGroupBoardLikeDTO like = modelMapper.map(newLike, StudyGroupBoardLikeDTO.class);
         like = studyGroupBoardLikeService.registStudyGroupBoardLike(like);

@@ -25,7 +25,7 @@ public class StudyGroupBoardController {
         this.studyGroupBoardService = studyGroupBoardService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseDTO<?> registStudyGroupBoard(@RequestBody RequestStudyGroupBoardVO newBoard) {
         StudyGroupBoardDTO board = modelMapper.map(newBoard, StudyGroupBoardDTO.class);
         board = studyGroupBoardService.registStudyGroupBoard(board);
@@ -33,7 +33,7 @@ public class StudyGroupBoardController {
         return ResponseDTO.ok(res);
     }
 
-    @PutMapping("/")
+    @PutMapping
     public ResponseDTO<?> modifyStudyGroupBoard(@RequestBody RequestStudyGroupBoardVO modifyBoard) {
         StudyGroupBoardDTO board = modelMapper.map(modifyBoard, StudyGroupBoardDTO.class);
         board = studyGroupBoardService.modifyStudyGroupBoard(board);
