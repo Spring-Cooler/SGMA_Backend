@@ -1,7 +1,7 @@
 package com.springcooler.sgma.studygroupboardreply.query.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.springcooler.sgma.studygroupboardcomment.command.domain.aggregate.StudyGroupBoardCommentStatus;
+import com.springcooler.sgma.studygroupboardreply.command.domain.aggregate.StudyGroupBoardReplyStatus;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -26,6 +26,10 @@ public class StudyGroupBoardReplyDTO {
 
     @JsonProperty("updated_at")
     private LocalDateTime updatedAt;
+
+    @Enumerated(EnumType.STRING)
+    @JsonProperty("active_status")
+    private StudyGroupBoardReplyStatus activeStatus;
 
     @JsonProperty("member_id")
     private Long memberId;

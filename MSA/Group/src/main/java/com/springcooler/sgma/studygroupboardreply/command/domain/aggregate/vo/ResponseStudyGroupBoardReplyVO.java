@@ -1,6 +1,9 @@
 package com.springcooler.sgma.studygroupboardreply.command.domain.aggregate.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.springcooler.sgma.studygroupboardreply.command.domain.aggregate.StudyGroupBoardReplyStatus;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +26,10 @@ public class ResponseStudyGroupBoardReplyVO {
 
     @JsonProperty("updated_at")
     private LocalDateTime updatedAt;
+
+    @Enumerated(EnumType.STRING)
+    @JsonProperty("active_status")
+    private StudyGroupBoardReplyStatus activeStatus;
 
     @JsonProperty("member_id")
     private Long memberId;

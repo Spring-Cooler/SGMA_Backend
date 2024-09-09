@@ -9,6 +9,7 @@
         <result property="content" column="CONTENT"/>
         <result property="createdAt" column="CREATED_AT"/>
         <result property="updatedAt" column="UPDATED_AT"/>
+        <result property="activeStatus" column="ACTIVE_STATUS"/>
         <result property="memberId" column="MEMBER_ID"/>
         <result property="studyGroupBoardCommentId" column="STUDY_GROUP_BOARD_COMMENT_ID"/>
     </resultMap>
@@ -19,10 +20,11 @@
              , A.CONTENT
              , A.CREATED_AT
              , A.UPDATED_AT
+             , A.ACTIVE_STATUS
              , A.MEMBER_ID
              , A.STUDY_GROUP_BOARD_COMMENT_ID
           FROM STUDY_GROUP_BOARD_REPLY A
-         WHERE A.STUDY_GROUP_BOARD_COMMENT_ID = #{ commentId }
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.STUDY_GROUP_BOARD_COMMENT_ID = #{ commentId }
     </select>
 
     <select id="findStudyGroupBoardRepliesByMemberId" resultMap="studyGroupBoardReplyResultMap" parameterType="Long">
@@ -31,10 +33,11 @@
              , A.CONTENT
              , A.CREATED_AT
              , A.UPDATED_AT
+             , A.ACTIVE_STATUS
              , A.MEMBER_ID
              , A.STUDY_GROUP_BOARD_COMMENT_ID
           FROM STUDY_GROUP_BOARD_REPLY A
-         WHERE A.MEMBER_ID = #{ memberId }
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.MEMBER_ID = #{ memberId }
     </select>
 
 </mapper>
