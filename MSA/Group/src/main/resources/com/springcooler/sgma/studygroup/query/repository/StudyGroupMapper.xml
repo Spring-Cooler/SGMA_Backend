@@ -89,6 +89,6 @@
              , A.USER_ID
              , A.STUDY_GROUP_CATEGORY_ID
           FROM STUDY_GROUP A
-         WHERE A.GROUP_NAME = #{ groupName } AND A.ACTIVE_STATUS = 'ACTIVE'
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.GROUP_NAME LIKE CONCAT('%', #{ groupName }, '%')
     </select>
 </mapper>
