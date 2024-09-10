@@ -1,7 +1,7 @@
 package com.springcooler.sgma.problem.command.infrastructure.service;
 
 import com.springcooler.sgma.choice.command.application.service.AppChoiceService;
-import com.springcooler.sgma.choice.command.domain.aggregate.vo.ProblemVO;
+import com.springcooler.sgma.problem.command.domain.aggregate.entity.ProblemVO;
 import com.springcooler.sgma.studyscheduleparticipant.command.application.service.AppStudyScheduleParticipantService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +23,20 @@ public class InfraProblemServiceImpl implements InfraProblemService {
 
     @Transactional
     @Override
-    public ProblemVO requestRegistChoices(long problemId, List<String> choices) {
-        return appChoiceService.registChoices(new ProblemVO(problemId, choices));
+    public ProblemVO requestRegistChoices(Long problemId, List<String> choices) {
+        ProblemVO problemVO = new ProblemVO(problemId, choices);
+        return appChoiceService.registChoices(problemVO);
     }
 
 
     @Override
-    public void requestIncreaseNumSubmittedProblems(long scheduleId, long participantId) {
+    public void requestIncreaseNumSubmittedProblems(Long scheduleId, Long participantId) {
         studyScheduleParticipantService.increaseNumSubmittedProblems(scheduleId, participantId);
     }
 
 
     @Override
-    public void requestDecreaseNumSubmittedProblems(long scheduleId, long participantId) {
+    public void requestDecreaseNumSubmittedProblems(Long scheduleId, Long participantId) {
         studyScheduleParticipantService.decreaseNumSubmittedProblems(scheduleId, participantId);
     }
 }

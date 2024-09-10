@@ -1,15 +1,15 @@
 package com.springcooler.sgma.problem.command.infrastructure.service;
 
-import com.springcooler.sgma.choice.command.domain.aggregate.vo.ProblemVO;
 
+import com.springcooler.sgma.problem.command.domain.aggregate.entity.ProblemVO;
 
 import java.util.List;
 
 
 public interface InfraProblemService {
-    ProblemVO requestRegistChoices(long problemId, List<String> choices);
+    ProblemVO requestRegistChoices(Long problemId, List<String> choices);
 
-    void requestIncreaseNumSubmittedProblems(long scheduleId, long participantId);
+    void requestIncreaseNumSubmittedProblems(Long scheduleId, Long participantId);
 
-    void requestDecreaseNumSubmittedProblems(long scheduleId, long participantId);
+    void requestDecreaseNumSubmittedProblems(Long scheduleId, Long participantId);
 }

@@ -1,8 +1,6 @@
 package com.springcooler.sgma.problem.command.application.controller;
 
-import com.springcooler.sgma.problem.command.application.dto.ProblemAndChoiceDTO;
 import com.springcooler.sgma.problem.command.application.service.AppProblemService;
-import com.springcooler.sgma.problem.common.ResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +22,10 @@ public class ProblemController {
 //        return ResponseDTO.ok(problemAndChoice);
 //    }
 
-    @DeleteMapping("/{problemId}")
-    public ResponseDTO<?> deleteProblem(@PathVariable("problemId") long problemId) {
-        appProblemService.deleteProblem(problemId);
-
-        return ResponseDTO.ok(null);
-    }
+//    @DeleteMapping("/{problemId}")
+//    public ResponseDTO<?> deleteProblem(@PathVariable("problemId") long problemId) {
+//        appProblemService.deleteProblem(problemId);
+//
+//        return ResponseDTO.ok(null);
+//    }
 }

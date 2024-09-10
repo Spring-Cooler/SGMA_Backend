@@ -1,12 +1,10 @@
 package com.springcooler.sgma.choice.command.application.service;
 
-import com.springcooler.sgma.choice.command.application.dto.ChoiceDTO;
 import com.springcooler.sgma.choice.command.domain.aggregate.entity.Choice;
 import com.springcooler.sgma.choice.command.domain.aggregate.entity.ChoicePK;
-import com.springcooler.sgma.choice.command.domain.aggregate.vo.ProblemVO;
 import com.springcooler.sgma.choice.command.domain.repository.ChoiceRepository;
 
-import jakarta.persistence.EntityNotFoundException;
+import com.springcooler.sgma.problem.command.domain.aggregate.entity.ProblemVO;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +29,7 @@ public class AppChoiceServiceImpl implements AppChoiceService {
     @Transactional
     @Override
     public ProblemVO registChoices(ProblemVO problemVO) {
-            long problemID = problemVO.getProblemId();
+            Long problemID = problemVO.getProblemId();
             List<String> choices = problemVO.getChoices();
             List<Choice> choicesToInsert = new ArrayList<>();
             for (int i = 0; i < choices.size(); i++) {
@@ -41,7 +39,7 @@ public class AppChoiceServiceImpl implements AppChoiceService {
                 choicesToInsert.add(newChoice);
             }
             choicesToInsert = choiceRepository.saveAll(choicesToInsert);
-            ProblemVO insertedInfo = new ProblemVO(problemVO.getProblemId(), choicesToInsert.stream().map(x -> x.getContent()).collect(Collectors.toList()));
+            ProblemVO insertedInfo = new ProblemVO(problemID, choicesToInsert.stream().map(x -> x.getContent()).collect(Collectors.toList()));
             return insertedInfo;
     }
 }
