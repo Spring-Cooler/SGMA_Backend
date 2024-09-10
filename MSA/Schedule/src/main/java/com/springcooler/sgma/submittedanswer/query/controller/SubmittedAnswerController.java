@@ -24,16 +24,16 @@ public class SubmittedAnswerController {
     public SubmittedAnswerController(SubmittedAnswerService submittedAnswerService) {
         this.submittedAnswerService = submittedAnswerService;
     }
-    @GetMapping("/")
-    public ResponseDTO<?> getAllSubmittedAnswers() {
-        return ResponseDTO.ok(submittedAnswerService.findAllSubmittedAnswers());
-
-    }
-
-    @GetMapping("/problems/{problemId}")
-    public ResponseDTO<?> getSubmittedAnswersByProblemId(@PathVariable("problemId") long problemId){
-        return ResponseDTO.ok(submittedAnswerService.findSubmittedAnswersByProblemId(problemId));
-    }
+//    @GetMapping("/")
+//    public ResponseDTO<?> getAllSubmittedAnswers() {
+//        return ResponseDTO.ok(submittedAnswerService.findAllSubmittedAnswers());
+//
+//    }
+//
+//    @GetMapping("/problems/{problemId}")
+//    public ResponseDTO<?> getSubmittedAnswersByProblemId(@PathVariable("problemId") long problemId){
+//        return ResponseDTO.ok(submittedAnswerService.findSubmittedAnswersByProblemId(problemId));
+//    }
 
 
 
