@@ -19,12 +19,43 @@ class ProblemServiceTests {
 
     @DisplayName("전체 문제 조회")
     @Test
-    void findAllProblems(){
+    void testFindAllProblems(){
 
         // given
 
         // when
         List<ProblemDTO> problems = problemService.findAllProblems();
+
+        // then
+        assertNotNull(problems);
+        problems.forEach(x->log.info(x.toString()));
+    }
+
+
+    @DisplayName("문제 ID로 문제 조회")
+    @Test
+    void testFindProblemById(){
+
+        // given
+        Long problemId = 1L;
+
+        // when
+        ProblemDTO problem = problemService.findProblemById(problemId);
+
+        // then
+        assertNotNull(problem);
+        log.info(problem.toString());
+    }
+
+    @DisplayName("스케쥴ID로 문제 조회")
+    @Test
+    void testFindProblemsByScheduleId(){
+
+        // given
+        Long scheduleId =2L;
+
+        // when
+        List<ProblemDTO> problems = problemService.findProblemsByScheduleId(scheduleId);
 
         // then
         assertNotNull(problems);

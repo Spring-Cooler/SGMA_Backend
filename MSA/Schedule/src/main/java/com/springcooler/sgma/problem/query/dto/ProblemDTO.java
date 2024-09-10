@@ -25,6 +25,9 @@ public class ProblemDTO {
     @JsonProperty("content")
     private String content;
 
+    @JsonProperty("answer")
+    private String answer;
+
     @JsonProperty("problem_type")
     private String problemType;
 

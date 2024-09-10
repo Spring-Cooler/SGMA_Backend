@@ -27,5 +27,22 @@ public class ProblemServiceImpl implements ProblemService {
         return problems;
     }
 
+    @Override
+    public ProblemDTO findProblemById(Long id) {
+        ProblemDTO problem = problemMapper.findProblemById(id);
+        if(problem == null || problem.getProblemId() == 0) {
+            throw new CommonException(ErrorCode.NOT_FOUND_PROBLEM);
+        }
+        return problem;
+    }
 
+    @Override
+    public List<ProblemDTO> findProblemsByScheduleId(Long scheduleId) {
+        List<ProblemDTO> problems = problemMapper.findProblemsByScheduleId(scheduleId);
+
+        if(problems == null || problems.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_PROBLEM);
+        }
+        return problems;
+    }
 }
