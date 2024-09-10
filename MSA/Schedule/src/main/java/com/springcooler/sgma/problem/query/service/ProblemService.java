@@ -16,4 +16,5 @@ public interface ProblemService {
     public List<ProblemDTO> findProblemsByScheduleId(Long scheduleId);
 
 
+    String getAnswerByProblemId(Long problemId);
 }

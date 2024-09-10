@@ -12,5 +12,6 @@ public interface ProblemMapper {
     ProblemDTO findProblemById(Long id);
 
     List<ProblemDTO> findProblemsByScheduleId(Long scheduleId);
+
 }
 

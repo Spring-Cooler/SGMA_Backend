@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Slf4j
+@Transactional
 class AppSubmittedAnswerServiceTests {
 
     @Autowired
@@ -52,5 +54,20 @@ class AppSubmittedAnswerServiceTests {
 
         // then
         assertDoesNotThrow(()-> appSubmittedAnswerService.registSubmittedAnswer(submittedAnswers));
+    }
+
+    @DisplayName("참여자 ID로 제출답안 채점 테스트")
+    @Test
+    void testGradeSubmittedAnswerByParticipantId(){
+
+        // given
+        Long scheduleId = 1L;
+        Long participantId = 1L;
+
+        // when
+
+        // then
+        appSubmittedAnswerService.gradeSubmittedAnswersByScheduleIdAndParticipantId(scheduleId, participantId);
+
     }
 }

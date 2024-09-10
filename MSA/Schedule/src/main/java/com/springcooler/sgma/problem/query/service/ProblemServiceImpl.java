@@ -45,4 +45,14 @@ public class ProblemServiceImpl implements ProblemService {
         }
         return problems;
     }
+
+    @Override
+    public String getAnswerByProblemId(Long problemId) {
+        String answer =problemMapper.findProblemById(problemId).getAnswer();
+
+        if(answer == null || answer == "") {
+            throw new CommonException(ErrorCode.NOT_FOUND_PROBLEM);
+        }
+        return answer;
+    }
 }
