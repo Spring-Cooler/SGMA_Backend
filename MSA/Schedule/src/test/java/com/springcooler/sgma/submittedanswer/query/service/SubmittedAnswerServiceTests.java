@@ -37,7 +37,7 @@ class SubmittedAnswerServiceTests {
     void testFindSubmittedAnswersByProblemId(){
 
         // given
-        Long problemId =1L;
+        Long problemId = 1L;
 
         // when
         List<SubmittedAnswerDTO> submittedAnswers = submittedAnswerService.findSubmittedAnswersByProblemId(problemId);
