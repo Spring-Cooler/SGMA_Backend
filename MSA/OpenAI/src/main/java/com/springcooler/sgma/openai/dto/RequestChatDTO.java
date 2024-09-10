@@ -1,10 +1,7 @@
 package com.springcooler.sgma.openai.dto;
 
-import com.springcooler.sgma.openai.aggregate.Choice;
 import com.springcooler.sgma.openai.aggregate.Message;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.springcooler.sgma.openai.controller;
 
-import com.springcooler.sgma.openai.dto.RequestChatDTO;
 import com.springcooler.sgma.openai.dto.ResponseChatDTO;
 import com.springcooler.sgma.openai.service.OpenAIService;
 import org.springframework.beans.factory.annotation.Autowired;
