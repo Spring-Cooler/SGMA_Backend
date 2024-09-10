@@ -1,6 +1,6 @@
 package com.springcooler.sgma.submittedanswer.query.controller;
 
-import com.springcooler.sgma.problem.query.common.ResponseMessage;
+import com.springcooler.sgma.submittedanswer.common.ResponseDTO;
 import com.springcooler.sgma.submittedanswer.query.dto.SubmittedAnswerDTO;
 import com.springcooler.sgma.submittedanswer.query.service.SubmittedAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,29 +25,14 @@ public class SubmittedAnswerController {
         this.submittedAnswerService = submittedAnswerService;
     }
     @GetMapping("/")
-    public ResponseEntity<ResponseMessage> getAllSubmittedAnswers() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-        Map<String, Object> responseMap = new HashMap<>();
-        List<SubmittedAnswerDTO> submittedAnswers = submittedAnswerService.findAllSubmittedAnswers();
-        responseMap.put("submittedAnswers", submittedAnswers);
+    public ResponseDTO<?> getAllSubmittedAnswers() {
+        return ResponseDTO.ok(submittedAnswerService.findAllSubmittedAnswers());
 
-        ResponseMessage responseMessage = new ResponseMessage(200,"전체 제출답안 조회 완료", responseMap);
-
-        return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
     }
 
     @GetMapping("/problems/{problemId}")
-    public ResponseEntity<ResponseMessage> getSubmittedAnswersByProblemId(@PathVariable("problemId") long problemId){
-        HttpHeaders headers= new HttpHeaders();
-        headers.setContentType(new MediaType("application","json", Charset.forName("UTF-8")));
-        Map<String, Object> responseMap = new HashMap<>();
-        List<SubmittedAnswerDTO> submittedAnswersByProblemId = submittedAnswerService.
-                findSubmittedAnswersByProblemId(problemId);
-        responseMap.put("submittedAnswersByProblemId", submittedAnswersByProblemId);
-
-        ResponseMessage responseMessage = new ResponseMessage(200, "문제 아이디로 답안 조회 성공", responseMap);
-        return new ResponseEntity<>(responseMessage, headers, HttpStatus.OK);
+    public ResponseDTO<?> getSubmittedAnswersByProblemId(@PathVariable("problemId") long problemId){
+        return ResponseDTO.ok(submittedAnswerService.findSubmittedAnswersByProblemId(problemId));
     }
 
 

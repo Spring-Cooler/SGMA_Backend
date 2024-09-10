@@ -27,15 +27,6 @@ public class AppChoiceServiceImpl implements AppChoiceService {
 
     }
 
-    @Transactional
-    @Override
-    public ChoiceDTO modifyChoice(ChoiceDTO modifyChoiceDTO) {
-        ChoicePK choicePK = new ChoicePK(modifyChoiceDTO.getProblemId(), modifyChoiceDTO.getChoiceNum());
-        Choice existingChoice = choiceRepository.findById(choicePK).orElseThrow(EntityNotFoundException::new);
-        existingChoice.setContent(modifyChoiceDTO.getContent());
-        Choice modifiedChoice = choiceRepository.save(existingChoice);
-        return new ChoiceDTO(modifiedChoice.getChoicePK().getProblemId(), modifiedChoice.getChoicePK().getChoiceNum(), modifiedChoice.getContent());
-    }
 
     @Transactional
     @Override

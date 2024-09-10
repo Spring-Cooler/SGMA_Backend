@@ -8,5 +8,5 @@ public interface AppProblemService {
     void deleteProblem(long problemId);
 
 
-    ProblemAndChoiceDTO registProblemAndChoice(ProblemAndChoiceDTO newProblemAndChoice);
+// TODO   ProblemAndChoiceDTO registProblemAndChoice(ProblemAndChoiceDTO newProblemAndChoice);
 }

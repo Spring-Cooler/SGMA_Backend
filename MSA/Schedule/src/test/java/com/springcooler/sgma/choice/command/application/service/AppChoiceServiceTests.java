@@ -36,21 +36,21 @@ class AppChoiceServiceTests {
 //        // then
 //    }
 
-    @DisplayName("선지 수정 테스트")
-    @Test
-    void testModifyChoice(){
-
-        // given
-        long problemId = 1L;
-        int choiceNum = 1;
-        ChoiceDTO modifyChoice = new ChoiceDTO(problemId, choiceNum,"선지 수정 테스트");
-
-        // when
-        ChoiceDTO modifiedChoice = appChoiceService.modifyChoice(modifyChoice);
-
-        // then
-        assertNotEquals(modifyChoice, modifiedChoice);
-        log.info("modifiedChoice: {}", modifiedChoice);
-    }
+//    @DisplayName("선지 수정 테스트")
+//    @Test
+//    void testModifyChoice(){
+//
+//        // given
+//        long problemId = 1L;
+//        int choiceNum = 1;
+//        ChoiceDTO modifyChoice = new ChoiceDTO(problemId, choiceNum,"선지 수정 테스트");
+//
+//        // when
+//        ChoiceDTO modifiedChoice = appChoiceService.modifyChoice(modifyChoice);
+//
+//        // then
+//        assertNotEquals(modifyChoice, modifiedChoice);
+//        log.info("modifiedChoice: {}", modifiedChoice);
+//    }
 
 }

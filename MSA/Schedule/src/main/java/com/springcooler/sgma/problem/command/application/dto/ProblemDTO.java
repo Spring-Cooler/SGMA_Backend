@@ -11,13 +11,16 @@ import lombok.*;
 public class ProblemDTO {
 
     @JsonProperty("problem_id")
-    private long problemId;
+    private Long problemId;
 
     @JsonProperty("content")
     private String content;
 
     @JsonProperty("answer")
-    private int answer;
+    private String answer;
+
+    @JsonProperty("problem_type")
+    private String problemType;
 
     @JsonProperty("participant_id")
     private long participantId;

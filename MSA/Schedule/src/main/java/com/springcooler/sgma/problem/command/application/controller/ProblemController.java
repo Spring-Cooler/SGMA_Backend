@@ -18,11 +18,11 @@ public class ProblemController {
         this.appProblemService = appProblemService;
     }
 
-    @PostMapping("/")
-    public ResponseDTO<?> registProblemAndChoicess(@RequestBody ProblemAndChoiceDTO newProblemAndChoice) {
-        ProblemAndChoiceDTO problemAndChoice = appProblemService.registProblemAndChoice(newProblemAndChoice);
-        return ResponseDTO.ok(problemAndChoice);
-    }
+//    @PostMapping("/")
+//    public ResponseDTO<?> registProblemAndChoicess(@RequestBody ProblemAndChoiceDTO newProblemAndChoice) {
+//        ProblemAndChoiceDTO problemAndChoice = appProblemService.registProblemAndChoice(newProblemAndChoice);
+//        return ResponseDTO.ok(problemAndChoice);
+//    }
 
     @DeleteMapping("/{problemId}")
     public ResponseDTO<?> deleteProblem(@PathVariable("problemId") long problemId) {

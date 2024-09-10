@@ -36,24 +36,5 @@ public class AppProblemServiceImpl implements AppProblemService {
     }
 
 
-    @Transactional
-    @Override
-    public ProblemAndChoiceDTO registProblemAndChoice(ProblemAndChoiceDTO newProblemAndChoice) {
-        Problem problem = new Problem(null,
-                newProblemAndChoice.getContent(),
-                newProblemAndChoice.getAnswer(),
-                newProblemAndChoice.getParticipantId(),
-                newProblemAndChoice.getScheduleId());
 
-        try {
-            Problem registeredProblem = problemRepository.save(problem);
-            ProblemVO problemVO = infraProblemService.requestRegistChoices(registeredProblem.getProblemId(), newProblemAndChoice.getChoices());
-            infraProblemService.requestIncreaseNumSubmittedProblems(problem.getScheduleId(), problem.getParticipantId());
-            return new ProblemAndChoiceDTO(registeredProblem.getProblemId(), registeredProblem.getParticipantId(), registeredProblem.getScheduleId(), registeredProblem.getContent(), registeredProblem.getAnswer(), problemVO.getChoices());
-
-        } catch (Exception e) {
-            throw new CommonException(ErrorCode.INTERNAL_SERVER_ERROR);
-        }
-
-    }
 }

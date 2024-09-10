@@ -16,7 +16,7 @@ public class ProblemAndChoiceDTO {
     private Long problemId;
 
     @JsonProperty("participant_id")
-    private long participantId;
+    private Long participantId;
 
     @JsonProperty("schedule_id")
     private long scheduleId;
@@ -25,7 +25,10 @@ public class ProblemAndChoiceDTO {
     private String content;
 
     @JsonProperty("answer")
-    private int answer;
+    private String answer;
+
+    @JsonProperty("problem_type")
+    private String problemType;
 
     @JsonProperty("choices")
     private List<String> choices;
