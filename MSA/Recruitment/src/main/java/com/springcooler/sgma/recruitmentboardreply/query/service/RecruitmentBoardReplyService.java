@@ -27,5 +27,12 @@ public class RecruitmentBoardReplyService {
         }
         return replies;
     }
+    public List<RecruitmentBoardReplyDTO> findAllRecruitmentBoardReplyByRecruitmentBoardId(Long recruitmentBoardCommentId){
+        List<RecruitmentBoardReplyDTO> replies =recruitmentBoardReplyMapper.findRecruitmentBoardRepliesByBoardId(recruitmentBoardCommentId);
+        if(replies == null || replies.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_RECRUITMENT_BOARD_REPLY);
+        }
+        return replies;
+    }
 
 }

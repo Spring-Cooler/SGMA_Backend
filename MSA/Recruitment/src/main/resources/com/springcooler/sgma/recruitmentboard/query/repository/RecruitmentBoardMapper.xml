@@ -32,25 +32,40 @@
         A.GROUP_ID,
         A.STUDY_GROUP_CATEGORY_ID
         FROM RECRUITMENT_BOARD A
-        WHERE A.ACTIVE_STATUS = 'ACTIVE'
+        WHERE A.ACTIVE_STATUS = 'ACTIVE' OR A.ACTIVE_STATUS='INACTIVE'
     </select>
 
 
     <select id="findRecruitmentBoardByBoardId" resultMap="studyGroupRecruitment" parameterType="Long">
         SELECT
-        A.RECRUITMENT_BOARD_ID,
-        A.TITLE,
-        A.CONTENT,
-        A.CREATED_AT,
-        A.UPDATED_AT,
-        A.RECRUITMENT_START_TIME,
-        A.RECRUITMENT_END_TIME,
-        A.ACTIVE_STATUS,
-        A.LIKES,
-        A.GROUP_ID,
-        A.STUDY_GROUP_CATEGORY_ID
-        FROM RECRUITMENT_BOARD A
-        WHERE A.RECRUITMENT_BOARD_ID = #{ recruitmentBoardId }
+            A.RECRUITMENT_BOARD_ID,
+            A.TITLE,
+            A.CONTENT,
+            A.CREATED_AT,
+            A.UPDATED_AT,
+            A.RECRUITMENT_START_TIME,
+            A.RECRUITMENT_END_TIME,
+            A.ACTIVE_STATUS,
+            A.LIKES,
+            A.GROUP_ID,
+            A.STUDY_GROUP_CATEGORY_ID
+        FROM (
+            SELECT
+                RECRUITMENT_BOARD_ID,
+                TITLE,
+                CONTENT,
+                CREATED_AT,
+                UPDATED_AT,
+                RECRUITMENT_START_TIME,
+                RECRUITMENT_END_TIME,
+                ACTIVE_STATUS,
+                LIKES,
+                GROUP_ID,
+                STUDY_GROUP_CATEGORY_ID
+            FROM RECRUITMENT_BOARD
+                WHERE RECRUITMENT_BOARD_ID = #{ recruitmentBoardId }
+        ) A
+        WHERE A.ACTIVE_STATUS = 'ACTIVE' OR A.ACTIVE_STATUS = 'INACTIVE';
     </select>
 
 </mapper>
