@@ -17,6 +17,7 @@ public class InfraStudyGroupServiceImpl implements InfraStudyGroupService {
     }
 
     // 스터디 그룹장 추가
+    @Transactional
     @Override
     public void registStudyGroupOwner(StudyGroupMemberDTO owner) {
         studyGroupMemberService.registStudyGroupOwner(owner);
