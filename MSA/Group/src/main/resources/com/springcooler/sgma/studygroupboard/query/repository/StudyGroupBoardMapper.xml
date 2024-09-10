@@ -62,17 +62,17 @@
 
     <select id="findStudyGroupBoardsByContent" resultMap="studyGroupBoardResultMap" parameterType="string">
         SELECT
-        A.STUDY_GROUP_BOARD_ID
-        , A.TITLE
-        , A.CONTENT
-        , A.CREATED_AT
-        , A.UPDATED_AT
-        , A.ACTIVE_STATUS
-        , A.LIKES
-        , A.MEMBER_ID
-        , A.GROUP_ID
-        FROM STUDY_GROUP_BOARD A
-        WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.CONTENT LIKE CONCAT('%', #{ content }, '%')
+               A.STUDY_GROUP_BOARD_ID
+             , A.TITLE
+             , A.CONTENT
+             , A.CREATED_AT
+             , A.UPDATED_AT
+             , A.ACTIVE_STATUS
+             , A.LIKES
+             , A.MEMBER_ID
+             , A.GROUP_ID
+          FROM STUDY_GROUP_BOARD A
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.CONTENT LIKE CONCAT('%', #{ content }, '%')
     </select>
 
     <select id="findStudyGroupBoardByBoardId" resultMap="studyGroupBoardResultMap" parameterType="Long">
