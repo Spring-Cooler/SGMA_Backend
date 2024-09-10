@@ -2,13 +2,13 @@ package com.springcooler.sgma.submittedanswer.command.application.service;
 
 
 import com.springcooler.sgma.submittedanswer.command.application.dto.SubmittedAnswerDTO;
+import com.springcooler.sgma.submittedanswer.command.domain.aggregate.AnswerStatus;
 import com.springcooler.sgma.submittedanswer.command.domain.aggregate.SubmittedAnswer;
 import com.springcooler.sgma.submittedanswer.command.domain.aggregate.SubmittedAnswerPK;
 import com.springcooler.sgma.submittedanswer.command.domain.repository.SubmittedAnswerRepository;
 import com.springcooler.sgma.submittedanswer.command.infrastructure.service.InfraSubmittedAnswerService;
 import com.springcooler.sgma.submittedanswer.common.exception.CommonException;
 import com.springcooler.sgma.submittedanswer.common.exception.ErrorCode;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
 
         submittedAnswerDTOs.forEach(
                 submittedAnswer -> {
-                    SubmittedAnswer newSubmittedAnswer = new SubmittedAnswer(submittedAnswer.getProblemId(),submittedAnswer.getParticipantId(), submittedAnswer.getSubmittedAnswer(), submittedAnswer.getAnswerStatus());
+                    SubmittedAnswer newSubmittedAnswer = new SubmittedAnswer(submittedAnswer.getProblemId(),submittedAnswer.getParticipantId(), submittedAnswer.getSubmittedAnswer());
                     submittedAnswers.add(newSubmittedAnswer);
                 }
         );
@@ -57,17 +57,11 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
 
     }
 
-    @Transactional
-    @Override
-    public SubmittedAnswer findSubmittedAnswerByProblemIdAndParticipantId(long problemId, long participantId) {
-        SubmittedAnswerPK submittedAnswerPK = new SubmittedAnswerPK(problemId, participantId);
-        SubmittedAnswer foundSubmittedAnswer = submittedAnswerRepository.findById(submittedAnswerPK).orElseThrow(EntityNotFoundException::new);
-        return foundSubmittedAnswer;
-    }
+
 
     @Transactional
     @Override
-    public double gradeSubmittedAnswersByScheduleIdAndParticipantId(long scheduleId, long participantId) {
+    public double gradeSubmittedAnswersByScheduleIdAndParticipantId(Long scheduleId, Long participantId) {
         List<SubmittedAnswer> submittedAnswers = submittedAnswerRepository.findByParticipantId(participantId);
         if (submittedAnswers == null || submittedAnswers.isEmpty()) {
             throw new CommonException(ErrorCode.NOT_FOUND_SUBMITTED_ANSWER);
@@ -76,13 +70,13 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
         for (SubmittedAnswer submittedAnswer : submittedAnswers) {
             log.info("submittedAnswer before grade: {}", submittedAnswer);
             Long problemId = submittedAnswer.getProblemId();
-            int answer = infraSubmittedAnswerService.getAnswerByProblemId(problemId);
-            if (answer == submittedAnswer.getSubmittedAnswer()) {
-                submittedAnswer.setAnswerStatus("RIGHT");
+            String answer = infraSubmittedAnswerService.getAnswerByProblemId(problemId);
+            if (submittedAnswer.getSubmittedAnswer().equals(answer)) {
+                submittedAnswer.setAnswerStatus(AnswerStatus.RIGHT);
                 rightAnswer++;
             }
             else {
-                submittedAnswer.setAnswerStatus("WRONG");
+                submittedAnswer.setAnswerStatus(AnswerStatus.WRONG);
             }
             log.info("submittedAnswer after grade: {}", submittedAnswer);
         }
