@@ -33,7 +33,7 @@ class StudyGroupCategoryTests {
     @DisplayName("스터디그룹 카테고리 단건 조회(카테고리 아이디) 테스트")
     @ParameterizedTest
     @ValueSource(ints = 1)
-    void testFindStudyGroupCategoryByCategoryId(int categoryId) {
+    void testFindStudyGroupCategoryByCategoryId(Integer categoryId) {
         Assertions.assertDoesNotThrow(
                 () -> {
                     StudyGroupCategoryDTO category =

@@ -12,4 +12,10 @@ public interface StudyGroupNoticeService {
     // 스터디그룹 공지사항 단건 조회(공지사항 아이디)
     StudyGroupNoticeDTO findStudyGroupNoticeByNoticeId(Long noticeId);
 
+    // 스터디그룹 공지사항 제목으로 조회
+    List<StudyGroupNoticeDTO> findStudyGroupNoticesByTitle(String title);
+
+    // 스터디그룹 공지사항 내용으로 조회
+    List<StudyGroupNoticeDTO> findStudyGroupNoticesByContent(String content);
+
 }
