@@ -6,8 +6,10 @@ import com.springcooler.sgma.studygroupboard.command.domain.aggregate.StudyGroup
 import com.springcooler.sgma.studygroupboard.command.domain.aggregate.StudyGroupBoardStatus;
 import com.springcooler.sgma.studygroupboard.command.domain.repository.StudyGroupBoardRepository;
 import com.springcooler.sgma.studygroupboard.command.domain.service.DomainStudyGroupBoardService;
+import com.springcooler.sgma.studygroupboard.command.infrastructure.service.InfraStudyGroupBoardService;
 import com.springcooler.sgma.studygroupboard.common.exception.CommonException;
 import com.springcooler.sgma.studygroupboard.common.exception.ErrorCode;
+import com.springcooler.sgma.studygroupboardlike.command.application.dto.StudyGroupBoardLikeDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +22,17 @@ public class AppStudyGroupBoardServiceImpl implements AppStudyGroupBoardService 
 
     private final ModelMapper modelMapper;
     private final DomainStudyGroupBoardService domainStudyGroupBoardService;
+    private final InfraStudyGroupBoardService infraStudyGroupBoardService;
     private final StudyGroupBoardRepository studyGroupBoardRepository;
 
     @Autowired
     public AppStudyGroupBoardServiceImpl(ModelMapper modelMapper,
                                          DomainStudyGroupBoardService domainStudyGroupBoardService,
+                                         InfraStudyGroupBoardService infraStudyGroupBoardService,
                                          StudyGroupBoardRepository studyGroupBoardRepository) {
         this.modelMapper = modelMapper;
         this.domainStudyGroupBoardService = domainStudyGroupBoardService;
+        this.infraStudyGroupBoardService = infraStudyGroupBoardService;
         this.studyGroupBoardRepository = studyGroupBoardRepository;
     }
 
@@ -94,6 +99,42 @@ public class AppStudyGroupBoardServiceImpl implements AppStudyGroupBoardService 
         // INACTIVE 처리
         deleteBoard.setActiveStatus(StudyGroupBoardStatus.INACTIVE);
         studyGroupBoardRepository.save(deleteBoard);
+    }
+
+    // 좋아요
+    @Transactional
+    @Override
+    public StudyGroupBoardDTO registStudyGroupBoardLike(StudyGroupBoardLikeDTO like) {
+        // 기존 엔티티 조회
+        StudyGroupBoard existingBoard = studyGroupBoardRepository.findById(like.getStudyGroupBoardId())
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_BOARD));
+
+        // 좋아요 생성 요청
+        infraStudyGroupBoardService.registStudyGroupBoardLike(like);
+
+        // 좋아요 수 + 1
+        existingBoard.setLikes(existingBoard.getLikes() + 1);
+        studyGroupBoardRepository.save(existingBoard);
+
+        return modelMapper.map(existingBoard, StudyGroupBoardDTO.class);
+    }
+
+    // 좋아요 취소
+    @Transactional
+    @Override
+    public StudyGroupBoardDTO deleteStudyGroupBoardLike(Long boardId, Long memberId) {
+        // 기존 엔티티 조회
+        StudyGroupBoard existingBoard = studyGroupBoardRepository.findById(boardId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_BOARD));
+
+        // 좋아요 취소 요청
+        infraStudyGroupBoardService.deleteStudyGroupBoardLike(boardId, memberId);
+
+        // 좋아요 수 - 1
+        existingBoard.setLikes(existingBoard.getLikes() - 1);
+        studyGroupBoardRepository.save(existingBoard);
+
+        return modelMapper.map(existingBoard, StudyGroupBoardDTO.class);
     }
 
 }

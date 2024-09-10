@@ -2,6 +2,7 @@ package com.springcooler.sgma.studygroupboard.command.application.service;
 
 import com.springcooler.sgma.studygroupboard.command.application.dto.StudyGroupBoardDTO;
 import com.springcooler.sgma.studygroupboard.common.exception.CommonException;
+import com.springcooler.sgma.studygroupboardlike.command.application.dto.StudyGroupBoardLikeDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -72,6 +73,46 @@ class StudyGroupBoardServiceTests {
         //Then
         Assertions.assertThrows(CommonException.class,
                 () -> studyGroupBoardService.deleteStudyGroupBoard(boardId));
+    }
+
+    @DisplayName("스터디그룹 자유게시글 좋아요 테스트")
+    @Test
+    void testRegistStudyGroupBoardLike() {
+        //Given
+        StudyGroupBoardLikeDTO newLike = StudyGroupBoardLikeDTO.builder()
+                .studyGroupBoardId(1L)
+                .memberId(1L)
+                .build();
+        int expectedLikes = 3;
+
+        //When
+        StudyGroupBoardDTO board = studyGroupBoardService.registStudyGroupBoardLike(newLike);
+        if (board != null) {
+            log.info(board.toString());
+        }
+
+        //Then
+        Assertions.assertNotNull(board);
+        Assertions.assertEquals(expectedLikes, board.getLikes());
+    }
+
+    @DisplayName("스터디그룹 자유게시글 좋아요 취소 테스트")
+    @Test
+    void testDeleteStudyGroupBoardLike() {
+        //Given
+        Long boardId = 1L;
+        Long memberId = 2L;
+        int expectedLikes = 1;
+
+        //When
+        StudyGroupBoardDTO board = studyGroupBoardService.deleteStudyGroupBoardLike(boardId, memberId);
+        if (board != null) {
+            log.info(board.toString());
+        }
+
+        //Then
+        Assertions.assertNotNull(board);
+        Assertions.assertEquals(expectedLikes, board.getLikes());
     }
 
 }

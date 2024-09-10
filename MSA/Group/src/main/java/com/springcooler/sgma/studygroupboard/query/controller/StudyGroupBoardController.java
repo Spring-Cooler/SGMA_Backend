@@ -24,7 +24,7 @@ public class StudyGroupBoardController {
 
     // 게시글 그룹별 조회
     @GetMapping("/group-id/{groupId}")
-    public ResponseDTO<?> findStudyGroupBoardByGroupId(@PathVariable("groupId") Long groupId) {
+    public ResponseDTO<?> findStudyGroupBoardsByGroupId(@PathVariable("groupId") Long groupId) {
         List<StudyGroupBoardDTO> boards = studyGroupBoardService.findStudyGroupBoardsByGroupId(groupId);
         return ResponseDTO.ok(boards);
     }
@@ -52,7 +52,7 @@ public class StudyGroupBoardController {
 
     // 게시글 단건 조회
     @GetMapping("/{boardId}")
-    public ResponseDTO<?> findStudyGroupBoardsByBoardId(@PathVariable("boardId") Long boardId) {
+    public ResponseDTO<?> findStudyGroupBoardByBoardId(@PathVariable("boardId") Long boardId) {
         StudyGroupBoardDTO board = studyGroupBoardService.findStudyGroupBoardByBoardId(boardId);
         return ResponseDTO.ok(board);
     }
