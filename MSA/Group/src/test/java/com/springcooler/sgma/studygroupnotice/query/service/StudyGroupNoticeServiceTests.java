@@ -21,7 +21,7 @@ class StudyGroupNoticeServiceTests {
     @DisplayName("스터디그룹 공지사항 전체 조회(스터디그룹 아이디) 테스트")
     @ParameterizedTest
     @ValueSource(longs = 1L)
-    void testFindStudyGroupNoticesByGroupId(long groupId) {
+    void testFindStudyGroupNoticesByGroupId(Long groupId) {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupNoticeDTO> studyGroupNotices =
@@ -34,7 +34,7 @@ class StudyGroupNoticeServiceTests {
     @DisplayName("스터디그룹 공지사항 단건 조회(공지사항 아이디) 테스트")
     @ParameterizedTest
     @ValueSource(longs = 2L)
-    void testFindStudyGroupNoticeByNoticeId(long noticeId) {
+    void testFindStudyGroupNoticeByNoticeId(Long noticeId) {
         Assertions.assertDoesNotThrow(
                 () -> {
                     StudyGroupNoticeDTO studyGroupNotice =
@@ -43,4 +43,31 @@ class StudyGroupNoticeServiceTests {
                 }
         );
     }
+
+    @DisplayName("스터디그룹 공지사항 제목으로 조회 테스트")
+    @ParameterizedTest
+    @ValueSource(strings = "프")
+    void testFindStudyGroupNoticesByTitle(String title) {
+        Assertions.assertDoesNotThrow(
+                () -> {
+                    List<StudyGroupNoticeDTO> studyGroupNotices =
+                            studyGroupNoticeService.findStudyGroupNoticesByTitle(title);
+                    studyGroupNotices.forEach(x -> log.info(x.toString()));
+                }
+        );
+    }
+
+    @DisplayName("스터디그룹 공지사항 내용으로 조회 테스트")
+    @ParameterizedTest
+    @ValueSource(strings = "사")
+    void testFindStudyGroupNoticesByContent(String content) {
+        Assertions.assertDoesNotThrow(
+                () -> {
+                    List<StudyGroupNoticeDTO> studyGroupNotices =
+                            studyGroupNoticeService.findStudyGroupNoticesByContent(content);
+                    studyGroupNotices.forEach(x -> log.info(x.toString()));
+                }
+        );
+    }
+
 }
