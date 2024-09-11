@@ -4,8 +4,6 @@ import com.springcooler.sgma.submittedanswer.query.dto.SubmittedAnswerDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -16,10 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Slf4j
 class SubmittedAnswerServiceTests {
-    @Autowired
-    private SubmittedAnswerService submittedAnswerService;
 
-    @DisplayName("제출 답안 전체 조회 테스트")
+    @Autowired
+    SubmittedAnswerService submittedAnswerService;
+
+    @DisplayName("제출답안 전체 조회 테스트")
     @Test
     void testFindAllSubmittedAnswers(){
 
@@ -27,27 +26,39 @@ class SubmittedAnswerServiceTests {
 
         // when
         List<SubmittedAnswerDTO> submittedAnswers = submittedAnswerService.findAllSubmittedAnswers();
+
         // then
         assertNotNull(submittedAnswers);
-        log.info("submittedAnswers.toString(): {}", submittedAnswers);
-        submittedAnswers.forEach(x-> log.info("x: {}", x));
+        submittedAnswers.forEach(x->log.info(x.toString()));
     }
 
-    @DisplayName("문제 ID로 제출 답안 조회 테스트")
-    @ParameterizedTest
-    @ValueSource(longs = 1L)
-    void testFindSubmittedAnswerByProblemId(long problemId){
+    @DisplayName("문제 ID로 제출 답안 조회")
+    @Test
+    void testFindSubmittedAnswersByProblemId(){
 
-        //given
-        List<SubmittedAnswerDTO> submittedAnswers = submittedAnswerService.findSubmittedAnswersByProblemId(problemId);
+        // given
+        Long problemId = 1L;
 
         // when
+        List<SubmittedAnswerDTO> submittedAnswers = submittedAnswerService.findSubmittedAnswersByProblemId(problemId);
 
         // then
         assertNotNull(submittedAnswers);
-        submittedAnswers.forEach(x-> log.info("x: {}", x));
+        submittedAnswers.forEach(x->log.info(x.toString()));
     }
 
+    @DisplayName("참가자 ID로 제출 답안 조회")
+    @Test
+    void testFindSubmittedAnswersByParticipantId(){
 
+        // given
+        Long participantId = 1L;
 
+        // when
+        List<SubmittedAnswerDTO> submittedAnswers = submittedAnswerService.findSubmittedAnswersByParticipantId(participantId);
+
+        // then
+        assertNotNull(submittedAnswers);
+        submittedAnswers.forEach(x->log.info(x.toString()));
+    }
 }

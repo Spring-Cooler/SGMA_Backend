@@ -9,8 +9,8 @@ import java.util.List;
 public interface SubmittedAnswerMapper {
     List<SubmittedAnswerDTO> findAllSubmittedAnswers();
 
-    List<SubmittedAnswerDTO> findSubmittedAnswersByProblemId(long problemId);
+    List<SubmittedAnswerDTO> findSubmittedAnswersByProblemId(Long problemId);
 
-    List<SubmittedAnswerDTO> findSubmittedAnswersByParticipantId(long participantId);
+    List<SubmittedAnswerDTO> findSubmittedAnswersByParticipantId(Long participantId);
 
 }

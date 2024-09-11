@@ -3,6 +3,8 @@ package com.springcooler.sgma.problem.command.application.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -11,18 +13,24 @@ import lombok.*;
 public class ProblemDTO {
 
     @JsonProperty("problem_id")
-    private long problemId;
+    private Long problemId;
+
+    @JsonProperty("participant_id")
+    private Long participantId;
+
+    @JsonProperty("schedule_id")
+    private Long scheduleId;
 
     @JsonProperty("content")
     private String content;
 
     @JsonProperty("answer")
-    private int answer;
+    private String answer;
 
-    @JsonProperty("participant_id")
-    private long participantId;
+    @JsonProperty("problem_type")
+    private String problemType;
 
-    @JsonProperty("schedule_id")
-    private long scheduleId;
+    @JsonProperty("choices")
+    private List<String> choices;
 
 }

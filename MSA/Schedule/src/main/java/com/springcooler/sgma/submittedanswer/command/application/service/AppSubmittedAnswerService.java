@@ -10,9 +10,8 @@ public interface AppSubmittedAnswerService {
 
     SubmittedAnswer modifySubmittedAnswer(SubmittedAnswerDTO modifySubmittedAnswer);
 
-    SubmittedAnswer findSubmittedAnswerByProblemIdAndParticipantId(long problemId, long participantId);
 
-    double gradeSubmittedAnswersByScheduleIdAndParticipantId(long scheduleId, long participantId);
+    double gradeSubmittedAnswersByScheduleIdAndParticipantId(Long scheduleId, Long participantId);
 
 
 }

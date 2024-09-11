@@ -20,7 +20,11 @@ public class Problem {
     private String content;
 
     @Column(name="answer")
-    private int answer;
+    private String answer;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="problem_type")
+    private ProblemType problemType;
 
     @Column(name="participant_id")
     private long participantId;
