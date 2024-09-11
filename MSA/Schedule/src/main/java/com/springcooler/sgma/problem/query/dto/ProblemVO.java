@@ -1,5 +1,6 @@
 package com.springcooler.sgma.problem.query.dto;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.springcooler.sgma.choice.query.dto.ChoiceDTO;
 import com.springcooler.sgma.problem.command.domain.aggregate.entity.ProblemType;
@@ -13,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class ProblemDTO {
+public class ProblemVO {
     @JsonProperty("problem_id")
     private Long problemId;
 
