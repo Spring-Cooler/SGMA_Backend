@@ -94,7 +94,8 @@
 ---
 
 ### System Architecture <a id="system-architecture"></a>
-![image](https://github.com/user-attachments/assets/88199112-1940-4cba-96ea-cd7031117c78)
+![Network Diagrams](https://github.com/user-attachments/assets/83706f89-f51f-4036-8cd7-f4244cb34801)
+
 
 
 ### 요구사항 정의서 <a id="요구사항-정의서"></a>
