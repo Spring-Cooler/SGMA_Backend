@@ -36,8 +36,9 @@
                    ,A.SUBMITTED_ANSWER
                    ,A.ANSWER_STATUS
           FROM      SUBMITTED_ANSWER A
-         WHERE      A.PARTICIPANT_ID = # { participantId }
+         WHERE      A.PARTICIPANT_ID = #{ participantId }
     </select>
+
 
 
 </mapper>
