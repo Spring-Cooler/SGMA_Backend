@@ -1,6 +1,4 @@
 package com.springcooler.sgma.submittedanswer.command.application.service;
-
-
 import com.springcooler.sgma.problem.command.domain.aggregate.entity.ProblemType;
 import com.springcooler.sgma.problem.query.dto.ProblemVO;
 import com.springcooler.sgma.submittedanswer.command.application.dto.SubmittedAnswerDTO;
@@ -13,7 +11,6 @@ import com.springcooler.sgma.submittedanswer.command.infrastructure.service.Open
 import com.springcooler.sgma.submittedanswer.common.exception.CommonException;
 import com.springcooler.sgma.submittedanswer.common.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,13 +25,11 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
     private final SubmittedAnswerRepository submittedAnswerRepository;
     private final InfraSubmittedAnswerService infraSubmittedAnswerService;
     private final OpenAIClient openAIClient;
-    private final ModelMapper modelMapper;
     @Autowired
     public AppSubmittedAnswerServiceImpl(SubmittedAnswerRepository submittedAnswerRepository
-            , InfraSubmittedAnswerService infraSubmittedAnswerService, OpenAIClient openAIClient, ModelMapper modelMapper) {
+            , InfraSubmittedAnswerService infraSubmittedAnswerService, OpenAIClient openAIClient) {
         this.submittedAnswerRepository = submittedAnswerRepository;
         this.infraSubmittedAnswerService = infraSubmittedAnswerService;
-        this.modelMapper = modelMapper;
         this.openAIClient = openAIClient;
     }
 
@@ -80,7 +75,7 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
             Long problemId = submittedAnswer.getProblemId();
             ProblemVO problemInfo = infraSubmittedAnswerService.requestProblemInfo(problemId);
             if(problemInfo.getProblemType()==ProblemType.MULTIPLE) {
-                String answer = submittedAnswer.getSubmittedAnswer();
+                String answer = problemInfo.getAnswer();
                 if (submittedAnswer.getSubmittedAnswer().equals(answer)) {
                     submittedAnswer.setAnswerStatus(AnswerStatus.RIGHT);
                     rightAnswer++;
@@ -88,7 +83,7 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
                     submittedAnswer.setAnswerStatus(AnswerStatus.WRONG);
                 }
             } else if (problemInfo.getProblemType() == ProblemType.ESSAY) {
-                String gradedResponse = openAIClient.requestGradeEssayTypeProblem(problemInfo.getContent(), problemInfo.getAnswer(), submittedAnswer.getSubmittedAnswer());
+                String gradedResponse = openAIClient.chat(problemInfo.getContent(), problemInfo.getAnswer(), submittedAnswer.getSubmittedAnswer());
                 log.info("gradedResponse: {}", gradedResponse);
                 if(gradedResponse.charAt(0)=='O'){
                     submittedAnswer.setAnswerStatus(AnswerStatus.RIGHT);
