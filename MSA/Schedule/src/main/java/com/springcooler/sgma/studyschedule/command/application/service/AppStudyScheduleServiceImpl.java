@@ -22,17 +22,14 @@ public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
     private final ModelMapper modelMapper;
     private final DomainStudyScheduleService domainStudyScheduleService;
     private final StudyScheduleRepository studyScheduleRepository;
-    private final StudyScheduleParticipantRepository participantRepository;
 
     @Autowired
     public AppStudyScheduleServiceImpl(ModelMapper modelMapper,
                                        DomainStudyScheduleService domainStudyScheduleService,
-                                       StudyScheduleRepository studyScheduleRepository,
-                                       StudyScheduleParticipantRepository participantRepository) {
+                                       StudyScheduleRepository studyScheduleRepository) {
         this.modelMapper = modelMapper;
         this.domainStudyScheduleService = domainStudyScheduleService;
         this.studyScheduleRepository = studyScheduleRepository;
-        this.participantRepository = participantRepository;
     }
 
     // 스터디 일정 생성
@@ -110,38 +107,4 @@ public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
         deleteSchedule.setActiveStatus(StudyScheduleStatus.INACTIVE);
         studyScheduleRepository.save(deleteSchedule);
     }
-
-    // 일정에 따른 참가자들의 시험 평균 및 표준편차 계산 및 업데이트
-//    @Transactional
-//    @Override
-//    public StudySchedule updateScheduleWithParticipantScores(Long scheduleId) {
-//        List<StudyScheduleParticipant> participants = participantRepository.findByScheduleId(scheduleId);
-//
-//        List<Double> scores = participants.stream()
-//                .map(StudyScheduleParticipant::getTestScore)
-//                .toList();
-//
-//        if (scores.isEmpty()) {
-//            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE);
-//        }
-//
-//        double average = scores.stream()
-//                .mapToDouble(Double::doubleValue)
-//                .average()
-//                .orElse(0.0);
-//
-//        double variance = scores.stream()
-//                .mapToDouble(score -> Math.pow(score - average, 2))
-//                .average()
-//                .orElse(0.0);
-//        double standardDeviation = Math.sqrt(variance);
-//
-//        StudySchedule schedule = studyScheduleRepository.findById(scheduleId)
-//                .orElseThrow(() -> new CommonException((ErrorCode.NOT_FOUND_STUDY_SCHEDULE)));
-//
-//        schedule.setTestAverage(average);
-//        schedule.setTestStandardDeviation(standardDeviation);
-//        studyScheduleRepository.save(schedule);
-//        return schedule;
-//    }
 }

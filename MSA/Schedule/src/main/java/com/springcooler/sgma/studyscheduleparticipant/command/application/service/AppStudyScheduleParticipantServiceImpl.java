@@ -1,5 +1,6 @@
 package com.springcooler.sgma.studyscheduleparticipant.command.application.service;
 
+import com.springcooler.sgma.studyschedule.command.infrastructure.service.InfraStudyScheduleService;
 import com.springcooler.sgma.studyschedule.common.exception.CommonException;
 import com.springcooler.sgma.studyschedule.common.exception.ErrorCode;
 import com.springcooler.sgma.studyscheduleparticipant.command.application.dto.StudyScheduleParticipantDTO;
@@ -9,8 +10,6 @@ import com.springcooler.sgma.studyscheduleparticipant.command.domain.aggregate.S
 import com.springcooler.sgma.studyscheduleparticipant.command.domain.repository.StudyScheduleParticipantRepository;
 import com.springcooler.sgma.studyschedule.command.domain.repository.StudyScheduleRepository;
 import com.springcooler.sgma.studyscheduleparticipant.command.domain.service.DomainStudyScheduleParticipantService;
-import com.springcooler.sgma.studyscheduleparticipant.command.infrastructure.service.InfraStudyScheduleParticipantService;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,16 +24,19 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
     private final StudyScheduleRepository scheduleRepository;
     private final StudyScheduleParticipantRepository participantRepository;
     private final DomainStudyScheduleParticipantService domainStudyScheduleParticipantService;
+    private final InfraStudyScheduleService infraStudyScheduleService;
 
     @Autowired
     public AppStudyScheduleParticipantServiceImpl(ModelMapper modelMapper,
                                                   StudyScheduleRepository scheduleRepository,
                                                   StudyScheduleParticipantRepository participantRepository,
-                                                  DomainStudyScheduleParticipantService domainStudyScheduleParticipantService) {
+                                                  DomainStudyScheduleParticipantService domainStudyScheduleParticipantService,
+                                                  InfraStudyScheduleService infraStudyScheduleService) {
         this.modelMapper = modelMapper;
         this.scheduleRepository = scheduleRepository;
         this.participantRepository = participantRepository;
         this.domainStudyScheduleParticipantService = domainStudyScheduleParticipantService;
+        this.infraStudyScheduleService = infraStudyScheduleService;
     }
 
     // 스터디 일정 참가
@@ -122,13 +124,14 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
 
     @Transactional
     @Override
-    public void gradeSubmittedAnswersByParticipantId(long scheduleId, long participantId, double score) {
+    public void gradeSubmittedAnswersByParticipantId(Long scheduleId, Long participantId, Double score) {
         StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
 
-//        participant.setTestScore(score * 100);
+        participant.setTestScore((int) (score * 100));
         participant.setTestPercentage(score * 100);
 
         participantRepository.save(participant);
+        infraStudyScheduleService.updateScheduleWithParticipantScores(scheduleId);
     }
 }

@@ -26,7 +26,7 @@ public class InfraSubmittedAnswerServiceImpl implements InfraSubmittedAnswerServ
     }
 
     @Override
-    public void requestUpdateParticipantScore(long scheduleId, long participantId, double score) {
+    public void requestUpdateParticipantScore(Long scheduleId, Long participantId, Double score) {
         participantService.gradeSubmittedAnswersByParticipantId(scheduleId, participantId, score);
     }
 }

@@ -50,7 +50,7 @@ public class StudyScheduleController {
         return ResponseDTO.ok(null);
     }
 
-    // 시험 평균과 표준편차 업데이트
+//    // 시험 평균과 표준편차 업데이트
 //    @PutMapping("/updateScores/{scheduleId}")
 //    public ResponseDTO<?> updateScheduleScores(@PathVariable Long scheduleId) {
 //        StudySchedule score = studyScheduleService.updateScheduleWithParticipantScores(scheduleId);

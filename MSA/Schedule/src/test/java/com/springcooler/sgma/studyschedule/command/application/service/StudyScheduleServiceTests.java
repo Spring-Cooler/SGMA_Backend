@@ -34,7 +34,7 @@ class StudyScheduleServiceTests {
         newSchedule.setNumProblemsPerParticipant(4);
 
         // When
-        StudySchedule schedule = studyScheduleService.registStudySchedule(newSchedule);
+        StudyScheduleDTO schedule = studyScheduleService.registStudySchedule(newSchedule);
 
         // Then
         Assertions.assertNotNull(schedule);
@@ -55,7 +55,7 @@ class StudyScheduleServiceTests {
         modifySchedule.setNumProblemsPerParticipant(4);
 
         // When
-        StudySchedule updatedSchedule = studyScheduleService.modifyStudySchedule(modifySchedule);
+        StudyScheduleDTO updatedSchedule = studyScheduleService.modifyStudySchedule(modifySchedule);
 
         // Then
         Assertions.assertNotNull(updatedSchedule);
@@ -75,18 +75,5 @@ class StudyScheduleServiceTests {
         // Then
         Assertions.assertThrows(CommonException.class,
                 () -> studyScheduleService.deleteStudySchedule(scheduleId));
-    }
-
-    @DisplayName("스터디 그룹 일정 참가자 평균점수 및 표준편차 업데이트 테스트")
-    @Test
-    void testUpdateScheduleWithParticipantScores() {
-        // Given
-        Long scheduleId = 4L;
-
-        // When
-        StudySchedule updatedSchedule = studyScheduleService.updateScheduleWithParticipantScores(scheduleId);
-
-        // Then
-        Assertions.assertNotNull(updatedSchedule);
     }
 }
