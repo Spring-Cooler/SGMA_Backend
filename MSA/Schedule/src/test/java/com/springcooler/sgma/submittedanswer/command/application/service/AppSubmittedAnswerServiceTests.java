@@ -51,7 +51,6 @@ class AppSubmittedAnswerServiceTests {
         List<SubmittedAnswerDTO> submittedAnswers = new ArrayList<>();
         SubmittedAnswerDTO submittedAnswerInfo = new SubmittedAnswerDTO(problemId, participantId, submittedAnswer);
         submittedAnswers.add(submittedAnswerInfo);
-ㅇㄴㄹㄴㄹ
         // then
         assertDoesNotThrow(()-> appSubmittedAnswerService.registSubmittedAnswer(submittedAnswers));
     }
