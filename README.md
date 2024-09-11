@@ -121,9 +121,11 @@
 ### 1. 개념 모델링 <a id="1-개념-모델링"></a>
 ![image](https://github.com/user-attachments/assets/e6dea257-6429-4be1-91f4-fa653914148e)
 ### 2. 논리 모델링 <a id="2-논리-모델링"></a>
-![image](https://github.com/user-attachments/assets/398562df-4355-4f4b-b6ed-cfd6b9fc3f19)
+![image](https://github.com/user-attachments/assets/b8903887-7000-4205-bf5d-f41de5996ab9)
+
 ### 3. 물리 모델링 <a id="3-물리-모델링"></a>
-![image](https://github.com/user-attachments/assets/8a79a240-e42b-4341-a202-77a251d1a636)
+![image](https://github.com/user-attachments/assets/2bf256be-07f2-4f74-91d6-dab3994d7e0b)
+
 
 
 ### 산출물<a id="산출물"></a>
