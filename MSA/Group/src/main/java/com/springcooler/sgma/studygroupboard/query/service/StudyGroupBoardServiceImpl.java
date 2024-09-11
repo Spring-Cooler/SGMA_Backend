@@ -49,6 +49,16 @@ public class StudyGroupBoardServiceImpl implements StudyGroupBoardService {
         return boards;
     }
 
+    // 게시글 내용으로 조회
+    @Override
+    public List<StudyGroupBoardDTO> findStudyGroupBoardsByContent(String content) {
+        List<StudyGroupBoardDTO> boards = studyGroupBoardMapper.findStudyGroupBoardsByContent(content);
+        if(boards == null || boards.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_BOARD);
+        }
+        return boards;
+    }
+
     // 게시글 단건 조회
     @Override
     public StudyGroupBoardDTO findStudyGroupBoardByBoardId(Long boardId) {

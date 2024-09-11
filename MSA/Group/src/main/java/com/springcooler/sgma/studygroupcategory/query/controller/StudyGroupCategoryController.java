@@ -23,7 +23,7 @@ public class StudyGroupCategoryController {
     }
 
     // 스터디그룹 카테고리 전체 조회
-    @GetMapping("/")
+    @GetMapping
     public ResponseDTO<?> findAllStudyGroupCategories() {
         List<StudyGroupCategoryDTO> categories = studyGroupCategoryService.findAllStudyGroupCategories();
         return ResponseDTO.ok(categories);

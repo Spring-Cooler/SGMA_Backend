@@ -21,7 +21,7 @@ class StudyGroupMemberServiceTests {
     @DisplayName("스터디 그룹원 단건 조회(그룹원 아이디) 테스트")
     @ParameterizedTest
     @ValueSource(longs = 6)
-    void testFindStudyGroupMemberByMemberId(long memberId) {
+    void testFindStudyGroupMemberByMemberId(Long memberId) {
         Assertions.assertDoesNotThrow(
                 () -> {
                     StudyGroupMemberDTO studyGroupMember
@@ -34,7 +34,7 @@ class StudyGroupMemberServiceTests {
     @DisplayName("스터디 그룹원 그룹별 조회 테스트")
     @ParameterizedTest
     @ValueSource(longs = 4)
-    void testFindStudyGroupMembersByGroupId(long groupId) {
+    void testFindStudyGroupMembersByGroupId(Long groupId) {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupMemberDTO> studyGroupMembers
@@ -47,7 +47,7 @@ class StudyGroupMemberServiceTests {
     @DisplayName("스터디 그룹원 회원별 조회 테스트")
     @ParameterizedTest
     @ValueSource(longs = 1)
-    void testFindStudyGroupMembersByUserId(long userId) {
+    void testFindStudyGroupMembersByUserId(Long userId) {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupMemberDTO> studyGroupMembers

@@ -28,7 +28,7 @@ public class StudyGroupController {
     }
 
     // 스터디 그룹 생성
-    @PostMapping("/")
+    @PostMapping
     public ResponseDTO<?> registStudyGroup(@RequestBody RequestStudyGroupVO newStudyGroup) {
         StudyGroupDTO studyGroup = modelMapper.map(newStudyGroup, StudyGroupDTO.class);
         studyGroup = studyGroupService.registStudyGroup(studyGroup);
@@ -46,7 +46,7 @@ public class StudyGroupController {
     }
 
     // 스터디 그룹 정보 수정
-    @PutMapping("/")
+    @PutMapping
     public ResponseDTO<?> modifyStudyGroup(@RequestBody RequestStudyGroupVO modifyStudyGroup) {
         StudyGroupDTO studyGroup = modelMapper.map(modifyStudyGroup, StudyGroupDTO.class);
         studyGroup = studyGroupService.modifyStudyGroup(studyGroup);

@@ -39,4 +39,24 @@ public class StudyGroupNoticeServiceImpl implements StudyGroupNoticeService {
         return notice;
     }
 
+    // 스터디그룹 공지사항 제목으로 조회
+    @Override
+    public List<StudyGroupNoticeDTO> findStudyGroupNoticesByTitle(String title) {
+        List<StudyGroupNoticeDTO> notices = studyGroupNoticeMapper.findStudyGroupNoticesByTitle(title);
+        if (notices == null || notices.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_NOTICE);
+        }
+        return notices;
+    }
+
+    // 스터디그룹 공지사항 내용으로 조회
+    @Override
+    public List<StudyGroupNoticeDTO> findStudyGroupNoticesByContent(String content) {
+        List<StudyGroupNoticeDTO> notices = studyGroupNoticeMapper.findStudyGroupNoticesByContent(content);
+        if (notices == null || notices.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_NOTICE);
+        }
+        return notices;
+    }
+
 }

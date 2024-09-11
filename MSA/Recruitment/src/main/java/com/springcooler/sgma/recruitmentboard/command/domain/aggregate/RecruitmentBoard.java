@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 
 @Entity
-@Builder
+@Builder(toBuilder = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,7 +27,6 @@ public class RecruitmentBoard {
 
     @Column(name = "created_at",columnDefinition = "TIMESTAMP",nullable = false)
     private Timestamp createdAt;
-
     @Column(name = "updated_at",columnDefinition = "TIMESTAMP",nullable = false)
     private Timestamp updatedAt;
     @Column(name = "recruitment_start_time",columnDefinition = "TIMESTAMP",nullable = false)

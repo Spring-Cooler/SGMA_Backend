@@ -15,6 +15,9 @@ public interface StudyGroupBoardService {
     // 게시글 제목으로 조회
     List<StudyGroupBoardDTO> findStudyGroupBoardsByTitle(String title);
 
+    // 게시글 내용으로 조회
+    List<StudyGroupBoardDTO> findStudyGroupBoardsByContent(String content);
+
     // 게시글 단건 조회
     StudyGroupBoardDTO findStudyGroupBoardByBoardId(Long boardId);
 

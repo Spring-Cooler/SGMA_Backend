@@ -27,10 +27,12 @@ public class RecruitmentBoardReply {
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "active_status",nullable = false)
     private ActiveStatus activeStatus;
 
-    @Column(name = "anonymous_Status",nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "anonymous_status",nullable = false)
     private AnonymousStatus anonymousStatus;
 
     @Column(name = "user_id",nullable =false)

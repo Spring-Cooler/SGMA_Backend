@@ -36,4 +36,18 @@ public class StudyGroupNoticeController {
         return ResponseDTO.ok(notice);
     }
 
+    // 스터디그룹 공지사항 제목으로 조회
+    @GetMapping("/title/{title}")
+    public ResponseDTO<?> findStudyGroupNoticesByTitle(@PathVariable("title") String title) {
+        List<StudyGroupNoticeDTO> notices = studyGroupNoticeService.findStudyGroupNoticesByTitle(title);
+        return ResponseDTO.ok(notices);
+    }
+
+    // 스터디그룹 공지사항 내용으로 조회
+    @GetMapping("/content/{content}")
+    public ResponseDTO<?> findStudyGroupNoticesByContent(@PathVariable("content") String content) {
+        List<StudyGroupNoticeDTO> notices = studyGroupNoticeService.findStudyGroupNoticesByContent(content);
+        return ResponseDTO.ok(notices);
+    }
+
 }

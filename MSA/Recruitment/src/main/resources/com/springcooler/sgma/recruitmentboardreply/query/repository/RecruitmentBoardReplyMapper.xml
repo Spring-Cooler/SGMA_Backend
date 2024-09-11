@@ -29,4 +29,18 @@
         WHERE A.ACTIVE_STATUS = 'ACTIVE'
     </select>
 
+    <select id="findRecruitmentBoardRepliesByBoardId" resultMap="recruitmentBoardReply">
+        SELECT
+        A.RECRUITMENT_BOARD_REPLY_ID,
+        A.CONTENT,
+        A.CREATED_AT,
+        A.UPDATED_AT,
+        A.ACTIVE_STATUS,
+        A.ANONYMOUS_STATUS,
+        A.USER_ID,
+        A.RECRUITMENT_BOARD_COMMENT_ID
+        FROM RECRUITMENT_BOARD_REPLY A
+        WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.RECRUITMENT_BOARD_COMMENT_ID= #{recruitmentBoardCommentId}
+    </select>
+
 </mapper>
