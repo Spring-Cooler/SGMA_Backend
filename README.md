@@ -165,6 +165,12 @@
 
 </details>
 
+<details>
+   <summary>OpenAI API를 이용한 주관식 문제 채점</summary>
+
+   ![image](https://github.com/user-attachments/assets/77f75f63-3e2d-460a-823d-7f7a062a6e87)
+</details>
+
 
 ### 📜 동료평가 <a id="동료평가"></a>
 
