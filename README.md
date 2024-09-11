@@ -48,9 +48,9 @@
 
 ## 1. Backend <a id="1-backend"></a>
 
-| Java 17                                                                           | Spring Boot                                                                                              | Spring Data JPA                                                                                   | MyBatis                                                                                                 | Hibernate                                                                       | Spring Security                                                                                                   | JWT                                                                                      | Gradle                                                                 | JUnit5                                                                                             | Spring Batch                                                           |
-| --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| ![Java](https://img.shields.io/badge/Java-17-007396.svg?&logo=java&color=red)| ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3-6DB33F.svg?&logo=spring-boot&color=lightgreen) | ![Spring Data JPA](https://img.shields.io/badge/Spring_Data_JPA-6DB33F.svg?&logo=spring-data-JPA) | ![MyBatis](https://img.shields.io/badge/MyBatis-FE6602.svg?&logo=mybatis5&logoColor=white&color=FE6602) | ![Hibernate](https://img.shields.io/badge/Hibernate-59666C.svg?&logo=hibernate) | ![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F.svg?&logo=spring-security&logoColor=white) | ![JWT](https://img.shields.io/badge/JWT-F60055.svg?&logo=json-web-token&logoColor=white) | ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?&logo=gradle) | ![JUnit5](https://img.shields.io/badge/JUnit5-25A162.svg?&logo=junit5&logoColor=white&color=green) |![Spring Batch](https://img.shields.io/badge/Spring_Batch-6CB33E?style=flat&logo=springbatch&logoColor=white)  |
+| Java 17                                                                           | Spring Boot                                                                                              | Spring Data JPA                                                                                   | MyBatis                                                                                                 | Hibernate                                                                       | Spring Security                                                                                                   | JWT                                                                                      | Gradle                                                                 | JUnit5                                                                                             | Spring Batch                                                           | OpenAI                                                           |
+| --------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| ![Java](https://img.shields.io/badge/Java-17-007396.svg?&logo=java&color=red)| ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3-6DB33F.svg?&logo=spring-boot&color=lightgreen) | ![Spring Data JPA](https://img.shields.io/badge/Spring_Data_JPA-6DB33F.svg?&logo=spring-data-JPA) | ![MyBatis](https://img.shields.io/badge/MyBatis-FE6602.svg?&logo=mybatis5&logoColor=white&color=FE6602) | ![Hibernate](https://img.shields.io/badge/Hibernate-59666C.svg?&logo=hibernate) | ![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F.svg?&logo=spring-security&logoColor=white) | ![JWT](https://img.shields.io/badge/JWT-F60055.svg?&logo=json-web-token&logoColor=white) | ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?&logo=gradle) | ![JUnit5](https://img.shields.io/badge/JUnit5-25A162.svg?&logo=junit5&logoColor=white&color=green) |![Spring Batch](https://img.shields.io/badge/Spring_Batch-6CB33E?style=flat&logo=springbatch&logoColor=white)  |![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat&logo=openai&logoColor=white)  |
 
 
 
@@ -94,7 +94,8 @@
 ---
 
 ### System Architecture <a id="system-architecture"></a>
-![image](https://github.com/user-attachments/assets/88199112-1940-4cba-96ea-cd7031117c78)
+![Network Diagrams](https://github.com/user-attachments/assets/83706f89-f51f-4036-8cd7-f4244cb34801)
+
 
 
 ### 요구사항 정의서 <a id="요구사항-정의서"></a>
@@ -120,9 +121,11 @@
 ### 1. 개념 모델링 <a id="1-개념-모델링"></a>
 ![image](https://github.com/user-attachments/assets/e6dea257-6429-4be1-91f4-fa653914148e)
 ### 2. 논리 모델링 <a id="2-논리-모델링"></a>
-![image](https://github.com/user-attachments/assets/398562df-4355-4f4b-b6ed-cfd6b9fc3f19)
+![image](https://github.com/user-attachments/assets/b8903887-7000-4205-bf5d-f41de5996ab9)
+
 ### 3. 물리 모델링 <a id="3-물리-모델링"></a>
-![image](https://github.com/user-attachments/assets/8a79a240-e42b-4341-a202-77a251d1a636)
+![image](https://github.com/user-attachments/assets/2bf256be-07f2-4f74-91d6-dab3994d7e0b)
+
 
 
 ### 산출물<a id="산출물"></a>
@@ -162,6 +165,12 @@
 
   ![image](https://github.com/user-attachments/assets/c15026df-42f4-4397-9500-312cb759cf5e)
 
+</details>
+
+<details>
+   <summary>OpenAI API를 이용한 주관식 문제 채점</summary>
+
+   ![image](https://github.com/user-attachments/assets/77f75f63-3e2d-460a-823d-7f7a062a6e87)
 </details>
 
 

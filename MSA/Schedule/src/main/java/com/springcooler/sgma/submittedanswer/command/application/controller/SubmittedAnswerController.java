@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @RestController("commandSubmittedAnswerController")
-@RequestMapping("/api/submitted-answers/")
+@RequestMapping("/api/submitted-answers")
 public class SubmittedAnswerController {
 
     AppSubmittedAnswerService appSubmittedAnswerService;

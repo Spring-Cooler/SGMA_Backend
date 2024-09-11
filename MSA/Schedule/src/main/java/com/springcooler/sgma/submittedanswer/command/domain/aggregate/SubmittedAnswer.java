@@ -23,9 +23,15 @@ public class SubmittedAnswer {
     private Long participantId;
 
     @Column(name="submitted_answer")
-    private int submittedAnswer;
+    private String submittedAnswer;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="answer_status")
-    private String answerStatus;
+    private AnswerStatus answerStatus = AnswerStatus.UNGRADED;
 
+    public SubmittedAnswer(Long problemId, Long participantId, String submittedAnswer) {
+        this.problemId = problemId;
+        this.participantId = participantId;
+        this.submittedAnswer = submittedAnswer;
+    }
 }

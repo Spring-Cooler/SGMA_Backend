@@ -11,15 +11,12 @@ import lombok.*;
 public class SubmittedAnswerDTO {
 
     @JsonProperty("problem_id")
-    private long problemId;
+    private Long problemId;
 
     @JsonProperty("participant_id")
-    private long participantId;
+    private Long participantId;
 
     @JsonProperty("submitted_answer")
-    private int submittedAnswer;
-
-    @JsonProperty("answer_status")
-    private String answerStatus;
+    private String submittedAnswer;
 
 }
