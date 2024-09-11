@@ -1,17 +1,17 @@
-package com.springcooler.sgma.studyschedule.query.dto;
+package com.springcooler.sgma.studyschedule.command.domain.aggregate.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudyScheduleStatus;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.*;
-
-import java.sql.Timestamp;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class StudyScheduleDTO {
+public class RequestStudyScheduleVO {
 
     @JsonProperty("schedule_id")
     private Long scheduleId;
@@ -23,10 +23,10 @@ public class StudyScheduleDTO {
     private String content;
 
     @JsonProperty("schedule_start_time")
-    private Timestamp scheduleStartTime;
+    private java.sql.Timestamp scheduleStartTime;
 
     @JsonProperty("schedule_end_time")
-    private Timestamp scheduleEndTime;
+    private java.sql.Timestamp scheduleEndTime;
 
     @JsonProperty("num_participants")
     private Integer numParticipants;

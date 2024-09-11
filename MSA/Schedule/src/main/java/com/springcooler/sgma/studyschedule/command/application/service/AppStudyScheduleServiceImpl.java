@@ -38,31 +38,47 @@ public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
     // 스터디 일정 생성
     @Transactional
     @Override
-    public StudySchedule registStudySchedule(StudyScheduleDTO newStudySchedule) {
+    public StudyScheduleDTO registStudySchedule(StudyScheduleDTO newStudySchedule) {
         if(!domainStudyScheduleService.isValidDTO(RestStatus.POST, newStudySchedule)) {
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
         }
+
+        StudyScheduleDTO createStudySchedule = StudyScheduleDTO.builder()
+                .title(newStudySchedule.getTitle())
+                .content(newStudySchedule.getContent())
+                .scheduleStartTime(newStudySchedule.getScheduleStartTime())
+                .scheduleEndTime(newStudySchedule.getScheduleEndTime())
+                .numParticipants(0)
+                .activeStatus(StudyScheduleStatus.ACTIVE)
+                .testStatus(newStudySchedule.getTestStatus())
+                .testAverage(0.0)
+                .testStandardDeviation(0.0)
+                .groupId(newStudySchedule.getGroupId())
+                .numProblemsPerParticipant(newStudySchedule.getNumProblemsPerParticipant())
+                .build();
+
 
         if ("N".equalsIgnoreCase(newStudySchedule.getTestStatus())) {
             newStudySchedule.setNumProblemsPerParticipant(0);
         }
 
-        newStudySchedule.setActiveStatus(StudyScheduleStatus.ACTIVE.name());
+        StudySchedule schedule = modelMapper.map(createStudySchedule, StudySchedule.class);
+        studyScheduleRepository.save(schedule);
 
-        return studyScheduleRepository.save(modelMapper.map(newStudySchedule, StudySchedule.class));
+        return modelMapper.map(schedule, StudyScheduleDTO.class);
     }
 
     // 스터디 일정 수정
     @Transactional
     @Override
-    public StudySchedule modifyStudySchedule(StudyScheduleDTO modifyStudySchedule) {
+    public StudyScheduleDTO modifyStudySchedule(StudyScheduleDTO modifyStudySchedule) {
         if(!domainStudyScheduleService.isValidDTO(RestStatus.POST, modifyStudySchedule)) {
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
         }
 
         StudySchedule existingSchedule =
                 studyScheduleRepository.findById(modifyStudySchedule.getScheduleId())
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
+                        .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
 
         existingSchedule.setTitle(modifyStudySchedule.getTitle());
         existingSchedule.setContent(modifyStudySchedule.getContent());
@@ -74,7 +90,9 @@ public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
         if ("N".equalsIgnoreCase(modifyStudySchedule.getTestStatus())) {
             existingSchedule.setNumProblemsPerParticipant(0);
         }
-        return studyScheduleRepository.save(existingSchedule);
+
+        studyScheduleRepository.save(existingSchedule);
+        return modelMapper.map(existingSchedule, StudyScheduleDTO.class);
     }
 
     // 스터디 일정 삭제
@@ -83,7 +101,7 @@ public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
     public void deleteStudySchedule(Long scheduleId) {
         StudySchedule deleteSchedule =
                 studyScheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new CommonException((ErrorCode.NOT_FOUND_STUDY_SCHEDULE)));
+                        .orElseThrow(() -> new CommonException((ErrorCode.NOT_FOUND_STUDY_SCHEDULE)));
 
         if (!domainStudyScheduleService.isActive(deleteSchedule.getActiveStatus())) {
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE);
@@ -94,36 +112,36 @@ public class AppStudyScheduleServiceImpl implements AppStudyScheduleService {
     }
 
     // 일정에 따른 참가자들의 시험 평균 및 표준편차 계산 및 업데이트
-    @Transactional
-    @Override
-    public StudySchedule updateScheduleWithParticipantScores(Long scheduleId) {
-        List<StudyScheduleParticipant> participants = participantRepository.findByScheduleId(scheduleId);
-
-        List<Double> scores = participants.stream()
-                .map(StudyScheduleParticipant::getTestScore)
-                .toList();
-
-        if (scores.isEmpty()) {
-            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE);
-        }
-
-        double average = scores.stream()
-                .mapToDouble(Double::doubleValue)
-                .average()
-                .orElse(0.0);
-
-        double variance = scores.stream()
-                .mapToDouble(score -> Math.pow(score - average, 2))
-                .average()
-                .orElse(0.0);
-        double standardDeviation = Math.sqrt(variance);
-
-        StudySchedule schedule = studyScheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new CommonException((ErrorCode.NOT_FOUND_STUDY_SCHEDULE)));
-
-        schedule.setTestAverage(average);
-        schedule.setTestStandardDeviation(standardDeviation);
-        studyScheduleRepository.save(schedule);
-        return schedule;
-    }
+//    @Transactional
+//    @Override
+//    public StudySchedule updateScheduleWithParticipantScores(Long scheduleId) {
+//        List<StudyScheduleParticipant> participants = participantRepository.findByScheduleId(scheduleId);
+//
+//        List<Double> scores = participants.stream()
+//                .map(StudyScheduleParticipant::getTestScore)
+//                .toList();
+//
+//        if (scores.isEmpty()) {
+//            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE);
+//        }
+//
+//        double average = scores.stream()
+//                .mapToDouble(Double::doubleValue)
+//                .average()
+//                .orElse(0.0);
+//
+//        double variance = scores.stream()
+//                .mapToDouble(score -> Math.pow(score - average, 2))
+//                .average()
+//                .orElse(0.0);
+//        double standardDeviation = Math.sqrt(variance);
+//
+//        StudySchedule schedule = studyScheduleRepository.findById(scheduleId)
+//                .orElseThrow(() -> new CommonException((ErrorCode.NOT_FOUND_STUDY_SCHEDULE)));
+//
+//        schedule.setTestAverage(average);
+//        schedule.setTestStandardDeviation(standardDeviation);
+//        studyScheduleRepository.save(schedule);
+//        return schedule;
+//    }
 }

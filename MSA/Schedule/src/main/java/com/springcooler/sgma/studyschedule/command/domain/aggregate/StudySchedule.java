@@ -16,16 +16,16 @@ public class StudySchedule {
     @Column(name="SCHEDULE_ID")
     private Long scheduleId;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name="TITLE", columnDefinition = "TEXT")
     private String title;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name="CONTENT", columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "SCHEDULE_START_TIME",columnDefinition = "TIMESTAMP")
+    @Column(name = "SCHEDULE_START_TIME", columnDefinition = "TIMESTAMP")
     private java.sql.Timestamp scheduleStartTime;
 
-    @Column(name = "SCHEDULE_END_TIME",columnDefinition = "TIMESTAMP")
+    @Column(name = "SCHEDULE_END_TIME", columnDefinition = "TIMESTAMP")
     private java.sql.Timestamp scheduleEndTime;
 
     @Column(name = "NUM_PARTICIPANTS")

@@ -1,12 +1,14 @@
-package com.springcooler.sgma.studyscheduleparticipant.query.dto;
+package com.springcooler.sgma.studyscheduleparticipant.command.domain.aggregate.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class StudyScheduleParticipantDTO {
+public class RequestStudyScheduleParticipantVO {
 
     @JsonProperty("participant_id")
     private Long participantId;

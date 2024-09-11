@@ -15,8 +15,6 @@ public class DomainStudyScheduleServiceImpl implements DomainStudyScheduleServic
             case POST:
                 if(studyScheduleDTO.getTitle() == null ||
                         studyScheduleDTO.getContent() == null ||
-                        studyScheduleDTO.getScheduleStartTime() == null ||
-                        studyScheduleDTO.getScheduleEndTime() == null ||
                         studyScheduleDTO.getGroupId() == null) {
                     return false;
                 }
@@ -38,3 +36,4 @@ public class DomainStudyScheduleServiceImpl implements DomainStudyScheduleServic
     }
 
 }
+

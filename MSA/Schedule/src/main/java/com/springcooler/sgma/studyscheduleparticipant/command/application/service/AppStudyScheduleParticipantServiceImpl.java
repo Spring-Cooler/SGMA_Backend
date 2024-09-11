@@ -18,29 +18,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
-@Slf4j
 @Service
 public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleParticipantService {
 
-    private final StudyScheduleParticipantRepository participantRepository;
-    private final StudyScheduleRepository scheduleRepository;
-    private final DomainStudyScheduleParticipantService domainStudyScheduleParticipantService;
     private final ModelMapper modelMapper;
+    private final StudyScheduleRepository scheduleRepository;
+    private final StudyScheduleParticipantRepository participantRepository;
+    private final DomainStudyScheduleParticipantService domainStudyScheduleParticipantService;
 
     @Autowired
-    public AppStudyScheduleParticipantServiceImpl(StudyScheduleParticipantRepository participantRepository,
+    public AppStudyScheduleParticipantServiceImpl(ModelMapper modelMapper,
                                                   StudyScheduleRepository scheduleRepository,
-                                                  DomainStudyScheduleParticipantService domainStudyScheduleParticipantService,
-                                                  ModelMapper modelMapper) {
-        this.participantRepository = participantRepository;
-        this.scheduleRepository = scheduleRepository;
-        this.domainStudyScheduleParticipantService = domainStudyScheduleParticipantService;
+                                                  StudyScheduleParticipantRepository participantRepository,
+                                                  DomainStudyScheduleParticipantService domainStudyScheduleParticipantService) {
         this.modelMapper = modelMapper;
+        this.scheduleRepository = scheduleRepository;
+        this.participantRepository = participantRepository;
+        this.domainStudyScheduleParticipantService = domainStudyScheduleParticipantService;
     }
 
+    // 스터디 일정 참가
     @Transactional
     @Override
-    public StudyScheduleParticipant registStudyScheduleParticipant(StudyScheduleParticipantDTO newParticipant) {
+    public StudyScheduleParticipantDTO registStudyScheduleParticipant(StudyScheduleParticipantDTO newParticipant) {
         if (!domainStudyScheduleParticipantService.isValidDTO(RestStatus.POST, newParticipant)) {
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
         }
@@ -48,25 +48,32 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
         StudySchedule schedule = scheduleRepository.findById(newParticipant.getScheduleId())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
 
-        StudyScheduleParticipant participant = modelMapper.map(newParticipant, StudyScheduleParticipant.class);
+        StudyScheduleParticipantDTO tempParticipant = StudyScheduleParticipantDTO.builder()
+                .scheduleId(newParticipant.getScheduleId())
+                .memberId(newParticipant.getMemberId())
+                .submissionStatus("N")
+                .numSubmittedProblems(0)
+                .testScore(0)
+                .testPercentage(0.0)
+                .build();
 
+        StudyScheduleParticipant participant = modelMapper.map(tempParticipant, StudyScheduleParticipant.class);
         participantRepository.save(participant);
         schedule.setNumParticipants(schedule.getNumParticipants() + 1);
         scheduleRepository.save(schedule);
 
-        return participant;
+        return modelMapper.map(participant, StudyScheduleParticipantDTO.class);
     }
 
+    // 스터디 일정 참가 취소
     @Transactional
     @Override
     public void deleteStudyScheduleParticipant(Long scheduleId, Long memberId) {
-        StudySchedule schedule =
-                scheduleRepository.findById(scheduleId)
-                        .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
+        StudySchedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
 
-        StudyScheduleParticipant participant =
-                participantRepository.findByScheduleIdAndMemberId(scheduleId, memberId)
-                        .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
+        StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndMemberId(scheduleId, memberId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
 
         participantRepository.delete(participant);
 
@@ -74,6 +81,7 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
         scheduleRepository.save(schedule);
     }
 
+    // 출제 문제 수 증가 및 출제 상태 변경
     @Transactional
     @Override
     public void increaseNumSubmittedProblems(Long scheduleId, Long participantId) {
@@ -81,7 +89,6 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
 
         participant.setNumSubmittedProblems(participant.getNumSubmittedProblems() + 1);
-        log.debug("participant: {}", participant);
         participantRepository.save(participant);
 
         StudySchedule schedule = scheduleRepository.findById(scheduleId)
@@ -94,6 +101,7 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
 
     }
 
+    // 출제 문제 수 감소 및 출제 상태 변경
     @Transactional
     @Override
     public void decreaseNumSubmittedProblems(Long scheduleId, Long participantId) {
@@ -101,7 +109,6 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
 
         participant.setNumSubmittedProblems(participant.getNumSubmittedProblems() - 1);
-        log.debug("participant: {}", participant);
         participantRepository.save(participant);
 
         StudySchedule schedule = scheduleRepository.findById(scheduleId)
@@ -116,13 +123,11 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
     @Transactional
     @Override
     public void gradeSubmittedAnswersByParticipantId(long scheduleId, long participantId, double score) {
-        log.debug("score: {}", score);
         StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
 
-        participant.setTestScore(score * 100);
+//        participant.setTestScore(score * 100);
         participant.setTestPercentage(score * 100);
-        log.debug("score: {}", score);
 
         participantRepository.save(participant);
     }
