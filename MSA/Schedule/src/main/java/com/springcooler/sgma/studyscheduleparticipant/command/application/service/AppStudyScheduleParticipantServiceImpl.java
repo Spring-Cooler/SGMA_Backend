@@ -128,8 +128,11 @@ public class AppStudyScheduleParticipantServiceImpl implements AppStudyScheduleP
         StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
 
-        participant.setTestScore((int) (score * 100));
-        participant.setTestPercentage(score * 100);
+        // 소수점 둘째 자리까지 반올림
+        double roundedScore = Math.round(score * 10000) / 100.0;
+
+        participant.setTestScore((int) roundedScore);
+        participant.setTestPercentage(roundedScore);
 
         participantRepository.save(participant);
         infraStudyScheduleService.updateScheduleWithParticipantScores(scheduleId);

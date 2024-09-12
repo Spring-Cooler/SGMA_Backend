@@ -55,6 +55,10 @@ public class InfraStudyScheduleServiceImpl implements InfraStudyScheduleService 
         double variance = (sumOfSquares / scores.size()) - (average * average);
         double standardDeviation = Math.sqrt(variance);
 
+        // 소수점 둘째 자리까지 반올림
+        average = Math.round(average * 100) / 100.0;
+        standardDeviation = Math.round(standardDeviation * 100) / 100.0;
+
         StudySchedule schedule = studyScheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE));
 
