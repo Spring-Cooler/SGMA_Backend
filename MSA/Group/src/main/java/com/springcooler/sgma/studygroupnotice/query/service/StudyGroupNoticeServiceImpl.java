@@ -12,6 +12,8 @@ import java.util.List;
 @Service
 public class StudyGroupNoticeServiceImpl implements StudyGroupNoticeService {
 
+    private final Integer PAGE_SIZE = 10;
+
     private final StudyGroupNoticeMapper studyGroupNoticeMapper;
 
     @Autowired
@@ -21,8 +23,13 @@ public class StudyGroupNoticeServiceImpl implements StudyGroupNoticeService {
 
     // 스터디그룹 공지사항 전체 조회(스터디그룹 아이디)
     @Override
-    public List<StudyGroupNoticeDTO> findStudyGroupNoticesByGroupId(Long groupId) {
-        List<StudyGroupNoticeDTO> notices = studyGroupNoticeMapper.findStudyGroupNoticesByGroupId(groupId);
+    public List<StudyGroupNoticeDTO> findStudyGroupNoticesByGroupId(Long groupId, Integer pageNo) {
+        if(pageNo == null || pageNo < 1) {
+            throw new CommonException(ErrorCode.INVALID_PARAMETER_FORMAT);
+        }
+        Integer offset = (pageNo - 1) * PAGE_SIZE;
+        List<StudyGroupNoticeDTO> notices =
+                studyGroupNoticeMapper.findStudyGroupNoticesByGroupId(groupId, PAGE_SIZE, offset);
         if (notices == null || notices.isEmpty()) {
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_NOTICE);
         }
@@ -41,8 +48,13 @@ public class StudyGroupNoticeServiceImpl implements StudyGroupNoticeService {
 
     // 스터디그룹 공지사항 제목으로 조회
     @Override
-    public List<StudyGroupNoticeDTO> findStudyGroupNoticesByTitle(String title) {
-        List<StudyGroupNoticeDTO> notices = studyGroupNoticeMapper.findStudyGroupNoticesByTitle(title);
+    public List<StudyGroupNoticeDTO> findStudyGroupNoticesByTitle(String title, Integer pageNo) {
+        if(pageNo == null || pageNo < 1) {
+            throw new CommonException(ErrorCode.INVALID_PARAMETER_FORMAT);
+        }
+        Integer offset = (pageNo - 1) * PAGE_SIZE;
+        List<StudyGroupNoticeDTO> notices =
+                studyGroupNoticeMapper.findStudyGroupNoticesByTitle(title, PAGE_SIZE, offset);
         if (notices == null || notices.isEmpty()) {
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_NOTICE);
         }
@@ -51,8 +63,13 @@ public class StudyGroupNoticeServiceImpl implements StudyGroupNoticeService {
 
     // 스터디그룹 공지사항 내용으로 조회
     @Override
-    public List<StudyGroupNoticeDTO> findStudyGroupNoticesByContent(String content) {
-        List<StudyGroupNoticeDTO> notices = studyGroupNoticeMapper.findStudyGroupNoticesByContent(content);
+    public List<StudyGroupNoticeDTO> findStudyGroupNoticesByContent(String content, Integer pageNo) {
+        if(pageNo == null || pageNo < 1) {
+            throw new CommonException(ErrorCode.INVALID_PARAMETER_FORMAT);
+        }
+        Integer offset = (pageNo - 1) * PAGE_SIZE;
+        List<StudyGroupNoticeDTO> notices =
+                studyGroupNoticeMapper.findStudyGroupNoticesByContent(content, PAGE_SIZE, offset);
         if (notices == null || notices.isEmpty()) {
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_NOTICE);
         }

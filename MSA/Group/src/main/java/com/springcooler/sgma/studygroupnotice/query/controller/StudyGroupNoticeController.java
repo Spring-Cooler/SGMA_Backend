@@ -4,10 +4,7 @@ import com.springcooler.sgma.studygroupnotice.common.ResponseDTO;
 import com.springcooler.sgma.studygroupnotice.query.dto.StudyGroupNoticeDTO;
 import com.springcooler.sgma.studygroupnotice.query.service.StudyGroupNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,8 +21,9 @@ public class StudyGroupNoticeController {
 
     // 스터디그룹 공지사항 전체 조회(스터디그룹 아이디)
     @GetMapping("/group-id/{groupId}")
-    public ResponseDTO<?> findStudyGroupNoticesByGroupId(@PathVariable("groupId") Long groupId) {
-        List<StudyGroupNoticeDTO> notices = studyGroupNoticeService.findStudyGroupNoticesByGroupId(groupId);
+    public ResponseDTO<?> findStudyGroupNoticesByGroupId(@PathVariable("groupId") Long groupId,
+                                                         @RequestParam("page") Integer pageNo) {
+        List<StudyGroupNoticeDTO> notices = studyGroupNoticeService.findStudyGroupNoticesByGroupId(groupId, pageNo);
         return ResponseDTO.ok(notices);
     }
 
@@ -38,15 +36,17 @@ public class StudyGroupNoticeController {
 
     // 스터디그룹 공지사항 제목으로 조회
     @GetMapping("/title/{title}")
-    public ResponseDTO<?> findStudyGroupNoticesByTitle(@PathVariable("title") String title) {
-        List<StudyGroupNoticeDTO> notices = studyGroupNoticeService.findStudyGroupNoticesByTitle(title);
+    public ResponseDTO<?> findStudyGroupNoticesByTitle(@PathVariable("title") String title,
+                                                       @RequestParam("page") Integer pageNo) {
+        List<StudyGroupNoticeDTO> notices = studyGroupNoticeService.findStudyGroupNoticesByTitle(title, pageNo);
         return ResponseDTO.ok(notices);
     }
 
     // 스터디그룹 공지사항 내용으로 조회
     @GetMapping("/content/{content}")
-    public ResponseDTO<?> findStudyGroupNoticesByContent(@PathVariable("content") String content) {
-        List<StudyGroupNoticeDTO> notices = studyGroupNoticeService.findStudyGroupNoticesByContent(content);
+    public ResponseDTO<?> findStudyGroupNoticesByContent(@PathVariable("content") String content,
+                                                         @RequestParam("page") Integer pageNo) {
+        List<StudyGroupNoticeDTO> notices = studyGroupNoticeService.findStudyGroupNoticesByContent(content, pageNo);
         return ResponseDTO.ok(notices);
     }
 

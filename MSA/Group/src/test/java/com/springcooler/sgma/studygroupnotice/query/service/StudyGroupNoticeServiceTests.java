@@ -25,7 +25,7 @@ class StudyGroupNoticeServiceTests {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupNoticeDTO> studyGroupNotices =
-                            studyGroupNoticeService.findStudyGroupNoticesByGroupId(groupId);
+                            studyGroupNoticeService.findStudyGroupNoticesByGroupId(groupId, 1);
                     studyGroupNotices.forEach(x -> log.info(x.toString()));
                 }
         );
@@ -51,7 +51,7 @@ class StudyGroupNoticeServiceTests {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupNoticeDTO> studyGroupNotices =
-                            studyGroupNoticeService.findStudyGroupNoticesByTitle(title);
+                            studyGroupNoticeService.findStudyGroupNoticesByTitle(title, 1);
                     studyGroupNotices.forEach(x -> log.info(x.toString()));
                 }
         );
@@ -64,7 +64,7 @@ class StudyGroupNoticeServiceTests {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupNoticeDTO> studyGroupNotices =
-                            studyGroupNoticeService.findStudyGroupNoticesByContent(content);
+                            studyGroupNoticeService.findStudyGroupNoticesByContent(content, 1);
                     studyGroupNotices.forEach(x -> log.info(x.toString()));
                 }
         );
