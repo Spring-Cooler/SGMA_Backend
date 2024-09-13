@@ -1,15 +1,11 @@
 package com.springcooler.sgma.studygroupnotice.query.controller;
 
 import com.springcooler.sgma.studygroupnotice.common.ResponseDTO;
+import com.springcooler.sgma.studygroupnotice.query.dto.PageDTO;
 import com.springcooler.sgma.studygroupnotice.query.dto.StudyGroupNoticeDTO;
 import com.springcooler.sgma.studygroupnotice.query.service.StudyGroupNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController("queryStudyGroupNoticeController")
 @RequestMapping("/api/study-group/notices")
@@ -24,30 +20,37 @@ public class StudyGroupNoticeController {
 
     // 스터디그룹 공지사항 전체 조회(스터디그룹 아이디)
     @GetMapping("/group-id/{groupId}")
-    public ResponseDTO<?> findStudyGroupNoticesByGroupId(@PathVariable("groupId") Long groupId) {
-        List<StudyGroupNoticeDTO> notices = studyGroupNoticeService.findStudyGroupNoticesByGroupId(groupId);
-        return ResponseDTO.ok(notices);
+    public ResponseDTO<?> findStudyGroupNoticesByGroupId(@PathVariable("groupId") Long groupId,
+                                                         @RequestParam("page") Integer pageNo) {
+        PageDTO<StudyGroupNoticeDTO> page =
+                studyGroupNoticeService.findStudyGroupNoticesByGroupId(groupId, pageNo);
+        return ResponseDTO.ok(page);
     }
 
     // 스터디그룹 공지사항 단건 조회(공지사항 아이디)
     @GetMapping("/{noticeId}")
     public ResponseDTO<?> findStudyGroupNoticeByNoticeId(@PathVariable("noticeId") Long noticeId) {
-        StudyGroupNoticeDTO notice = studyGroupNoticeService.findStudyGroupNoticeByNoticeId(noticeId);
+        StudyGroupNoticeDTO notice =
+                studyGroupNoticeService.findStudyGroupNoticeByNoticeId(noticeId);
         return ResponseDTO.ok(notice);
     }
 
     // 스터디그룹 공지사항 제목으로 조회
     @GetMapping("/title/{title}")
-    public ResponseDTO<?> findStudyGroupNoticesByTitle(@PathVariable("title") String title) {
-        List<StudyGroupNoticeDTO> notices = studyGroupNoticeService.findStudyGroupNoticesByTitle(title);
-        return ResponseDTO.ok(notices);
+    public ResponseDTO<?> findStudyGroupNoticesByTitle(@PathVariable("title") String title,
+                                                       @RequestParam("page") Integer pageNo) {
+        PageDTO<StudyGroupNoticeDTO> page =
+                studyGroupNoticeService.findStudyGroupNoticesByTitle(title, pageNo);
+        return ResponseDTO.ok(page);
     }
 
     // 스터디그룹 공지사항 내용으로 조회
     @GetMapping("/content/{content}")
-    public ResponseDTO<?> findStudyGroupNoticesByContent(@PathVariable("content") String content) {
-        List<StudyGroupNoticeDTO> notices = studyGroupNoticeService.findStudyGroupNoticesByContent(content);
-        return ResponseDTO.ok(notices);
+    public ResponseDTO<?> findStudyGroupNoticesByContent(@PathVariable("content") String content,
+                                                         @RequestParam("page") Integer pageNo) {
+        PageDTO<StudyGroupNoticeDTO> page =
+                studyGroupNoticeService.findStudyGroupNoticesByContent(content, pageNo);
+        return ResponseDTO.ok(page);
     }
 
 }

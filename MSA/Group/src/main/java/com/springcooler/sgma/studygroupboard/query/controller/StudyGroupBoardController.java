@@ -1,12 +1,11 @@
 package com.springcooler.sgma.studygroupboard.query.controller;
 
 import com.springcooler.sgma.studygroupboard.common.ResponseDTO;
+import com.springcooler.sgma.studygroupboard.query.dto.PageDTO;
 import com.springcooler.sgma.studygroupboard.query.dto.StudyGroupBoardDTO;
 import com.springcooler.sgma.studygroupboard.query.service.StudyGroupBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController("queryStudyGroupBoardController")
 @RequestMapping("/api/study-group/boards")
@@ -23,36 +22,36 @@ public class StudyGroupBoardController {
     @GetMapping("/group-id/{groupId}")
     public ResponseDTO<?> findStudyGroupBoardsByGroupId(@PathVariable("groupId") Long groupId,
                                                         @RequestParam("page") Integer pageNo) {
-        List<StudyGroupBoardDTO> boards =
+        PageDTO<StudyGroupBoardDTO> page =
                 studyGroupBoardService.findStudyGroupBoardsByGroupId(groupId, pageNo);
-        return ResponseDTO.ok(boards);
+        return ResponseDTO.ok(page);
     }
 
     // 게시글 그룹원별 조회
     @GetMapping("/member-id/{memberId}")
     public ResponseDTO<?> findStudyGroupBoardsByMemberId(@PathVariable("memberId") Long memberId,
                                                          @RequestParam("page") Integer pageNo) {
-        List<StudyGroupBoardDTO> boards =
+        PageDTO<StudyGroupBoardDTO> page =
                 studyGroupBoardService.findStudyGroupBoardsByMemberId(memberId, pageNo);
-        return ResponseDTO.ok(boards);
+        return ResponseDTO.ok(page);
     }
 
     // 게시글 제목으로 조회
     @GetMapping("/title/{title}")
     public ResponseDTO<?> findStudyGroupBoardsByTitle(@PathVariable("title") String title,
                                                       @RequestParam("page") Integer pageNo) {
-        List<StudyGroupBoardDTO> boards =
+        PageDTO<StudyGroupBoardDTO> page =
                 studyGroupBoardService.findStudyGroupBoardsByTitle(title, pageNo);
-        return ResponseDTO.ok(boards);
+        return ResponseDTO.ok(page);
     }
 
     // 게시글 내용으로 조회
     @GetMapping("/content/{content}")
     public ResponseDTO<?> findStudyGroupBoardsByContent(@PathVariable("content") String content,
                                                         @RequestParam("page") Integer pageNo) {
-        List<StudyGroupBoardDTO> boards =
+        PageDTO<StudyGroupBoardDTO> page =
                 studyGroupBoardService.findStudyGroupBoardsByContent(content, pageNo);
-        return ResponseDTO.ok(boards);
+        return ResponseDTO.ok(page);
     }
 
     // 게시글 단건 조회

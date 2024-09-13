@@ -42,6 +42,13 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         if(!domainStudyGroupService.isValidDTO(RestStatus.POST, newStudyGroup))
             throw new CommonException(ErrorCode.INVALID_REQUEST_BODY);
 
+        // 그룹명 중복 검사
+        StudyGroup existingGroupName =
+                studyGroupRepository.findByGroupName(newStudyGroup.getGroupName());
+
+        if(existingGroupName != null)
+            throw new CommonException(ErrorCode.DUPLICATE_GROUP_NAME_EXISTS);
+
         // 스터디 그룹 생성 코드
         StudyGroupDTO tempStudyGroup = StudyGroupDTO.builder()
                 .groupName(newStudyGroup.getGroupName())
@@ -98,6 +105,13 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
 
+        // 그룹명 중복 검사
+        StudyGroup existingGroupName =
+                studyGroupRepository.findByGroupName(modifyStudyGroup.getGroupName());
+
+        if(existingGroupName != null)
+            throw new CommonException(ErrorCode.DUPLICATE_GROUP_NAME_EXISTS);
+
         // 변경된 정보 매핑
         existingStudyGroup.setGroupName(modifyStudyGroup.getGroupName());
         existingStudyGroup.setStudyGroupCategoryId(modifyStudyGroup.getStudyGroupCategoryId());
@@ -119,6 +133,13 @@ public class AppStudyGroupServiceImpl implements AppStudyGroupService {
         // 기존 엔티티 조회
         StudyGroup existingStudyGroup = studyGroupRepository.findById(modifyStudyGroup.getGroupId())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP));
+
+        // 그룹명 중복 검사
+        StudyGroup existingGroupName =
+                studyGroupRepository.findByGroupName(modifyStudyGroup.getGroupName());
+
+        if(existingGroupName != null)
+            throw new CommonException(ErrorCode.DUPLICATE_GROUP_NAME_EXISTS);
 
         // 변경된 이름 매핑
         existingStudyGroup.setGroupName(modifyStudyGroup.getGroupName());
