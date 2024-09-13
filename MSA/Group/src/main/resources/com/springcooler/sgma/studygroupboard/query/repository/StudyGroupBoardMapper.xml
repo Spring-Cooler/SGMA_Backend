@@ -15,7 +15,7 @@
         <result property="groupId" column="GROUP_ID"/>
     </resultMap>
 
-    <select id="findStudyGroupBoardsByGroupId" resultMap="studyGroupBoardResultMap" parameterType="Long">
+    <select id="findStudyGroupBoardsByGroupId" resultMap="studyGroupBoardResultMap" parameterType="map">
         SELECT
                A.STUDY_GROUP_BOARD_ID
              , A.TITLE
@@ -28,9 +28,11 @@
              , A.GROUP_ID
           FROM STUDY_GROUP_BOARD A
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.GROUP_ID = #{ groupId }
+         ORDER BY A.STUDY_GROUP_BOARD_ID
+         LIMIT #{ pageSize } OFFSET #{ offset }
     </select>
 
-    <select id="findStudyGroupBoardsByMemberId" resultMap="studyGroupBoardResultMap" parameterType="Long">
+    <select id="findStudyGroupBoardsByMemberId" resultMap="studyGroupBoardResultMap" parameterType="map">
         SELECT
                A.STUDY_GROUP_BOARD_ID
              , A.TITLE
@@ -43,9 +45,11 @@
              , A.GROUP_ID
           FROM STUDY_GROUP_BOARD A
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.MEMBER_ID = #{ memberId }
+         ORDER BY A.STUDY_GROUP_BOARD_ID
+         LIMIT #{ pageSize } OFFSET #{ offset }
     </select>
 
-    <select id="findStudyGroupBoardsByTitle" resultMap="studyGroupBoardResultMap" parameterType="string">
+    <select id="findStudyGroupBoardsByTitle" resultMap="studyGroupBoardResultMap" parameterType="map">
         SELECT
                A.STUDY_GROUP_BOARD_ID
              , A.TITLE
@@ -58,9 +62,11 @@
              , A.GROUP_ID
           FROM STUDY_GROUP_BOARD A
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.TITLE LIKE CONCAT('%', #{ title }, '%')
+         ORDER BY A.STUDY_GROUP_BOARD_ID
+         LIMIT #{ pageSize } OFFSET #{ offset }
     </select>
 
-    <select id="findStudyGroupBoardsByContent" resultMap="studyGroupBoardResultMap" parameterType="string">
+    <select id="findStudyGroupBoardsByContent" resultMap="studyGroupBoardResultMap" parameterType="map">
         SELECT
                A.STUDY_GROUP_BOARD_ID
              , A.TITLE
@@ -73,6 +79,8 @@
              , A.GROUP_ID
           FROM STUDY_GROUP_BOARD A
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.CONTENT LIKE CONCAT('%', #{ content }, '%')
+         ORDER BY A.STUDY_GROUP_BOARD_ID
+         LIMIT #{ pageSize } OFFSET #{ offset }
     </select>
 
     <select id="findStudyGroupBoardByBoardId" resultMap="studyGroupBoardResultMap" parameterType="Long">

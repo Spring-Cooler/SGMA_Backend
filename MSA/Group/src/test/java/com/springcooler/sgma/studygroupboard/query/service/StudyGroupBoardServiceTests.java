@@ -25,7 +25,7 @@ class StudyGroupBoardServiceTests {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupBoardDTO> boards =
-                            studyGroupBoardService.findStudyGroupBoardsByGroupId(groupId);
+                            studyGroupBoardService.findStudyGroupBoardsByGroupId(groupId, 1);
                     boards.forEach(x -> log.info(x.toString()));
                 }
         );
@@ -38,7 +38,7 @@ class StudyGroupBoardServiceTests {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupBoardDTO> boards =
-                            studyGroupBoardService.findStudyGroupBoardsByMemberId(memberId);
+                            studyGroupBoardService.findStudyGroupBoardsByMemberId(memberId, 1);
                     boards.forEach(x -> log.info(x.toString()));
                 }
         );
@@ -51,7 +51,7 @@ class StudyGroupBoardServiceTests {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupBoardDTO> boards =
-                            studyGroupBoardService.findStudyGroupBoardsByTitle(title);
+                            studyGroupBoardService.findStudyGroupBoardsByTitle(title, 1);
                     boards.forEach(x -> log.info(x.toString()));
                 }
         );
@@ -64,7 +64,7 @@ class StudyGroupBoardServiceTests {
         Assertions.assertDoesNotThrow(
                 () -> {
                     List<StudyGroupBoardDTO> boards =
-                            studyGroupBoardService.findStudyGroupBoardsByContent(content);
+                            studyGroupBoardService.findStudyGroupBoardsByContent(content, 1);
                     boards.forEach(x -> log.info(x.toString()));
                 }
         );
