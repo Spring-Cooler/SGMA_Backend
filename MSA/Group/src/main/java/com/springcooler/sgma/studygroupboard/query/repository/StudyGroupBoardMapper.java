@@ -32,4 +32,16 @@ public interface StudyGroupBoardMapper {
     // 게시글 단건 조회
     StudyGroupBoardDTO findStudyGroupBoardByBoardId(Long boardId);
 
+    // 그룹별 게시글 전체 개수 조회
+    Integer getTotalElementsByGroupId(Long groupId);
+
+    // 그룹원별 게시글 전체 개수 조회
+    Integer getTotalElementsByMemberId(Long memberId);
+
+    // 제목별 게시글 전체 개수 조회
+    Integer getTotalElementsByTitle(String title);
+
+    // 내용별 게시글 전체 개수 조회
+    Integer getTotalElementsByContent(String content);
+
 }

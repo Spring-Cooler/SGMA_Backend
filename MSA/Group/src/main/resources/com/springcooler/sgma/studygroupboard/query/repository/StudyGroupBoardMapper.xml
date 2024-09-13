@@ -98,4 +98,32 @@
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.STUDY_GROUP_BOARD_ID = #{ boardId }
     </select>
 
+    <select id="getTotalElementsByGroupId" resultType="Integer" parameterType="Long">
+        SELECT
+               COUNT(*) AS TOTAL
+          FROM STUDY_GROUP_BOARD A
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.GROUP_ID = #{ groupId }
+    </select>
+
+    <select id="getTotalElementsByMemberId" resultType="Integer" parameterType="Long">
+        SELECT
+               COUNT(*) AS TOTAL
+          FROM STUDY_GROUP_BOARD A
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.MEMBER_ID = #{ memberId }
+    </select>
+
+    <select id="getTotalElementsByTitle" resultType="Integer" parameterType="string">
+        SELECT
+               COUNT(*) AS TOTAL
+          FROM STUDY_GROUP_BOARD A
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.TITLE LIKE CONCAT('%', #{ title }, '%')
+    </select>
+
+    <select id="getTotalElementsByContent" resultType="Integer" parameterType="string">
+        SELECT
+               COUNT(*) AS TOTAL
+          FROM STUDY_GROUP_BOARD A
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.CONTENT LIKE CONCAT('%', #{ content }, '%')
+    </select>
+
 </mapper>
