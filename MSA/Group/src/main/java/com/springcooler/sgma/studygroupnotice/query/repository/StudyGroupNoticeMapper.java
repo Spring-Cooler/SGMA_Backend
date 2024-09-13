@@ -27,4 +27,13 @@ public interface StudyGroupNoticeMapper {
                                                              @Param("pageSize") Integer pageSize,
                                                              @Param("offset") Integer offset);
 
+    // 그룹명으로 전체 공지사항 개수 조회
+    Integer getTotalElementsByGroupId(Long groupId);
+
+    // 제목으로 전체 공지사항 개수 조회
+    Integer getTotalElementsByTitle(String title);
+
+    // 내용으로 전체 공지사항 개수 조회
+    Integer getTotalElementsByContent(String content);
+
 }

@@ -28,7 +28,7 @@
              , A.GROUP_ID
           FROM STUDY_GROUP_BOARD A
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.GROUP_ID = #{ groupId }
-         ORDER BY A.STUDY_GROUP_BOARD_ID
+         ORDER BY A.STUDY_GROUP_BOARD_ID DESC
          LIMIT #{ pageSize } OFFSET #{ offset }
     </select>
 
@@ -45,7 +45,7 @@
              , A.GROUP_ID
           FROM STUDY_GROUP_BOARD A
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.MEMBER_ID = #{ memberId }
-         ORDER BY A.STUDY_GROUP_BOARD_ID
+         ORDER BY A.STUDY_GROUP_BOARD_ID DESC
          LIMIT #{ pageSize } OFFSET #{ offset }
     </select>
 
@@ -62,7 +62,7 @@
              , A.GROUP_ID
           FROM STUDY_GROUP_BOARD A
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.TITLE LIKE CONCAT('%', #{ title }, '%')
-         ORDER BY A.STUDY_GROUP_BOARD_ID
+         ORDER BY A.STUDY_GROUP_BOARD_ID DESC
          LIMIT #{ pageSize } OFFSET #{ offset }
     </select>
 
@@ -79,7 +79,7 @@
              , A.GROUP_ID
           FROM STUDY_GROUP_BOARD A
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.CONTENT LIKE CONCAT('%', #{ content }, '%')
-         ORDER BY A.STUDY_GROUP_BOARD_ID
+         ORDER BY A.STUDY_GROUP_BOARD_ID DESC
          LIMIT #{ pageSize } OFFSET #{ offset }
     </select>
 

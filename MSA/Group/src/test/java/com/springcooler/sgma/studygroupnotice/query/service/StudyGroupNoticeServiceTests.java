@@ -1,5 +1,6 @@
 package com.springcooler.sgma.studygroupnotice.query.service;
 
+import com.springcooler.sgma.studygroupnotice.query.dto.PageDTO;
 import com.springcooler.sgma.studygroupnotice.query.dto.StudyGroupNoticeDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -24,9 +25,9 @@ class StudyGroupNoticeServiceTests {
     void testFindStudyGroupNoticesByGroupId(Long groupId) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<StudyGroupNoticeDTO> studyGroupNotices =
+                    PageDTO<StudyGroupNoticeDTO> page =
                             studyGroupNoticeService.findStudyGroupNoticesByGroupId(groupId, 1);
-                    studyGroupNotices.forEach(x -> log.info(x.toString()));
+                    page.getElements().forEach(x -> log.info(x.toString()));
                 }
         );
     }
@@ -50,9 +51,9 @@ class StudyGroupNoticeServiceTests {
     void testFindStudyGroupNoticesByTitle(String title) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<StudyGroupNoticeDTO> studyGroupNotices =
+                    PageDTO<StudyGroupNoticeDTO> page =
                             studyGroupNoticeService.findStudyGroupNoticesByTitle(title, 1);
-                    studyGroupNotices.forEach(x -> log.info(x.toString()));
+                    page.getElements().forEach(x -> log.info(x.toString()));
                 }
         );
     }
@@ -63,9 +64,9 @@ class StudyGroupNoticeServiceTests {
     void testFindStudyGroupNoticesByContent(String content) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<StudyGroupNoticeDTO> studyGroupNotices =
+                    PageDTO<StudyGroupNoticeDTO> page =
                             studyGroupNoticeService.findStudyGroupNoticesByContent(content, 1);
-                    studyGroupNotices.forEach(x -> log.info(x.toString()));
+                    page.getElements().forEach(x -> log.info(x.toString()));
                 }
         );
     }
