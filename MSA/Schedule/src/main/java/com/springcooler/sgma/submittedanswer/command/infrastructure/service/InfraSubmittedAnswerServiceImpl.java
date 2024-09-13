@@ -16,7 +16,7 @@ public class InfraSubmittedAnswerServiceImpl implements InfraSubmittedAnswerServ
     private final ModelMapper modelMapper;
     @Autowired
     public InfraSubmittedAnswerServiceImpl(ProblemService problemService
-    , AppStudyScheduleParticipantService participantService, ModelMapper modelMapper) {
+            , AppStudyScheduleParticipantService participantService, ModelMapper modelMapper) {
         this.problemService = problemService;
         this.participantService = participantService;
         this.modelMapper = modelMapper;

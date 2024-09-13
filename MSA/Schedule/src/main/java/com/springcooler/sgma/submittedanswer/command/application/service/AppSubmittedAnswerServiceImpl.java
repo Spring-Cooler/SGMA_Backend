@@ -44,7 +44,7 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
                     submittedAnswers.add(newSubmittedAnswer);
                 }
         );
-         submittedAnswerRepository.saveAll(submittedAnswers);
+        submittedAnswerRepository.saveAll(submittedAnswers);
 
     }
 
@@ -100,4 +100,3 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
         return score;
     }
 }
-

@@ -29,7 +29,7 @@ public class StudyScheduleParticipant {
     private Integer numSubmittedProblems;
 
     @Column(name = "TEST_SCORE")
-    private Double testScore;
+    private Integer testScore;
 
     @Column(name = "TEST_PERCENTAGE")
     private Double testPercentage;
