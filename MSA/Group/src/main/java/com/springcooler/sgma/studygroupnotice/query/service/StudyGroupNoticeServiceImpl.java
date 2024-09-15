@@ -38,7 +38,7 @@ public class StudyGroupNoticeServiceImpl implements StudyGroupNoticeService {
         }
 
         // 현재 페이지 공지사항 조회
-        Integer offset = (pageNo - 1) * PAGE_SIZE;
+        Integer offset = (pageNo - 1) * ELEMENTS_PER_PAGE;
         List<StudyGroupNoticeDTO> notices =
                 studyGroupNoticeMapper.findStudyGroupNoticesByGroupId(groupId, ELEMENTS_PER_PAGE, offset);
         if (notices == null || notices.isEmpty()) {
@@ -70,7 +70,7 @@ public class StudyGroupNoticeServiceImpl implements StudyGroupNoticeService {
         Integer totalElements = studyGroupNoticeMapper.getTotalElementsByTitle(title);
 
         // 현재 페이지 공지사항 조회
-        Integer offset = (pageNo - 1) * PAGE_SIZE;
+        Integer offset = (pageNo - 1) * ELEMENTS_PER_PAGE;
         List<StudyGroupNoticeDTO> notices =
                 studyGroupNoticeMapper.findStudyGroupNoticesByTitle(title, ELEMENTS_PER_PAGE, offset);
         if (notices == null || notices.isEmpty()) {
@@ -92,7 +92,7 @@ public class StudyGroupNoticeServiceImpl implements StudyGroupNoticeService {
         Integer totalElements = studyGroupNoticeMapper.getTotalElementsByContent(content);
 
         // 현재 페이지 공지사항 조회
-        Integer offset = (pageNo - 1) * PAGE_SIZE;
+        Integer offset = (pageNo - 1) * ELEMENTS_PER_PAGE;
         List<StudyGroupNoticeDTO> notices =
                 studyGroupNoticeMapper.findStudyGroupNoticesByContent(content, ELEMENTS_PER_PAGE, offset);
         if (notices == null || notices.isEmpty()) {

@@ -11,22 +11,22 @@ public interface StudyGroupBoardMapper {
 
     // 게시글 그룹별 조회
     List<StudyGroupBoardDTO> findStudyGroupBoardsByGroupId(@Param("groupId") Long groupId,
-                                                           @Param("pageSize") Integer pageSize,
+                                                           @Param("elementsPerPage") Integer elementsPerPage,
                                                            @Param("offset") Integer offset);
 
     // 게시글 그룹원별 조회
     List<StudyGroupBoardDTO> findStudyGroupBoardsByMemberId(@Param("memberId") Long memberId,
-                                                            @Param("pageSize") Integer pageSize,
+                                                            @Param("elementsPerPage") Integer elementsPerPage,
                                                             @Param("offset") Integer offset);
 
     // 게시글 제목으로 조회
     List<StudyGroupBoardDTO> findStudyGroupBoardsByTitle(@Param("title") String title,
-                                                         @Param("pageSize") Integer pageSize,
+                                                         @Param("elementsPerPage") Integer elementsPerPage,
                                                          @Param("offset") Integer offset);
 
     // 게시글 내용으로 조회
     List<StudyGroupBoardDTO> findStudyGroupBoardsByContent(@Param("content") String content,
-                                                           @Param("pageSize") Integer pageSize,
+                                                           @Param("elementsPerPage") Integer elementsPerPage,
                                                            @Param("offset") Integer offset);
 
     // 게시글 단건 조회
