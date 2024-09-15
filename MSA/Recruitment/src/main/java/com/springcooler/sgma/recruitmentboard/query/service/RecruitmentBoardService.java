@@ -38,4 +38,12 @@ public class RecruitmentBoardService {
         return recruitmentBoard;
     }
 
+    public List<RecruitmentBoardDTO> findRecruitmentBoardsByTitle(String title){
+        List<RecruitmentBoardDTO> recruitmentBoards = recruitmentBoardMapper.findRecruitmentBoardsByTitle(title);
+        if(recruitmentBoards == null) {
+            throw new CommonException(ErrorCode.NOT_FOUND_RECRUITMENT_BOARD);
+        }
+        return recruitmentBoards;
+    }
+
 }

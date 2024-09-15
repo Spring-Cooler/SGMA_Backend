@@ -41,5 +41,12 @@ public class RecruitmentBoardController {
         return ResponseDTO.ok(recruitmentBoard);
     }
 
+    @GetMapping("title/{recruitmentBoardTitle}")
+    @Operation(summary = "모집글 제목으로 조회")
+    public ResponseDTO<?> findRecruitmentBoardByBoardTitle(@PathVariable("recruitmentBoardTitle") String recruitmentBoardTitle) {
+        List<RecruitmentBoardDTO> recruitmentBoard = recruitmentBoardService.findRecruitmentBoardsByTitle(recruitmentBoardTitle);
+        return ResponseDTO.ok(recruitmentBoard);
+    }
+
 }
 

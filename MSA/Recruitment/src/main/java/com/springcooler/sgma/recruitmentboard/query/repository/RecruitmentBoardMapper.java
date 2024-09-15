@@ -13,4 +13,5 @@ public interface RecruitmentBoardMapper {
 
     RecruitmentBoardDTO findRecruitmentBoardByBoardId(Long recruitmentBoardId);
 
+    List<RecruitmentBoardDTO> findRecruitmentBoardsByTitle(String title);
 }
