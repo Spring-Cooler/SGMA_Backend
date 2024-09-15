@@ -2,6 +2,7 @@ package com.springcooler.sgma.recruitmentboard.query.service;
 
 import com.springcooler.sgma.recruitmentboard.common.exception.CommonException;
 import com.springcooler.sgma.recruitmentboard.common.exception.ErrorCode;
+import com.springcooler.sgma.recruitmentboard.query.dto.PaginatedResponse;
 import com.springcooler.sgma.recruitmentboard.query.dto.RecruitmentBoardDTO;
 import com.springcooler.sgma.recruitmentboard.query.repository.RecruitmentBoardMapper;
 import lombok.extern.log4j.Log4j2;
@@ -21,12 +22,22 @@ public class RecruitmentBoardService {
         this.recruitmentBoardMapper = recruitmentBoardMapper;
     }
 
-    public List<RecruitmentBoardDTO> findAllRecruitmentBoards() {
-        List<RecruitmentBoardDTO> recruitmentBoards = recruitmentBoardMapper.findAllRecruitmentBoards();
-        if(recruitmentBoards == null || recruitmentBoards.isEmpty()) {
-            throw new CommonException(ErrorCode.NOT_FOUND_RECRUITMENT_BOARD);
-        }
-        return recruitmentBoards;
+    public PaginatedResponse<RecruitmentBoardDTO> findAllRecruitmentBoards(int page, int size) {
+        List<RecruitmentBoardDTO> boards = recruitmentBoardMapper.findAllRecruitmentBoards();
+        long totalElements = boards.size();
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        // 페이징 처리
+        int start = (page - 1) * size;
+        int end = Math.min(start + size, boards.size());
+        List<RecruitmentBoardDTO> paginatedBoards = boards.subList(start, end);
+
+        PaginatedResponse<RecruitmentBoardDTO> response = new PaginatedResponse<>();
+        response.setData(paginatedBoards);
+        response.setTotalPages(totalPages);
+        response.setTotalElements(totalElements);
+
+        return response;
     }
 
     public RecruitmentBoardDTO findRecruitmentBoardByBoardId(Long recruitmentBoardId){

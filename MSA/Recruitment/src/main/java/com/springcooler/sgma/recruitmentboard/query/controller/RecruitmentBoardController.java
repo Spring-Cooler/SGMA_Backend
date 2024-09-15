@@ -1,5 +1,6 @@
 package com.springcooler.sgma.recruitmentboard.query.controller;
 
+import com.springcooler.sgma.recruitmentboard.query.dto.PaginatedResponse;
 import com.springcooler.sgma.recruitmentboard.query.dto.RecruitmentBoardDTO;
 import com.springcooler.sgma.recruitmentboard.query.service.RecruitmentBoardService;
 
@@ -7,10 +8,8 @@ import com.springcooler.sgma.recruitmentboard.query.service.RecruitmentBoardServ
 import com.springcooler.sgma.recruitmentboardcomment.common.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,13 +24,21 @@ public class RecruitmentBoardController {
         this.recruitmentBoardService = studyGroupApplicantService;
     }
 
-    @GetMapping("")
-    @Operation(summary = "모집글 전체 조회")
-    public ResponseDTO<?> findAllRecruitmentBoards() {
-        List<RecruitmentBoardDTO> recruitmentBoards = recruitmentBoardService.findAllRecruitmentBoards();
-        return ResponseDTO.ok(recruitmentBoards);
-    }
+//    @GetMapping("")
+//    @Operation(summary = "모집글 전체 조회")
+//    public ResponseDTO<?> findAllRecruitmentBoards() {
+//        List<RecruitmentBoardDTO> recruitmentBoards = recruitmentBoardService.findAllRecruitmentBoards();
+//        return ResponseDTO.ok(recruitmentBoards);
+//    }
 
+    @GetMapping("/recruitment-boards")
+    @Operation(summary = "모집글 전체 조회")
+    public ResponseDTO<?> getRecruitmentBoards(
+            @RequestParam(defaultValue = "1") int page) {
+        final int size = 5;
+        PaginatedResponse<RecruitmentBoardDTO> response = recruitmentBoardService.findAllRecruitmentBoards(page, size);
+        return ResponseDTO.ok(response);
+    }
 
     @GetMapping("/{recruitmentBoardId}")
     @Operation(summary = "모집글 Id로 조회")
