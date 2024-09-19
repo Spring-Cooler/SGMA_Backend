@@ -8,7 +8,6 @@ import com.springcooler.sgma.recruitmentboard.query.service.RecruitmentBoardServ
 import com.springcooler.sgma.recruitmentboardcomment.common.ResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public class RecruitmentBoardController {
 //        return ResponseDTO.ok(recruitmentBoards);
 //    }
 
-    @GetMapping("/recruitment-boards")
+    @GetMapping("/all")
     @Operation(summary = "모집글 전체 조회")
     public ResponseDTO<?> getRecruitmentBoards(
             @RequestParam(defaultValue = "1") int page) {
@@ -40,7 +39,7 @@ public class RecruitmentBoardController {
         return ResponseDTO.ok(response);
     }
 
-    @GetMapping("/{recruitmentBoardId}")
+    @GetMapping("board/{recruitmentBoardId}")
     @Operation(summary = "모집글 Id로 조회")
     public ResponseDTO<?> findRecruitmentBoardByBoardId(@PathVariable("recruitmentBoardId") Long recruitmentBoardId) {
         RecruitmentBoardDTO recruitmentBoard =
@@ -52,6 +51,13 @@ public class RecruitmentBoardController {
     @Operation(summary = "모집글 제목으로 조회")
     public ResponseDTO<?> findRecruitmentBoardByBoardTitle(@PathVariable("recruitmentBoardTitle") String recruitmentBoardTitle) {
         List<RecruitmentBoardDTO> recruitmentBoard = recruitmentBoardService.findRecruitmentBoardsByTitle(recruitmentBoardTitle);
+        return ResponseDTO.ok(recruitmentBoard);
+    }
+
+    @GetMapping("group/{groupId}")
+    @Operation(summary = "그룹ID로 조회")
+    public ResponseDTO<?> findRecruitmentBoardsByGroupId(@PathVariable("groupId") Long groupId){
+        List<RecruitmentBoardDTO> recruitmentBoard =recruitmentBoardService.findRecruitmentBoardsByGroupId(groupId);
         return ResponseDTO.ok(recruitmentBoard);
     }
 

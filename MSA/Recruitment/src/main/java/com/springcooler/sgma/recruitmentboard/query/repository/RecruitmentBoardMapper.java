@@ -15,4 +15,6 @@ public interface RecruitmentBoardMapper {
     List<RecruitmentBoardDTO> findRecruitmentBoardsByTitle(String title);
 
     List<RecruitmentBoardDTO> findAllRecruitmentBoards();
+
+    List<RecruitmentBoardDTO> findRecruitmentBoardsByGroupId(Long groupId);
 }

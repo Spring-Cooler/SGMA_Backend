@@ -57,4 +57,12 @@ public class RecruitmentBoardService {
         return recruitmentBoards;
     }
 
+    public List<RecruitmentBoardDTO> findRecruitmentBoardsByGroupId(Long groupId){
+        List<RecruitmentBoardDTO> recruitmentBoards= recruitmentBoardMapper.findRecruitmentBoardsByGroupId(groupId);
+        if(recruitmentBoards == null) {
+            throw new CommonException(ErrorCode.NOT_FOUND_RECRUITMENT_BOARD);
+        }
+        return recruitmentBoards;
+    }
+
 }
