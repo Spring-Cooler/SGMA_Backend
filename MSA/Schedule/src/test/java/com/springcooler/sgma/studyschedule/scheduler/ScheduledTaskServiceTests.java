@@ -21,6 +21,7 @@ class ScheduledTaskServiceTests {
     @Test
     void testUpdateScheduledTasks(){
         scheduledTaskService.updateScheduledTasks();
+
     }
 
     @Test

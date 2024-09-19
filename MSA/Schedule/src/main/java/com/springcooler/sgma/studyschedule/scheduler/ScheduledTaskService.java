@@ -9,6 +9,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
@@ -17,7 +19,7 @@ import java.util.concurrent.ScheduledFuture;
 public class ScheduledTaskService {
 
     private final TaskScheduler taskScheduler;
-    private static List<StudySchedule> scheduledTasks;
+    public List<StudySchedule> scheduledTasks;
     private final StudyScheduleRepository studyScheduleRepository;
     @Autowired
     public ScheduledTaskService(TaskScheduler taskScheduler, StudyScheduleRepository studyScheduleRepository) {
@@ -29,16 +31,23 @@ public class ScheduledTaskService {
     @Scheduled(fixedRate = 3600000)
     public void updateScheduledTasks(){
 //        @Scheduled는 매개변수 없는 method에만 사용이 가능해서 테스트용으로 startTime 작성
-        Timestamp startTime = Timestamp.valueOf("2024-09-15 17:30:00");
-        Timestamp endTime = Timestamp.valueOf("2024-09-15 18:30:00");
+//        now()로 수정 예정
+        Timestamp startTime = Timestamp.valueOf("2024-09-01 00:00:00");
+//        DB의 스케쥴 목록을 읽어오기 위해 한달로 기간 설정
+//        1시간 단위로 수정 예정
+        Timestamp endTime = Timestamp.valueOf(startTime.toLocalDateTime().plusMonths(1));
+
         List<StudySchedule> scheduledTasks = studyScheduleRepository.findByScheduleEndTimeBetween(startTime, endTime);
         scheduledTasks.forEach(scheduledTask -> {
-            scheduleTaskAtTimestamp(scheduledTask.getScheduleEndTime(), ()->log.info(scheduledTask.getScheduleId().toString()));
+//            TODO: scheduleTaskAtTimestamp
+            log.info("scheduledTask: {}", scheduledTask);
+
+
         });
     }
 //    TODO: 가져온 작업들을 taskScheduler에 등록
     public ScheduledFuture<?> scheduleTaskAtTimestamp(Timestamp timestamp, Runnable task) {
-        Date date = new Date(timestamp.getTime());
+        Instant date = Instant.from((TemporalAccessor) timestamp).plusSeconds(5);
         return taskScheduler.schedule(task, date);
     }
 
