@@ -8,9 +8,13 @@ import java.util.List;
 
 @Mapper
 public interface RecruitmentBoardMapper {
-
-    List<RecruitmentBoardDTO> findAllRecruitmentBoards();
+    
 
     RecruitmentBoardDTO findRecruitmentBoardByBoardId(Long recruitmentBoardId);
 
+    List<RecruitmentBoardDTO> findRecruitmentBoardsByTitle(String title);
+
+    List<RecruitmentBoardDTO> findAllRecruitmentBoards();
+
+    List<RecruitmentBoardDTO> findRecruitmentBoardsByGroupId(Long groupId);
 }
