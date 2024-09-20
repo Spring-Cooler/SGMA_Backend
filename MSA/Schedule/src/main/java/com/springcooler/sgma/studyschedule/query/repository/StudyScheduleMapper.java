@@ -1,6 +1,7 @@
 package com.springcooler.sgma.studyschedule.query.repository;
 
 import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleDTO;
+import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleParticipantVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,4 +21,5 @@ public interface StudyScheduleMapper {
     // 스터디 그룹 일정 시험의 통계 자료 조회
     StudyScheduleDTO findStudyScheduleByStatistics(long scheduleId);
 
+    List<Long> findParticipantsByScheduleId(long scheduleId);
 }

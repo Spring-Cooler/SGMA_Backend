@@ -1,6 +1,8 @@
 package com.springcooler.sgma.studyschedule.query.service;
 
 import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleDTO;
+import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleParticipantVO;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+@Slf4j
 @SpringBootTest
 @Transactional
 class StudyScheduleServiceTests {
@@ -27,7 +31,7 @@ class StudyScheduleServiceTests {
         StudyScheduleDTO ScheduleByScheduleId = studyScheduleService.findStudyScheduleByScheduleId(scheduleId);
 
         // Then
-        Assertions.assertNotNull(ScheduleByScheduleId);
+        assertNotNull(ScheduleByScheduleId);
     }
 
     @DisplayName("스터디 그룹 일정 전체 조회 테스트")
@@ -40,7 +44,7 @@ class StudyScheduleServiceTests {
         List<StudyScheduleDTO> ScheduleByGroupId = studyScheduleService.findStudyScheduleByGroupId(groupId);
 
         // Then
-        Assertions.assertNotNull(ScheduleByGroupId);
+        assertNotNull(ScheduleByGroupId);
     }
 
     @DisplayName("스터디 그룹 일정 기간별 조회 테스트")
@@ -55,7 +59,7 @@ class StudyScheduleServiceTests {
         List<StudyScheduleDTO> SchedulesByPeriod = studyScheduleService.findStudySchedulesByPeriod(groupId, startDate, endDate);
 
         // Then
-        Assertions.assertNotNull(SchedulesByPeriod);
+        assertNotNull(SchedulesByPeriod);
     }
 
     @DisplayName("스터디 그룹 일정 시험 통계 조회 테스트")
@@ -68,6 +72,24 @@ class StudyScheduleServiceTests {
         StudyScheduleDTO ScheduleByStatistics = studyScheduleService.findStudyScheduleByStatistics(scheduleId);
 
         // Then
-        Assertions.assertNotNull(ScheduleByStatistics);
+        assertNotNull(ScheduleByStatistics);
+    }
+
+    @DisplayName("스터디 일정ID로 참여자 목록 조회 테스트")
+    @Test
+    void testFindParticipantsByScheduleId(){
+
+        // given
+        long scheduleId = 3L;
+
+        // when
+        StudyScheduleParticipantVO participantVO = studyScheduleService.findParticipantsByScheduleId(scheduleId);
+
+        // then
+        assertNotNull(participantVO);
+        log.info("scheduleId: {}", participantVO.getScheduleId());
+        participantVO.getParticipants().forEach(participant -> {
+            log.info("participant: {}", participant);
+        });
     }
 }

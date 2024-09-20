@@ -3,6 +3,7 @@ package com.springcooler.sgma.studyschedule.query.service;
 import com.springcooler.sgma.studyschedule.common.exception.CommonException;
 import com.springcooler.sgma.studyschedule.common.exception.ErrorCode;
 import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleDTO;
+import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleParticipantVO;
 import com.springcooler.sgma.studyschedule.query.repository.StudyScheduleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,15 @@ public class StudyScheduleServiceImpl implements StudyScheduleService {
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE);
         }
         return statistics;
+    }
+
+    @Override
+    public StudyScheduleParticipantVO findParticipantsByScheduleId(long scheduleId) {
+        List<Long> participants = studyScheduleMapper.findParticipantsByScheduleId(scheduleId);
+        if (participants == null || participants.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE);
+        }
+        StudyScheduleParticipantVO scheduleVO = new StudyScheduleParticipantVO(scheduleId, participants);
+        return scheduleVO;
     }
 }

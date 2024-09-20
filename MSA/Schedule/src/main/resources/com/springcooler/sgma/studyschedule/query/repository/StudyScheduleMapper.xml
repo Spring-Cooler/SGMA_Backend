@@ -18,6 +18,7 @@
         <result property="testStandardDeviation" column="TEST_STANDARD_DEVIATION"/>
     </resultMap>
 
+
     <!-- 스터디 그룹 일정 단건 조회 (Schedule ID로) -->
     <select id="findStudyScheduleByScheduleId" resultMap="studySchedule">
         SELECT
@@ -94,4 +95,10 @@
         WHERE SCHEDULE_ID = #{scheduleId} AND TEST_STATUS = 'Y'
     </select>
 
+    <select id="findParticipantsByScheduleId" parameterType="long" resultType="java.lang.Long">
+        SELECT
+                PARTICIPANT_ID
+          FROM  STUDY_SCHEDULE_PARTICIPANT
+         WHERE  SCHEDULE_ID = #{ scheduleId }
+    </select>
 </mapper>

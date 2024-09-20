@@ -2,9 +2,9 @@ package com.springcooler.sgma.submittedanswer.command.application.service;
 import com.springcooler.sgma.problem.command.domain.aggregate.entity.ProblemType;
 import com.springcooler.sgma.problem.query.dto.ProblemVO;
 import com.springcooler.sgma.submittedanswer.command.application.dto.SubmittedAnswerDTO;
-import com.springcooler.sgma.submittedanswer.command.domain.aggregate.AnswerStatus;
-import com.springcooler.sgma.submittedanswer.command.domain.aggregate.SubmittedAnswer;
-import com.springcooler.sgma.submittedanswer.command.domain.aggregate.SubmittedAnswerPK;
+import com.springcooler.sgma.submittedanswer.command.domain.aggregate.entity.AnswerStatus;
+import com.springcooler.sgma.submittedanswer.command.domain.aggregate.entity.SubmittedAnswer;
+import com.springcooler.sgma.submittedanswer.command.domain.aggregate.entity.SubmittedAnswerPK;
 import com.springcooler.sgma.submittedanswer.command.domain.repository.SubmittedAnswerRepository;
 import com.springcooler.sgma.submittedanswer.command.infrastructure.service.InfraSubmittedAnswerService;
 import com.springcooler.sgma.submittedanswer.command.infrastructure.service.OpenAIClient;
@@ -60,7 +60,9 @@ public class AppSubmittedAnswerServiceImpl implements AppSubmittedAnswerService 
 
     }
 
-
+    @Override
+    public void gradeSubmittedAnswerByScheduleId(Long scheduleId) {
+    }
 
     @Transactional
     @Override
