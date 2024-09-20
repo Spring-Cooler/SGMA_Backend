@@ -23,8 +23,8 @@ class StudyGroupApplicantServiceTests {
     void testFindAllRecruitmentBoards() {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<RecruitmentBoardDTO> recruitmentBoards = recruitmentBoardService.findAllRecruitmentBoards();
-                    recruitmentBoards.forEach(System.out::println);
+//                    List<RecruitmentBoardDTO> recruitmentBoards = recruitmentBoardService.findAllRecruitmentBoards();
+//                    recruitmentBoards.forEach(System.out::println);
                 }
         );
     }

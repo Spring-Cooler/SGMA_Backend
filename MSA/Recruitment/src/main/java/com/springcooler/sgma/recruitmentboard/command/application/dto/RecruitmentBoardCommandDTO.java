@@ -23,7 +23,7 @@ public class RecruitmentBoardCommandDTO {
     private Timestamp recruitmentStartTime;
     private Timestamp recruitmentEndTime;
     private String activeStatus;
-    private int likes;
-    private long groupId;
-    private int studyGroupCategoryId;
+    private Integer likes;
+    private Long groupId;
+    private Integer studyGroupCategoryId;
 }

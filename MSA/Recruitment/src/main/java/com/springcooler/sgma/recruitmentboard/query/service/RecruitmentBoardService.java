@@ -22,7 +22,7 @@ public class RecruitmentBoardService {
         this.recruitmentBoardMapper = recruitmentBoardMapper;
     }
 
-    public PaginatedResponse<RecruitmentBoardDTO> findAllRecruitmentBoards(int page, int size) {
+    public PaginatedResponse<RecruitmentBoardDTO> findAllRecruitmentBoards(Integer page, Integer size) {
         List<RecruitmentBoardDTO> boards = recruitmentBoardMapper.findAllRecruitmentBoards();
         long totalElements = boards.size();
         int totalPages = (int) Math.ceil((double) totalElements / size);
@@ -65,4 +65,21 @@ public class RecruitmentBoardService {
         return recruitmentBoards;
     }
 
+    public PaginatedResponse<RecruitmentBoardDTO> findRecruitmentBoardsByCategory(Integer page, Integer size, Integer studyGroupCategoryId) {
+        List<RecruitmentBoardDTO> recruitmentBoards = recruitmentBoardMapper.findRecruitmentBoardsByCategory(studyGroupCategoryId);
+        long totalElements = recruitmentBoards.size();
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        // 페이징 처리
+        int start = (page - 1) * size;
+        int end = Math.min(start + size, recruitmentBoards.size());
+        List<RecruitmentBoardDTO> paginatedBoards = recruitmentBoards.subList(start, end);
+
+        PaginatedResponse<RecruitmentBoardDTO> response = new PaginatedResponse<>();
+        response.setData(paginatedBoards);
+        response.setTotalPages(totalPages);
+        response.setTotalElements(totalElements);
+
+        return response;
+    }
 }
