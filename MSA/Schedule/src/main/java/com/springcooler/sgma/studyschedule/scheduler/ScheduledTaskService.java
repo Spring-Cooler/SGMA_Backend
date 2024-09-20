@@ -1,7 +1,12 @@
 package com.springcooler.sgma.studyschedule.scheduler;
 
+import com.springcooler.sgma.studyschedule.command.application.service.AppStudyScheduleService;
 import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudySchedule;
 import com.springcooler.sgma.studyschedule.command.domain.repository.StudyScheduleRepository;
+import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleParticipantVO;
+import com.springcooler.sgma.studyschedule.query.service.StudyScheduleServiceImpl;
+import com.springcooler.sgma.studyscheduleparticipant.command.infrastructure.service.InfraStudyScheduleParticipantService;
+import com.springcooler.sgma.submittedanswer.command.infrastructure.service.InfraSubmittedAnswerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
@@ -21,10 +26,19 @@ public class ScheduledTaskService {
     private final TaskScheduler taskScheduler;
     public List<StudySchedule> scheduledTasks;
     private final StudyScheduleRepository studyScheduleRepository;
+    private final StudyScheduleServiceImpl studyScheduleService;
+    private final InfraStudyScheduleParticipantService infraStudyScheduleParticipantService;
     @Autowired
-    public ScheduledTaskService(TaskScheduler taskScheduler, StudyScheduleRepository studyScheduleRepository) {
-        this.taskScheduler = taskScheduler;
+    public ScheduledTaskService(TaskScheduler taskScheduler
+                                , StudyScheduleRepository studyScheduleRepository
+                                , StudyScheduleServiceImpl studyScheduleServiceImpl
+                                , InfraStudyScheduleParticipantService infraStudyScheduleParticipantService){
+                                this.taskScheduler = taskScheduler;
         this.studyScheduleRepository = studyScheduleRepository;
+        this.studyScheduleService = studyScheduleServiceImpl;
+        this.infraStudyScheduleParticipantService = infraStudyScheduleParticipantService;
+
+
     }
 
 //    TODO: 1시간 단위로 작업 가져옴
@@ -34,11 +48,16 @@ public class ScheduledTaskService {
 //        now()로 수정 예정
         Timestamp startTime = Timestamp.valueOf("2024-09-01 00:00:00");
 //        DB의 스케쥴 목록을 읽어오기 위해 한달로 기간 설정
-//        1시간 단위로 수정 예정
+//        추후 1시간 단위로 수정 예정
         Timestamp endTime = Timestamp.valueOf(startTime.toLocalDateTime().plusMonths(1));
 
         List<StudySchedule> scheduledTasks = studyScheduleRepository.findByScheduleEndTimeBetween(startTime, endTime);
         scheduledTasks.forEach(scheduledTask -> {
+            StudyScheduleParticipantVO scheduleParticipantVO = studyScheduleService.findParticipantsByScheduleId(scheduledTask.getScheduleId());
+            long scheduleId = scheduledTask.getScheduleId();
+            scheduleParticipantVO.getParticipants().forEach(participantId->{
+                scheduleTaskAtTimestamp(scheduledTask.getScheduleEndTime(), ()->infraStudyScheduleParticipantService.gradeAndUpdateParticipantScore(scheduleId, participantId));
+            });
 //            TODO: scheduleTaskAtTimestamp
             log.info("scheduledTask: {}", scheduledTask);
 
