@@ -1,5 +1,6 @@
 package com.springcooler.sgma.studygroup.query.repository;
 
+import com.springcooler.sgma.studygroup.query.dto.MyStudyGroupDTO;
 import com.springcooler.sgma.studygroup.query.dto.StudyGroupDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -25,5 +26,8 @@ public interface StudyGroupMapper {
 
     // 스터디그룹 단건 조회(그룹 이름)
     StudyGroupDTO findStudyGroupByGroupName(String groupName);
+
+    // 내가 가입한 스터디 그룹 전체 조회
+    List<MyStudyGroupDTO> findStudyGroupsByUserId(Long userId);
 
 }
