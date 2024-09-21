@@ -45,6 +45,6 @@ public class UserDTO {
     private SignupPath signupPath;
 
     @JsonProperty("user_identifier")
-    private String userIdentifier; // 신규 추가, 가입 경로 + 이메일 조합
+    private String userIdentifier; // 신규 추가, 가입 경로 + 사용자id 조합
 }
 

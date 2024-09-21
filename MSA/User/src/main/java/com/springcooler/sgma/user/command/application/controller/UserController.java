@@ -75,10 +75,9 @@ public class UserController {
     /*설명. 일반 회원 가입 기능*/
     @PostMapping("/normal")
     public ResponseDTO<?> registNormalUser(@RequestBody RequestResistUserVO newUser) {
-        UserDTO userDTO = modelMapper.map(newUser, UserDTO.class);
 
         // UserService 호출
-        UserDTO savedUserDTO = userService.registUser(userDTO); // 저장된 DTO 반환
+        UserDTO savedUserDTO = userService.registUser(newUser); // 저장된 DTO 반환
         
         //응답 VO로 변환후 반환
         ResponseUserVO responseUser=modelMapper.map(savedUserDTO,ResponseUserVO.class);
