@@ -39,11 +39,11 @@ public class RecruitmentBoard {
     private BoardActiveStatus activeStatus;
 
     @Column(nullable = false)
-    private int likes;
+    private Integer likes;
 
-    private long group_id;
+    private Long group_id;
 
-    private int study_group_category_id;
+    private Integer study_group_category_id;
 
 
     public void checkAndUpdateStatus(Timestamp currentTime) {

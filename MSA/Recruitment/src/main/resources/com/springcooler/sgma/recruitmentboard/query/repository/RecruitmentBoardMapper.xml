@@ -104,5 +104,23 @@
     WHERE A.GROUP_ID = #{groupId}
     </select>
 
+    <select id="findRecruitmentBoardsByCategory" resultMap="studyGroupRecruitment" parameterType="Integer">
+        SELECT
+        A.RECRUITMENT_BOARD_ID,
+        A.TITLE,
+        A.CONTENT,
+        A.CREATED_AT,
+        A.UPDATED_AT,
+        A.RECRUITMENT_START_TIME,
+        A.RECRUITMENT_END_TIME,
+        A.ACTIVE_STATUS,
+        A.LIKES,
+        A.GROUP_ID,
+        A.STUDY_GROUP_CATEGORY_ID
+        FROM RECRUITMENT_BOARD A
+        WHERE A.STUDY_GROUP_CATEGORY_ID = #{studyGroupCategoryId}
+    </select>
+
+
 
 </mapper>

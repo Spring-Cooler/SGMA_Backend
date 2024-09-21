@@ -33,8 +33,8 @@ public class RecruitmentBoardController {
     @GetMapping("/all")
     @Operation(summary = "모집글 전체 조회")
     public ResponseDTO<?> getRecruitmentBoards(
-            @RequestParam(defaultValue = "1") int page) {
-        final int size = 5;
+            @RequestParam(defaultValue = "1") Integer page) {
+        final Integer size = 5;
         PaginatedResponse<RecruitmentBoardDTO> response = recruitmentBoardService.findAllRecruitmentBoards(page, size);
         return ResponseDTO.ok(response);
     }
@@ -56,10 +56,17 @@ public class RecruitmentBoardController {
 
     @GetMapping("group/{groupId}")
     @Operation(summary = "그룹ID로 조회")
-    public ResponseDTO<?> findRecruitmentBoardsByGroupId(@PathVariable("groupId") Long groupId){
-        List<RecruitmentBoardDTO> recruitmentBoard =recruitmentBoardService.findRecruitmentBoardsByGroupId(groupId);
+    public ResponseDTO<?> findRecruitmentBoardsByGroupId(@PathVariable("groupId") Long groupId) {
+        List<RecruitmentBoardDTO> recruitmentBoard = recruitmentBoardService.findRecruitmentBoardsByGroupId(groupId);
         return ResponseDTO.ok(recruitmentBoard);
     }
 
+    @GetMapping("category/{studyGroupCategoryId}")
+    @Operation(summary = "카테고리ID로 조회")
+    public ResponseDTO<?> findRecruitmentBoardsByCategory(@RequestParam(defaultValue = "1") Integer page, @PathVariable("studyGroupCategoryId") Integer studyGroupCategoryId) {
+        final Integer size = 5;
+        PaginatedResponse<RecruitmentBoardDTO> response = recruitmentBoardService.findRecruitmentBoardsByCategory(page, size, studyGroupCategoryId);
+        return ResponseDTO.ok(response);
+    }
 }
 
