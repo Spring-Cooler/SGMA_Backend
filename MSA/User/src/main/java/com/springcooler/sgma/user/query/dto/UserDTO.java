@@ -24,7 +24,10 @@ public class UserDTO {
     private String nickname;
 
     @JsonProperty("email")
-    private String email;
+    private String email; // 신규 추가
+
+    @JsonProperty("user_auth_id")
+    private String userAuthId;
 
     @JsonProperty("user_status")
     private ActiveStatus userStatus = ActiveStatus.ACTIVE;
@@ -45,6 +48,6 @@ public class UserDTO {
     private SignupPath signupPath;
 
     @JsonProperty("user_identifier")
-    private String userIdentifier; // 신규 추가, 가입 경로 + 사용자id 조합
+    private String userIdentifier; // 변경, 가입 경로 + 사용자id 조합
 }
 

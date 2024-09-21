@@ -35,4 +35,14 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+
+    @Override
+    public UserDTO getUserByUserIdentifier(String userIdentifier) {
+        UserDTO user = userMapper.findByUserIdentifier(userIdentifier);
+        log.info("user: {}",user);
+        if (user == null) {
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+        }
+        return user;
+    }
 }

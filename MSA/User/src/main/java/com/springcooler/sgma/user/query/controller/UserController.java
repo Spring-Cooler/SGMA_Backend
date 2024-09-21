@@ -2,6 +2,7 @@ package com.springcooler.sgma.user.query.controller;
 
 import com.springcooler.sgma.user.common.ResponseDTO;
 import com.springcooler.sgma.user.query.dto.RecruitmentBoardCommentDTO;
+import com.springcooler.sgma.user.query.dto.RequestUserIdentifierDTO;
 import com.springcooler.sgma.user.query.dto.UserCommentsAndRepliesDTO;
 import com.springcooler.sgma.user.query.dto.UserDTO;
 import com.springcooler.sgma.user.query.service.RecruitmentCommentService;
@@ -10,10 +11,7 @@ import org.hibernate.engine.jdbc.cursor.internal.RefCursorSupportInitiator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,8 +41,15 @@ public class UserController {
 
     // 닉네임으로 사용자 조회
     @GetMapping("/nickname/{nickname}")
-    public ResponseDTO<UserDTO> getUserByName(@PathVariable("nickname") String nickname) {
+    public ResponseDTO<UserDTO> getUserByNickName(@PathVariable("nickname") String nickname) {
         UserDTO userDTO = userService.getUserByNickname(nickname);
+        return ResponseDTO.ok(userDTO);
+    }
+
+    // 닉네임으로 사용자 조회
+    @GetMapping("/identifier")
+    public ResponseDTO<UserDTO> getUserByUserIdentifier(@RequestBody RequestUserIdentifierDTO requestUserIdentifierDTO) {
+        UserDTO userDTO = userService.getUserByUserIdentifier(requestUserIdentifierDTO.getUserIdentifier());
         return ResponseDTO.ok(userDTO);
     }
 

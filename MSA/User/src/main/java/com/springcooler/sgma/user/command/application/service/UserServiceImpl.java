@@ -234,7 +234,10 @@ public class UserServiceImpl implements UserService {
                 throw new CommonException(ErrorCode.EMAIL_VERIFICATION_REQUIRED); // 이메일 인증이 필요하다는 커스텀 예외 던지기
             }
         }
-
+        
+        //필기. aws s3에 올라갈 프로필(추후에 변경 예정)
+        String defaultProfileImageUrl = "https://example.com/default-profile.png"; // 기본 프로필 이미지 URL
+        
         // UserDTO 설정 (유효성 검사 후)
         UserDTO newUserDTO = UserDTO.builder()
                 .userAuthId(newUser.getUserAuthId())  // 사용자가 입력한 ID
@@ -244,6 +247,8 @@ public class UserServiceImpl implements UserService {
                 .createdAt(LocalDateTime.now().withNano(0))
                 .acceptStatus(AcceptStatus.Y)
                 .userStatus(ActiveStatus.ACTIVE)
+                .nickname("닉네임 없음")
+                .profileImage(defaultProfileImageUrl) // 기본 프로필 이미지 설정
                 .userIdentifier("NORMAL_" + newUser.getUserAuthId()) // user_identifier 생성
                 .build();
 
