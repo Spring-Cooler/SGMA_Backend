@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -63,17 +64,27 @@ public class WebSecurity {
                 /* 설명. authenticationManager 등록(UserDetails를 상속받는 Service 계층 + BCrypt 암호화) */
                 .authenticationManager(authenticationManager)
 
-                /* 설명. session 방식을 사용하지 않음(JWT Token 방식 사용 시 설정할 내용) */
-                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        http.addFilter(getAuthenticationFilter(authenticationManager));
-        http.addFilterBefore(new JwtFilter(userService, jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                /* 설명. session 방식을 사용하지 않음(JWT Token 방식 사용 시 설정할 내용) */
+                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilter(getAuthenticationFilter(authenticationManager))
+                .addFilterBefore(new JwtFilter(userService, jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
 
         return http.build();
     }
+
     /* 설명. 인증(Authentication)용 메소드(인증 필터 반환) */
-    private Filter getAuthenticationFilter(AuthenticationManager authenticationManager) {
-        return new AuthenticationFilter(authenticationManager, userService, env);//필기. AuthenticationFilter 생성
+    private AuthenticationFilter getAuthenticationFilter(AuthenticationManager authenticationManager) {
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager, userService, env, bCryptPasswordEncoder);
+        authenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
+        return authenticationFilter;
     }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new CustomAuthenticationFailureHandler();
+    }
+
 
 }

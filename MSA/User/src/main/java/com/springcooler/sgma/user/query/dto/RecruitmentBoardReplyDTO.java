@@ -30,4 +30,13 @@ public class RecruitmentBoardReplyDTO {
 
     @JsonProperty("comment_id")
     private Long commentId;
+
+    @JsonProperty("recruitment_board_title")
+    private String recruitmentBoardTitle;  // 모집글 제목 추가
+
+    @JsonProperty("study_group_name")
+    private String studyGroupName;  // 스터디 그룹명 추가
+
+    @JsonProperty("recruitment_status")
+    private String recruitmentStatus; // 모집글 상태 추가 (예: 모집 중, 모집 완료 등)
 }
