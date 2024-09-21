@@ -7,6 +7,7 @@ import com.springcooler.sgma.user.command.application.service.EmailVerificationS
 import com.springcooler.sgma.user.command.domain.aggregate.AcceptStatus;
 import com.springcooler.sgma.user.command.domain.aggregate.ActiveStatus;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.RequestResistUserVO;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.RequestUpdatePasswordUserVO;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.ResponseEmailMessageVO;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.ResponseUserVO;
 import com.springcooler.sgma.user.common.ResponseDTO;
@@ -68,6 +69,17 @@ public class UserController {
 
         // 서비스 호출 및 결과 처리
         UserEntity userEntity = userService.updateProfile(userId, userUpdateDTO);
+        ResponseUserVO userUpdateRequestVO = modelMapper.map(userEntity, ResponseUserVO.class);
+        return ResponseDTO.ok(userUpdateRequestVO);
+    }
+
+    //필기. 사용자 비밀번호 재설정
+    @PatchMapping("/{userId}/password")
+    public ResponseDTO<?> updateProfile(@PathVariable("userId") Long userId,
+                                        @RequestBody RequestUpdatePasswordUserVO requestUpdatePasswordUserVO) {
+
+        // 서비스 호출 및 결과 처리
+        UserEntity userEntity = userService.updatePassword(userId, requestUpdatePasswordUserVO.getPassword());
         ResponseUserVO userUpdateRequestVO = modelMapper.map(userEntity, ResponseUserVO.class);
         return ResponseDTO.ok(userUpdateRequestVO);
     }

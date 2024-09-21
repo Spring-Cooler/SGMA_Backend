@@ -145,6 +145,31 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(userEntity);
     }
 
+    //필기. 사용자 비밀번호 재설정
+    @Override
+    public UserEntity updatePassword(Long userId, String newPassword) {
+        // 1. 사용자 ID를 통해 사용자를 조회
+        Optional<UserEntity> user = userRepository.findById(userId);
+
+        if (user.isEmpty()) {
+            // 사용자가 존재하지 않으면 예외 발생
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+        }
+
+        UserEntity userEntity = user.get();
+
+        // 2. 새로운 비밀번호를 암호화하여 설정
+        String encryptedPassword = bCryptPasswordEncoder.encode(newPassword);
+        userEntity.setEncryptedPwd(encryptedPassword);
+
+        // 3. 암호화된 비밀번호를 저장하고 사용자 정보를 업데이트
+        UserEntity updatedUserEntity = userRepository.save(userEntity);
+
+        // 4. 업데이트된 사용자 엔티티 반환
+        return updatedUserEntity;
+    }
+
+
     /**설명.
      *  S3에서 기존 프로필 이미지를 삭제하는 메서드.
      *설명.
