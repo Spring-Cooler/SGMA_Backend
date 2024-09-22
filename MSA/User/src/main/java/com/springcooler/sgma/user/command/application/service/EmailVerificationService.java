@@ -1,11 +1,15 @@
 package com.springcooler.sgma.user.command.application.service;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -23,18 +27,38 @@ public class EmailVerificationService {
     public void sendVerificationEmail(String email) {
         String verificationCode = generateVerificationCode();
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(email);
-        message.setSubject("SGMA 이메일 인증 코드");
-        message.setText("안녕하세요,\n\n"
-                + "SGMA를 이용해주셔서 감사합니다. 아래 인증 코드를 입력하여 이메일 인증을 완료해 주세요.\n\n"
-                + "인증 코드: " + verificationCode + "\n\n"
-                + "인증 코드는 5분 동안 유효합니다.\n"
-                + "궁금한 사항이 있으시면 언제든지 문의해 주세요.\n\n"
-                + "감사합니다,\n"
-                + "SGMA 팀");
-        mailSender.send(message);
+        //필기. HTML 형식의 이메일 전송을 위한 객체
+        MimeMessage message = mailSender.createMimeMessage();
 
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setTo(email);
+            helper.setSubject("SGMA 이메일 인증 코드");
+
+            //필기. HTML 형식의 이메일 내용 작성
+            String content = "<div style='font-family: Arial, sans-serif; color: #333;'>"
+                    + "<h2 style='color: #A1B872;'>안녕하세요,</h2>"
+                    + "<p>SGMA에 가입해 주셔서 감사합니다.</p>"
+                    + "<p>이메일 인증을 완료하시려면 아래의 <strong style='color: #A1B872;'>6자리 인증 코드</strong>를 입력해 주세요:</p>"
+                    + "<div style='margin: 20px 0; padding: 10px; border: 1px solid #A1B872; display: inline-block; font-size: 1.5em;'>"
+                    + verificationCode + "</div>"
+                    + "<p>이 인증 코드는 발송된 시점으로부터 <strong>5분간 유효</strong>합니다.</p>"
+                    + "<p>문의사항이 있으시면 언제든지 저희 팀으로 연락 주시기 바랍니다.</p>"
+                    + "<br>"
+                    + "<p>감사합니다.<br>SGMA 팀 드림</p>"
+                    + "<hr style='border: none; border-top: 1px solid #ddd;'>"
+                    + "<p style='font-size: 0.9em; color: #999;'>이 메일은 발신 전용입니다. 답장을 보내지 말아 주세요.</p>"
+                    + "</div>";
+
+            // HTML 내용을 설정
+            helper.setText(content, true);
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            // 예외 처리 로직 추가
+        }
+
+        mailSender.send(message);
         saveVerificationCode(email, verificationCode);
     }
 
@@ -57,10 +81,17 @@ public class EmailVerificationService {
         stringRedisTemplate.opsForValue().set(email, code, VERIFICATION_CODE_TTL, TimeUnit.MINUTES); 
     }
 
-    //필기. 6자리 난수 발생 (0~999999)
+    //필기. 6자리 랜덤문자열 발생 ()
     private String generateVerificationCode() {
-        Random random = new Random();
-        int code = random.nextInt(999999);
-        return String.format("%06d", code);
+        // 사용할 수 있는 문자들: 대문자, 소문자, 숫자, 특수문자
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&";
+        SecureRandom random = new SecureRandom();
+        StringBuilder code = new StringBuilder(6);
+
+        for (int i = 0; i < 6; i++) {
+            int index = random.nextInt(characters.length());
+            code.append(characters.charAt(index));
+        }
+        return code.toString();
     }
 }

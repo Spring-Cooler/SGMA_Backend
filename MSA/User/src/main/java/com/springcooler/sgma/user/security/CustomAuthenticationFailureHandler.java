@@ -55,6 +55,4 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         ObjectMapper objectMapper = new ObjectMapper();
         response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
     }
-
-
 }

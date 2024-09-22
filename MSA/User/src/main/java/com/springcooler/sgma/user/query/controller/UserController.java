@@ -1,10 +1,10 @@
 package com.springcooler.sgma.user.query.controller;
 
+import com.springcooler.sgma.user.command.domain.aggregate.SignupPath;
 import com.springcooler.sgma.user.common.ResponseDTO;
-import com.springcooler.sgma.user.query.dto.RecruitmentBoardCommentDTO;
-import com.springcooler.sgma.user.query.dto.RequestUserIdentifierDTO;
-import com.springcooler.sgma.user.query.dto.UserCommentsAndRepliesDTO;
-import com.springcooler.sgma.user.query.dto.UserDTO;
+import com.springcooler.sgma.user.common.exception.CommonException;
+import com.springcooler.sgma.user.common.exception.ErrorCode;
+import com.springcooler.sgma.user.query.dto.*;
 import com.springcooler.sgma.user.query.service.RecruitmentCommentService;
 import com.springcooler.sgma.user.query.service.UserService;
 import org.hibernate.engine.jdbc.cursor.internal.RefCursorSupportInitiator;
@@ -46,12 +46,21 @@ public class UserController {
         return ResponseDTO.ok(userDTO);
     }
 
-    // 닉네임으로 사용자 조회
+    // 사용자 이메일로 사용자 조회
     @GetMapping("/identifier")
     public ResponseDTO<UserDTO> getUserByUserIdentifier(@RequestBody RequestUserIdentifierDTO requestUserIdentifierDTO) {
         UserDTO userDTO = userService.getUserByUserIdentifier(requestUserIdentifierDTO.getUserIdentifier());
         return ResponseDTO.ok(userDTO);
     }
+
+    @GetMapping("/auth-id")
+    public ResponseDTO<UserDTO> getUserByUserNameAndSignupPathAndEmail(@RequestBody RequestUserAuthIdDTO request) {
+        //필기. 닉네임, 가입 구분, 이메일이 일치하는 사용자가 있는지 확인
+        UserDTO userDTO = userService.findUserByUserNicknameAndSignupPathAndEmail(request.getNickname(), SignupPath.NORMAL, request.getEmail());
+        return ResponseDTO.ok(userDTO);
+    }
+
+
 
     // 회원별 댓글 조회 API
     @GetMapping("/comments/{userId}")

@@ -69,6 +69,26 @@ public class UserServiceImpl implements UserService {
         this.modelMapper = modelMapper;
     }
 
+
+    // 이름, 가입 구분, 이메일로 사용자 찾기
+    public UserDTO findUserByUserNicknameAndSignupPathAndEmail(String nickname, SignupPath signupPath, String email) {
+        UserEntity userEntity = userRepository.findByNicknameAndSignupPathAndEmail(nickname, signupPath, email);
+        if (userEntity == null) {
+            return null;
+        }
+        return modelMapper.map(userEntity, UserDTO.class);
+    }
+
+    // 아이디와 이메일로 사용자 찾기
+    public UserDTO findUserByUserAuthIdAndEmail(String userAuthId, String email) {
+        UserEntity userEntity = userRepository.findByUserAuthIdAndEmail(userAuthId, email);
+        if (userEntity == null) {
+            return null;
+        }
+        return modelMapper.map(userEntity, UserDTO.class);
+    }
+
+
     /**
      * 사용자 계정을 비활성화하는 메서드.
      */
@@ -96,6 +116,48 @@ public class UserServiceImpl implements UserService {
         userEntity.activateUser();  // 사용자 상태를 활성화(ACTIVE)로 변경
         return userRepository.save(userEntity);  // 변경된 상태를 저장
     }
+
+    //필기. 사용자 비밀번호 재설정
+    @Override
+    public UserEntity updatePassword(Long userId, String newPassword) {
+        // 1. 사용자 ID를 통해 사용자를 조회
+        Optional<UserEntity> user = userRepository.findById(userId);
+
+        //필기. 사용자 존재 검증
+        if (user.isEmpty()) {
+            // 사용자가 존재하지 않으면 예외 발생
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+        }
+
+        //필기. 비번 재설정시 이메일 인증여부 확인
+        UserEntity newUser=user.get();
+        // Redis에서 이메일 인증 여부 확인 (이메일이 있을 때만)
+        if (newUser.getEmail() != null && !newUser.getEmail().isEmpty()) {
+            String emailVerificationStatus = stringRedisTemplate.opsForValue().get(newUser.getEmail());
+            if (!"True".equals(emailVerificationStatus)) {
+                log.error("이메일 인증이 완료되지 않았습니다: {}", newUser.getEmail());
+                throw new CommonException(ErrorCode.EMAIL_VERIFICATION_REQUIRED); // 이메일 인증이 필요하다는 커스텀 예외 던지기
+            }
+        }
+
+        UserEntity userEntity = user.get();
+
+        // 2. 새로운 비밀번호를 암호화하여 설정
+        String encryptedPassword = bCryptPasswordEncoder.encode(newPassword);
+        userEntity.setEncryptedPwd(encryptedPassword);
+
+        // 3. 암호화된 비밀번호를 저장하고 사용자 정보를 업데이트
+        UserEntity updatedUserEntity = userRepository.save(userEntity);
+
+        //4. 비번 재설정 성공 후 Redis에서 이메일 키 삭제
+        if (newUser.getEmail() != null && !newUser.getEmail().isEmpty()) {
+            stringRedisTemplate.delete(newUser.getEmail());
+        }
+        
+        // 5. 업데이트된 사용자 엔티티 반환
+        return updatedUserEntity;
+    }
+
 
     /**설명.
      *  사용자의 프로필(닉네임, 이미지)을 업데이트하는 메서드.
@@ -144,31 +206,6 @@ public class UserServiceImpl implements UserService {
         userEntity.updateProfile(updatedNickname, updatedImageUrl);
         return userRepository.save(userEntity);
     }
-
-    //필기. 사용자 비밀번호 재설정
-    @Override
-    public UserEntity updatePassword(Long userId, String newPassword) {
-        // 1. 사용자 ID를 통해 사용자를 조회
-        Optional<UserEntity> user = userRepository.findById(userId);
-
-        if (user.isEmpty()) {
-            // 사용자가 존재하지 않으면 예외 발생
-            throw new CommonException(ErrorCode.NOT_FOUND_USER);
-        }
-
-        UserEntity userEntity = user.get();
-
-        // 2. 새로운 비밀번호를 암호화하여 설정
-        String encryptedPassword = bCryptPasswordEncoder.encode(newPassword);
-        userEntity.setEncryptedPwd(encryptedPassword);
-
-        // 3. 암호화된 비밀번호를 저장하고 사용자 정보를 업데이트
-        UserEntity updatedUserEntity = userRepository.save(userEntity);
-
-        // 4. 업데이트된 사용자 엔티티 반환
-        return updatedUserEntity;
-    }
-
 
     /**설명.
      *  S3에서 기존 프로필 이미지를 삭제하는 메서드.
@@ -272,8 +309,8 @@ public class UserServiceImpl implements UserService {
                 .createdAt(LocalDateTime.now().withNano(0))
                 .acceptStatus(AcceptStatus.Y)
                 .userStatus(ActiveStatus.ACTIVE)
-                .nickname("닉네임 없음")
-                .profileImage(defaultProfileImageUrl) // 기본 프로필 이미지 설정
+                .nickname(newUser.getUserName()) // 필기. 기본적으로 사용자 이름으로 설정
+                .profileImage(defaultProfileImageUrl) //필기. 기본 프로필 이미지 설정
                 .userIdentifier("NORMAL_" + newUser.getUserAuthId()) // user_identifier 생성
                 .build();
 
