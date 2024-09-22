@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class RequestLoginVO {
 
-    @JsonProperty("email")
-    private String email;
+    @JsonProperty("user_auth_id")
+    private String userAuthId;
 
     @JsonProperty("password")
     private String password;

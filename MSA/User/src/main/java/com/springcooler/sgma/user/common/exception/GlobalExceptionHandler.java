@@ -3,6 +3,7 @@ package com.springcooler.sgma.user.common.exception;
 import com.springcooler.sgma.user.common.ResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -59,4 +60,13 @@ public class GlobalExceptionHandler {
         log.error("handleDataIntegrityViolationException() in GlobalExceptionHandler : {}", e.getMessage());
         return ResponseDTO.fail(new CommonException(ErrorCode.DATA_INTEGRITY_VIOLATION));
     }
+
+   //필기. 로그인 실패시 작동하는 에러
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseDTO<?> handleBadCredentialsException(BadCredentialsException e) {
+        log.error("handleBadCredentialsException() in GlobalExceptionHandler: {}", e.getMessage());
+        return ResponseDTO.fail(new CommonException(ErrorCode.LOGIN_FAILURE));
+    }
+
+
 }

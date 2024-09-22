@@ -1,5 +1,6 @@
 package com.springcooler.sgma.studygroupboard.query.service;
 
+import com.springcooler.sgma.studygroupboard.query.dto.PageDTO;
 import com.springcooler.sgma.studygroupboard.query.dto.StudyGroupBoardDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -8,8 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 @Slf4j
 @SpringBootTest
@@ -24,9 +23,9 @@ class StudyGroupBoardServiceTests {
     void testFindStudyGroupBoardsByGroupId(Long groupId) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<StudyGroupBoardDTO> boards =
-                            studyGroupBoardService.findStudyGroupBoardsByGroupId(groupId);
-                    boards.forEach(x -> log.info(x.toString()));
+                    PageDTO<StudyGroupBoardDTO> page =
+                            studyGroupBoardService.findStudyGroupBoardsByGroupId(groupId, 1);
+                    page.getElements().forEach(x -> log.info(x.toString()));
                 }
         );
     }
@@ -37,9 +36,9 @@ class StudyGroupBoardServiceTests {
     void testFindStudyGroupBoardsByMemberId(Long memberId) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<StudyGroupBoardDTO> boards =
-                            studyGroupBoardService.findStudyGroupBoardsByMemberId(memberId);
-                    boards.forEach(x -> log.info(x.toString()));
+                    PageDTO<StudyGroupBoardDTO> page =
+                            studyGroupBoardService.findStudyGroupBoardsByMemberId(memberId, 1);
+                    page.getElements().forEach(x -> log.info(x.toString()));
                 }
         );
     }
@@ -50,9 +49,9 @@ class StudyGroupBoardServiceTests {
     void testFindStudyGroupBoardsByTitle(String title) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<StudyGroupBoardDTO> boards =
-                            studyGroupBoardService.findStudyGroupBoardsByTitle(title);
-                    boards.forEach(x -> log.info(x.toString()));
+                    PageDTO<StudyGroupBoardDTO> page =
+                            studyGroupBoardService.findStudyGroupBoardsByTitle(title, 1);
+                    page.getElements().forEach(x -> log.info(x.toString()));
                 }
         );
     }
@@ -63,9 +62,9 @@ class StudyGroupBoardServiceTests {
     void testFindStudyGroupBoardsByContent(String content) {
         Assertions.assertDoesNotThrow(
                 () -> {
-                    List<StudyGroupBoardDTO> boards =
-                            studyGroupBoardService.findStudyGroupBoardsByContent(content);
-                    boards.forEach(x -> log.info(x.toString()));
+                    PageDTO<StudyGroupBoardDTO> page =
+                            studyGroupBoardService.findStudyGroupBoardsByContent(content, 1);
+                    page.getElements().forEach(x -> log.info(x.toString()));
                 }
         );
     }

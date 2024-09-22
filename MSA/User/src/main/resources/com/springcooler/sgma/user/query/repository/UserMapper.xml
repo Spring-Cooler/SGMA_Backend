@@ -13,13 +13,14 @@
         password,
         nickname,
         email,
+        user_auth_id AS userAuthId,
         user_status AS userStatus,
         created_at AS createdAt,
         withdrawn_at AS withdrawnAt,
         profile_image AS profileImage,
         accept_status AS acceptStatus,
         signup_path AS signupPath,
-        CONCAT(signup_path, '_', email) AS userIdentifier  <!-- 신규 추가된 필드 -->
+        user_identifier AS userIdentifier  <!-- user_identifier 필드 변경 -->
         FROM USER
         WHERE user_id = #{userId}
     </select>
@@ -32,15 +33,35 @@
         password,
         nickname,
         email,
+        user_auth_id AS userAuthId,
         user_status AS userStatus,
         created_at AS createdAt,
         withdrawn_at AS withdrawnAt,
         profile_image AS profileImage,
         accept_status AS acceptStatus,
         signup_path AS signupPath,
-        CONCAT(signup_path, '_', email) AS userIdentifier  <!-- 신규 추가된 필드 -->
+        user_identifier AS userIdentifier  <!-- user_identifier 필드 변경 -->
         FROM USER
         WHERE nickname = #{nickname}
     </select>
 
+    <!-- 사용자 userIdentifier로 조회 -->
+    <select id="findByUserIdentifier" parameterType="String" resultType="com.springcooler.sgma.user.query.dto.UserDTO">
+        SELECT
+        user_id AS userId,
+        user_name AS userName,
+        password,
+        nickname,
+        email,
+        user_auth_id AS userAuthId,
+        user_status AS userStatus,
+        created_at AS createdAt,
+        withdrawn_at AS withdrawnAt,
+        profile_image AS profileImage,
+        accept_status AS acceptStatus,
+        signup_path AS signupPath,
+        user_identifier AS userIdentifier  <!-- user_identifier 필드 변경 -->
+        FROM USER
+        WHERE user_identifier = #{userIdentifier}
+    </select>
 </mapper>

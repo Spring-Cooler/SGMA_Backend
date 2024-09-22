@@ -7,12 +7,10 @@ import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudySchedul
 import com.springcooler.sgma.studyschedule.common.exception.CommonException;
 import com.springcooler.sgma.studyschedule.common.exception.ErrorCode;
 import com.springcooler.sgma.submittedanswer.command.application.service.AppSubmittedAnswerService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
 @Service
 public class InfraStudyScheduleParticipantServiceImpl implements InfraStudyScheduleParticipantService {
 
@@ -71,9 +69,8 @@ public class InfraStudyScheduleParticipantServiceImpl implements InfraStudySched
 
     @Transactional
     @Override
-    public double gradeAndUpdateParticipantScore(long scheduleId, long participantId) {
+    public Double gradeAndUpdateParticipantScore(Long scheduleId, Long participantId) {
         double score = appSubmittedAnswerService.gradeSubmittedAnswersByScheduleIdAndParticipantId(scheduleId, participantId);
-        log.debug("score: {}", score);
         StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
 

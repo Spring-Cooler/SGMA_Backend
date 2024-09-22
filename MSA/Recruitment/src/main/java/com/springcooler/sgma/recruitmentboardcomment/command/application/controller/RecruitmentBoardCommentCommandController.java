@@ -24,7 +24,7 @@ public class RecruitmentBoardCommentCommandController {
 
     @PostMapping("/{recruitmentBoardId}")
     @Operation(summary = "모집글 댓글 작성")
-    public ResponseDTO<RecruitmentBoardComment> createComment(@PathVariable("recruitmentBoardId") Long recruitmentBoardId, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
+    public ResponseDTO<?> createComment(@PathVariable("recruitmentBoardId") Long recruitmentBoardId, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
         RecruitmentBoardComment createdComment = recruitmentBoardCommentCommandService.createRecruitmentBoardComment(recruitmentBoardId, recruitmentBoardCommentCommandDTO);
         return ResponseDTO.ok(createdComment);
     }

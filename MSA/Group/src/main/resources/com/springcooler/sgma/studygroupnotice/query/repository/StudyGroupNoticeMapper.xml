@@ -13,7 +13,7 @@
         <result property="groupId" column="GROUP_ID"/>
     </resultMap>
 
-    <select id="findStudyGroupNoticesByGroupId" resultMap="studyGroupNoticeResultMap" parameterType="Long">
+    <select id="findStudyGroupNoticesByGroupId" resultMap="studyGroupNoticeResultMap" parameterType="map">
         SELECT
                A.NOTICE_ID
              , A.TITLE
@@ -24,6 +24,8 @@
              , A.GROUP_ID
           FROM STUDY_GROUP_NOTICE A
          WHERE A.GROUP_ID = #{ groupId } AND A.ACTIVE_STATUS = 'ACTIVE'
+         ORDER BY A.NOTICE_ID DESC
+         LIMIT #{ elementsPerPage } OFFSET #{ offset }
     </select>
 
     <select id="findStudyGroupNoticeByNoticeId" resultMap="studyGroupNoticeResultMap" parameterType="Long">
@@ -39,7 +41,7 @@
          WHERE A.NOTICE_ID = #{ noticeId } AND A.ACTIVE_STATUS = 'ACTIVE'
     </select>
 
-    <select id="findStudyGroupNoticesByTitle" resultMap="studyGroupNoticeResultMap" parameterType="string">
+    <select id="findStudyGroupNoticesByTitle" resultMap="studyGroupNoticeResultMap" parameterType="map">
         SELECT
                A.NOTICE_ID
              , A.TITLE
@@ -50,9 +52,11 @@
              , A.GROUP_ID
           FROM STUDY_GROUP_NOTICE A
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.TITLE LIKE CONCAT('%', #{ title }, '%')
+         ORDER BY A.NOTICE_ID DESC
+         LIMIT #{ elementsPerPage } OFFSET #{ offset }
     </select>
 
-    <select id="findStudyGroupNoticesByContent" resultMap="studyGroupNoticeResultMap" parameterType="string">
+    <select id="findStudyGroupNoticesByContent" resultMap="studyGroupNoticeResultMap" parameterType="map">
         SELECT
                A.NOTICE_ID
              , A.TITLE
@@ -61,6 +65,29 @@
              , A.UPDATED_AT
              , A.ACTIVE_STATUS
              , A.GROUP_ID
+          FROM STUDY_GROUP_NOTICE A
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.CONTENT LIKE CONCAT('%', #{ content }, '%')
+         ORDER BY A.NOTICE_ID DESC
+         LIMIT #{ elementsPerPage } OFFSET #{ offset }
+    </select>
+
+    <select id="getTotalElementsByGroupId" resultType="Integer" parameterType="Long">
+        SELECT
+               COUNT(*) AS TOTAL
+          FROM STUDY_GROUP_NOTICE A
+         WHERE A.GROUP_ID = #{ groupId } AND A.ACTIVE_STATUS = 'ACTIVE'
+    </select>
+
+    <select id="getTotalElementsByTitle" resultType="Integer" parameterType="string">
+        SELECT
+               COUNT(*) AS TOTAL
+          FROM STUDY_GROUP_NOTICE A
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.TITLE LIKE CONCAT('%', #{ title }, '%')
+    </select>
+
+    <select id="getTotalElementsByContent" resultType="Integer" parameterType="string">
+        SELECT
+               COUNT(*) AS TOTAL
           FROM STUDY_GROUP_NOTICE A
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.CONTENT LIKE CONCAT('%', #{ content }, '%')
     </select>

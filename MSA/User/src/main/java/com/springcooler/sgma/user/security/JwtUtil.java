@@ -62,6 +62,7 @@ public class JwtUtil {
     public Authentication getAuthentication(String token) {
         String userIdentifier = this.getUserId(token);
         UserDetails userDetails = userService.loadUserByUsername(userIdentifier); // userIdentifier로 사용자 로드
+        log.info("userDetails 확인: {}", userDetails);
 
         Claims claims = parseClaims(token);
         log.info("넘어온 AccessToken claims 확인: {}", claims);

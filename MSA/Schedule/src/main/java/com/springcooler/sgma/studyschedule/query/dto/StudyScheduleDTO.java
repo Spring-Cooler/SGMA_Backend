@@ -1,15 +1,16 @@
 package com.springcooler.sgma.studyschedule.query.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.springcooler.sgma.studyschedule.command.domain.aggregate.StudyScheduleStatus;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.*;
 
 import java.sql.Timestamp;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class StudyScheduleDTO {
 
     @JsonProperty("schedule_id")
@@ -30,8 +31,9 @@ public class StudyScheduleDTO {
     @JsonProperty("num_participants")
     private Integer numParticipants;
 
+    @Enumerated(EnumType.STRING)
     @JsonProperty("active_status")
-    private String activeStatus;
+    private StudyScheduleStatus activeStatus;
 
     @JsonProperty("test_status")
     private String testStatus;

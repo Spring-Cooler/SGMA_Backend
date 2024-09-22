@@ -1,15 +1,11 @@
 package com.springcooler.sgma;
 
-
-
-
-import com.springcooler.sgma.recruitmentboardlike.command.application.service.RecruitmentBoardLikeServiceImpl;
+import com.springcooler.sgma.recruitmentboard.query.service.RecruitmentBoardService;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
@@ -18,7 +14,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = "com.springcooler.sgma.studygroupapplicant.command.infrastructure.service")
 public class SgmaApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(SgmaApplication.class, args);
 	}

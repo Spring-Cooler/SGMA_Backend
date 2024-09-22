@@ -27,9 +27,12 @@ public class UserEntity {
     @Column(name = "email", length = 255)
     private String email;
 
+    @Column(name = "user_auth_id", nullable = false, length = 255)
+    private String userAuthId; // 신규 추가, 일반 로그인 ID 또는 소셜 로그인 고유번호
+
     @Enumerated(EnumType.STRING)
     @Column(name = "user_status", nullable = false, length = 255)
-    private ActiveStatus userStatus =  ActiveStatus.ACTIVE;
+    private ActiveStatus userStatus = ActiveStatus.ACTIVE;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -49,12 +52,12 @@ public class UserEntity {
     private SignupPath signupPath;
 
     @Column(name = "user_identifier", nullable = false, unique = true, length = 511)
-    private String userIdentifier; // 신규 추가
+    private String userIdentifier; // signup_path + user_auth_id 조합으로 생성
 
     @PrePersist
     public void prePersist() {
-        // userIdentifier를 signupPath와 email을 기반으로 생성
-        this.userIdentifier = this.signupPath + "_" + this.email;
+        // userIdentifier를 signupPath와 userAuthId를 기반으로 생성
+        this.userIdentifier = this.signupPath + "_" + this.userAuthId;
     }
 
     public void deactivateUser() {

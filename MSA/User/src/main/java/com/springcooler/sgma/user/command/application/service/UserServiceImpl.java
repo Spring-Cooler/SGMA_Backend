@@ -11,6 +11,7 @@ import com.springcooler.sgma.user.command.domain.aggregate.AcceptStatus;
 import com.springcooler.sgma.user.command.domain.aggregate.ActiveStatus;
 import com.springcooler.sgma.user.command.domain.aggregate.SignupPath;
 import com.springcooler.sgma.user.command.domain.aggregate.UserEntity;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.RequestResistUserVO;
 import com.springcooler.sgma.user.command.domain.repository.UserRepository;
 import com.springcooler.sgma.user.common.exception.CommonException;
 import com.springcooler.sgma.user.common.exception.ErrorCode;
@@ -144,6 +145,31 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(userEntity);
     }
 
+    //필기. 사용자 비밀번호 재설정
+    @Override
+    public UserEntity updatePassword(Long userId, String newPassword) {
+        // 1. 사용자 ID를 통해 사용자를 조회
+        Optional<UserEntity> user = userRepository.findById(userId);
+
+        if (user.isEmpty()) {
+            // 사용자가 존재하지 않으면 예외 발생
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+        }
+
+        UserEntity userEntity = user.get();
+
+        // 2. 새로운 비밀번호를 암호화하여 설정
+        String encryptedPassword = bCryptPasswordEncoder.encode(newPassword);
+        userEntity.setEncryptedPwd(encryptedPassword);
+
+        // 3. 암호화된 비밀번호를 저장하고 사용자 정보를 업데이트
+        UserEntity updatedUserEntity = userRepository.save(userEntity);
+
+        // 4. 업데이트된 사용자 엔티티 반환
+        return updatedUserEntity;
+    }
+
+
     /**설명.
      *  S3에서 기존 프로필 이미지를 삭제하는 메서드.
      *설명.
@@ -216,31 +242,39 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDTO registUser(UserDTO userDTO) {
+    public UserDTO registUser(RequestResistUserVO newUser) {
 
         // 일반 회원가입인데 동일한 UserIdentifier가 존재하는지 확인(이메일 중복 검증)
-        UserEntity existingUser = userRepository.findByUserIdentifier("NORMAL_" + userDTO.getEmail());
+        UserEntity existingUser = userRepository.findByUserIdentifier("NORMAL_" + newUser.getUserAuthId());
         if (existingUser != null) {
-            throw new CommonException(ErrorCode.EXIST_USER);
+            throw new CommonException(ErrorCode.EXIST_USER_ID);
         }
 
-        // Redis에서 이메일 인증 여부 확인
-        String emailVerificationStatus = stringRedisTemplate.opsForValue().get(userDTO.getEmail());
 
-        if (!"True".equals(emailVerificationStatus)) {
-            log.error("이메일 인증이 완료되지 않았습니다: {}", userDTO.getEmail());
-            throw new CommonException(ErrorCode.EMAIL_VERIFICATION_REQUIRED); // 이메일 인증이 필요하다는 커스텀 예외 던지기
+        // Redis에서 이메일 인증 여부 확인 (이메일이 있을 때만)
+        if (newUser.getEmail() != null && !newUser.getEmail().isEmpty()) {
+            String emailVerificationStatus = stringRedisTemplate.opsForValue().get(newUser.getEmail());
+            if (!"True".equals(emailVerificationStatus)) {
+                log.error("이메일 인증이 완료되지 않았습니다: {}", newUser.getEmail());
+                throw new CommonException(ErrorCode.EMAIL_VERIFICATION_REQUIRED); // 이메일 인증이 필요하다는 커스텀 예외 던지기
+            }
         }
-
+        
+        //필기. aws s3에 올라갈 프로필(추후에 변경 예정)
+        String defaultProfileImageUrl = "https://example.com/default-profile.png"; // 기본 프로필 이미지 URL
+        
         // UserDTO 설정 (유효성 검사 후)
         UserDTO newUserDTO = UserDTO.builder()
-                .userName(userDTO.getUserName())
-                .email(userDTO.getEmail())
+                .userAuthId(newUser.getUserAuthId())  // 사용자가 입력한 ID
+                .userName(newUser.getUserName())
+                .email(newUser.getEmail())
                 .signupPath(SignupPath.NORMAL)
                 .createdAt(LocalDateTime.now().withNano(0))
                 .acceptStatus(AcceptStatus.Y)
                 .userStatus(ActiveStatus.ACTIVE)
-                .userIdentifier("NORMAL_" + userDTO.getEmail())
+                .nickname("닉네임 없음")
+                .profileImage(defaultProfileImageUrl) // 기본 프로필 이미지 설정
+                .userIdentifier("NORMAL_" + newUser.getUserAuthId()) // user_identifier 생성
                 .build();
 
         // DTO -> Entity 변환
@@ -248,25 +282,32 @@ public class UserServiceImpl implements UserService {
         log.info("Service 계층에서 DTO -> Entity: {}", userEntity);
 
         // 비밀번호 암호화
-        userEntity.setEncryptedPwd(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+        userEntity.setEncryptedPwd(bCryptPasswordEncoder.encode(newUser.getPassword()));
 
         // Entity 저장 후 반환된 Entity 가져오기
         UserEntity savedEntity = userRepository.save(userEntity);
 
         // 회원가입 성공 후 Redis에서 이메일 키 삭제
-        stringRedisTemplate.delete(userDTO.getEmail());
+        if (newUser.getEmail() != null && !newUser.getEmail().isEmpty()) {
+            stringRedisTemplate.delete(newUser.getEmail());
+        }
 
         // 저장된 Entity를 DTO로 변환하여 반환
         return modelMapper.map(savedEntity, UserDTO.class);
     }
 
+    @Override
+    public UserEntity findByUserIdentifier(String userIdentifier) {
+        return userRepository.findByUserIdentifier(userIdentifier);
+    }
+
+
     /* 설명. 로그인 시 security가 자동으로 호출하는 메소드 */
     @Override
     public UserDetails loadUserByUsername(String userIdentifier) throws UsernameNotFoundException {
 
-        /* 설명. 넘어온 email과 가입경로를 사용자가 입력한 id로써 회원을 조회하는 쿼리 메소드 작성 */
+        /* 설명. 넘어온 user_auth_id와 signupPath를 사용자가 입력한 id로써 회원을 조회하는 쿼리 메소드 작성 */
         UserEntity loginUser = userRepository.findByUserIdentifier(userIdentifier);
-
         if (loginUser == null) {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
@@ -276,7 +317,7 @@ public class UserServiceImpl implements UserService {
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ENTERPRISE"));
 
-        return new User(loginUser.getEmail(), loginUser.getEncryptedPwd(),
+        return new User(loginUser.getUserAuthId(), loginUser.getEncryptedPwd(),
                 true, true, true, true,
                 grantedAuthorities);
     }

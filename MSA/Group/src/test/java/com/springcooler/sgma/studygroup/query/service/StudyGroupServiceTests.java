@@ -1,5 +1,6 @@
 package com.springcooler.sgma.studygroup.query.service;
 
+import com.springcooler.sgma.studygroup.query.dto.MyStudyGroupDTO;
 import com.springcooler.sgma.studygroup.query.dto.StudyGroupDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -86,6 +87,18 @@ class StudyGroupServiceTests {
                 () -> {
                     StudyGroupDTO studyGroup = studyGroupService.findStudyGroupByGroupName(groupName);
                     log.info(studyGroup.toString());
+                }
+        );
+    }
+
+    @DisplayName("내가 가입한 스터디그룹 조회 테스트")
+    @ParameterizedTest
+    @ValueSource(longs = 1L)
+    void testFindStudyGroupsByUserId(Long userId) {
+        Assertions.assertDoesNotThrow(
+                () -> {
+                    List<MyStudyGroupDTO> studyGroups = studyGroupService.findStudyGroupsByUserId(userId);
+                    studyGroups.forEach(x -> log.info(x.toString()));
                 }
         );
     }

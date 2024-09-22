@@ -12,6 +12,16 @@
         <result property="studyGroupCategoryId" column="STUDY_GROUP_CATEGORY_ID"/>
     </resultMap>
 
+    <resultMap id="myStudyGroupResultMap" type="com.springcooler.sgma.studygroup.query.dto.MyStudyGroupDTO">
+        <id property="groupId" column="GROUP_ID"/>
+        <result property="groupName" column="GROUP_NAME"/>
+        <result property="studyGroupCategoryId" column="STUDY_GROUP_CATEGORY_ID"/>
+        <result property="categoryName" column="STUDY_GROUP_CATEGORY_NAME"/>
+        <result property="memberId" column="MEMBER_ID"/>
+        <result property="memberEnrolledAt" column="MEMBER_ENROLLED_AT"/>
+        <result property="groupRole" column="GROUP_ROLE"/>
+    </resultMap>
+
     <select id="findAllStudyGroups" resultMap="studyGroupResultMap">
         SELECT
                A.GROUP_ID
@@ -49,9 +59,9 @@
           FROM STUDY_GROUP A
           JOIN STUDY_GROUP_MEMBER B
             ON A.GROUP_ID = B.GROUP_ID
-          JOIN USER C
-            ON B.USER_ID = C.USER_ID
-         WHERE C.USER_ID = #{ participantId } AND A.ACTIVE_STATUS = 'ACTIVE'
+         WHERE B.USER_ID = #{ participantId }
+           AND A.ACTIVE_STATUS = 'ACTIVE'
+           AND B.MEMBER_STATUS = 'ACTIVE'
          ORDER BY A.GROUP_ID
     </select>
 
@@ -90,5 +100,25 @@
              , A.STUDY_GROUP_CATEGORY_ID
           FROM STUDY_GROUP A
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.GROUP_NAME LIKE CONCAT('%', #{ groupName }, '%')
+    </select>
+
+    <select id="findStudyGroupsByUserId" resultMap="myStudyGroupResultMap" parameterType="Long">
+        SELECT
+               A.GROUP_ID
+             , A.GROUP_NAME
+             , A.STUDY_GROUP_CATEGORY_ID
+             , B.STUDY_GROUP_CATEGORY_NAME
+             , C.MEMBER_ID
+             , C.MEMBER_ENROLLED_AT
+             , C.GROUP_ROLE
+          FROM STUDY_GROUP A
+          JOIN STUDY_GROUP_CATEGORY B
+            ON A.STUDY_GROUP_CATEGORY_ID = B.STUDY_GROUP_CATEGORY_ID
+          JOIN STUDY_GROUP_MEMBER C
+            ON A.GROUP_ID = C.GROUP_ID
+         WHERE C.USER_ID = #{ userId }
+           AND A.ACTIVE_STATUS = 'ACTIVE'
+           AND C.MEMBER_STATUS = 'ACTIVE'
+         ORDER BY A.GROUP_ID
     </select>
 </mapper>

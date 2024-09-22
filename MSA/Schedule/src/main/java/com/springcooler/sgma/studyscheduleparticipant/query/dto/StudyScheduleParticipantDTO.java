@@ -5,9 +5,7 @@ import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 public class StudyScheduleParticipantDTO {
 
     @JsonProperty("participant_id")
@@ -26,7 +24,7 @@ public class StudyScheduleParticipantDTO {
     private Integer numSubmittedProblems;
 
     @JsonProperty("test_score")
-    private Double testScore;
+    private Integer testScore;
 
     @JsonProperty("test_percentage")
     private Double testPercentage;

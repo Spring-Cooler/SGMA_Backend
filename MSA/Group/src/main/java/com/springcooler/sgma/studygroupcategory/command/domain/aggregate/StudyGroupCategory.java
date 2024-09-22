@@ -15,7 +15,7 @@ public class StudyGroupCategory {
     @Id
     @Column(name="STUDY_GROUP_CATEGORY_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
+    private Integer categoryId;
 
     @Column(name="STUDY_GROUP_CATEGORY_NAME")
     private String categoryName;

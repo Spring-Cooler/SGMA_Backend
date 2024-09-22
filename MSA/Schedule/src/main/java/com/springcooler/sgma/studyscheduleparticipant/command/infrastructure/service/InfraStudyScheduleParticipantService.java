@@ -8,5 +8,5 @@ public interface InfraStudyScheduleParticipantService {
     void decreaseNumSubmittedProblems(Long scheduleId, Long participantId);
 
     // 특정 참가자의 채점 점수를 가져오는 메서드
-    double gradeAndUpdateParticipantScore(long scheduleId, long participantId);
+    Double gradeAndUpdateParticipantScore(Long scheduleId, Long participantId);
 }

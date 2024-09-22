@@ -1,5 +1,6 @@
 package com.springcooler.sgma.studygroup.query.service;
 
+import com.springcooler.sgma.studygroup.query.dto.MyStudyGroupDTO;
 import com.springcooler.sgma.studygroup.query.dto.StudyGroupDTO;
 import com.springcooler.sgma.studygroup.query.repository.StudyGroupMapper;
 import com.springcooler.sgma.studygroup.common.exception.CommonException;
@@ -77,6 +78,16 @@ public class StudyGroupServiceImpl implements StudyGroupService {
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP);
         }
         return studyGroup;
+    }
+
+    // 내가 가입한 스터디 그룹 전체 조회
+    @Override
+    public List<MyStudyGroupDTO> findStudyGroupsByUserId(Long userId) {
+        List<MyStudyGroupDTO> studyGroups = studyGroupMapper.findStudyGroupsByUserId(userId);
+        if(studyGroups == null || studyGroups.isEmpty()) {
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP);
+        }
+        return studyGroups;
     }
 
 }
