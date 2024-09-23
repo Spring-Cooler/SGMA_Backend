@@ -2,18 +2,20 @@ package com.springcooler.sgma.user.command.application.controller;
 
 import com.springcooler.sgma.user.command.application.dto.*;
 import com.springcooler.sgma.user.command.application.service.EmailVerificationService;
+import com.springcooler.sgma.user.command.application.service.OAuth2LoginService;
 import com.springcooler.sgma.user.command.domain.aggregate.AcceptStatus;
 import com.springcooler.sgma.user.command.domain.aggregate.ActiveStatus;
 import com.springcooler.sgma.user.command.domain.aggregate.SignupPath;
-import com.springcooler.sgma.user.command.domain.aggregate.vo.RequestResistUserVO;
-import com.springcooler.sgma.user.command.domain.aggregate.vo.RequestUpdatePasswordUserVO;
-import com.springcooler.sgma.user.command.domain.aggregate.vo.ResponseEmailMessageVO;
-import com.springcooler.sgma.user.command.domain.aggregate.vo.ResponseUserVO;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.*;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.kakao.KakaoAuthorizationCode;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.naver.NaverAuthorizationCode;
 import com.springcooler.sgma.user.common.ResponseDTO;
 import com.springcooler.sgma.user.common.exception.CommonException;
 import com.springcooler.sgma.user.common.exception.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.springcooler.sgma.user.command.application.service.UserService;
@@ -29,11 +31,15 @@ public class UserController {
     private final Environment env;
     private final UserService userService;
     private final ModelMapper modelMapper;
+
+    private final OAuth2LoginService oAuth2LoginService;
     @Autowired
-    public UserController(Environment env, UserService userService,ModelMapper modelMapper) {
+    public UserController(Environment env, UserService userService,ModelMapper modelMapper,
+                          OAuth2LoginService oAuth2LoginService) {
         this.env = env;
         this.userService = userService;
         this.modelMapper=modelMapper;
+        this.oAuth2LoginService = oAuth2LoginService;
     }
 
     @GetMapping("/health")
@@ -160,6 +166,33 @@ public class UserController {
         } else {
             return ResponseDTO.fail(new CommonException(ErrorCode.INVALID_VERIFICATION_CODE));
         }
+    }
+
+    //설명. 카카오 로그인, 네이버 로그인
+    @PostMapping("/oauth2/kakao")
+    public ResponseEntity<Void> loginWithKakao(@RequestBody KakaoAuthorizationCode code) {
+        AuthTokens tokens = oAuth2LoginService.loginWithKakao(code.getCode());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + tokens.getAccessToken());
+        headers.set("Refresh-Token", tokens.getRefreshToken());
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .build();
+    }
+
+    @PostMapping("/oauth2/naver")
+    public ResponseEntity<Void> loginWithNaver(@RequestBody NaverAuthorizationCode code) {
+        AuthTokens tokens = oAuth2LoginService.loginWithNaver(code);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + tokens.getAccessToken());
+        headers.set("Refresh-Token", tokens.getRefreshToken());
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .build();
     }
 
 }

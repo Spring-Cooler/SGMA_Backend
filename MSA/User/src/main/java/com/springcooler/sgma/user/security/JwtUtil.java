@@ -1,6 +1,8 @@
 package com.springcooler.sgma.user.security;
 
+import com.springcooler.sgma.user.command.application.dto.UserDTO;
 import com.springcooler.sgma.user.command.application.service.UserService;
+import com.springcooler.sgma.user.command.domain.aggregate.UserEntity;
 import com.springcooler.sgma.user.common.exception.CommonException;
 import com.springcooler.sgma.user.common.exception.ErrorCode;
 import io.jsonwebtoken.*;
@@ -16,31 +18,32 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Component
 public class JwtUtil {
-    private final Key key;
+
+    private final Key secretKey;
     private UserService userService;
+    private long expirationTime;
 
     public JwtUtil(
-            @Value("${token.secret}") String secretKey
-            ,UserService userService
+            @Value("${token.secret}") String secretKey,
+            @Value("${token.expiration_time}") long expirationTime,
+            UserService userService
     ) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        this.key = Keys.hmacShaKeyFor(keyBytes);
+        this.secretKey = Keys.hmacShaKeyFor(keyBytes);
+        this.expirationTime = expirationTime;
         this.userService=userService;
     }
 
     /* 설명. Token 검증(Bearer 토큰이 넘어왔고, 우리 사이트의 secret key로 만들어 졌는가, 만료되었는지와 내용이 비어있진 않은지) */
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT Token {}", e);
@@ -84,12 +87,34 @@ public class JwtUtil {
 
     /* 설명. Token에서 Claims 추출 */
     public Claims parseClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
     }
 
     /* 설명. Token에서 사용자의 id(subject 클레임) 추출 */
     public String getUserId(String token) {
         return parseClaims(token).getSubject();
+    }
+
+
+
+    /* 설명. 토큰 생성 메소드 수정 */
+    public String generateToken(UserEntity user, List<String> roles) {
+        // subject를 가입구분_{고유번호} 형식으로 설정
+        String subject = user.getSignupPath().name() + "_" + user.getUserAuthId();
+
+        // JWT Claims 설정
+        Claims claims = Jwts.claims().setSubject(subject);
+        claims.put("email", user.getEmail());
+        claims.put("name", user.getUserName());
+        claims.put("auth", roles); // roles 정보를 auth에 추가
+
+        // 토큰 생성 및 서명
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .signWith(secretKey, SignatureAlgorithm.HS512) // key와 알고리즘을 사용하여 서명
+                .compact();
     }
 
 }
