@@ -10,16 +10,16 @@ import java.util.List;
 public interface StudyScheduleMapper {
 
     // 스터디 그룹 일정 단건 조회
-    StudyScheduleDTO findStudyScheduleByScheduleId(long scheduleId);
+    StudyScheduleDTO findStudyScheduleByScheduleId(Long scheduleId);
 
     // 스터디 그룹 일정 전체 조회
-    List<StudyScheduleDTO> findStudyScheduleByGroupId(long groupId);
+    List<StudyScheduleDTO> findStudyScheduleByGroupId(Long groupId);
 
     // 스터디 그룹 일정 기간별 조회
-    List<StudyScheduleDTO> findStudySchedulesByPeriod(long groupId, String startDate, String endDate);
+    List<StudyScheduleDTO> findStudySchedulesByPeriod(Long groupId, String startDate, String endDate);
 
     // 스터디 그룹 일정 시험의 통계 자료 조회
-    StudyScheduleDTO findStudyScheduleByStatistics(long scheduleId);
+    StudyScheduleDTO findStudyScheduleByStatistics(Long scheduleId);
 
-    List<Long> findParticipantsByScheduleId(long scheduleId);
+    List<Long> findParticipantsByScheduleId(Long scheduleId);
 }

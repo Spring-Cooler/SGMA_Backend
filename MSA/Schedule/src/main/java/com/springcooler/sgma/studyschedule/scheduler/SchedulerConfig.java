@@ -1,16 +1,15 @@
 package com.springcooler.sgma.studyschedule.scheduler;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.context.annotation.Configuration;
 
-public class SchedulerConfig {
-
+@Configuration
+public class SchedulerConfig{
     @Bean
-    public TaskScheduler taskScheduler(){
-        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+    TrackingThreadPoolTaskScheduler trackingThreadPoolTaskScheduler(){
+        TrackingThreadPoolTaskScheduler scheduler = new TrackingThreadPoolTaskScheduler();
         scheduler.setPoolSize(5);
-        scheduler.initialize();
+
         return scheduler;
     }
 }
