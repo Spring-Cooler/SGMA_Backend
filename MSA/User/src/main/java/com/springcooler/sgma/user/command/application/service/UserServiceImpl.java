@@ -178,12 +178,17 @@ public class UserServiceImpl implements UserService {
         String imageUrl = null;
 
 
-        // 닉네임 중복 검증 (닉네임이 변경되는 경우에만)
-        if (userUpdateDTO.getNickname() != null && !userUpdateDTO.getNickname().equals(userEntity.getNickname())) {
+        // 닉네임 중복 검증(null이 아니고 기존과 같지 않은 경우에)
+        if (userUpdateDTO.getNickname() != null ) {
+
+            if (userUpdateDTO.getNickname().equals(userEntity.getNickname()))
+            {
+                throw new CommonException(ErrorCode.DUPLICATE_NICKNAME);
+            }
 
             Optional<UserEntity> existingUserWithSameNickname = userRepository.findByNickname(userUpdateDTO.getNickname());
             if (existingUserWithSameNickname.isPresent()) {
-                throw new CommonException(ErrorCode.DUPLICATE_NICKNAME); // 커스텀 예외 던지기 (DUPLICATE_NICKNAME은 정의된 에러 코드로 가정)
+                throw new CommonException(ErrorCode.DUPLICATE_NICKNAME_EXISTS); // 커스텀 예외 던지기 (DUPLICATE_NICKNAME은 정의된 에러 코드로 가정)
             }
         }
 
@@ -297,6 +302,17 @@ public class UserServiceImpl implements UserService {
             }
         }
         
+        //필기. 일반 회원가입시 닉네임 중복 검증 로직
+        if(newUser.getNickname()==null){
+            throw new CommonException(ErrorCode.INVALID_INPUT_NICKNAME);
+        }
+        Optional<UserEntity> existingUserWithSameNickname = userRepository.findByNickname(newUser.getNickname());
+        if (existingUserWithSameNickname.isPresent()) {
+            throw new CommonException(ErrorCode.DUPLICATE_NICKNAME_EXISTS); // 커스텀 예외 던지기 (DUPLICATE_NICKNAME은 정의된 에러 코드로 가정)
+        }
+
+
+
         //필기. aws s3에 올라갈 프로필(추후에 변경 예정)
         String defaultProfileImageUrl = "https://example.com/default-profile.png"; // 기본 프로필 이미지 URL
         
@@ -309,7 +325,7 @@ public class UserServiceImpl implements UserService {
                 .createdAt(LocalDateTime.now().withNano(0))
                 .acceptStatus(AcceptStatus.Y)
                 .userStatus(ActiveStatus.ACTIVE)
-                .nickname(newUser.getUserName()) // 필기. 기본적으로 사용자 이름으로 설정
+                .nickname(newUser.getNickname()) //필기. 닉네임도 회원가입시 필요
                 .profileImage(defaultProfileImageUrl) //필기. 기본 프로필 이미지 설정
                 .userIdentifier("NORMAL_" + newUser.getUserAuthId()) // user_identifier 생성
                 .build();

@@ -20,6 +20,8 @@ public enum ErrorCode {
     INVALID_REQUEST_BODY(40011, HttpStatus.BAD_REQUEST, "잘못된 요청 본문입니다."),
     MISSING_REQUIRED_FIELD(40012, HttpStatus.BAD_REQUEST, "필수 필드가 누락되었습니다."),
     INVALID_VERIFICATION_CODE(40013, HttpStatus.BAD_REQUEST, "잘못된 인증번호입니다. 인증번호를 다시 확인해주세요"),
+    INVALID_INPUT_NICKNAME(40418, HttpStatus.BAD_REQUEST, "닉네임을 입력하지 않았습니다."),
+
 
     // 파일 관련 오류
     UNSUPPORTED_FILE_FORMAT(40020, HttpStatus.BAD_REQUEST, "지원되지 않는 파일 형식입니다."),
@@ -67,9 +69,10 @@ public enum ErrorCode {
     NOT_FOUND_STUDY_GROUP_NOTICE(40415, HttpStatus.NOT_FOUND, "스터디 그룹 공지가 존재하지 않습니다."),
     EMAIL_VERIFICATION_REQUIRED(40416, HttpStatus.BAD_REQUEST
             , "이메일 인증이 안된 이메일입니다. 이메일 인증을 완료해주세요."),
-    NOT_FOUND_USER_ID(40401, HttpStatus.NOT_FOUND, "아이디를 잘못 입력하셨습니다."),
+    NOT_FOUND_USER_ID(40417, HttpStatus.NOT_FOUND, "아이디를 잘못 입력하셨습니다."),
 
-
+    //429 (Too Many Requests)
+    TOO_MANY_REQUESTS(42900, HttpStatus.TOO_MANY_REQUESTS, "요청 횟수가 너무 많습니다. 잠시 후 다시 시도해 주세요."),
 
     //500
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다");

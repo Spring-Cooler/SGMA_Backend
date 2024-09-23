@@ -1,7 +1,10 @@
 package com.springcooler.sgma.user.command.application.service;
 
+import com.springcooler.sgma.user.common.exception.CommonException;
+import com.springcooler.sgma.user.common.exception.ErrorCode;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
@@ -13,6 +16,8 @@ import java.security.SecureRandom;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+
+@Slf4j
 @Service
 public class EmailVerificationService {
 
@@ -23,8 +28,13 @@ public class EmailVerificationService {
     private StringRedisTemplate stringRedisTemplate;  // StringRedisTemplate 사용
 
     private final long VERIFICATION_CODE_TTL = 5; // 5분
+    private final long COOLDOWN_SECONDS = 30; // 30초 쿨다운
 
     public void sendVerificationEmail(String email) {
+        if (isCooldown(email)) {
+            throw new CommonException(ErrorCode.TOO_MANY_REQUESTS); //필기. 30초 쿨다운 제한
+        }
+
         String verificationCode = generateVerificationCode();
 
         //필기. HTML 형식의 이메일 전송을 위한 객체
@@ -60,6 +70,7 @@ public class EmailVerificationService {
 
         mailSender.send(message);
         saveVerificationCode(email, verificationCode);
+        saveCooldownTimestamp(email); //필기. 쿨다운 타임스탬프 저장
     }
 
     //필기. 해당 이메일의 코드가 일치하는지 확인하는 코드
@@ -78,7 +89,7 @@ public class EmailVerificationService {
 
     //필기. Redis에 코드 저장
     private void saveVerificationCode(String email, String code) {
-        stringRedisTemplate.opsForValue().set(email, code, VERIFICATION_CODE_TTL, TimeUnit.MINUTES); 
+        stringRedisTemplate.opsForValue().set(email, code, VERIFICATION_CODE_TTL, TimeUnit.MINUTES);
     }
 
     //필기. 6자리 랜덤문자열 발생 ()
@@ -94,4 +105,28 @@ public class EmailVerificationService {
         }
         return code.toString();
     }
+
+    //필기. 이메일 전송 쿨다운 체크
+    private boolean isCooldown(String email) {
+        String lastSentTime = stringRedisTemplate.opsForValue().get(email + ":cooldown"); //필기. 쿨다운 키
+
+        if (lastSentTime == null) {
+            return false;
+        }
+
+        long lastSentTimestamp = Long.parseLong(lastSentTime);
+        long currentTimestamp = System.currentTimeMillis() / 1000; // 필기. 초 단위 시간\
+
+        log.error("재전송 가능 남은 시간: {}", currentTimestamp);
+
+        return currentTimestamp - lastSentTimestamp < COOLDOWN_SECONDS;
+    }
+
+    //필기. 쿨다운 타임스탬프 저장
+    private void saveCooldownTimestamp(String email) {
+        long currentTimestamp = System.currentTimeMillis() / 1000; // 필기. 초 단위 시간
+        stringRedisTemplate.opsForValue()
+                .set(email + ":cooldown", String.valueOf(currentTimestamp), COOLDOWN_SECONDS, TimeUnit.SECONDS); // 필기. TTL 30초
+    }
 }
+

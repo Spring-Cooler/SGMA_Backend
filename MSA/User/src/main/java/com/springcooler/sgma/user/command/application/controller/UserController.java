@@ -96,64 +96,56 @@ public class UserController {
         return ResponseDTO.ok(responseUser);
     }
 
-    
-    //설명. 이메일 인증 서비스
+
+    // 설명. 이메일 인증 서비스
     @Autowired
     private EmailVerificationService emailVerificationService;
 
-    //설명. 이메일 전송 API (회원가입전, 아이디 찾기시 실행)
+    // 설명. 이메일 전송 API (회원가입전, 아이디 찾기시 실행)
     @PostMapping("/verification-email/signup")
     public ResponseDTO<?> sendVerificationEmail(@RequestBody @Validated EmailVerificationVO request) {
-        try {
-            emailVerificationService.sendVerificationEmail(request.getEmail());
+        emailVerificationService.sendVerificationEmail(request.getEmail());
 
-            ResponseEmailMessageVO responseEmailMessageVO =new ResponseEmailMessageVO();
-            responseEmailMessageVO.setMessage("인증 코드가 이메일로 전송되었습니다.");
-            return ResponseDTO.ok(responseEmailMessageVO);
-        } catch (Exception e) {
-            return ResponseDTO.fail(new CommonException(ErrorCode.INTERNAL_SERVER_ERROR));
-        }
+        ResponseEmailMessageVO responseEmailMessageVO = new ResponseEmailMessageVO();
+        responseEmailMessageVO.setMessage("인증 코드가 이메일로 전송되었습니다.");
+        return ResponseDTO.ok(responseEmailMessageVO);
     }
 
-
-    //설명. 이메일 전송 API(아이디 찾기시 실행)
+    // 설명. 이메일 전송 API(아이디 찾기시 실행)
     @PostMapping("/verification-email/auth-id")
     public ResponseDTO<?> sendVerificationEmailForUserId(@RequestBody @Validated EmailVerificationUserIdRequestDTO request) {
-        try {
-            //필기. 닉네임, 가입 구분, 이메일이 일치하는 사용자가 있는지 확인
-            UserDTO user = userService.findUserByUserNicknameAndSignupPathAndEmail(request.getNickname(),SignupPath.NORMAL, request.getEmail());
-            if (user == null) {
-                return ResponseDTO.fail(new CommonException(ErrorCode.NOT_FOUND_USER));
-            }
-            //필기. 유효성 검사후 가능하면 이메일 전송
-            emailVerificationService.sendVerificationEmail(request.getEmail());
-            ResponseEmailMessageVO responseEmailMessageVO = new ResponseEmailMessageVO();
-            responseEmailMessageVO.setMessage("아이디 찾기를 위한 인증 코드가 이메일로 전송되었습니다.");
-            return ResponseDTO.ok(responseEmailMessageVO);
-        } catch (Exception e) {
-            return ResponseDTO.fail(new CommonException(ErrorCode.INTERNAL_SERVER_ERROR));
+        // 닉네임, 가입 구분, 이메일이 일치하는 사용자가 있는지 확인
+        UserDTO user = userService.findUserByUserNicknameAndSignupPathAndEmail(request.getNickname(), SignupPath.NORMAL, request.getEmail());
+
+        if (user == null) {
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
+
+        // 유효성 검사후 가능하면 이메일 전송
+        emailVerificationService.sendVerificationEmail(request.getEmail());
+
+        ResponseEmailMessageVO responseEmailMessageVO = new ResponseEmailMessageVO();
+        responseEmailMessageVO.setMessage("아이디 찾기를 위한 인증 코드가 이메일로 전송되었습니다.");
+        return ResponseDTO.ok(responseEmailMessageVO);
     }
 
-    //설명. 이메일 전송 API (비빌번호 찾기시 실행)
+    // 설명. 이메일 전송 API (비밀번호 찾기시 실행)
     @PostMapping("/verification-email/user-password")
     public ResponseDTO<?> sendVerificationEmailForUserPassword(@RequestBody @Validated EmailVerificationUserPasswordRequestDTO request) {
-        try {
-            // NORMAL_{userAuthId}와 이메일이 일치하는 사용자가 있는지 확인
-            UserDTO user = userService.findUserByUserAuthIdAndEmail(request.getUserAuthId(), request.getEmail());
-            if (user == null) {
-                return ResponseDTO.fail(new CommonException(ErrorCode.NOT_FOUND_USER));
-            }
-            //필기. 유효성 검사후 가능하면 이메일 전송
-            emailVerificationService.sendVerificationEmail(request.getEmail());
-            ResponseEmailMessageVO responseEmailMessageVO = new ResponseEmailMessageVO();
-            responseEmailMessageVO.setMessage("비밀번호 찾기를 위한 인증 코드가 이메일로 전송되었습니다.");
-            return ResponseDTO.ok(responseEmailMessageVO);
-        } catch (Exception e) {
-            return ResponseDTO.fail(new CommonException(ErrorCode.INTERNAL_SERVER_ERROR));
-        }
-    }
+        // NORMAL_{userAuthId}와 이메일이 일치하는 사용자가 있는지 확인
+        UserDTO user = userService.findUserByUserAuthIdAndEmail(request.getUserAuthId(), request.getEmail());
 
+        if (user == null) {
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+        }
+
+        // 유효성 검사후 가능하면 이메일 전송
+        emailVerificationService.sendVerificationEmail(request.getEmail());
+
+        ResponseEmailMessageVO responseEmailMessageVO = new ResponseEmailMessageVO();
+        responseEmailMessageVO.setMessage("비밀번호 찾기를 위한 인증 코드가 이메일로 전송되었습니다.");
+        return ResponseDTO.ok(responseEmailMessageVO);
+    }
 
 
     //설명. 이메일 인증번호 검증 API (회원가입전 실행)

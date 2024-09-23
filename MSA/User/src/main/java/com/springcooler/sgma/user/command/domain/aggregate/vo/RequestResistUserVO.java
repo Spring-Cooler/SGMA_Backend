@@ -17,9 +17,13 @@ public class RequestResistUserVO {
     @JsonProperty("password")
     private String password; // 암호화 되기 전 사용자가 입력한 평문(비밀번호)
 
+    @JsonProperty("nickname")
+    private String nickname; // 일반 회원가입 시 사용자 닉네임은 필수
+
     @JsonProperty("email")
     private String email; // 이메일은 선택 사항으로 변경
 
     @JsonProperty("signup_path")
     private SignupPath signupPath; // 가입 경로 (NORMAL, KAKAO, GOOGLE 등)
+
 }
