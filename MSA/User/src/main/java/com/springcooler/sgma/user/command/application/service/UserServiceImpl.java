@@ -365,12 +365,21 @@ public class UserServiceImpl implements UserService {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
 
+
+        // 소셜 로그인으로 가입된 사용자의 경우 비밀번호가 없을 수 있으므로 기본 비밀번호 설정
+        String encryptedPwd = loginUser.getEncryptedPwd();
+        if (encryptedPwd == null) {
+            // 비밀번호가 없을 경우 임의의 문자열이나 빈 문자열을 설정
+            encryptedPwd = "{noop}"; // 또는 필요한 기본값 설정
+        }
+
+
         /* 설명. 사용자의 권한들을 가져왔다는 가정 */
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ENTERPRISE"));
 
-        return new User(loginUser.getUserAuthId(), loginUser.getEncryptedPwd(),
+        return new User(loginUser.getUserAuthId(), encryptedPwd,
                 true, true, true, true,
                 grantedAuthorities);
     }

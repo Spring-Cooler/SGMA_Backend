@@ -5,10 +5,9 @@ import com.springcooler.sgma.user.command.application.service.UserService;
 import com.springcooler.sgma.user.command.domain.aggregate.ActiveStatus;
 import com.springcooler.sgma.user.command.domain.aggregate.SignupPath;
 import com.springcooler.sgma.user.command.domain.aggregate.UserEntity;
-import com.springcooler.sgma.user.command.domain.aggregate.vo.RequestLoginVO;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.login.RequestLoginVO;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.login.ResponseNormalLoginVO;
 import com.springcooler.sgma.user.common.ResponseDTO;
-import com.springcooler.sgma.user.common.exception.CommonException;
-import com.springcooler.sgma.user.common.exception.ErrorCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -100,8 +99,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         }
     }
 
-
-
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
@@ -110,24 +107,62 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         log.info("로그인 성공하고 security가 관리하는 principal객체(authResult): {}", authResult);
 
+        // 사용자 인증 정보 및 식별자 생성
         String userAuthId = ((User) authResult.getPrincipal()).getUsername();
         SignupPath signupPath = ((RequestLoginVO) authResult.getDetails()).getSignupPath();
-
         String userIdentifier = signupPath + "_" + userAuthId;
 
+        // Claims 및 역할 정보 설정
         Claims claims = Jwts.claims().setSubject(userIdentifier);
         List<String> roles = authResult.getAuthorities().stream()
                 .map(role -> role.getAuthority())
                 .collect(Collectors.toList());
         claims.put("auth", roles);
 
-        String token = Jwts.builder()
+        // 만료 시간 설정
+        long accessExpiration = System.currentTimeMillis() + getExpirationTime(env.getProperty("token.access-expiration-time"));
+        long refreshExpiration = System.currentTimeMillis() + getExpirationTime(env.getProperty("token.refresh-expiration-time"));
+
+        // 액세스 토큰 생성
+        String accessToken = Jwts.builder()
                 .setClaims(claims)
-                .setExpiration(new Date(System.currentTimeMillis()
-                        + Long.parseLong(env.getProperty("token.expiration_time"))))
+                .setExpiration(new Date(accessExpiration))
                 .signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret"))
                 .compact();
 
-        response.addHeader("token", token);
+        // 리프레시 토큰 생성
+        String refreshToken = Jwts.builder()
+                .setClaims(claims)
+                .setExpiration(new Date(refreshExpiration))
+                .signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret"))
+                .compact();
+
+        //  ResponseNormalLoginVO 객체 생성
+        ResponseNormalLoginVO loginResponseVO = new ResponseNormalLoginVO(
+                accessToken,
+                new Date(accessExpiration),
+                refreshToken,
+                new Date(refreshExpiration),
+                userIdentifier
+        );
+
+        // ResponseDTO 객체 생성
+        ResponseDTO<ResponseNormalLoginVO> responseDTO = ResponseDTO.ok(loginResponseVO);
+
+        // JSON 응답 생성
+        String jsonResponse = new ObjectMapper().writeValueAsString(responseDTO);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jsonResponse);
     }
+
+    private long getExpirationTime(String expirationTime) {
+        if (expirationTime == null) {
+            // 기본 만료 시간을 설정합니다. 예를 들어, 1시간(3600000ms)으로 설정
+            return 3600000;
+        }
+        return Long.parseLong(expirationTime);
+    }
+
+
 }
