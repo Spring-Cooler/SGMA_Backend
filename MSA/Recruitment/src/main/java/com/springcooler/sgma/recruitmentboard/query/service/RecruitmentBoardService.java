@@ -82,4 +82,12 @@ public class RecruitmentBoardService {
 
         return response;
     }
+
+    public List<RecruitmentBoardDTO> findTop3MostLikedPostsWithin7Days(){
+        List<RecruitmentBoardDTO> recruitmentBoards= recruitmentBoardMapper.findTop3MostLikedPostsWithin7Days();
+        if(recruitmentBoards == null) {
+            throw new CommonException(ErrorCode.NOT_FOUND_RECRUITMENT_BOARD);
+        }
+        return recruitmentBoards;
+    }
 }

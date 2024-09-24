@@ -19,4 +19,6 @@ public interface RecruitmentBoardMapper {
     List<RecruitmentBoardDTO> findRecruitmentBoardsByGroupId(Long groupId);
 
     List<RecruitmentBoardDTO> findRecruitmentBoardsByCategory(Integer categoryId);
+
+    List<RecruitmentBoardDTO> findTop3MostLikedPostsWithin7Days();
 }
