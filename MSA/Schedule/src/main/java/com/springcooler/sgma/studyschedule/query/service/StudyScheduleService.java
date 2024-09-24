@@ -1,6 +1,7 @@
 package com.springcooler.sgma.studyschedule.query.service;
 
 import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleDTO;
+import com.springcooler.sgma.studyschedule.query.dto.StudyScheduleParticipantVO;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface StudyScheduleService {
 
     // 스터디 그룹 일정 시험의 통계 자료 조회 (scheduleID로 조회)
     StudyScheduleDTO findStudyScheduleByStatistics(long scheduleID);
+
+    StudyScheduleParticipantVO findParticipantsByScheduleId(long scheduleId);
 }

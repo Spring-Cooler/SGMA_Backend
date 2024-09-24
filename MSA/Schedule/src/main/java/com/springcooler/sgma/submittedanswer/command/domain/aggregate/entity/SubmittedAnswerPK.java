@@ -1,4 +1,4 @@
-package com.springcooler.sgma.submittedanswer.command.domain.aggregate;
+package com.springcooler.sgma.submittedanswer.command.domain.aggregate.entity;
 
 import jakarta.persistence.Column;
 import lombok.*;

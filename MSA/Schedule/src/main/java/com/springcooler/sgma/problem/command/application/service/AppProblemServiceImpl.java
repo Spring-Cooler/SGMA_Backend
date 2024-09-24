@@ -52,6 +52,7 @@ public class AppProblemServiceImpl implements AppProblemService {
         problemRepository.save(newProblem);
         if (newProblem.getProblemType().equals(ProblemType.MULTIPLE)){
         ProblemVO problemvo = infraProblemService.requestRegistChoices(newProblem.getProblemId(),problemInfo.getChoices());
+            problemInfo.setChoices(problemvo.getChoices());
         }
         problemInfo.setProblemId(newProblem.getProblemId());
         return problemInfo;
