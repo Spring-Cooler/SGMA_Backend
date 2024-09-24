@@ -1,4 +1,4 @@
-package com.springcooler.sgma.user.command.domain.aggregate.vo;
+package com.springcooler.sgma.user.command.domain.aggregate.vo.login;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.springcooler.sgma.user.command.domain.aggregate.SignupPath;

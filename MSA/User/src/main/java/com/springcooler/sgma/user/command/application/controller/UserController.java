@@ -3,19 +3,17 @@ package com.springcooler.sgma.user.command.application.controller;
 import com.springcooler.sgma.user.command.application.dto.*;
 import com.springcooler.sgma.user.command.application.service.EmailVerificationService;
 import com.springcooler.sgma.user.command.application.service.OAuth2LoginService;
-import com.springcooler.sgma.user.command.domain.aggregate.AcceptStatus;
-import com.springcooler.sgma.user.command.domain.aggregate.ActiveStatus;
 import com.springcooler.sgma.user.command.domain.aggregate.SignupPath;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.*;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.kakao.KakaoAuthorizationCode;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.login.AuthTokens;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.login.ResponseLoginVO;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.naver.NaverAuthorizationCode;
 import com.springcooler.sgma.user.common.ResponseDTO;
 import com.springcooler.sgma.user.common.exception.CommonException;
 import com.springcooler.sgma.user.common.exception.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.springcooler.sgma.user.command.application.service.UserService;
@@ -23,7 +21,7 @@ import com.springcooler.sgma.user.command.domain.aggregate.UserEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @RestController("userCommandController")
 @RequestMapping("/api/users")
@@ -169,30 +167,37 @@ public class UserController {
     }
 
     //설명. 카카오 로그인, 네이버 로그인
+    // 설명. 카카오 로그인
     @PostMapping("/oauth2/kakao")
-    public ResponseEntity<Void> loginWithKakao(@RequestBody KakaoAuthorizationCode code) {
+    public ResponseDTO<ResponseLoginVO> loginWithKakao(@RequestBody KakaoAuthorizationCode code) {
         AuthTokens tokens = oAuth2LoginService.loginWithKakao(code.getCode());
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + tokens.getAccessToken());
-        headers.set("Refresh-Token", tokens.getRefreshToken());
+        // 응답 본문에 필요한 정보 포함
+        ResponseLoginVO loginResponseVO = new ResponseLoginVO(
+                tokens.getAccessToken(),
+                new Date(tokens.getAccessTokenExpiry()), // long 타입을 Date로 변환
+                tokens.getRefreshToken(),
+                new Date(tokens.getRefreshTokenExpiry()), // long 타입을 Date로 변환
+                tokens.getUserIdentifier() // 토큰 생성 시 사용한 사용자 식별자
+        );
 
-        return ResponseEntity.ok()
-                .headers(headers)
-                .build();
+        return ResponseDTO.ok(loginResponseVO);
     }
 
     @PostMapping("/oauth2/naver")
-    public ResponseEntity<Void> loginWithNaver(@RequestBody NaverAuthorizationCode code) {
+    public ResponseDTO<ResponseLoginVO> loginWithNaver(@RequestBody NaverAuthorizationCode code) {
         AuthTokens tokens = oAuth2LoginService.loginWithNaver(code);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + tokens.getAccessToken());
-        headers.set("Refresh-Token", tokens.getRefreshToken());
+        // 응답 본문에 필요한 정보 포함
+        ResponseLoginVO loginResponseVO = new ResponseLoginVO(
+                tokens.getAccessToken(),
+                new Date(tokens.getAccessTokenExpiry()), // long 타입을 Date로 변환
+                tokens.getRefreshToken(),
+                new Date(tokens.getRefreshTokenExpiry()), // long 타입을 Date로 변환
+                tokens.getUserIdentifier() // 토큰 생성 시 사용한 사용자 식별자
+        );
 
-        return ResponseEntity.ok()
-                .headers(headers)
-                .build();
+        return ResponseDTO.ok(loginResponseVO);
     }
 
 }

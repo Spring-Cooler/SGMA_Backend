@@ -1,7 +1,7 @@
 package com.springcooler.sgma.user.command.application.service;
 
 import com.springcooler.sgma.config.OAuthProperties;
-import com.springcooler.sgma.user.command.application.dto.AuthTokens;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.login.AuthTokens;
 import com.springcooler.sgma.user.command.domain.aggregate.AcceptStatus;
 import com.springcooler.sgma.user.command.domain.aggregate.ActiveStatus;
 import com.springcooler.sgma.user.command.domain.aggregate.SignupPath;
@@ -12,12 +12,14 @@ import com.springcooler.sgma.user.command.domain.aggregate.vo.naver.NaverUser;
 import com.springcooler.sgma.user.command.domain.repository.UserRepository;
 import com.springcooler.sgma.user.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,20 +29,30 @@ public class OAuth2LoginService {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
     private final RestTemplate restTemplate;
-    private final OAuthProperties oAuthProperties; // OAuth 설정 클래스 주입
+    private final OAuthProperties oAuthProperties;
+    private final long accessExpirationTime;
+    private final long refreshExpirationTime;
 
     @Autowired
-    public OAuth2LoginService(JwtUtil jwtUtil, UserRepository userRepository, RestTemplate restTemplate,
-                              OAuthProperties oAuthProperties) {
+    public OAuth2LoginService(JwtUtil jwtUtil,
+                              UserRepository userRepository,
+                              RestTemplate restTemplate,
+                              OAuthProperties oAuthProperties,
+                              @Value("${token.access-expiration-time}") long accessExpirationTime,
+                              @Value("${token.refresh-expiration-time}") long refreshExpirationTime) {
         this.jwtUtil = jwtUtil;
         this.userRepository = userRepository;
         this.restTemplate = restTemplate;
-        this.oAuthProperties = oAuthProperties; // 설정 클래스 초기화
+        this.oAuthProperties = oAuthProperties;
+        this.accessExpirationTime = accessExpirationTime;
+        this.refreshExpirationTime = refreshExpirationTime;
     }
 
     public AuthTokens loginWithKakao(String authorizationCode) {
+        OAuthProperties.OAuthClient kakaoClient = oAuthProperties.getRegistration().get("kakao");
+
         // 카카오 액세스 토큰 요청
-        String accessToken = getKakaoAccessToken(authorizationCode, oAuthProperties.getKakao().getRedirectUri());
+        String accessToken = getKakaoAccessToken(authorizationCode, kakaoClient.getRedirectUri());
 
         // 카카오 사용자 정보 요청
         KakaoUser kakaoUser = getKakaoUserInfo(accessToken);
@@ -56,8 +68,10 @@ public class OAuth2LoginService {
     }
 
     public AuthTokens loginWithNaver(NaverAuthorizationCode code) {
+        OAuthProperties.OAuthClient naverClient = oAuthProperties.getRegistration().get("naver");
+
         // 네이버 액세스 토큰 요청
-        String accessToken = getNaverAccessToken(code.getCode(), code.getState(), oAuthProperties.getNaver().getRedirectUri());
+        String accessToken = getNaverAccessToken(code.getCode(), code.getState(), naverClient.getRedirectUri());
 
         // 네이버 사용자 정보 요청
         NaverUser naverUser = getNaverUserInfo(accessToken);
@@ -73,8 +87,17 @@ public class OAuth2LoginService {
     }
 
     private AuthTokens createAuthTokens(UserEntity user) {
+        // 액세스 토큰 생성
         String accessToken = jwtUtil.generateToken(user, List.of("ROLE_ADMIN","ROLE_ENTERPRISE"));
-        return new AuthTokens(accessToken, null, "Bearer", System.currentTimeMillis() + 43200000L);
+        // 리프레시 토큰 생성
+        String refreshToken = jwtUtil.generateRefreshToken(user);
+
+        // 만료 시간 설정
+        Date accessTokenExpiry = new Date(System.currentTimeMillis() + accessExpirationTime);
+        Date refreshTokenExpiry = new Date(System.currentTimeMillis() + refreshExpirationTime);
+
+        // AuthTokens에 사용자 식별자 추가
+        return new AuthTokens(accessToken, refreshToken, "Bearer", accessTokenExpiry.getTime(), refreshTokenExpiry.getTime(), user.getUserIdentifier());
     }
 
     private UserEntity getOrCreateMember(String userIdentifier, String email, String realName, SignupPath provider) {
@@ -108,14 +131,17 @@ public class OAuth2LoginService {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", oAuthProperties.getKakao().getClientId()); // 설정 클래스에서 값 사용
-        params.add("client_secret", oAuthProperties.getKakao().getClientSecret()); // 설정 클래스에서 값 사용
+        params.add("client_id", oAuthProperties.getRegistration().get("kakao").getClientId());
+        params.add("client_secret", oAuthProperties.getRegistration().get("kakao").getClientSecret());
         params.add("redirect_uri", redirectUri);
         params.add("code", authorizationCode);
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
-        ResponseEntity<Map<String, String>> response = restTemplate.postForEntity("https://kauth.kakao.com/oauth/token"
-                , request, (Class<Map<String, String>>) (Class<?>) Map.class);
+        ResponseEntity<Map<String, String>> response = restTemplate.postForEntity(
+                "https://kauth.kakao.com/oauth/token",
+                request,
+                (Class<Map<String, String>>) (Class<?>) Map.class);
+
         return response.getBody().get("access_token");
     }
 
@@ -125,9 +151,11 @@ public class OAuth2LoginService {
         headers.setBearerAuth(accessToken);
 
         HttpEntity<Void> request = new HttpEntity<>(headers);
-        ResponseEntity<Map<String, Object>> response
-                = restTemplate.exchange("https://kapi.kakao.com/v2/user/me"
-                , HttpMethod.GET, request, (Class<Map<String, Object>>) (Class<?>) Map.class);
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
+                "https://kapi.kakao.com/v2/user/me",
+                HttpMethod.GET,
+                request,
+                (Class<Map<String, Object>>) (Class<?>) Map.class);
 
         Map<String, Object> userInfo = response.getBody();
         Map<String, Object> kakaoAccount = (Map<String, Object>) userInfo.get("kakao_account");
@@ -142,17 +170,16 @@ public class OAuth2LoginService {
         );
     }
 
-    // 액세스 토큰 요청 메서드 수정
     private String getNaverAccessToken(String authorizationCode, String state, String redirectUri) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", oAuthProperties.getNaver().getClientId());
-        params.add("client_secret", oAuthProperties.getNaver().getClientSecret());
-        params.add("code", authorizationCode); // authorization code
-        params.add("state", state); // state 값 추가
+        params.add("client_id", oAuthProperties.getRegistration().get("naver").getClientId());
+        params.add("client_secret", oAuthProperties.getRegistration().get("naver").getClientSecret());
+        params.add("code", authorizationCode);
+        params.add("state", state);
         params.add("redirect_uri", redirectUri);
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
@@ -176,8 +203,11 @@ public class OAuth2LoginService {
         headers.setBearerAuth(accessToken);
 
         HttpEntity<Void> request = new HttpEntity<>(headers);
-        ResponseEntity<Map<String, Object>> response = restTemplate.exchange("https://openapi.naver.com/v1/nid/me"
-                , HttpMethod.GET, request, (Class<Map<String, Object>>) (Class<?>) Map.class);
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
+                "https://openapi.naver.com/v1/nid/me",
+                HttpMethod.GET,
+                request,
+                (Class<Map<String, Object>>) (Class<?>) Map.class);
 
         Map<String, Object> userInfo = (Map<String, Object>) response.getBody().get("response");
         return new NaverUser(
