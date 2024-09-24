@@ -68,5 +68,11 @@ public class RecruitmentBoardController {
         PaginatedResponse<RecruitmentBoardDTO> response = recruitmentBoardService.findRecruitmentBoardsByCategory(page, size, studyGroupCategoryId);
         return ResponseDTO.ok(response);
     }
+    @GetMapping("mostliked")
+    @Operation(summary = "좋아요 갯수 상위 3개 게시물 조회")
+    public ResponseDTO<?> findTop3MostLikedPostsWithin7Days() {
+        List<RecruitmentBoardDTO> response = recruitmentBoardService.findTop3MostLikedPostsWithin7Days();
+        return ResponseDTO.ok(response);
+    }
 }
 
