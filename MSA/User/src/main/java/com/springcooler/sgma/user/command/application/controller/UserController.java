@@ -7,7 +7,7 @@ import com.springcooler.sgma.user.command.domain.aggregate.SignupPath;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.*;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.kakao.KakaoAuthorizationCode;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.login.AuthTokens;
-import com.springcooler.sgma.user.command.domain.aggregate.vo.login.ResponseLoginVO;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.login.ResponseOAuthLoginVO;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.naver.NaverAuthorizationCode;
 import com.springcooler.sgma.user.common.ResponseDTO;
 import com.springcooler.sgma.user.common.exception.CommonException;
@@ -169,32 +169,34 @@ public class UserController {
     //설명. 카카오 로그인, 네이버 로그인
     // 설명. 카카오 로그인
     @PostMapping("/oauth2/kakao")
-    public ResponseDTO<ResponseLoginVO> loginWithKakao(@RequestBody KakaoAuthorizationCode code) {
+    public ResponseDTO<ResponseOAuthLoginVO> loginWithKakao(@RequestBody KakaoAuthorizationCode code) {
         AuthTokens tokens = oAuth2LoginService.loginWithKakao(code.getCode());
 
         // 응답 본문에 필요한 정보 포함
-        ResponseLoginVO loginResponseVO = new ResponseLoginVO(
+        ResponseOAuthLoginVO loginResponseVO = new ResponseOAuthLoginVO(
                 tokens.getAccessToken(),
-                new Date(tokens.getAccessTokenExpiry()), // long 타입을 Date로 변환
+                new Date(tokens.getAccessTokenExpiry()),
                 tokens.getRefreshToken(),
-                new Date(tokens.getRefreshTokenExpiry()), // long 타입을 Date로 변환
-                tokens.getUserIdentifier() // 토큰 생성 시 사용한 사용자 식별자
+                new Date(tokens.getRefreshTokenExpiry()),
+                tokens.getUserIdentifier(),
+                tokens.isProfileIncomplete() // 프로필 정보 불완전 여부
         );
 
         return ResponseDTO.ok(loginResponseVO);
     }
 
     @PostMapping("/oauth2/naver")
-    public ResponseDTO<ResponseLoginVO> loginWithNaver(@RequestBody NaverAuthorizationCode code) {
+    public ResponseDTO<ResponseOAuthLoginVO> loginWithNaver(@RequestBody NaverAuthorizationCode code) {
         AuthTokens tokens = oAuth2LoginService.loginWithNaver(code);
 
         // 응답 본문에 필요한 정보 포함
-        ResponseLoginVO loginResponseVO = new ResponseLoginVO(
+        ResponseOAuthLoginVO loginResponseVO = new ResponseOAuthLoginVO(
                 tokens.getAccessToken(),
-                new Date(tokens.getAccessTokenExpiry()), // long 타입을 Date로 변환
+                new Date(tokens.getAccessTokenExpiry()),
                 tokens.getRefreshToken(),
-                new Date(tokens.getRefreshTokenExpiry()), // long 타입을 Date로 변환
-                tokens.getUserIdentifier() // 토큰 생성 시 사용한 사용자 식별자
+                new Date(tokens.getRefreshTokenExpiry()),
+                tokens.getUserIdentifier(),
+                tokens.isProfileIncomplete() // 프로필 정보 불완전 여부
         );
 
         return ResponseDTO.ok(loginResponseVO);

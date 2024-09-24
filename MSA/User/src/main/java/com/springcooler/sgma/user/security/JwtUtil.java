@@ -100,7 +100,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(user.getUserIdentifier()) // 사용자 식별자 설정
                 .claim("email", user.getEmail()) // 이메일 클레임 추가
-                .claim("roles", roles) // 역할 정보 클레임 추가
+                .claim("auth", roles) // 역할 정보 클레임 추가
                 .claim("userIdentifier", user.getUserIdentifier()) // 사용자 식별자 클레임 추가
                 .setIssuedAt(new Date()) // 발행 시간 설정
                 .setExpiration(new Date(System.currentTimeMillis() + accessExpirationTime)) // 액세스 토큰 만료 시간 설정
@@ -109,9 +109,11 @@ public class JwtUtil {
     }
 
     // 설명. 리프레시 토큰 생성 메소드
-    public String generateRefreshToken(UserEntity user) {
+    public String generateRefreshToken(UserEntity user, List<String> roles) {
         return Jwts.builder()
                 .setSubject(user.getUserIdentifier()) // 사용자 식별자 설정
+                .claim("email", user.getEmail()) // 이메일 클레임 추가
+                .claim("auth", roles) // 역할 정보 클레임 추가
                 .claim("userIdentifier", user.getUserIdentifier()) // 사용자 식별자 클레임 추가
                 .setIssuedAt(new Date()) // 발행 시간 설정
                 .setExpiration(new Date(System.currentTimeMillis() + refreshExpirationTime)) // 리프레시 토큰 만료 시간 설정

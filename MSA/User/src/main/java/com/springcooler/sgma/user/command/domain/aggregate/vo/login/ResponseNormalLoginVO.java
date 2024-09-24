@@ -11,22 +11,21 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseLoginVO {
-
-    @JsonProperty("access_token") // 스네이크 케이스로 변환
+public class ResponseNormalLoginVO {
+    @JsonProperty("access_token")
     private String accessToken;
 
-    @JsonProperty("access_token_expiry")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonProperty("access_token_expiry")
     private Date accessTokenExpiry;
 
-    @JsonProperty("refresh_token") // 스네이크 케이스로 변환
+    @JsonProperty("refresh_token")
     private String refreshToken;
 
-    @JsonProperty("refresh_token_expiry")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonProperty("refresh_token_expiry")
     private Date refreshTokenExpiry;
 
-    @JsonProperty("user_identifier") // 스네이크 케이스로 변환
+    @JsonProperty("user_identifier")
     private String userIdentifier;
 }

@@ -6,7 +6,7 @@ import com.springcooler.sgma.user.command.domain.aggregate.ActiveStatus;
 import com.springcooler.sgma.user.command.domain.aggregate.SignupPath;
 import com.springcooler.sgma.user.command.domain.aggregate.UserEntity;
 import com.springcooler.sgma.user.command.domain.aggregate.vo.login.RequestLoginVO;
-import com.springcooler.sgma.user.command.domain.aggregate.vo.login.ResponseLoginVO;
+import com.springcooler.sgma.user.command.domain.aggregate.vo.login.ResponseNormalLoginVO;
 import com.springcooler.sgma.user.common.ResponseDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -137,8 +137,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret"))
                 .compact();
 
-        // ResponseLoginVO 객체 생성
-        ResponseLoginVO loginResponseVO = new ResponseLoginVO(
+        //  ResponseNormalLoginVO 객체 생성
+        ResponseNormalLoginVO loginResponseVO = new ResponseNormalLoginVO(
                 accessToken,
                 new Date(accessExpiration),
                 refreshToken,
@@ -147,7 +147,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         );
 
         // ResponseDTO 객체 생성
-        ResponseDTO<ResponseLoginVO> responseDTO = ResponseDTO.ok(loginResponseVO);
+        ResponseDTO<ResponseNormalLoginVO> responseDTO = ResponseDTO.ok(loginResponseVO);
 
         // JSON 응답 생성
         String jsonResponse = new ObjectMapper().writeValueAsString(responseDTO);

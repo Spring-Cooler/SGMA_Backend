@@ -90,15 +90,27 @@ public class OAuth2LoginService {
         // 액세스 토큰 생성
         String accessToken = jwtUtil.generateToken(user, List.of("ROLE_ADMIN","ROLE_ENTERPRISE"));
         // 리프레시 토큰 생성
-        String refreshToken = jwtUtil.generateRefreshToken(user);
+        String refreshToken = jwtUtil.generateRefreshToken(user, List.of("ROLE_ADMIN","ROLE_ENTERPRISE"));
 
         // 만료 시간 설정
         Date accessTokenExpiry = new Date(System.currentTimeMillis() + accessExpirationTime);
         Date refreshTokenExpiry = new Date(System.currentTimeMillis() + refreshExpirationTime);
 
+        // 프로필 정보 불완전 여부 체크(닉네임이)
+        boolean isProfileIncomplete = (user.getNickname() == null || user.getNickname().trim().isEmpty());
+
         // AuthTokens에 사용자 식별자 추가
-        return new AuthTokens(accessToken, refreshToken, "Bearer", accessTokenExpiry.getTime(), refreshTokenExpiry.getTime(), user.getUserIdentifier());
+        return new AuthTokens(
+                accessToken,
+                refreshToken,
+                "Bearer",
+                accessTokenExpiry.getTime(),
+                refreshTokenExpiry.getTime(),
+                user.getUserIdentifier(),
+                isProfileIncomplete
+        );
     }
+
 
     private UserEntity getOrCreateMember(String userIdentifier, String email, String realName, SignupPath provider) {
         // user_identifier를 기반으로 사용자 조회
