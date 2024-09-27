@@ -373,7 +373,6 @@ public class UserServiceImpl implements UserService {
             encryptedPwd = "{noop}"; // 또는 필요한 기본값 설정
         }
 
-
         /* 설명. 사용자의 권한들을 가져왔다는 가정 */
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
