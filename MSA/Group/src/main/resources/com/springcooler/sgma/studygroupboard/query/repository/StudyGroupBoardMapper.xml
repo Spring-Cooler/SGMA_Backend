@@ -12,6 +12,7 @@
         <result property="activeStatus" column="ACTIVE_STATUS"/>
         <result property="likes" column="LIKES"/>
         <result property="memberId" column="MEMBER_ID"/>
+        <result property="nickname" column="NICKNAME"/>
         <result property="groupId" column="GROUP_ID"/>
     </resultMap>
 
@@ -25,8 +26,13 @@
              , A.ACTIVE_STATUS
              , A.LIKES
              , A.MEMBER_ID
+             , C.NICKNAME
              , A.GROUP_ID
           FROM STUDY_GROUP_BOARD A
+          JOIN STUDY_GROUP_MEMBER B
+            ON A.MEMBER_ID = B.MEMBER_ID
+          JOIN USER C
+            ON B.USER_ID = C.USER_ID
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.GROUP_ID = #{ groupId }
          ORDER BY A.STUDY_GROUP_BOARD_ID DESC
          LIMIT #{ elementsPerPage } OFFSET #{ offset }
@@ -42,8 +48,13 @@
              , A.ACTIVE_STATUS
              , A.LIKES
              , A.MEMBER_ID
+             , C.NICKNAME
              , A.GROUP_ID
           FROM STUDY_GROUP_BOARD A
+          JOIN STUDY_GROUP_MEMBER B
+            ON A.MEMBER_ID = B.MEMBER_ID
+          JOIN USER C
+            ON B.USER_ID = C.USER_ID
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.MEMBER_ID = #{ memberId }
          ORDER BY A.STUDY_GROUP_BOARD_ID DESC
          LIMIT #{ elementsPerPage } OFFSET #{ offset }
@@ -59,8 +70,13 @@
              , A.ACTIVE_STATUS
              , A.LIKES
              , A.MEMBER_ID
+             , C.NICKNAME
              , A.GROUP_ID
           FROM STUDY_GROUP_BOARD A
+          JOIN STUDY_GROUP_MEMBER B
+            ON A.MEMBER_ID = B.MEMBER_ID
+          JOIN USER C
+            ON B.USER_ID = C.USER_ID
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.TITLE LIKE CONCAT('%', #{ title }, '%')
          ORDER BY A.STUDY_GROUP_BOARD_ID DESC
          LIMIT #{ elementsPerPage } OFFSET #{ offset }
@@ -76,8 +92,13 @@
              , A.ACTIVE_STATUS
              , A.LIKES
              , A.MEMBER_ID
+             , C.NICKNAME
              , A.GROUP_ID
           FROM STUDY_GROUP_BOARD A
+          JOIN STUDY_GROUP_MEMBER B
+            ON A.MEMBER_ID = B.MEMBER_ID
+          JOIN USER C
+            ON B.USER_ID = C.USER_ID
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.CONTENT LIKE CONCAT('%', #{ content }, '%')
          ORDER BY A.STUDY_GROUP_BOARD_ID DESC
          LIMIT #{ elementsPerPage } OFFSET #{ offset }
@@ -93,8 +114,13 @@
              , A.ACTIVE_STATUS
              , A.LIKES
              , A.MEMBER_ID
+             , C.NICKNAME
              , A.GROUP_ID
           FROM STUDY_GROUP_BOARD A
+          JOIN STUDY_GROUP_MEMBER B
+            ON A.MEMBER_ID = B.MEMBER_ID
+          JOIN USER C
+            ON B.USER_ID = C.USER_ID
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.STUDY_GROUP_BOARD_ID = #{ boardId }
     </select>
 
