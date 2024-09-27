@@ -12,10 +12,10 @@ public interface StudyGroupBoardService {
     PageDTO<StudyGroupBoardDTO> findStudyGroupBoardsByMemberId(Long memberId, Integer pageNo);
 
     // 게시글 제목으로 조회
-    PageDTO<StudyGroupBoardDTO> findStudyGroupBoardsByTitle(String title, Integer pageNo);
+    PageDTO<StudyGroupBoardDTO> findStudyGroupBoardsByTitle(Long groupId, String title, Integer pageNo);
 
     // 게시글 내용으로 조회
-    PageDTO<StudyGroupBoardDTO> findStudyGroupBoardsByContent(String content, Integer pageNo);
+    PageDTO<StudyGroupBoardDTO> findStudyGroupBoardsByContent(Long groupId, String content, Integer pageNo);
 
     // 게시글 단건 조회
     StudyGroupBoardDTO findStudyGroupBoardByBoardId(Long boardId);

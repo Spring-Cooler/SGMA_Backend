@@ -12,9 +12,9 @@ public interface StudyGroupNoticeService {
     StudyGroupNoticeDTO findStudyGroupNoticeByNoticeId(Long noticeId);
 
     // 스터디그룹 공지사항 제목으로 조회
-    PageDTO<StudyGroupNoticeDTO> findStudyGroupNoticesByTitle(String title, Integer pageNo);
+    PageDTO<StudyGroupNoticeDTO> findStudyGroupNoticesByTitle(Long groupId, String title, Integer pageNo);
 
     // 스터디그룹 공지사항 내용으로 조회
-    PageDTO<StudyGroupNoticeDTO> findStudyGroupNoticesByContent(String content, Integer pageNo);
+    PageDTO<StudyGroupNoticeDTO> findStudyGroupNoticesByContent(Long groupId, String content, Integer pageNo);
 
 }

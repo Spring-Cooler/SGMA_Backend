@@ -36,20 +36,22 @@ public class StudyGroupNoticeController {
     }
 
     // 스터디그룹 공지사항 제목으로 조회
-    @GetMapping("/title/{title}")
-    public ResponseDTO<?> findStudyGroupNoticesByTitle(@PathVariable("title") String title,
+    @GetMapping("/group-id/{groupId}/title/{title}")
+    public ResponseDTO<?> findStudyGroupNoticesByTitle(@PathVariable("groupId") Long groupId,
+                                                       @PathVariable("title") String title,
                                                        @RequestParam("page") Integer pageNo) {
         PageDTO<StudyGroupNoticeDTO> page =
-                studyGroupNoticeService.findStudyGroupNoticesByTitle(title, pageNo);
+                studyGroupNoticeService.findStudyGroupNoticesByTitle(groupId, title, pageNo);
         return ResponseDTO.ok(page);
     }
 
     // 스터디그룹 공지사항 내용으로 조회
-    @GetMapping("/content/{content}")
-    public ResponseDTO<?> findStudyGroupNoticesByContent(@PathVariable("content") String content,
+    @GetMapping("/group-id/{groupId}/content/{content}")
+    public ResponseDTO<?> findStudyGroupNoticesByContent(@PathVariable("groupId") Long groupId,
+                                                         @PathVariable("content") String content,
                                                          @RequestParam("page") Integer pageNo) {
         PageDTO<StudyGroupNoticeDTO> page =
-                studyGroupNoticeService.findStudyGroupNoticesByContent(content, pageNo);
+                studyGroupNoticeService.findStudyGroupNoticesByContent(groupId, content, pageNo);
         return ResponseDTO.ok(page);
     }
 

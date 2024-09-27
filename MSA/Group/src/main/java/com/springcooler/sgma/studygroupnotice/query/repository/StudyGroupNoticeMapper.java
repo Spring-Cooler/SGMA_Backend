@@ -18,12 +18,14 @@ public interface StudyGroupNoticeMapper {
     StudyGroupNoticeDTO findStudyGroupNoticeByNoticeId(Long noticeId);
 
     // 스터디그룹 공지사항 제목으로 조회
-    List<StudyGroupNoticeDTO> findStudyGroupNoticesByTitle(@Param("title") String title,
+    List<StudyGroupNoticeDTO> findStudyGroupNoticesByTitle(@Param("groupId") Long groupId,
+                                                           @Param("title") String title,
                                                            @Param("elementsPerPage") Integer elementsPerPage,
                                                            @Param("offset") Integer offset);
 
     // 스터디그룹 공지사항 내용으로 조회
-    List<StudyGroupNoticeDTO> findStudyGroupNoticesByContent(@Param("content") String content,
+    List<StudyGroupNoticeDTO> findStudyGroupNoticesByContent(@Param("groupId") Long groupId,
+                                                             @Param("content") String content,
                                                              @Param("elementsPerPage") Integer elementsPerPage,
                                                              @Param("offset") Integer offset);
 
@@ -31,9 +33,9 @@ public interface StudyGroupNoticeMapper {
     Integer getTotalElementsByGroupId(Long groupId);
 
     // 제목으로 전체 공지사항 개수 조회
-    Integer getTotalElementsByTitle(String title);
+    Integer getTotalElementsByTitle(Long groupId, String title);
 
     // 내용으로 전체 공지사항 개수 조회
-    Integer getTotalElementsByContent(String content);
+    Integer getTotalElementsByContent(Long groupId, String content);
 
 }

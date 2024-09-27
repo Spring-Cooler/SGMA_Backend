@@ -20,12 +20,14 @@ public interface StudyGroupBoardMapper {
                                                             @Param("offset") Integer offset);
 
     // 게시글 제목으로 조회
-    List<StudyGroupBoardDTO> findStudyGroupBoardsByTitle(@Param("title") String title,
+    List<StudyGroupBoardDTO> findStudyGroupBoardsByTitle(@Param("groupId") Long groupId,
+                                                         @Param("title") String title,
                                                          @Param("elementsPerPage") Integer elementsPerPage,
                                                          @Param("offset") Integer offset);
 
     // 게시글 내용으로 조회
-    List<StudyGroupBoardDTO> findStudyGroupBoardsByContent(@Param("content") String content,
+    List<StudyGroupBoardDTO> findStudyGroupBoardsByContent(@Param("groupId") Long groupId,
+                                                           @Param("content") String content,
                                                            @Param("elementsPerPage") Integer elementsPerPage,
                                                            @Param("offset") Integer offset);
 
@@ -39,9 +41,9 @@ public interface StudyGroupBoardMapper {
     Integer getTotalElementsByMemberId(Long memberId);
 
     // 제목별 게시글 전체 개수 조회
-    Integer getTotalElementsByTitle(String title);
+    Integer getTotalElementsByTitle(Long groupId, String title);
 
     // 내용별 게시글 전체 개수 조회
-    Integer getTotalElementsByContent(String content);
+    Integer getTotalElementsByContent(Long groupId, String content);
 
 }
