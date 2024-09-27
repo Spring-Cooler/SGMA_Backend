@@ -51,7 +51,7 @@
              , A.ACTIVE_STATUS
              , A.GROUP_ID
           FROM STUDY_GROUP_NOTICE A
-         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.TITLE LIKE CONCAT('%', #{ title }, '%')
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.GROUP_ID = #{ groupId } AND A.TITLE LIKE CONCAT('%', #{ title }, '%')
          ORDER BY A.NOTICE_ID DESC
          LIMIT #{ elementsPerPage } OFFSET #{ offset }
     </select>
@@ -66,7 +66,7 @@
              , A.ACTIVE_STATUS
              , A.GROUP_ID
           FROM STUDY_GROUP_NOTICE A
-         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.CONTENT LIKE CONCAT('%', #{ content }, '%')
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.GROUP_ID = #{ groupId } AND A.CONTENT LIKE CONCAT('%', #{ content }, '%')
          ORDER BY A.NOTICE_ID DESC
          LIMIT #{ elementsPerPage } OFFSET #{ offset }
     </select>
@@ -78,18 +78,18 @@
          WHERE A.GROUP_ID = #{ groupId } AND A.ACTIVE_STATUS = 'ACTIVE'
     </select>
 
-    <select id="getTotalElementsByTitle" resultType="Integer" parameterType="string">
+    <select id="getTotalElementsByTitle" resultType="Integer" parameterType="map">
         SELECT
                COUNT(*) AS TOTAL
           FROM STUDY_GROUP_NOTICE A
-         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.TITLE LIKE CONCAT('%', #{ title }, '%')
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.GROUP_ID = #{ groupId } AND A.TITLE LIKE CONCAT('%', #{ title }, '%')
     </select>
 
-    <select id="getTotalElementsByContent" resultType="Integer" parameterType="string">
+    <select id="getTotalElementsByContent" resultType="Integer" parameterType="map">
         SELECT
                COUNT(*) AS TOTAL
           FROM STUDY_GROUP_NOTICE A
-         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.CONTENT LIKE CONCAT('%', #{ content }, '%')
+         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.GROUP_ID = #{ groupId } AND A.CONTENT LIKE CONCAT('%', #{ content }, '%')
     </select>
 
 </mapper>

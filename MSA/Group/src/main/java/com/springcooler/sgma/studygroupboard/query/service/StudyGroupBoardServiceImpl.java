@@ -73,21 +73,21 @@ public class StudyGroupBoardServiceImpl implements StudyGroupBoardService {
 
     // 게시글 제목으로 조회
     @Override
-    public PageDTO<StudyGroupBoardDTO> findStudyGroupBoardsByTitle(String title, Integer pageNo) {
+    public PageDTO<StudyGroupBoardDTO> findStudyGroupBoardsByTitle(Long groupId, String title, Integer pageNo) {
         // 페이지 번호 유효성 검사
         if(pageNo == null || pageNo < 1) {
             throw new CommonException(ErrorCode.INVALID_PARAMETER_FORMAT);
         }
 
         // 제목별 전체 게시글 수 조회
-        Integer totalElements = studyGroupBoardMapper.getTotalElementsByTitle(title);
+        Integer totalElements = studyGroupBoardMapper.getTotalElementsByTitle(groupId, title);
         if(totalElements == null || totalElements < 1) {
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_BOARD);
         }
 
         // 현재 페이지 게시글 조회
         Integer offset = (pageNo - 1) * ELEMENTS_PER_PAGE;
-        List<StudyGroupBoardDTO> boards = studyGroupBoardMapper.findStudyGroupBoardsByTitle(title, ELEMENTS_PER_PAGE, offset);
+        List<StudyGroupBoardDTO> boards = studyGroupBoardMapper.findStudyGroupBoardsByTitle(groupId, title, ELEMENTS_PER_PAGE, offset);
         if(boards == null || boards.isEmpty()) {
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_BOARD);
         }
@@ -97,21 +97,21 @@ public class StudyGroupBoardServiceImpl implements StudyGroupBoardService {
 
     // 게시글 내용으로 조회
     @Override
-    public PageDTO<StudyGroupBoardDTO> findStudyGroupBoardsByContent(String content, Integer pageNo) {
+    public PageDTO<StudyGroupBoardDTO> findStudyGroupBoardsByContent(Long groupId, String content, Integer pageNo) {
         // 페이지 번호 유효성 검사
         if(pageNo == null || pageNo < 1) {
             throw new CommonException(ErrorCode.INVALID_PARAMETER_FORMAT);
         }
 
         // 내용별 전체 게시글 수 조회
-        Integer totalElements = studyGroupBoardMapper.getTotalElementsByContent(content);
+        Integer totalElements = studyGroupBoardMapper.getTotalElementsByContent(groupId, content);
         if(totalElements == null || totalElements < 1) {
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_BOARD);
         }
 
         // 현재 페이지 게시글 조회
         Integer offset = (pageNo - 1) * ELEMENTS_PER_PAGE;
-        List<StudyGroupBoardDTO> boards = studyGroupBoardMapper.findStudyGroupBoardsByContent(content, ELEMENTS_PER_PAGE, offset);
+        List<StudyGroupBoardDTO> boards = studyGroupBoardMapper.findStudyGroupBoardsByContent(groupId, content, ELEMENTS_PER_PAGE, offset);
         if(boards == null || boards.isEmpty()) {
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_BOARD);
         }

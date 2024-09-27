@@ -50,7 +50,7 @@ class StudyGroupBoardServiceTests {
         Assertions.assertDoesNotThrow(
                 () -> {
                     PageDTO<StudyGroupBoardDTO> page =
-                            studyGroupBoardService.findStudyGroupBoardsByTitle(title, 1);
+                            studyGroupBoardService.findStudyGroupBoardsByTitle(1L, title, 1);
                     page.getElements().forEach(x -> log.info(x.toString()));
                 }
         );
@@ -63,7 +63,7 @@ class StudyGroupBoardServiceTests {
         Assertions.assertDoesNotThrow(
                 () -> {
                     PageDTO<StudyGroupBoardDTO> page =
-                            studyGroupBoardService.findStudyGroupBoardsByContent(content, 1);
+                            studyGroupBoardService.findStudyGroupBoardsByContent(1L, content, 1);
                     page.getElements().forEach(x -> log.info(x.toString()));
                 }
         );

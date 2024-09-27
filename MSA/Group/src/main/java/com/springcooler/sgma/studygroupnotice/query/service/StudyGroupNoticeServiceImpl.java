@@ -60,19 +60,19 @@ public class StudyGroupNoticeServiceImpl implements StudyGroupNoticeService {
 
     // 스터디그룹 공지사항 제목으로 조회
     @Override
-    public PageDTO<StudyGroupNoticeDTO> findStudyGroupNoticesByTitle(String title, Integer pageNo) {
+    public PageDTO<StudyGroupNoticeDTO> findStudyGroupNoticesByTitle(Long groupId, String title, Integer pageNo) {
         // 페이지 번호 유효성 검사
         if(pageNo == null || pageNo < 1) {
             throw new CommonException(ErrorCode.INVALID_PARAMETER_FORMAT);
         }
 
         // 제목별 전체 공지사항 개수 조회
-        Integer totalElements = studyGroupNoticeMapper.getTotalElementsByTitle(title);
+        Integer totalElements = studyGroupNoticeMapper.getTotalElementsByTitle(groupId, title);
 
         // 현재 페이지 공지사항 조회
         Integer offset = (pageNo - 1) * ELEMENTS_PER_PAGE;
         List<StudyGroupNoticeDTO> notices =
-                studyGroupNoticeMapper.findStudyGroupNoticesByTitle(title, ELEMENTS_PER_PAGE, offset);
+                studyGroupNoticeMapper.findStudyGroupNoticesByTitle(groupId, title, ELEMENTS_PER_PAGE, offset);
         if (notices == null || notices.isEmpty()) {
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_NOTICE);
         }
@@ -82,19 +82,19 @@ public class StudyGroupNoticeServiceImpl implements StudyGroupNoticeService {
 
     // 스터디그룹 공지사항 내용으로 조회
     @Override
-    public PageDTO<StudyGroupNoticeDTO> findStudyGroupNoticesByContent(String content, Integer pageNo) {
+    public PageDTO<StudyGroupNoticeDTO> findStudyGroupNoticesByContent(Long groupId, String content, Integer pageNo) {
         // 페이지 번호 유효성 검사
         if(pageNo == null || pageNo < 1) {
             throw new CommonException(ErrorCode.INVALID_PARAMETER_FORMAT);
         }
 
         // 내용별 전체 공지사항 개수 조회
-        Integer totalElements = studyGroupNoticeMapper.getTotalElementsByContent(content);
+        Integer totalElements = studyGroupNoticeMapper.getTotalElementsByContent(groupId, content);
 
         // 현재 페이지 공지사항 조회
         Integer offset = (pageNo - 1) * ELEMENTS_PER_PAGE;
         List<StudyGroupNoticeDTO> notices =
-                studyGroupNoticeMapper.findStudyGroupNoticesByContent(content, ELEMENTS_PER_PAGE, offset);
+                studyGroupNoticeMapper.findStudyGroupNoticesByContent(groupId, content, ELEMENTS_PER_PAGE, offset);
         if (notices == null || notices.isEmpty()) {
             throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_NOTICE);
         }

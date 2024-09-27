@@ -37,20 +37,22 @@ public class StudyGroupBoardController {
     }
 
     // 게시글 제목으로 조회
-    @GetMapping("/title/{title}")
-    public ResponseDTO<?> findStudyGroupBoardsByTitle(@PathVariable("title") String title,
+    @GetMapping("/group-id/{groupId}/title/{title}")
+    public ResponseDTO<?> findStudyGroupBoardsByTitle(@PathVariable("groupId") Long groupId,
+                                                      @PathVariable("title") String title,
                                                       @RequestParam("page") Integer pageNo) {
         PageDTO<StudyGroupBoardDTO> page =
-                studyGroupBoardService.findStudyGroupBoardsByTitle(title, pageNo);
+                studyGroupBoardService.findStudyGroupBoardsByTitle(groupId, title, pageNo);
         return ResponseDTO.ok(page);
     }
 
     // 게시글 내용으로 조회
-    @GetMapping("/content/{content}")
-    public ResponseDTO<?> findStudyGroupBoardsByContent(@PathVariable("content") String content,
+    @GetMapping("/group-id/{groupId}/content/{content}")
+    public ResponseDTO<?> findStudyGroupBoardsByContent(@PathVariable Long groupId,
+                                                        @PathVariable("content") String content,
                                                         @RequestParam("page") Integer pageNo) {
         PageDTO<StudyGroupBoardDTO> page =
-                studyGroupBoardService.findStudyGroupBoardsByContent(content, pageNo);
+                studyGroupBoardService.findStudyGroupBoardsByContent(groupId, content, pageNo);
         return ResponseDTO.ok(page);
     }
 
