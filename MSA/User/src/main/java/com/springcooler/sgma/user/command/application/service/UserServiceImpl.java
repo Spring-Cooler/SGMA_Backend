@@ -362,7 +362,7 @@ public class UserServiceImpl implements UserService {
         /* 설명. 넘어온 user_auth_id와 signupPath를 사용자가 입력한 id로써 회원을 조회하는 쿼리 메소드 작성 */
         UserEntity loginUser = userRepository.findByUserIdentifier(userIdentifier);
         if (loginUser == null) {
-            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+            throw new CommonException(ErrorCode.NOT_FOUND_USER_ID);
         }
 
 
