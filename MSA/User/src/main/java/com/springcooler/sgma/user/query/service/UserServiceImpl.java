@@ -52,6 +52,19 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+    @Override
+    public UserDTO getUserByUserAuthId(String userAuthId) {
+
+        UserDTO user = userMapper.findByUserIdentifier("NORMAL_"+userAuthId);
+        log.info("user: {}",user);
+        return user;
+    }
+
+    @Override
+    public UserDTO getUserByNicknameForDuplicate(String nickname) {
+        UserDTO user = userMapper.findByNickname(nickname);
+        return user;
+    }
 
     @Override
     public UserDTO findUserByUserNicknameAndSignupPathAndEmail(String nickname, SignupPath signupPath, String email) {
