@@ -72,8 +72,8 @@ public class UserController {
 
     // 회원별 댓글 조회 API
     @GetMapping("/comments/{userId}")
-    public UserCommentsAndRepliesDTO getCommentsAndRepliesByUserId(@PathVariable("userId") Long userId) {
-        return recruitmentCommentService.getCommentsAndRepliesByUserId(userId);
+    public ResponseDTO<UserCommentsAndRepliesDTO> getCommentsAndRepliesByUserId(@PathVariable("userId") Long userId) {
+        return ResponseDTO.ok(recruitmentCommentService.getCommentsAndRepliesByUserId(userId));
     }
 }
 
