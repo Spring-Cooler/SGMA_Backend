@@ -34,6 +34,9 @@ public class StudyGroupBoardReplyDTO {
     @JsonProperty("member_id")
     private Long memberId;
 
+    @JsonProperty("nickname")
+    private String nickname;
+
     @JsonProperty("comment_id")
     private Long studyGroupBoardCommentId;
 
