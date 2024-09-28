@@ -11,6 +11,7 @@
         <result property="updatedAt" column="UPDATED_AT"/>
         <result property="activeStatus" column="ACTIVE_STATUS"/>
         <result property="memberId" column="MEMBER_ID"/>
+        <result property="nickname" column="NICKNAME"/>
         <result property="studyGroupBoardCommentId" column="STUDY_GROUP_BOARD_COMMENT_ID"/>
     </resultMap>
 
@@ -22,9 +23,15 @@
              , A.UPDATED_AT
              , A.ACTIVE_STATUS
              , A.MEMBER_ID
+             , C.NICKNAME
              , A.STUDY_GROUP_BOARD_COMMENT_ID
           FROM STUDY_GROUP_BOARD_REPLY A
+          JOIN STUDY_GROUP_MEMBER B
+            ON A.MEMBER_ID = B.MEMBER_ID
+          JOIN USER C
+            ON C.USER_ID = B.USER_ID
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.STUDY_GROUP_BOARD_COMMENT_ID = #{ commentId }
+         ORDER BY A.STUDY_GROUP_BOARD_REPLY_ID ASC
     </select>
 
     <select id="findStudyGroupBoardRepliesByMemberId" resultMap="studyGroupBoardReplyResultMap" parameterType="Long">
@@ -35,9 +42,15 @@
              , A.UPDATED_AT
              , A.ACTIVE_STATUS
              , A.MEMBER_ID
+             , C.NICKNAME
              , A.STUDY_GROUP_BOARD_COMMENT_ID
           FROM STUDY_GROUP_BOARD_REPLY A
+          JOIN STUDY_GROUP_MEMBER B
+            ON A.MEMBER_ID = B.MEMBER_ID
+          JOIN USER C
+            ON C.USER_ID = B.USER_ID
          WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.MEMBER_ID = #{ memberId }
+         ORDER BY A.STUDY_GROUP_BOARD_REPLY_ID ASC
     </select>
 
 </mapper>
