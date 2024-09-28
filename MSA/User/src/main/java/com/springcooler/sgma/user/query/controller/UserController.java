@@ -47,16 +47,24 @@ public class UserController {
     }
 
     // 사용자 이메일로 사용자 조회
+//    @GetMapping("/identifier")
+//    public ResponseDTO<UserDTO> getUserByUserIdentifier(@RequestBody RequestUserIdentifierDTO requestUserIdentifierDTO) {
+//        UserDTO userDTO = userService.getUserByUserIdentifier(requestUserIdentifierDTO.getUserIdentifier());
+//        return ResponseDTO.ok(userDTO);
+//    }
+
     @GetMapping("/identifier")
-    public ResponseDTO<UserDTO> getUserByUserIdentifier(@RequestBody RequestUserIdentifierDTO requestUserIdentifierDTO) {
-        UserDTO userDTO = userService.getUserByUserIdentifier(requestUserIdentifierDTO.getUserIdentifier());
+    public ResponseDTO<UserDTO> getUserByUserIdentifier(@RequestParam("user_identifier") String userIdentifier)  {
+        UserDTO userDTO = userService.getUserByUserIdentifier(userIdentifier);
         return ResponseDTO.ok(userDTO);
     }
 
     @GetMapping("/auth-id")
-    public ResponseDTO<UserDTO> getUserByUserNameAndSignupPathAndEmail(@RequestBody RequestUserAuthIdDTO request) {
+    public ResponseDTO<UserDTO> getUserByUserNameAndSignupPathAndEmail(
+            @RequestParam String nickname,
+            @RequestParam String email) {
         //필기. 닉네임, 가입 구분, 이메일이 일치하는 사용자가 있는지 확인
-        UserDTO userDTO = userService.findUserByUserNicknameAndSignupPathAndEmail(request.getNickname(), SignupPath.NORMAL, request.getEmail());
+        UserDTO userDTO = userService.findUserByUserNicknameAndSignupPathAndEmail(nickname, SignupPath.NORMAL, email);
         return ResponseDTO.ok(userDTO);
     }
 
