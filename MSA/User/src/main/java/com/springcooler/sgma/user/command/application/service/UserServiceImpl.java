@@ -28,6 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -283,8 +284,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
-    public UserDTO registUser(RequestResistUserVO newUser) {
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public synchronized UserDTO registUser(RequestResistUserVO newUser) {
 
         // 일반 회원가입인데 동일한 UserIdentifier가 존재하는지 확인(이메일 중복 검증)
         UserEntity existingUser = userRepository.findByUserIdentifier("NORMAL_" + newUser.getUserAuthId());

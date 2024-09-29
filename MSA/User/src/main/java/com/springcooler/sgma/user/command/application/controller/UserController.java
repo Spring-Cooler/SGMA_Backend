@@ -63,7 +63,7 @@ public class UserController {
     @PatchMapping("/{userId}/profile")
     public ResponseDTO<?> updateProfile(@PathVariable("userId") Long userId,
                                         @RequestParam("nickname") String nickname,
-                                        @RequestParam("profile_image") MultipartFile profileImage) {
+                                        @RequestParam(value = "profile_image", required = false) MultipartFile profileImage) {
 
         // DTO 객체 생성 및 값 설정
         RequestUpdateUserDTO userUpdateDTO = new RequestUpdateUserDTO();

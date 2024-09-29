@@ -46,13 +46,6 @@ public class UserController {
         return ResponseDTO.ok(userDTO);
     }
 
-    // 사용자 이메일로 사용자 조회
-//    @GetMapping("/identifier")
-//    public ResponseDTO<UserDTO> getUserByUserIdentifier(@RequestBody RequestUserIdentifierDTO requestUserIdentifierDTO) {
-//        UserDTO userDTO = userService.getUserByUserIdentifier(requestUserIdentifierDTO.getUserIdentifier());
-//        return ResponseDTO.ok(userDTO);
-//    }
-
     @GetMapping("/identifier")
     public ResponseDTO<UserDTO> getUserByUserIdentifier(@RequestParam("user_identifier") String userIdentifier)  {
         UserDTO userDTO = userService.getUserByUserIdentifier(userIdentifier);
@@ -69,12 +62,36 @@ public class UserController {
     }
 
 
-
     // 회원별 댓글 조회 API
     @GetMapping("/comments/{userId}")
-    public UserCommentsAndRepliesDTO getCommentsAndRepliesByUserId(@PathVariable("userId") Long userId) {
-        return recruitmentCommentService.getCommentsAndRepliesByUserId(userId);
+    public ResponseDTO<UserCommentsAndRepliesDTO> getCommentsAndRepliesByUserId(@PathVariable("userId") Long userId) {
+        return ResponseDTO.ok(recruitmentCommentService.getCommentsAndRepliesByUserId(userId));
     }
+
+
+    // 닉네임 중복 검증 api
+    @PostMapping("/nickname/validate")
+    public ResponseDTO<BooleanResponseDTO> validateNickname(@RequestBody RequestNicknameDTO requestNicknameDTO) {
+        UserDTO userDTO = userService. getUserByNicknameForDuplicate(requestNicknameDTO.getNickname());
+        boolean isDuplicate=true;
+        if (userDTO==null){
+            isDuplicate=false;
+        }
+        BooleanResponseDTO booleanResponseDTO=new BooleanResponseDTO(isDuplicate);
+        return ResponseDTO.ok(booleanResponseDTO);
+    }
+
+    // 아이디 중복 검증 api
+    @PostMapping("/user-id/validate")
+    public ResponseDTO<BooleanResponseDTO> getUserByUserIdentifier(@RequestBody RequestUserAuthIdentifierDTO requestUserIdentifierDTO) {
+        UserDTO userDTO = userService.getUserByUserAuthId(requestUserIdentifierDTO.getUserAuthId());
+        boolean isDuplicate=true;
+        if (userDTO==null){
+            isDuplicate=false;
+        }
+        BooleanResponseDTO booleanResponseDTO=new BooleanResponseDTO(isDuplicate);
+        return ResponseDTO.ok(booleanResponseDTO);
+    }
+
+
 }
-
-

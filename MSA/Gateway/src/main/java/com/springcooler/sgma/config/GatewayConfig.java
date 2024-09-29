@@ -16,11 +16,13 @@ public class GatewayConfig {
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:8011"));
         corsConfig.setMaxAge(3600L);
-        corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE","PATCH"));
         corsConfig.addAllowedHeader("*");
+        corsConfig.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfig);
+
 
         return new CorsWebFilter(source);
     }
