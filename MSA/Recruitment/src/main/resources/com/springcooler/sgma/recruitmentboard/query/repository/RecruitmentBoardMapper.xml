@@ -55,7 +55,9 @@
             A.ACTIVE_STATUS,
             A.LIKES,
             A.GROUP_ID,
-            A.STUDY_GROUP_CATEGORY_ID
+            A.STUDY_GROUP_CATEGORY_ID,
+            C.nickname AS USER_NICKNAME,
+            D.study_group_category_name AS CATEGORY_NAME
         FROM (
             SELECT
                 RECRUITMENT_BOARD_ID,
@@ -72,7 +74,11 @@
             FROM RECRUITMENT_BOARD
                 WHERE RECRUITMENT_BOARD_ID = #{ recruitmentBoardId }
         ) A
+        JOIN STUDY_GROUP B ON A.GROUP_ID = B.GROUP_ID
+        JOIN USER C ON B.USER_ID = C.USER_ID
+        LEFT JOIN STUDY_GROUP_CATEGORY D ON A.STUDY_GROUP_CATEGORY_ID = D.STUDY_GROUP_CATEGORY_ID
         WHERE A.ACTIVE_STATUS = 'ACTIVE' OR A.ACTIVE_STATUS = 'INACTIVE';
+
     </select>
 
 
