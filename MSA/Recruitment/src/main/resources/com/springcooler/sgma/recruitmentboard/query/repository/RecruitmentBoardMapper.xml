@@ -16,6 +16,8 @@
         <result property="likes" column="LIKES"/>
         <result property="groupId" column="GROUP_ID"/>
         <result property="studyGroupCategoryId" column="STUDY_GROUP_CATEGORY_ID"/>
+        <result property="userNickname" column="USER_NICKNAME"/>
+        <result property="studyGroupCategoryName" column="CATEGORY_NAME"/>
     </resultMap>
 
     <select id="findAllRecruitmentBoards" resultMap="studyGroupRecruitment">
@@ -30,9 +32,14 @@
         A.ACTIVE_STATUS,
         A.LIKES,
         A.GROUP_ID,
-        A.STUDY_GROUP_CATEGORY_ID
+        A.STUDY_GROUP_CATEGORY_ID,
+        C.nickname AS USER_NICKNAME,
+        D.study_group_category_name AS CATEGORY_NAME
         FROM RECRUITMENT_BOARD A
-        WHERE A.ACTIVE_STATUS = 'ACTIVE' OR A.ACTIVE_STATUS='INACTIVE'
+        JOIN STUDY_GROUP B ON A.GROUP_ID = B.GROUP_ID
+        JOIN USER C ON B.USER_ID = C.USER_ID
+        LEFT JOIN STUDY_GROUP_CATEGORY D ON A.STUDY_GROUP_CATEGORY_ID = D.STUDY_GROUP_CATEGORY_ID
+        WHERE A.ACTIVE_STATUS = 'ACTIVE' OR A.ACTIVE_STATUS = 'INACTIVE';
     </select>
 
 
