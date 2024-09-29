@@ -106,9 +106,15 @@
         A.ACTIVE_STATUS,
         A.LIKES,
         A.GROUP_ID,
-        A.STUDY_GROUP_CATEGORY_ID
+        A.STUDY_GROUP_CATEGORY_ID,
+        C.nickname AS USER_NICKNAME,
+        D.study_group_category_name AS CATEGORY_NAME
     FROM RECRUITMENT_BOARD A
+    JOIN STUDY_GROUP B ON A.GROUP_ID = B.GROUP_ID
+    JOIN USER C ON B.USER_ID = C.USER_ID
+    LEFT JOIN STUDY_GROUP_CATEGORY D ON A.STUDY_GROUP_CATEGORY_ID = D.STUDY_GROUP_CATEGORY_ID
     WHERE A.GROUP_ID = #{groupId}
+
     </select>
 
     <select id="findRecruitmentBoardsByCategory" resultMap="studyGroupRecruitment" parameterType="Integer">
