@@ -51,7 +51,7 @@ public class RecruitmentBoardCommandServiceImpl implements RecruitmentBoardComma
                 .recruitmentStartTime(adjustedStartTime)
                 .recruitmentEndTime(adjustedEndTime)
                 .activeStatus(BoardActiveStatus.valueOf("ACTIVE"))
-                .likes(recruitmentBoardCommandDTO.getLikes())//추후 수정
+                .likes(0)//추후 수정
                 .group_id(recruitmentBoardCommandDTO.getGroupId())
                 .study_group_category_id(recruitmentBoardCommandDTO.getStudyGroupCategoryId())
                 .build();
