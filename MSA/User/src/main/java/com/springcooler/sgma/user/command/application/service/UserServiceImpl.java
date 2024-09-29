@@ -108,12 +108,12 @@ public class UserServiceImpl implements UserService {
      * 사용자 계정을 활성화하는 메서드.
      */
     @Override
-    public UserEntity activateUser(Long userId) {
-        Optional<UserEntity> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
+    public UserEntity activateUser(String userAuthId) {
+        UserEntity user = userRepository.findByUserIdentifier("NORMAL_"+userAuthId);
+        if (user==null) {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
-        UserEntity userEntity = user.get();
+        UserEntity userEntity = user;
         userEntity.activateUser();  // 사용자 상태를 활성화(ACTIVE)로 변경
         return userRepository.save(userEntity);  // 변경된 상태를 저장
     }
