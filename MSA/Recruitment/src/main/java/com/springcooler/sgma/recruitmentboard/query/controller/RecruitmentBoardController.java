@@ -30,13 +30,19 @@ public class RecruitmentBoardController {
 //        return ResponseDTO.ok(recruitmentBoards);
 //    }
 
+//    @GetMapping("/all")
+//    @Operation(summary = "모집글 전체 조회")
+//    public ResponseDTO<?> getRecruitmentBoards(
+//            @RequestParam(defaultValue = "1") Integer page) {
+//        final Integer size = 5;
+//        PaginatedResponse<RecruitmentBoardDTO> response = recruitmentBoardService.findAllRecruitmentBoards(page, size);
+//        return ResponseDTO.ok(response);
+//    }
     @GetMapping("/all")
     @Operation(summary = "모집글 전체 조회")
-    public ResponseDTO<?> getRecruitmentBoards(
-            @RequestParam(defaultValue = "1") Integer page) {
-        final Integer size = 5;
-        PaginatedResponse<RecruitmentBoardDTO> response = recruitmentBoardService.findAllRecruitmentBoards(page, size);
-        return ResponseDTO.ok(response);
+    public ResponseDTO<?> getRecruitmentBoards() {
+        List<RecruitmentBoardDTO> recruitmentBoard = recruitmentBoardService.findAllRecruitmentBoards();
+        return ResponseDTO.ok(recruitmentBoard);
     }
 
     @GetMapping("board/{recruitmentBoardId}")

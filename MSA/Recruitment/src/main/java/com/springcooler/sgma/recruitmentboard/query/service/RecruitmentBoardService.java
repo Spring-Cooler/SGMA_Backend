@@ -22,22 +22,12 @@ public class RecruitmentBoardService {
         this.recruitmentBoardMapper = recruitmentBoardMapper;
     }
 
-    public PaginatedResponse<RecruitmentBoardDTO> findAllRecruitmentBoards(Integer page, Integer size) {
-        List<RecruitmentBoardDTO> boards = recruitmentBoardMapper.findAllRecruitmentBoards();
-        long totalElements = boards.size();
-        int totalPages = (int) Math.ceil((double) totalElements / size);
-
-        // 페이징 처리
-        int start = (page - 1) * size;
-        int end = Math.min(start + size, boards.size());
-        List<RecruitmentBoardDTO> paginatedBoards = boards.subList(start, end);
-
-        PaginatedResponse<RecruitmentBoardDTO> response = new PaginatedResponse<>();
-        response.setData(paginatedBoards);
-        response.setTotalPages(totalPages);
-        response.setTotalElements(totalElements);
-
-        return response;
+    public List<RecruitmentBoardDTO> findAllRecruitmentBoards() {
+        List<RecruitmentBoardDTO> recruitmentBoard = recruitmentBoardMapper.findAllRecruitmentBoards();
+        if(recruitmentBoard == null) {
+            throw new CommonException(ErrorCode.NOT_FOUND_RECRUITMENT_BOARD);
+        }
+        return recruitmentBoard;
     }
 
     public RecruitmentBoardDTO findRecruitmentBoardByBoardId(Long recruitmentBoardId){
