@@ -13,5 +13,7 @@ public class StudyGroupApplicantDTO {
     private String applicationStatus;
 
     private Long recruitmentBoardId;
+
+    private String nickname;
     
 }

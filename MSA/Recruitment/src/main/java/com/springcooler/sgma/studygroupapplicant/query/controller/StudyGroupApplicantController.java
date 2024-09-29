@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("queryStudyGroupApplicantController")
+@RestController("StudyGroupApplicantController")
 @RequestMapping("/api/study-applicant")
 public class StudyGroupApplicantController {
     private final StudyGroupApplicantService studyGroupApplicantService;

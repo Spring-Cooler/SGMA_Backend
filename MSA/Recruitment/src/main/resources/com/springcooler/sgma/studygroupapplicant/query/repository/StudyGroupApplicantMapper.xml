@@ -8,6 +8,7 @@
         <id property="userId" column="USER_ID"/>
         <result property="applicationStatus" column="APPLICATION_STATUS"/>
         <result property="recruitmentBoardId" column="RECRUITMENT_BOARD_ID"/>
+        <result property="nickname" column="USER_NICKNAME"/>
     </resultMap>
 
     <select id="findStudyGroupApplicantByUserId" resultMap="studyGroupApplicant">
