@@ -53,9 +53,9 @@ public class UserController {
         return ResponseDTO.ok(userEntity);
     }
     //필기. 사용자 활성화 여부 변경
-    @PatchMapping("/{userId}/activate")
-    public ResponseDTO<?> activateUser(@PathVariable("userId") Long userId) {
-        UserEntity userEntity = userService.activateUser(userId);
+    @PostMapping("/activate")
+    public ResponseDTO<?> activateUser(@RequestParam("userAuthId") String userAuthId ) {
+        UserEntity userEntity = userService.activateUser(userAuthId);
         return ResponseDTO.ok(userEntity);
     }
 

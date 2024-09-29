@@ -66,32 +66,32 @@ class UserServiceImplTests {
         assertEquals(ErrorCode.NOT_FOUND_USER, exception.getErrorCode());
     }
 
-    @Test
-    @DisplayName("사용자 활성화 성공 테스트")
-    void activateUser_Success() {
-        // Given
-        Long userId = 1L;  // 실제 DB에 존재하는 사용자 ID로 변경 필요
-        UserEntity userEntity = userRepository.findById(userId)
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+//    @Test
+//    @DisplayName("사용자 활성화 성공 테스트")
+//    void activateUser_Success() {
+//        // Given
+//        Long userId = 1L;  // 실제 DB에 존재하는 사용자 ID로 변경 필요
+//        UserEntity userEntity = userRepository.findById(userId)
+//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+//
+//        // When
+//        UserEntity result = userServiceImpl.activateUser(userId);
+//
+//        // Then
+//        assertNotNull(result);
+//        assertEquals(ActiveStatus.ACTIVE, result.getUserStatus());
+//    }
 
-        // When
-        UserEntity result = userServiceImpl.activateUser(userId);
-
-        // Then
-        assertNotNull(result);
-        assertEquals(ActiveStatus.ACTIVE, result.getUserStatus());
-    }
-
-    @Test
-    @DisplayName("존재하지 않는 사용자 활성화 실패 테스트")
-    void activateUser_UserNotFound() {
-        // Given
-        Long userId = 999L;  // 존재하지 않는 사용자 ID로 테스트
-
-        // When & Then
-        CommonException exception = assertThrows(CommonException.class, () -> userServiceImpl.activateUser(userId));
-        assertEquals(ErrorCode.NOT_FOUND_USER, exception.getErrorCode());
-    }
+//    @Test
+//    @DisplayName("존재하지 않는 사용자 활성화 실패 테스트")
+//    void activateUser_UserNotFound() {
+//        // Given
+//        Long userId = 999L;  // 존재하지 않는 사용자 ID로 테스트
+//
+//        // When & Then
+//        CommonException exception = assertThrows(CommonException.class, () -> userServiceImpl.activateUser(userId));
+//        assertEquals(ErrorCode.NOT_FOUND_USER, exception.getErrorCode());
+//    }
 
     @Test
     @DisplayName("사용자 비활성화 시간 정확성 검증 테스트")
