@@ -8,6 +8,7 @@
         <id property="userId" column="USER_ID"/>
         <result property="applicationStatus" column="APPLICATION_STATUS"/>
         <result property="recruitmentBoardId" column="RECRUITMENT_BOARD_ID"/>
+        <result property="nickname" column="USER_NICKNAME"/>
     </resultMap>
 
     <select id="findStudyGroupApplicantByUserId" resultMap="studyGroupApplicant">
@@ -27,6 +28,17 @@
         A.RECRUITMENT_BOARD_ID
         FROM STUDY_GROUP_APPLICANT A
         WHERE A.RECRUITMENT_BOARD_ID =#{ recruitmentBoardId }
+    </select>
+
+    <select id="findStudyGroupApplicantByGroupId" resultMap="studyGroupApplicant" parameterType="Long">
+        SELECT
+        A.user_id,
+        A.recruitment_board_id,
+        A.application_status,
+        B.nickname AS USER_NICKNAME
+        FROM study_group_applicant A
+        JOIN USER B ON A.USER_ID = B.USER_ID
+        WHERE group_id=#{groupId} and application_status="WAIT";
     </select>
 
 </mapper>
