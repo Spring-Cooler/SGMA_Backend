@@ -13,4 +13,5 @@ public interface StudyGroupApplicantMapper {
 
     List<StudyGroupApplicantDTO> findStudyGroupApplicantByRecruitmentBoardId(Long recruitmentBoardId);
 
+    List<StudyGroupApplicantDTO> findStudyGroupApplicantByGroupId(Long groupId);
 }

@@ -39,4 +39,13 @@ public class StudyGroupApplicantService {
         return applicant;
     }
 
+    public List<StudyGroupApplicantDTO> findStudyGroupApplicantByGroupId(Long groupId){
+        List<StudyGroupApplicantDTO> applicant =
+                studyGroupApplicantMapper.findStudyGroupApplicantByGroupId(groupId);
+        if(applicant == null || applicant.isEmpty()){
+            throw new CommonException(ErrorCode.NOT_FOUND_STUDY_GROUP_APPLICANT);
+        }
+        return applicant;
+    }
+
 }
