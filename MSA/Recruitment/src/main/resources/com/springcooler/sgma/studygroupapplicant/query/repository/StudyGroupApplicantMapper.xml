@@ -38,7 +38,7 @@
         B.nickname AS USER_NICKNAME
         FROM study_group_applicant A
         JOIN USER B ON A.USER_ID = B.USER_ID
-        WHERE group_id=#{groupId};
+        WHERE group_id=#{groupId} and application_status="WAIT";
     </select>
 
 </mapper>
