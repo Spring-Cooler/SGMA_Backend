@@ -35,4 +35,6 @@ public class RecruitmentBoardDTO {
     private String studyGroupCategoryName;
 
     private String userNickname;
+
+    private String studyGroupCategoryName;
 }
