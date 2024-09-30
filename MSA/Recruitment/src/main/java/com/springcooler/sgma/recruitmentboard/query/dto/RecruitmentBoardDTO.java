@@ -32,5 +32,7 @@ public class RecruitmentBoardDTO {
 
     private Integer studyGroupCategoryId;
 
+    private String studyGroupCategoryName;
+
     private String userNickname;
 }
