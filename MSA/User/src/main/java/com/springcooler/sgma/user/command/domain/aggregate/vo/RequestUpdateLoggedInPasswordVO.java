@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class RequestUpdatePasswordUserVO {
-    @JsonProperty("user_auth_id")
-    private String userAuthId;
-
+public class RequestUpdateLoggedInPasswordVO {
     @JsonProperty("password")
     private String password;
 }

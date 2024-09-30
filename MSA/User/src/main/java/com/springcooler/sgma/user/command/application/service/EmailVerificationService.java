@@ -1,5 +1,7 @@
 package com.springcooler.sgma.user.command.application.service;
 
+import com.springcooler.sgma.user.command.application.dto.UserDTO;
+import com.springcooler.sgma.user.command.domain.aggregate.SignupPath;
 import com.springcooler.sgma.user.common.exception.CommonException;
 import com.springcooler.sgma.user.common.exception.ErrorCode;
 import jakarta.mail.MessagingException;
@@ -26,6 +28,9 @@ public class EmailVerificationService {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;  // StringRedisTemplate 사용
+
+    @Autowired
+    private UserService userService;
 
     private final long VERIFICATION_CODE_TTL = 5; // 5분
     private final long COOLDOWN_SECONDS = 30; // 30초 쿨다운
@@ -86,6 +91,31 @@ public class EmailVerificationService {
             return false;
         }
     }
+
+
+    //필기. 닉네임의 회원의 이메일의 코드가 일치하는지 확인하는 코드
+    public UserDTO verifyUserNicknameCode(String nickname, String email, String code) {
+        // Redis에서 저장된 코드 가져오기
+        String savedCode = stringRedisTemplate.opsForValue().get(email);
+
+        // 사용자 정보 조회
+        UserDTO userDTO = userService.findUserByUserNicknameAndSignupPathAndEmail(nickname, SignupPath.NORMAL, email);
+
+        if (userDTO == null) {
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+        }
+
+        // 인증 코드가 없거나 일치하지 않으면 예외 발생
+        if (savedCode == null || !savedCode.equals(code)) {
+            throw new CommonException(ErrorCode.EMAIL_VERIFICATION_REQUIRED);
+        }
+
+        // 인증 성공 시 Redis에 "verified" 저장하고 TTL을 1시간으로 설정
+        stringRedisTemplate.opsForValue().set(email, "verified", 1, TimeUnit.HOURS);
+
+        return userDTO;
+    }
+
 
     //필기. Redis에 코드 저장
     private void saveVerificationCode(String email, String code) {

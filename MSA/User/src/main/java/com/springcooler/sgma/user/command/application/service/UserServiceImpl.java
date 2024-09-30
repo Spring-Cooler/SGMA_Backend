@@ -118,20 +118,20 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(userEntity);  // 변경된 상태를 저장
     }
 
-    //필기. 사용자 비밀번호 재설정
+    //필기.  로그인 전 사용자 비밀번호 재설정
     @Override
-    public UserEntity updatePassword(Long userId, String newPassword) {
+    public UserEntity updatePassword(String userAuthId, String newPassword) {
         // 1. 사용자 ID를 통해 사용자를 조회
-        Optional<UserEntity> user = userRepository.findById(userId);
+        UserEntity user = userRepository.findByUserIdentifier("NORMAL_"+userAuthId);
 
         //필기. 사용자 존재 검증
-        if (user.isEmpty()) {
+        if (user==null ) {
             // 사용자가 존재하지 않으면 예외 발생
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
 
         //필기. 비번 재설정시 이메일 인증여부 확인
-        UserEntity newUser=user.get();
+        UserEntity newUser=user;
         // Redis에서 이메일 인증 여부 확인 (이메일이 있을 때만)
         if (newUser.getEmail() != null && !newUser.getEmail().isEmpty()) {
             String emailVerificationStatus = stringRedisTemplate.opsForValue().get(newUser.getEmail());
@@ -141,7 +141,7 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        UserEntity userEntity = user.get();
+        UserEntity userEntity = user;
 
         // 2. 새로운 비밀번호를 암호화하여 설정
         String encryptedPassword = bCryptPasswordEncoder.encode(newPassword);
@@ -158,6 +158,33 @@ public class UserServiceImpl implements UserService {
         // 5. 업데이트된 사용자 엔티티 반환
         return updatedUserEntity;
     }
+
+    //필기. 로그인 후 사용자 비밀번호 재설정
+    @Override
+    public UserEntity updateLogiendPassword(Long userId, String newPassword) {
+        // 1. 사용자 ID를 통해 사용자를 조회
+        Optional<UserEntity> user = userRepository.findById(userId);
+
+        //필기. 사용자 존재 검증
+        if (user.isEmpty()) {
+            // 사용자가 존재하지 않으면 예외 발생
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+        }
+
+        UserEntity userEntity = user.get();
+
+        // 2. 새로운 비밀번호를 암호화하여 설정
+        String encryptedPassword = bCryptPasswordEncoder.encode(newPassword);
+        userEntity.setEncryptedPwd(encryptedPassword);
+
+        // 3. 암호화된 비밀번호를 저장하고 사용자 정보를 업데이트
+        UserEntity updatedUserEntity = userRepository.save(userEntity);
+
+        // 5. 업데이트된 사용자 엔티티 반환
+        return updatedUserEntity;
+    }
+
+
 
 
     /**설명.
