@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface RecruitmentBoardLikeCommandService {
     RecruitmentBoardLike addLike(Long recruitmentBoardId, Long userId);
-    RecruitmentBoardLike deleteLike(Long recruitmentBoardId, Long userId);
+    void deleteLike(Long recruitmentBoardId, Long userId);
 }
