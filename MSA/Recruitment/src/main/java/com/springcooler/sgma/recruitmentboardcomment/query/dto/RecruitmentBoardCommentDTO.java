@@ -27,4 +27,6 @@ public class RecruitmentBoardCommentDTO {
 
     private String anonymousStatus;
 
+    private String userNickname;
+
 }

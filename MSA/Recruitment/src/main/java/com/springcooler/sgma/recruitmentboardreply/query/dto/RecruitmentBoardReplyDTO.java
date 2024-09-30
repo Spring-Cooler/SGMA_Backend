@@ -1,7 +1,6 @@
 package com.springcooler.sgma.recruitmentboardreply.query.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
@@ -28,6 +27,8 @@ public class RecruitmentBoardReplyDTO {
     private Long userId;
 
     private Long recruitmentBoardCommentId;
+
+    private String userNickname;
 
 }
 

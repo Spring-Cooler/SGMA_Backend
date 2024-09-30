@@ -38,8 +38,8 @@ public class RecruitmentBoardCommentCommandController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "모집글 댓글 삭제")
-    public ResponseDTO<?> deleteComment(@PathVariable("id") Long id, @RequestBody RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
-        recruitmentBoardCommentCommandService.deleteRecruitmentBoardComment(id, recruitmentBoardCommentCommandDTO);
+    public ResponseDTO<?> deleteComment(@PathVariable("id") Long id) {
+        recruitmentBoardCommentCommandService.deleteRecruitmentBoardComment(id);
         return ResponseDTO.ok(HttpStatus.NO_CONTENT);
     }
 }

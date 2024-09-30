@@ -63,7 +63,7 @@ public class RecruitmentBoardCommentCommandServiceImpl implements RecruitmentBoa
 
     @Override
     @Transactional
-    public RecruitmentBoardComment deleteRecruitmentBoardComment(Long recruitmentBoardCommentId, RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO) {
+    public RecruitmentBoardComment deleteRecruitmentBoardComment(Long recruitmentBoardCommentId) {
         Optional<RecruitmentBoardComment> optionalRecruitmentBoardComment = recruitmentBoardCommentRepository.findById(recruitmentBoardCommentId);
 
         if (optionalRecruitmentBoardComment.isPresent()) {

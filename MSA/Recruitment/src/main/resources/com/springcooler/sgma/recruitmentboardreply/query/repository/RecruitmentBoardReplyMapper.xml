@@ -13,6 +13,7 @@
         <result property="anonymousStatus" column="ANONYMOUS_STATUS"/>
         <result property="userId" column="USER_ID"/>
         <result property="recruitmentBoardCommentId" column="RECRUITMENT_BOARD_COMMENT_ID"/>
+        <result property="userNickname" column="USER_NICKNAME"/>
     </resultMap>
 
     <select id="findRecruitmentBoardReplies" resultMap="recruitmentBoardReply">
@@ -23,10 +24,11 @@
         A.UPDATED_AT,
         A.ACTIVE_STATUS,
         A.ANONYMOUS_STATUS,
-        A.USER_ID,
-        A.RECRUITMENT_BOARD_COMMENT_ID
+        A.USER_ID
+        U.NICKNAME AS USER_NICKNAME
         FROM RECRUITMENT_BOARD_REPLY A
-        WHERE A.ACTIVE_STATUS = 'ACTIVE'
+        LEFT JOIN USER U ON A.USER_ID = U.USER_ID
+        ORDER BY A.CREATED_AT DESC;
     </select>
 
     <select id="findRecruitmentBoardRepliesByBoardId" resultMap="recruitmentBoardReply">
@@ -38,9 +40,11 @@
         A.ACTIVE_STATUS,
         A.ANONYMOUS_STATUS,
         A.USER_ID,
-        A.RECRUITMENT_BOARD_COMMENT_ID
+        U.NICKNAME AS USER_NICKNAME
         FROM RECRUITMENT_BOARD_REPLY A
-        WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.RECRUITMENT_BOARD_COMMENT_ID= #{recruitmentBoardCommentId}
+        LEFT JOIN USER U ON A.USER_ID = U.USER_ID
+        WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.RECRUITMENT_BOARD_COMMENT_ID = #{recruitmentBoardCommentId}
+        ORDER BY A.CREATED_AT DESC;
     </select>
 
 </mapper>

@@ -13,6 +13,7 @@
         <result property="anonymousStatus" column="ANONYMOUS_STATUS"/>
         <result property="userId" column="USER_ID"/>
         <result property="recruitmentBoardId" column="RECRUITMENT_BOARD_ID"/>
+        <result property="userNickname" column="USER_NICKNAME"/>
     </resultMap>
 
     <select id="findStudyGroupRecruitmentCommentByBoardId" resultMap="studyGroupRecruitmentComment">
@@ -24,9 +25,12 @@
         A.ACTIVE_STATUS,
         A.ANONYMOUS_STATUS,
         A.USER_ID,
-        A.RECRUITMENT_BOARD_ID
+        A.RECRUITMENT_BOARD_ID,
+        U.NICKNAME AS USER_NICKNAME
         FROM RECRUITMENT_BOARD_COMMENT A
-        WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.RECRUITMENT_BOARD_ID = #{ recruitmentBoardId }
+        LEFT JOIN USER U ON A.USER_ID = U.USER_ID
+        WHERE A.ACTIVE_STATUS = 'ACTIVE'
+        AND A.RECRUITMENT_BOARD_ID = #{ recruitmentBoardId }
+        ORDER BY A.CREATED_AT DESC;
     </select>
-
 </mapper>
