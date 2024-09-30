@@ -52,15 +52,15 @@ public class UserController {
         return ResponseDTO.ok(userDTO);
     }
 
+    //필기. 사용자 아이디 찾기
     @GetMapping("/auth-id")
-    public ResponseDTO<UserDTO> getUserByUserNameAndSignupPathAndEmail(
+    public ResponseDTO<com.springcooler.sgma.user.query.dto.UserDTO> getUserByUserNameAndSignupPathAndEmail(
             @RequestParam String nickname,
             @RequestParam String email) {
         //필기. 닉네임, 가입 구분, 이메일이 일치하는 사용자가 있는지 확인
         UserDTO userDTO = userService.findUserByUserNicknameAndSignupPathAndEmail(nickname, SignupPath.NORMAL, email);
         return ResponseDTO.ok(userDTO);
     }
-
 
     // 회원별 댓글 조회 API
     @GetMapping("/comments/{userId}")

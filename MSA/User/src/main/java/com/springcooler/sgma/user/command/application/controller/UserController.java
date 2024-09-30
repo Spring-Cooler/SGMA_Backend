@@ -77,16 +77,28 @@ public class UserController {
     }
 
 
-    //필기. 사용자 비밀번호 재설정
-    @PatchMapping("/{userId}/password")
-    public ResponseDTO<?> updateProfile(@PathVariable("userId") Long userId,
-                                        @RequestBody RequestUpdatePasswordUserVO requestUpdatePasswordUserVO) {
+    //필기. 로그인전 사용자 비밀번호 재설정
+    @PostMapping("/re-password")
+    public ResponseDTO<?> updatePassword(@RequestBody RequestUpdatePasswordUserVO requestUpdatePasswordUserVO) {
 
         // 서비스 호출 및 결과 처리
-        UserEntity userEntity = userService.updatePassword(userId, requestUpdatePasswordUserVO.getPassword());
+        UserEntity userEntity = userService.updatePassword( requestUpdatePasswordUserVO.getUserAuthId(), requestUpdatePasswordUserVO.getPassword());
         ResponseUserVO userUpdateRequestVO = modelMapper.map(userEntity, ResponseUserVO.class);
         return ResponseDTO.ok(userUpdateRequestVO);
     }
+
+    //필기. 로그인한 사용자 비밀번호 재설정
+    @PatchMapping("/{userId}/password")
+    public ResponseDTO<?> updateLoginedPassword(@PathVariable("userId") Long userId,
+                                        @RequestBody RequestUpdateLoggedInPasswordVO requestUpdatePasswordUserVO) {
+        // 서비스 호출 및 결과 처리
+        UserEntity userEntity = userService.updateLogiendPassword(userId, requestUpdatePasswordUserVO.getPassword());
+        ResponseUserVO userUpdateRequestVO = modelMapper.map(userEntity, ResponseUserVO.class);
+        return ResponseDTO.ok(userUpdateRequestVO);
+    }
+
+
+
 
     /*설명. 일반 회원 가입 기능*/
     @PostMapping("/signup/normal")
@@ -163,6 +175,19 @@ public class UserController {
             return ResponseDTO.ok(responseEmailMessageVO);
         } else {
             return ResponseDTO.fail(new CommonException(ErrorCode.INVALID_VERIFICATION_CODE));
+        }
+    }
+
+    //설명. 아이디 찾기시 이메일 인증번호 검증 API
+    @PostMapping("/nickname/verification-email")
+    public ResponseDTO<?> verifyUserIdEmail(@RequestBody @Validated UserIdEmailVerificationVO request) {
+        try {
+            // 이메일과 인증 코드 검증
+            UserDTO userDTO = emailVerificationService.verifyUserNicknameCode(request.getNickname(), request.getEmail(), request.getCode());
+            return ResponseDTO.ok(userDTO);
+        } catch (CommonException e) {
+            // 검증 실패 시 예외 처리
+            return ResponseDTO.fail(e);
         }
     }
 

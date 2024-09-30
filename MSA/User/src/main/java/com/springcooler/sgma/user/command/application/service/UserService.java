@@ -14,7 +14,9 @@ public interface UserService extends UserDetailsService {
     UserEntity deactivateUser(Long userId);
     UserEntity activateUser(String userId);
     UserEntity updateProfile(Long userId, RequestUpdateUserDTO userUpdateDTO);
-    UserEntity updatePassword(Long userId,String password);
+    UserEntity updatePassword(String userAuthId,String password);
+
+    UserEntity updateLogiendPassword(Long userId,String password);
     UserDTO registUser(RequestResistUserVO newUser);
     UserEntity findByUserIdentifier(String userIdentifier);
 
