@@ -17,7 +17,7 @@ public class ProblemDTO {
     @JsonProperty("problem_id")
     private Long problemId;
 
-    @JsonProperty("problem_id")
+    @JsonProperty("participant_id")
     private Long participantId;
 
     @JsonProperty("schedule_id")
