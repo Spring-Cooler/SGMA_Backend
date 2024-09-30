@@ -19,6 +19,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -132,6 +133,7 @@ public class OAuth2LoginService {
             newUser.setSignupPath(provider); // 가입 경로
             newUser.setUserStatus(ActiveStatus.ACTIVE);
             newUser.setAcceptStatus(AcceptStatus.Y);
+            newUser.setCreatedAt(LocalDateTime.now().withNano(0));
 
             return userRepository.save(newUser);
         }
