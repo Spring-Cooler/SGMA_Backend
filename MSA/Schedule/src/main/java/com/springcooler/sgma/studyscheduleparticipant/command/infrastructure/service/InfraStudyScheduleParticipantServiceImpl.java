@@ -75,6 +75,7 @@ public class InfraStudyScheduleParticipantServiceImpl implements InfraStudySched
     @Override
     public Double gradeAndUpdateParticipantScore(Long scheduleId, Long participantId) {
         double score = appSubmittedAnswerService.gradeSubmittedAnswersByScheduleIdAndParticipantId(scheduleId, participantId);
+        System.out.printf("now(): %s, scheduleId: %d, participantId: %d", new Timestamp(Instant.now().toEpochMilli()), scheduleId, participantId);
         StudyScheduleParticipant participant = participantRepository.findByScheduleIdAndParticipantId(scheduleId, participantId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_STUDY_SCHEDULE_PARTICIPANT));
 

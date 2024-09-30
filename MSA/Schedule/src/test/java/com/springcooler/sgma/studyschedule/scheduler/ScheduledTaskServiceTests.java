@@ -23,7 +23,7 @@ class ScheduledTaskServiceTests {
         scheduledTaskService.updateScheduledTasks();
         List<ScheduledFuture<?>> scheduledTasks = scheduler.getScheduledTasks();
         log.info("now(): {}", new Timestamp(Instant.now().toEpochMilli()));
-        Thread.sleep(1000 * 120);
+        Thread.sleep(1000 * 240);
 
     }
 }
