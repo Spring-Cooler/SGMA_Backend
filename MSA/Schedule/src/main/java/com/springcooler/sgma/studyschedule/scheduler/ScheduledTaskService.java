@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 @Slf4j
@@ -36,15 +37,12 @@ public class ScheduledTaskService {
 
     }
 
-//    TODO: 1시간 단위로 작업 가져옴
-//    @Scheduled(fixedRate = 3600000)
+@Scheduled(cron = "0 */10 * * * *")
     public void updateScheduledTasks(){
-//        @Scheduled는 매개변수 없는 method에만 사용이 가능해서 테스트용으로 startTime 작성
 //        now()로 수정 예정
-        Timestamp startTime = Timestamp.valueOf("2024-09-01 00:00:00");
-//        DB의 스케쥴 목록을 읽어오기 위해 한달로 기간 설정
-//        추후 1시간 단위로 수정 예정
-        Timestamp endTime = Timestamp.valueOf(startTime.toLocalDateTime().plusMonths(1));
+        Timestamp startTime = Timestamp.from(Instant.now());
+
+        Timestamp endTime = Timestamp.valueOf(startTime.toLocalDateTime().plusHours(1));
 
         List<StudySchedule> scheduledTasks = studyScheduleRepository.findByScheduleEndTimeBetween(startTime, endTime);
         scheduledTasks.forEach(scheduledTask -> {
