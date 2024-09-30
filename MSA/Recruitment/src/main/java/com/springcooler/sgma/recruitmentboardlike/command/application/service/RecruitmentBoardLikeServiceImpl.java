@@ -3,6 +3,7 @@ package com.springcooler.sgma.recruitmentboardlike.command.application.service;
 import com.springcooler.sgma.recruitmentboard.command.domain.aggregate.RecruitmentBoard;
 import com.springcooler.sgma.recruitmentboard.command.domain.repository.RecruitmentBoardRepository;
 import com.springcooler.sgma.recruitmentboardlike.command.domain.aggregate.RecruitmentBoardLike;
+import com.springcooler.sgma.recruitmentboardlike.command.domain.aggregate.RecruitmentBoardLikeId;
 import com.springcooler.sgma.recruitmentboardlike.command.domain.repository.RecruitmentBoardLikeRepository;
 import com.springcooler.sgma.recruitmentboardlike.common.exception.CommonException;
 import com.springcooler.sgma.recruitmentboardlike.common.exception.ErrorCode;
@@ -53,31 +54,47 @@ public class RecruitmentBoardLikeServiceImpl implements RecruitmentBoardLikeComm
         return null;
     }
 
+//    @Transactional
+//    @Override
+//    public RecruitmentBoardLike deleteLike(Long recruitmentBoardId, Long userId) {
+//        // 전체 좋아요 목록 조회
+//        List<RecruitmentBoardLikeDTO> recruitmentBoardLikes = recruitmentBoardLikeService.findAllRecruitmentBoardLike();
+//
+//        // 해당 사용자의 좋아요가 있는지 확인
+//        RecruitmentBoardLikeDTO foundLike = recruitmentBoardLikes.stream()
+//                .filter(like -> like.getRecruitmentBoardId().equals(recruitmentBoardId) && like.getUserId().equals(userId))
+//                .findFirst()
+//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_LIKE));
+//
+//        // RecruitmentBoard 조회
+//        RecruitmentBoard recruitmentBoard = recruitmentBoardRepository.findById(recruitmentBoardId)
+//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_RECRUITMENT_BOARD));
+//
+//        // 좋아요 수 업데이트
+//        RecruitmentBoard updatedRecruitmentBoard = recruitmentBoard.toBuilder()
+//                .likes(recruitmentBoard.getLikes() - 1)
+//                .build();
+//
+//        // RecruitmentBoardLike 삭제
+//        RecruitmentBoardLike recruitmentLike = recruitmentBoardLikeRepository.findByRecruitmentBoardIdAndUserId(recruitmentBoardId, userId);
+//        recruitmentBoardLikeRepository.delete(recruitmentLike);
+//
+//        // 게시글 업데이트 저장
+//        recruitmentBoardRepository.save(updatedRecruitmentBoard);
+//        return recruitmentLike;
+//    }
+
+
     @Transactional
     @Override
-    public RecruitmentBoardLike deleteLike(Long recruitmentBoardId, Long userId) {
-        Optional<RecruitmentBoard> optionalRecruitmentBoard = recruitmentBoardRepository.findById(recruitmentBoardId);
-        List<RecruitmentBoardLikeDTO> recruitmentBoardLikes = recruitmentBoardLikeService.findAllRecruitmentBoardLike();
-        if(recruitmentBoardLikes.size()==0) {
-            throw new CommonException(ErrorCode.NOT_FOUND_LIKE);
-        }
-        else {
-            for (RecruitmentBoardLikeDTO like : recruitmentBoardLikes) {
-                if (like.getRecruitmentBoardId().equals(recruitmentBoardId) && like.getUserId().equals(userId)) {
-                    RecruitmentBoard recruitmentBoard = optionalRecruitmentBoard.get();
-                    RecruitmentBoard updatedRecruitmentBoard = recruitmentBoard.toBuilder()
-                            .likes(recruitmentBoard.getLikes() - 1)
-                            .build();
-                    RecruitmentBoardLike recruitmentLike = recruitmentBoardLikeRepository.findByRecruitmentBoardIdAndUserId(recruitmentBoardId, userId);
-                    recruitmentBoardLikeRepository.delete(recruitmentLike);
-                    recruitmentBoardRepository.save(updatedRecruitmentBoard);
-                    return null;
-                } else {
-                    throw new CommonException(ErrorCode.NOT_FOUND_LIKE);
-                }
-            }
-        }
-        return null;
+    public void deleteLike(Long recruitmentBoardId, Long userId) {
+        // 기존 엔티티 조회
+        RecruitmentBoardLike existingLike =
+                recruitmentBoardLikeRepository.findById(new RecruitmentBoardLikeId(recruitmentBoardId,userId))
+                        .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_LIKE));
+
+        recruitmentBoardLikeRepository.delete(existingLike);
     }
+
 }
 

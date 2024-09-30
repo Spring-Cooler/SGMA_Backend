@@ -23,9 +23,9 @@ public class RecruitmentBoardLikeController {
 
     @DeleteMapping("/like/{recruitmentBoardId}/{userId}")
     @Operation(summary = "모집글 좋아요 취소")
-    public ResponseDTO<?> deleteLike(@PathVariable("recruitmentBoardId") Long recruitmentBoardId, @PathVariable("userId") Long userId) {
-        RecruitmentBoardLike result = recruitmentBoardLikeService.deleteLike(recruitmentBoardId, userId);
-        return ResponseDTO.ok(result);
-
+    public ResponseDTO<?> deleteLike(@RequestParam("recruitmentBoardId") Long recruitmentBoardId,
+                                     @RequestParam("userId") Long userId) {
+        recruitmentBoardLikeService.deleteLike(recruitmentBoardId, userId);
+        return ResponseDTO.ok(null);
     }
 }
