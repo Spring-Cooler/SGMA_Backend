@@ -13,5 +13,5 @@ public interface RecruitmentBoardCommentCommandService {
     RecruitmentBoardComment updateRecruitmentBoardComment(Long recruitmentBoardCommentId, RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO);
 
 
-    RecruitmentBoardComment deleteRecruitmentBoardComment(Long recruitmentBoardCommentId,RecruitmentBoardCommentCommandDTO recruitmentBoardCommentCommandDTO);
+    RecruitmentBoardComment deleteRecruitmentBoardComment(Long recruitmentBoardCommentId);
 }

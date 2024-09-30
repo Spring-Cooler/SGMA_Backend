@@ -18,6 +18,11 @@
         A.RECRUITMENT_BOARD_ID
         FROM STUDY_GROUP_APPLICANT A
         WHERE A.USER_ID =#{ userId }
+
+
+
+
+
     </select>
 
 

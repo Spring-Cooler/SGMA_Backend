@@ -13,6 +13,4 @@ import java.util.Optional;
 public interface RecruitmentBoardRepository extends JpaRepository<RecruitmentBoard,Long> {
 
     List<RecruitmentBoard> findByActiveStatus(BoardActiveStatus status);
-
-    Optional<RecruitmentBoard> findByBoardIdAndUserId(Long recruitmentBoardId,Long UserId);
 }
