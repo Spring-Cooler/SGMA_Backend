@@ -5,6 +5,6 @@ import com.springcooler.sgma.studygroupboardlike.command.application.dto.StudyGr
 
 public interface DomainStudyGroupBoardLikeService {
 
-    boolean isValidDTO(RestStatus restStatus, StudyGroupBoardLikeDTO studyGroupBoardCommentDTO);
+    boolean isValidDTO(RestStatus restStatus, StudyGroupBoardLikeDTO studyGroupBoardLikeDTO);
 
 }

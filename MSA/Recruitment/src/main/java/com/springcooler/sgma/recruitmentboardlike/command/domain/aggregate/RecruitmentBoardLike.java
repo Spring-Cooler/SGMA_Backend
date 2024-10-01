@@ -1,16 +1,15 @@
 package com.springcooler.sgma.recruitmentboardlike.command.domain.aggregate;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Builder(toBuilder = true)
-@Data
+@Table(name="RECRUITMENT_BOARD_LIKE")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@ToString
 @IdClass(RecruitmentBoardLikeId.class)
 public class RecruitmentBoardLike {
     @Id
