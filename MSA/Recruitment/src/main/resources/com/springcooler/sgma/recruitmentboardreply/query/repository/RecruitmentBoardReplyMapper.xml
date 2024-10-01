@@ -28,7 +28,7 @@
         U.NICKNAME AS USER_NICKNAME
         FROM RECRUITMENT_BOARD_REPLY A
         LEFT JOIN USER U ON A.USER_ID = U.USER_ID
-        ORDER BY A.CREATED_AT DESC;
+        ORDER BY A.RECRUITMENT_BOARD_REPLY_ID;
     </select>
 
     <select id="findRecruitmentBoardRepliesByBoardId" resultMap="recruitmentBoardReply">
@@ -44,7 +44,7 @@
         FROM RECRUITMENT_BOARD_REPLY A
         LEFT JOIN USER U ON A.USER_ID = U.USER_ID
         WHERE A.ACTIVE_STATUS = 'ACTIVE' AND A.RECRUITMENT_BOARD_COMMENT_ID = #{recruitmentBoardCommentId}
-        ORDER BY A.CREATED_AT DESC;
+        ORDER BY A.RECRUITMENT_BOARD_REPLY_ID;
     </select>
 
 </mapper>

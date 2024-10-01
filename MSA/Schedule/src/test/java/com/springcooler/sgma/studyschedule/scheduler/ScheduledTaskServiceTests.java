@@ -45,7 +45,7 @@ class ScheduledTaskServiceTests {
 
         // 6. 스케줄 작업이 예상대로 동작하는지 검증
         // 일정 시간 동안 대기 후 작업이 제대로 실행되었는지 확인
-        Thread.sleep(1000 * 60 * 5);  // 5분 대기 (테스트 시 적절히 조정)
+//        Thread.sleep(1000 * 60 * 5);  // 5분 대기 (테스트 시 적절히 조정)
 
         // 7. 스케줄이 여전히 등록되어 있는지 확인 (비동기 작업일 경우)
         assertTrue(scheduledTasks.get(0).isDone() || !scheduledTasks.get(0).isCancelled(),

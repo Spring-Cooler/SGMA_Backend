@@ -47,7 +47,7 @@ class StudyGroupNoticeServiceTests {
 
     @DisplayName("스터디그룹 공지사항 제목으로 조회 테스트")
     @ParameterizedTest
-    @ValueSource(strings = "프")
+    @ValueSource(strings = "공")
     void testFindStudyGroupNoticesByTitle(String title) {
         Assertions.assertDoesNotThrow(
                 () -> {

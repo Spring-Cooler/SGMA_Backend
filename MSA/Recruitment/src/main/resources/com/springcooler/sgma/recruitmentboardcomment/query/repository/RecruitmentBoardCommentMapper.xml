@@ -31,6 +31,6 @@
         LEFT JOIN USER U ON A.USER_ID = U.USER_ID
         WHERE A.ACTIVE_STATUS = 'ACTIVE'
         AND A.RECRUITMENT_BOARD_ID = #{ recruitmentBoardId }
-        ORDER BY A.CREATED_AT DESC;
+        ORDER BY A.RECRUITMENT_BOARD_REPLY_ID;
     </select>
 </mapper>

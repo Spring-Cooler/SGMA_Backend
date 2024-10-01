@@ -58,7 +58,7 @@ class StudyGroupBoardServiceTests {
 
     @DisplayName("게시글 내용으로 조회 테스트")
     @ParameterizedTest
-    @ValueSource(strings = "다음")
+    @ValueSource(strings = "이")
     void testFindStudyGroupBoardsByContent(String content) {
         Assertions.assertDoesNotThrow(
                 () -> {
