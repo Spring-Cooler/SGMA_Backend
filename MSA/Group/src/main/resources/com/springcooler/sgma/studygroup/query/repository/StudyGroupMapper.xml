@@ -15,6 +15,7 @@
     <resultMap id="myStudyGroupResultMap" type="com.springcooler.sgma.studygroup.query.dto.MyStudyGroupDTO">
         <id property="groupId" column="GROUP_ID"/>
         <result property="groupName" column="GROUP_NAME"/>
+        <result property="userId" column="USER_ID"/>
         <result property="studyGroupCategoryId" column="STUDY_GROUP_CATEGORY_ID"/>
         <result property="categoryName" column="STUDY_GROUP_CATEGORY_NAME"/>
         <result property="memberId" column="MEMBER_ID"/>
@@ -106,6 +107,7 @@
         SELECT
                A.GROUP_ID
              , A.GROUP_NAME
+             , A.USER_ID
              , A.STUDY_GROUP_CATEGORY_ID
              , B.STUDY_GROUP_CATEGORY_NAME
              , C.MEMBER_ID
