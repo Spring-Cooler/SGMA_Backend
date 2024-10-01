@@ -37,4 +37,7 @@ public class StudyGroupNoticeDTO {
     @JsonProperty("group_id")
     private Long groupId;
 
+    @JsonProperty("user_id")
+    private Long userId;
+
 }

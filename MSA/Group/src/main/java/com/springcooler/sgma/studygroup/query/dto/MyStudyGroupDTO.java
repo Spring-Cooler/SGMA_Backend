@@ -21,6 +21,9 @@ public class MyStudyGroupDTO {
     @JsonProperty("group_name")
     private String groupName;
 
+    @JsonProperty("user_id")
+    private Long userId;
+
     @JsonProperty("category_id")
     private Integer studyGroupCategoryId;
 
